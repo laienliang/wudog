@@ -1,0 +1,40 @@
+{
+  "name": "wudong-admin-backend",
+  "version": "1.0.0",
+  "description": "乌东文旅平台管理后台后端",
+  "private": true,
+  "scripts": {
+    "dev": "cross-env NODE_ENV=local midway-bin dev --ts",
+    "build": "midway-bin build -ts",
+    "start": "node ./dist/index.js",
+    "test": "midway-bin test --ts"
+  },
+  "dependencies": {
+    "@midwayjs/bootstrap": "^3.0.0",
+    "@midwayjs/core": "^3.0.0",
+    "@midwayjs/decorator": "^3.20.24",
+    "@midwayjs/jwt": "^3.0.0",
+    "@midwayjs/koa": "^3.0.0",
+    "@midwayjs/logger": "^4.0.1",
+    "@midwayjs/typeorm": "^3.0.0",
+    "@midwayjs/upload": "^4.2.1",
+    "@midwayjs/validate": "^3.0.0",
+    "@types/koa-static": "^4.0.4",
+    "@types/multer": "^2.1.0",
+    "ali-oss": "^6.23.0",
+    "bcryptjs": "^2.4.3",
+    "class-validator": "^0.14.0",
+    "dotenv": "^17.4.2",
+    "koa-static": "^5.0.0",
+    "multer": "^2.2.0",
+    "mysql2": "^3.0.0",
+    "typeorm": "^0.3.30"
+  },
+  "devDependencies": {
+    "@midwayjs/cli": "^2.0.0",
+    "@midwayjs/mock": "^3.0.0",
+    "@types/node": "^18.0.0",
+    "cross-env": "^7.0.3",
+    "typescript": "^5.0.0"
+  }
+}
