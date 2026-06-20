@@ -10,11 +10,11 @@ import request from '../../utils/request';
 
 /** 订单类型显示映射 */
 const ORDER_TYPE_MAP: Record<string, { text: string; color: string }> = {
-  product: { text: '商品', color: 'blue' },
-  dining: { text: '餐位', color: 'orange' },
-  stay: { text: '住宿', color: 'purple' },
-  ticket: { text: '门票', color: 'cyan' },
-  route: { text: '路线', color: 'geekblue' },
+  product: { text: '商品（衣）', color: 'blue' },
+  food_order: { text: '餐饮（食）', color: 'orange' },
+  stay: { text: '住宿（住）', color: 'purple' },
+  ticket: { text: '门票（行）', color: 'cyan' },
+  route: { text: '路线（行）', color: 'geekblue' },
 };
 
 /**

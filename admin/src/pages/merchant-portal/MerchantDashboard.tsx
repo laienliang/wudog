@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import { Card, Col, Row, Statistic, Spin } from 'antd';
 import { ShoppingCartOutlined, CarOutlined, DollarOutlined, ReloadOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
+import { MODULE_TYPE_MAP } from '../../utils/format';
 
 export default function MerchantDashboard() {
   const merchantStr = localStorage.getItem('merchant');
@@ -67,7 +68,7 @@ export default function MerchantDashboard() {
             欢迎回来，{merchant.shop_name || '商家'}
           </h3>
           <p style={{ color: 'var(--color-text-secondary)', margin: 0 }}>
-            所属模块：{merchant.module_type || '-'}
+            所属模块：{MODULE_TYPE_MAP[merchant.module_type] || merchant.module_type || '-'}
           </p>
         </Card>
 

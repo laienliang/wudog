@@ -1,4 +1,4 @@
-import { Controller, Get, Inject, Headers, Query } from '@midwayjs/decorator';
+import { Controller, Get, Inject, Headers, Query, Param } from '@midwayjs/decorator';
 import { JwtService } from '@midwayjs/jwt';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
@@ -137,7 +137,7 @@ export class MerchantDashboardController {
     try {
       const qb = this.messageRepo.createQueryBuilder('m')
         .where('m.is_deleted = 0')
-        .andWhere('m.user_id = :merchantId', { merchantId });
+        .andWhere('(m.user_id = :merchantId OR m.user_id IS NULL)', { merchantId });
 
       if (messageType) {
         qb.andWhere('m.message_type = :messageType', { messageType });
@@ -164,12 +164,12 @@ export class MerchantDashboardController {
 
   /**
    * 标记商家消息为已读
-   * PUT /api/merchant-dashboard/messages/read/:id
+   * GET /api/merchant-dashboard/messages/read/:id
    */
   @Get('/messages/read/:id')
   async markMessageRead(
     @Headers('authorization') auth: string,
-    @Query('id') id: number
+    @Param('id') id: number
   ) {
     const merchantId = await this.getMerchantId(auth);
     if (!merchantId) {

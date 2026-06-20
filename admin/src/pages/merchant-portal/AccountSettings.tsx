@@ -6,6 +6,7 @@ import { useState } from 'react';
 import { Card, Form, Input, Button, message, Descriptions } from 'antd';
 import { LockOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
+import { MODULE_TYPE_MAP } from '../../utils/format';
 
 export default function AccountSettings() {
   const [form] = Form.useForm();
@@ -21,7 +22,7 @@ export default function AccountSettings() {
     }
     setLoading(true);
     try {
-      const res: any = await request.put(`/merchants/update/${merchant.id}`, {
+      const res: any = await request.put('/merchant-auth/profile', {
         password: values.newPassword,
       });
       if (res.code === 200) {
@@ -44,7 +45,7 @@ export default function AccountSettings() {
         <Descriptions column={1}>
           <Descriptions.Item label="用户名">{merchant.username}</Descriptions.Item>
           <Descriptions.Item label="店铺名称">{merchant.shop_name}</Descriptions.Item>
-          <Descriptions.Item label="所属模块">{merchant.module_type}</Descriptions.Item>
+          <Descriptions.Item label="所属模块">{MODULE_TYPE_MAP[merchant.module_type] || merchant.module_type}</Descriptions.Item>
         </Descriptions>
       </Card>
       <Card title="修改密码">

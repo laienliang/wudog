@@ -91,7 +91,7 @@ export default function RoleListPage() {
     } finally { setLoading(false); }
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize]);
+  useEffect(() => { loadData(); }, [page, pageSize, keyword]);
 
   const onSearch = () => { setPage(1); loadData(); };
 

@@ -50,7 +50,7 @@ export default function OperationLogPage() {
     } finally { setLoading(false); }
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize, action]);
+  useEffect(() => { loadData(); }, [page, pageSize, action, keyword]);
 
   /** 搜索操作，重置页码后加载数据 */
   const onSearch = () => { setPage(1); loadData(); };

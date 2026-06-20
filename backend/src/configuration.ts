@@ -116,23 +116,46 @@ export class ContainerLifeCycle {
           const jwtService = await ctx.requestContext.getAsync('jwtService');
           const payload: any = await jwtService.verify(token);
 
-          // 查询管理员信息
+          // 先获取管理员服务（两个分支可能都需要）
           const adminService = await ctx.requestContext.getAsync('adminService');
-          const admin = await adminService.findById(payload.id);
 
-          if (!admin || admin.status === 0) {
-            ctx.status = 401;
-            ctx.body = { code: 401, message: '账号已被禁用', data: null };
-            return;
+          // 根据 token 中的 role 区分管理员和商家认证
+          if (payload.role === 'merchant') {
+            // 商家 token —— 查询商家表验证
+            const merchantService = await ctx.requestContext.getAsync('merchantService');
+            const merchant = await merchantService.findById(payload.id);
+
+            if (!merchant || merchant.status === 0) {
+              ctx.status = 401;
+              ctx.body = { code: 401, message: '商家账号已被禁用', data: null };
+              return;
+            }
+
+            // 将商家信息挂载到 ctx.state
+            ctx.state.merchant = {
+              id: merchant.id,
+              username: merchant.username,
+              shop_name: merchant.shop_name,
+              module_type: merchant.module_type,
+            };
+          } else {
+            // 管理员 token —— 查询管理员表验证
+            const admin = await adminService.findById(payload.id);
+
+            if (!admin || admin.status === 0) {
+              ctx.status = 401;
+              ctx.body = { code: 401, message: '账号已被禁用', data: null };
+              return;
+            }
+
+            // 将管理员信息挂载到 ctx.state
+            ctx.state.admin = {
+              id: admin.id,
+              username: admin.username,
+              name: admin.name,
+              role_id: admin.role_id,
+            };
           }
-
-          // 将管理员信息挂载到 ctx.state
-          ctx.state.admin = {
-            id: admin.id,
-            username: admin.username,
-            name: admin.name,
-            role_id: admin.role_id,
-          };
         } catch (error) {
           ctx.status = 401;
           ctx.body = { code: 401, message: 'token无效或已过期', data: null };

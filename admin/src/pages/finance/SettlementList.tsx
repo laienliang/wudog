@@ -33,7 +33,7 @@ export default function SettlementListPage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/financial-records/list', { params: { page, pageSize, ...filters } });
+      const res: any = await request.get('/financial-records/list', { params: { page, pageSize, settlementStatus: filters.settlement_status, merchantId: filters.merchant_id } });
       if (res.code === 200) { setData(res.data.list); setTotal(res.data.total); }
     } finally { setLoading(false); }
   };
@@ -62,7 +62,7 @@ export default function SettlementListPage() {
   /** 批量结算操作，结算所有选中的记录 */
   const handleBatchSettle = async () => {
     if (selectedRowKeys.length === 0) { message.warning('请先选择要结算的记录'); return; }
-    const res: any = await request.post('/financial-records/batch-settle', { ids: selectedRowKeys });
+    const res: any = await request.post('/financial-records/settle-batch', { ids: selectedRowKeys });
     if (res.code === 200) { message.success(`批量结算成功，共 ${selectedRowKeys.length} 条`); setSelectedRowKeys([]); loadData(); }
     else message.error(res.message);
   };

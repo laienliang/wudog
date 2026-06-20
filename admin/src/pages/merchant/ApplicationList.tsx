@@ -56,7 +56,7 @@ export default function ApplicationListPage() {
   };
 
   useEffect(() => { setPage(1); }, [status]);
-  useEffect(() => { loadData(); }, [page, pageSize, status]);
+  useEffect(() => { loadData(); }, [page, pageSize, status, keyword]);
 
   /** 搜索操作，重置页码后加载数据 */
   const onSearch = () => { setPage(1); loadData(); };
