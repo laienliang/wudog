@@ -10,7 +10,7 @@ import request from '../../utils/request';
 
 /** 订单类型名称映射 */
 const ORDER_TYPE_MAP: Record<string, string> = {
-  product: '商品', food_order: '餐饮', stay: '住宿', ticket: '门票', route: '路线',
+  product: '商品（衣）', food_order: '餐饮（食）', stay: '住宿（住）', ticket: '门票（行）', route: '路线（行）',
 };
 
 /** 订单状态标签 */

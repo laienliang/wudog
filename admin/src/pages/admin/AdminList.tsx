@@ -53,7 +53,7 @@ export default function AdminListPage() {
     if (res.code === 200) setRoles(res.data.list);
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize]);
+  useEffect(() => { loadData(); }, [page, pageSize, keyword]);
   useEffect(() => { loadRoles(); }, []);
 
   /** 搜索操作，重置页码后加载数据 */

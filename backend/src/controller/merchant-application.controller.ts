@@ -1,5 +1,6 @@
 import { Controller, Post, Get, Put, Del, Inject, Query, Body, Param, Headers } from '@midwayjs/decorator';
 import { MerchantApplicationService } from '../service/merchant-application.service';
+import { MerchantService } from '../service/merchant.service';
 import { JwtService } from '@midwayjs/jwt';
 
 /**
@@ -10,6 +11,9 @@ import { JwtService } from '@midwayjs/jwt';
 export class MerchantApplicationController {
   @Inject()
   merchantApplicationService: MerchantApplicationService;
+
+  @Inject()
+  merchantService: MerchantService;
 
   @Inject()
   jwtService: JwtService;
@@ -102,12 +106,36 @@ export class MerchantApplicationController {
     try {
       const token = auth?.replace('Bearer ', '');
       const payload: any = await this.jwtService.verify(token);
+      const app = await this.merchantApplicationService.findById(Number(id));
+      if (!app) return { code: 404, message: '申请不存在', data: null };
+      if (app.status !== 'pending') return { code: 400, message: '该申请已处理', data: null };
+
+      // 更新申请状态
       const item = await this.merchantApplicationService.update(Number(id), {
         status: 'approved',
         reviewer_id: payload.id,
         review_time: new Date()
       });
-      return { code: 200, message: '审核通过', data: item };
+
+      // 自动创建商家账号（关联申请信息）
+      const existingMerchant = await this.merchantService.findByUsername(app.applicant_phone || `merchant_${app.id}`);
+      if (!existingMerchant) {
+        const bcrypt = require('bcryptjs');
+        const defaultPassword = '123456';
+        await this.merchantService.create({
+          user_id: app.user_id,
+          username: app.applicant_phone || `merchant_${app.id}`,
+          password_hash: bcrypt.hashSync(defaultPassword, 12),
+          shop_name: app.shop_name,
+          module_type: app.module_type,
+          contact_name: app.applicant_name,
+          contact_phone: app.applicant_phone,
+          status: 1,
+          joined_at: new Date(),
+        } as any);
+      }
+
+      return { code: 200, message: '审核通过，已自动创建商家账号（默认密码: 123456）', data: item };
     } catch {
       return { code: 401, message: 'token无效', data: null };
     }

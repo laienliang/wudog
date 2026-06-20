@@ -15,11 +15,12 @@ export class ActivityBannerController {
    * GET /api/activity-banners/list
    * @param page - 页码，默认 1
    * @param pageSize - 每页数量，默认 20
+   * @param keyword - 搜索关键词（可选）
    * @returns 分页活动横幅列表
    */
   @Get('/list')
-  async list(@Query('page') page = 1, @Query('pageSize') pageSize = 20) {
-    const result = await this.activityBannerService.findAll(Number(page), Number(pageSize));
+  async list(@Query('page') page = 1, @Query('pageSize') pageSize = 20, @Query('keyword') keyword?: string) {
+    const result = await this.activityBannerService.findAll(Number(page), Number(pageSize), keyword);
     return { code: 200, message: 'success', data: result };
   }
 

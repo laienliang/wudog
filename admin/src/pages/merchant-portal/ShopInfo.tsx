@@ -21,7 +21,7 @@ export default function ShopInfo() {
 
   const loadShopInfo = async () => {
     try {
-      const res: any = await request.get(`/merchants/detail/${merchant.id}`);
+      const res: any = await request.get('/merchant-auth/info');
       if (res.code === 200) {
         form.setFieldsValue(res.data);
         setLogo(res.data.logo || '');
@@ -36,7 +36,7 @@ export default function ShopInfo() {
     values.logo = logo;
     setLoading(true);
     try {
-      const res: any = await request.put(`/merchants/update/${merchant.id}`, values);
+      const res: any = await request.put('/merchant-auth/profile', values);
       if (res.code === 200) {
         message.success('保存成功');
         localStorage.setItem('merchant', JSON.stringify({ ...merchant, ...values }));

@@ -166,10 +166,10 @@ export default function DashboardPage() {
         {/* 核心指标卡片 - 第二行 */}
         <Row gutter={[16, 16]} style={{ marginTop: 16 }}>
           <Col xs={12} sm={6}>
-            <Card><Statistic title="今日GMV" value={orders.todayGMV || 0} precision={2} prefix="¥" valueStyle={{ color: '#D4A14B' }} /></Card>
+            <Card><Statistic title="今日GMV" value={orders.todayGmv || 0} precision={2} prefix="¥" valueStyle={{ color: '#D4A14B' }} /></Card>
           </Col>
           <Col xs={12} sm={6}>
-            <Card><Statistic title="本月GMV" value={orders.monthGMV || 0} precision={2} prefix="¥" valueStyle={{ color: '#7A5230' }} /></Card>
+            <Card><Statistic title="本月GMV" value={orders.monthGmv || 0} precision={2} prefix="¥" valueStyle={{ color: '#7A5230' }} /></Card>
           </Col>
           <Col xs={12} sm={6}>
             <Card><Statistic title="商家总数 / 活跃" value={merchants.total || 0} suffix={`/ ${merchants.active || 0}`} prefix={<ShopOutlined />} valueStyle={{ color: '#6B8E3D' }} /></Card>

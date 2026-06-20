@@ -80,7 +80,10 @@ export const ORDER_STATUS_MAP: Record<string, { color: string; text: string }> =
   shipped: { color: 'geekblue', text: '已发货' },
   completed: { color: 'success', text: '已完成' },
   cancelled: { color: 'default', text: '已取消' },
+  closed: { color: 'default', text: '已关闭' },
   refunding: { color: 'warning', text: '退款中' },
+  refund_approved: { color: 'green', text: '退款通过' },
+  refund_rejected: { color: 'error', text: '退款被拒' },
   refunded: { color: 'error', text: '已退款' },
 };
 
@@ -110,9 +113,9 @@ export const MODULE_TYPE_MAP: Record<string, string> = {
  * 订单类型映射
  */
 export const ORDER_TYPE_MAP: Record<string, string> = {
-  product: '商品订单',
-  food_order: '餐位预订',
-  stay: '住宿预订',
-  ticket: '门票订单',
-  route: '路线订单',
+  product: '商品（衣）',
+  food_order: '餐饮（食）',
+  stay: '住宿（住）',
+  ticket: '门票（行）',
+  route: '路线（行）',
 };

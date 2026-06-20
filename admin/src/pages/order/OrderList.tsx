@@ -11,20 +11,20 @@ import request from '../../utils/request';
 
 /** 订单类型选项配置 */
 const ORDER_TYPE_OPTIONS = [
-  { label: '商品', value: 'product' },
-  { label: '餐位', value: 'dining' },
-  { label: '住宿', value: 'stay' },
-  { label: '门票', value: 'ticket' },
-  { label: '路线', value: 'route' },
+  { label: '商品（衣）', value: 'product' },
+  { label: '餐饮（食）', value: 'food_order' },
+  { label: '住宿（住）', value: 'stay' },
+  { label: '门票（行）', value: 'ticket' },
+  { label: '路线（行）', value: 'route' },
 ];
 
 /** 订单类型显示映射（品牌色系） */
 const ORDER_TYPE_MAP: Record<string, { text: string; color: string }> = {
-  product: { text: '商品', color: 'blue' },
-  dining: { text: '餐位', color: 'orange' },
-  stay: { text: '住宿', color: 'green' },
-  ticket: { text: '门票', color: 'cyan' },
-  route: { text: '路线', color: 'geekblue' },
+  product: { text: '商品（衣）', color: 'blue' },
+  food_order: { text: '餐饮（食）', color: 'orange' },
+  stay: { text: '住宿（住）', color: 'green' },
+  ticket: { text: '门票（行）', color: 'cyan' },
+  route: { text: '路线（行）', color: 'geekblue' },
 };
 
 /** 订单状态选项配置 */
@@ -34,7 +34,10 @@ const STATUS_OPTIONS = [
   { label: '已发货', value: 'shipped' },
   { label: '已完成', value: 'completed' },
   { label: '已取消', value: 'cancelled' },
+  { label: '已关闭', value: 'closed' },
   { label: '退款中', value: 'refunding' },
+  { label: '退款通过', value: 'refund_approved' },
+  { label: '退款被拒', value: 'refund_rejected' },
   { label: '已退款', value: 'refunded' },
 ];
 
@@ -45,7 +48,10 @@ const STATUS_MAP: Record<string, { text: string; color: string }> = {
   shipped: { text: '已发货', color: 'geekblue' },
   completed: { text: '已完成', color: 'success' },
   cancelled: { text: '已取消', color: 'default' },
+  closed: { text: '已关闭', color: 'default' },
   refunding: { text: '退款中', color: 'warning' },
+  refund_approved: { text: '退款通过', color: 'green' },
+  refund_rejected: { text: '退款被拒', color: 'error' },
   refunded: { text: '已退款', color: 'error' },
 };
 
@@ -80,7 +86,7 @@ export default function OrderListPage() {
     setLoading(true);
     try {
       const res: any = await request.get('/orders/list', {
-        params: { page, pageSize, keyword, order_type: orderType, status },
+        params: { page, pageSize, keyword, orderType: orderType, status },
       });
       if (res.code === 200) {
         setData(res.data.list);
@@ -91,7 +97,7 @@ export default function OrderListPage() {
     }
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize, orderType, status]);
+  useEffect(() => { loadData(); }, [page, pageSize, orderType, status, keyword]);
 
   /** 搜索操作，重置页码后加载数据 */
   const onSearch = () => { setPage(1); loadData(); };

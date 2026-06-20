@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { FinancialRecordService } from '../service/financial-record.service';
 import { Order } from '../entity/order.entity';
 import { FinancialRecord } from '../entity/financial-record.entity';
+import { Merchant } from '../entity/merchant.entity';
 
 /**
  * 财务记录控制器
@@ -19,6 +20,9 @@ export class FinancialRecordController {
 
   @InjectEntityModel(FinancialRecord)
   recordRepo: Repository<FinancialRecord>;
+
+  @InjectEntityModel(Merchant)
+  merchantRepo: Repository<Merchant>;
 
   /**
    * 获取财务记录列表（分页）
@@ -163,6 +167,21 @@ export class FinancialRecordController {
           m.pending_amount += Number(r.merchant_income || 0);
         }
       });
+
+      // 查询所有涉及商家的真实店铺名
+      const merchantIds = Array.from(merchantMap.keys()).filter(Boolean);
+      if (merchantIds.length > 0) {
+        const merchants = await this.merchantRepo
+          .createQueryBuilder('m')
+          .select(['m.id', 'm.shop_name'])
+          .whereInIds(merchantIds)
+          .getMany();
+        merchants.forEach(m => {
+          if (merchantMap.has(m.id)) {
+            merchantMap.get(m.id).merchant_name = m.shop_name;
+          }
+        });
+      }
 
       return {
         code: 200,

@@ -8,6 +8,7 @@ import { Card, Col, Row, Table, Tag, Spin, Statistic, Button, Space } from 'antd
 import { ReloadOutlined, DollarOutlined, FileTextOutlined, WarningOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
 import { exportToExcel } from '../../utils/export';
+import { ORDER_TYPE_MAP } from '../../utils/format';
 
 const STATUS_MAP: Record<string, { text: string; color: string }> = {
   matched: { text: '一致', color: 'green' },
@@ -51,7 +52,7 @@ export default function ReconciliationPage() {
     { title: '订单号', dataIndex: 'order_no' },
     { title: '商家ID', dataIndex: 'merchant_id', width: 100 },
     { title: '订单金额', dataIndex: 'total_amount', render: (v: number) => `¥${Number(v).toFixed(2)}` },
-    { title: '订单类型', dataIndex: 'order_type' },
+    { title: '订单类型', dataIndex: 'order_type', render: (v: string) => ORDER_TYPE_MAP[v] || v },
   ];
 
   return (

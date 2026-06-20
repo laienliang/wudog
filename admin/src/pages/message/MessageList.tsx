@@ -4,7 +4,7 @@
  * 提供查看消息详情、标记已读、删除和发送新消息功能
  */
 import { useEffect, useState } from 'react';
-import { Table, Button, Space, Input, Modal, Form, Select, message, Popconfirm, Tag, Descriptions } from 'antd';
+import { Table, Button, Space, Input, InputNumber, Modal, Form, Select, message, Popconfirm, Tag, Descriptions } from 'antd';
 import { PlusOutlined, SearchOutlined, EyeOutlined, DeleteOutlined, CheckOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
 
@@ -12,16 +12,18 @@ import request from '../../utils/request';
 const MESSAGE_TYPE_OPTIONS = [
   { label: '系统通知', value: 'system' },
   { label: '订单通知', value: 'order' },
-  { label: '活动通知', value: 'activity' },
-  { label: '审核通知', value: 'audit' },
+  { label: '支付通知', value: 'payment' },
+  { label: '退款通知', value: 'refund' },
+  { label: '互动通知', value: 'interaction' },
 ];
 
 /** 消息类型颜色映射 */
 const MESSAGE_TYPE_COLORS: Record<string, string> = {
   system: 'blue',
   order: 'green',
-  activity: 'orange',
-  audit: 'purple',
+  payment: 'cyan',
+  refund: 'orange',
+  interaction: 'purple',
 };
 
 /**
@@ -54,7 +56,7 @@ export default function MessageListPage() {
   const loadData = async () => {
     setLoading(true);
     try {
-      const res: any = await request.get('/system-messages/list', { params: { page, pageSize, ...filters } });
+      const res: any = await request.get('/system-messages/list', { params: { page, pageSize, messageType: filters.message_type, isRead: filters.is_read } });
       if (res.code === 200) { setData(res.data.list); setTotal(res.data.total); }
     } finally { setLoading(false); }
   };
@@ -101,7 +103,7 @@ export default function MessageListPage() {
   const handleSend = async () => {
     const values = await sendForm.validateFields();
     try {
-      const res: any = await request.post('/system-messages/send', values);
+      const res: any = await request.post('/system-messages/create', values);
       if (res.code === 200) { message.success('发送成功'); setSendOpen(false); sendForm.resetFields(); loadData(); }
       else message.error(res.message);
     } catch (err: any) { message.error(err?.response?.data?.message || '发送失败'); }
@@ -178,7 +180,7 @@ export default function MessageListPage() {
       {/* 发送消息弹窗 */}
       <Modal title="发送消息" open={sendOpen} onOk={handleSend} onCancel={() => setSendOpen(false)} destroyOnClose>
         <Form form={sendForm} layout="vertical">
-          <Form.Item name="user_id" label="用户ID" rules={[{ required: true }]}><Input placeholder="输入目标用户ID" /></Form.Item>
+          <Form.Item name="user_id" label="用户ID" extra="留空则群发给所有用户"><InputNumber placeholder="输入目标用户ID（留空群发）" style={{ width: '100%' }} min={1} /></Form.Item>
           <Form.Item name="message_type" label="消息类型" rules={[{ required: true }]}><Select options={MESSAGE_TYPE_OPTIONS} /></Form.Item>
           <Form.Item name="title" label="标题" rules={[{ required: true }]}><Input /></Form.Item>
           <Form.Item name="content" label="内容" rules={[{ required: true }]}><Input.TextArea rows={4} /></Form.Item>

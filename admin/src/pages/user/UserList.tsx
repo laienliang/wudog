@@ -54,7 +54,7 @@ export default function UserListPage() {
     }
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize, statusFilter]);
+  useEffect(() => { loadData(); }, [page, pageSize, statusFilter, keyword]);
 
   /** 搜索操作，重置页码后加载数据 */
   const onSearch = () => { setPage(1); loadData(); };

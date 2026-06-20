@@ -44,7 +44,7 @@ export default function CarouselListPage() {
     } finally { setLoading(false); }
   };
 
-  useEffect(() => { loadData(); }, [page, pageSize]);
+  useEffect(() => { loadData(); }, [page, pageSize, keyword]);
 
   /** 搜索操作，重置页码后加载数据 */
   const onSearch = () => { setPage(1); loadData(); };
