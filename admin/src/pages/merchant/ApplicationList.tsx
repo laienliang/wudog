@@ -4,7 +4,7 @@
  * 提供申请详情查看、审核通过、驳回（需填写原因）操作
  */
 import { useEffect, useState } from 'react';
-import { Table, Button, Space, Input, Modal, Form, message, Tag, Tabs, Descriptions } from 'antd';
+import { Table, Button, Space, Input, Modal, Form, message, Tag, Tabs, Descriptions, Popconfirm } from 'antd';
 import { SearchOutlined, CheckOutlined, CloseOutlined, EyeOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
 
@@ -114,7 +114,9 @@ export default function ApplicationListPage() {
           <Button type="link" icon={<EyeOutlined />} onClick={() => showDetail(record)}>查看</Button>
           {record.status === 'pending' && (
             <>
-              <Button type="link" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }} onClick={() => handleApprove(record)}>通过</Button>
+              <Popconfirm title={`确认通过「${record.shop_name}」的入驻申请？`} onConfirm={() => handleApprove(record)}>
+                <Button type="link" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }}>通过</Button>
+              </Popconfirm>
               <Button type="link" danger icon={<CloseOutlined />} onClick={() => openReject(record)}>驳回</Button>
             </>
           )}

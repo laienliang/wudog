@@ -1,7 +1,9 @@
-import { Provide } from '@midwayjs/decorator';
+import { Provide, Inject } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { FinancialRecord } from '../entity/financial-record.entity';
+import { Order } from '../entity/order.entity';
+import { SystemConfigService } from './system-config.service';
 
 /**
  * 财务记录服务
@@ -11,6 +13,12 @@ import { FinancialRecord } from '../entity/financial-record.entity';
 export class FinancialRecordService {
   @InjectEntityModel(FinancialRecord)
   recordRepo: Repository<FinancialRecord>;
+
+  @InjectEntityModel(Order)
+  orderRepo: Repository<Order>;
+
+  @Inject()
+  systemConfigService: SystemConfigService;
 
   /**
    * 分页查询财务记录列表
@@ -96,5 +104,78 @@ export class FinancialRecordService {
       .andWhere('is_deleted = 0')
       .execute();
     return { affected: result.affected || 0 };
+  }
+
+  /**
+   * 自动生成结算单
+   * 规则（R11-05）：
+   * - 门票/线路（ticket/route）：支付后 T+7 天可结算
+   * - 商品/餐厅/民宿（product/food_order/stay）：支付后 T+15 天可结算
+   * 仅对已完成（completed）且尚未生成财务记录的订单生成
+   */
+  async generateSettlementBills() {
+    const now = new Date();
+
+    // 读取各模块抽佣比例
+    const commissionRates: Record<string, number> = {};
+    for (const key of ['commission_rate_clothing', 'commission_rate_food', 'commission_rate_stay', 'commission_rate_travel']) {
+      const cfg = await this.systemConfigService.findByKey(key);
+      commissionRates[key] = cfg ? Number(cfg.config_value) : 0.1;
+    }
+
+    // 订单类型 -> 结算周期（天）和抽佣配置键
+    const typeConfig: Record<string, { days: number; rateKey: string }> = {
+      product: { days: 15, rateKey: 'commission_rate_clothing' },
+      food_order: { days: 15, rateKey: 'commission_rate_food' },
+      stay: { days: 15, rateKey: 'commission_rate_stay' },
+      ticket: { days: 7, rateKey: 'commission_rate_travel' },
+      route: { days: 7, rateKey: 'commission_rate_travel' },
+    };
+
+    let generated = 0;
+    let skipped = 0;
+
+    for (const [orderType, config] of Object.entries(typeConfig)) {
+      // 计算结算到期时间线
+      const deadline = new Date(now);
+      deadline.setDate(deadline.getDate() - config.days);
+
+      // 查找符合条件的订单：已完成、已支付、支付时间早于结算线
+      const orders = await this.orderRepo.createQueryBuilder('o')
+        .where('o.is_deleted = 0')
+        .andWhere('o.order_type = :type', { type: orderType })
+        .andWhere('o.status = :status', { status: 'completed' })
+        .andWhere('o.pay_time IS NOT NULL')
+        .andWhere('o.pay_time <= :deadline', { deadline })
+        .getMany();
+
+      for (const order of orders) {
+        // 检查是否已有财务记录
+        const existing = await this.recordRepo.createQueryBuilder('r')
+          .where('r.order_id = :orderId', { orderId: order.id })
+          .andWhere('r.is_deleted = 0')
+          .getOne();
+        if (existing) { skipped++; continue; }
+
+        const amount = Number(order.total_amount || 0);
+        const rate = commissionRates[config.rateKey] || 0.1;
+        const commissionAmount = Math.round(amount * rate * 100) / 100;
+        const merchantIncome = Math.round((amount - commissionAmount) * 100) / 100;
+
+        await this.recordRepo.save(this.recordRepo.create({
+          order_id: order.id,
+          order_no: order.order_no,
+          merchant_id: order.merchant_id,
+          order_amount: amount,
+          commission_rate: rate,
+          commission_amount: commissionAmount,
+          merchant_income: merchantIncome,
+          settlement_status: 'pending',
+        }));
+        generated++;
+      }
+    }
+
+    return { generated, skipped };
   }
 }

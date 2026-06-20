@@ -1,7 +1,8 @@
-import { Provide } from '@midwayjs/decorator';
+import { Provide, Inject } from '@midwayjs/decorator';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { MerchantApplication } from '../entity/merchant-application.entity';
+import { SystemMessageService } from './system-message.service';
 
 /**
  * 商家入驻申请服务
@@ -11,6 +12,9 @@ import { MerchantApplication } from '../entity/merchant-application.entity';
 export class MerchantApplicationService {
   @InjectEntityModel(MerchantApplication)
   applicationRepo: Repository<MerchantApplication>;
+
+  @Inject()
+  systemMessageService: SystemMessageService;
 
   /**
    * 分页查询商家入驻申请列表
@@ -125,5 +129,43 @@ export class MerchantApplicationService {
       reject_reason: reason,
     });
     return await this.findById(id);
+  }
+
+  /**
+   * 检查超时未处理的入驻申请
+   * 查询状态为 pending 且创建时间超过3天的申请
+   * 为每条超时申请创建系统消息提醒管理员
+   * @returns 超时申请数量和详情
+   */
+  async checkOverdueApplications() {
+    const threshold = new Date(Date.now() - 3 * 24 * 60 * 60 * 1000);
+    const overdueList = await this.applicationRepo
+      .createQueryBuilder('application')
+      .where('application.is_deleted = 0')
+      .andWhere('application.status = :status', { status: 'pending' })
+      .andWhere('application.created_at < :threshold', { threshold })
+      .getMany();
+
+    // 为每条超时申请创建系统消息（user_id=NULL 表示所有管理员可见）
+    for (const app of overdueList) {
+      await this.systemMessageService.create({
+        user_id: null as any,
+        message_type: 'system',
+        title: '入驻申请超时提醒',
+        content: `商家入驻申请「${app.shop_name}」（申请人：${app.applicant_name}）已超过3个工作日未处理，请尽快审核。`,
+        is_read: 0,
+      });
+    }
+
+    return {
+      overdueCount: overdueList.length,
+      overdueList: overdueList.map(a => ({
+        id: a.id,
+        shopName: a.shop_name,
+        applicantName: a.applicant_name,
+        createdAt: a.created_at,
+        daysOverdue: Math.floor((Date.now() - new Date(a.created_at).getTime()) / (24 * 60 * 60 * 1000)),
+      })),
+    };
   }
 }

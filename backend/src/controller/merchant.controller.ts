@@ -38,6 +38,21 @@ export class MerchantController {
   }
 
   /**
+   * 强制商家下线
+   * POST /api/merchants/force-offline/:id
+   * 清空商家登录时间，使其商家后台登录态失效
+   * @param id - 商家 ID
+   */
+  @Post('/force-offline/:id')
+  async forceOffline(@Param('id') id: number) {
+    const item = await this.merchantService.findById(Number(id));
+    if (!item) return { code: 404, message: '商家不存在', data: null };
+    await this.merchantService.update(Number(id), { last_login_at: null } as any);
+    console.log(`[强制下线] 商家 ID: ${id}, 店铺: ${item.shop_name}, 操作时间: ${new Date().toISOString()}`);
+    return { code: 200, message: `已将「${item.shop_name}」强制下线`, data: null };
+  }
+
+  /**
    * 创建商家
    * POST /api/merchants/create
    * @param body - 商家信息（包含 password 字段会自动加密为 password_hash）

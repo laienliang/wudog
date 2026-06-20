@@ -164,13 +164,11 @@ export default function UserListPage() {
       title: '操作', width: 280, render: (_: any, record: any) => (
         <Space>
           <Button type="link" icon={<EyeOutlined />} onClick={() => openDetail(record)}>查看</Button>
-          <Button
-            type="link"
-            icon={record.status === 1 ? <StopOutlined /> : <CheckCircleOutlined />}
-            onClick={() => handleBan(record)}
-          >
-            {record.status === 1 ? '封禁' : '解封'}
-          </Button>
+          <Popconfirm title={`确认${record.status === 1 ? '封禁' : '解封'}用户「${record.nickname || record.username}」？`} onConfirm={() => handleBan(record)}>
+            <Button type="link" icon={record.status === 1 ? <StopOutlined /> : <CheckCircleOutlined />}>
+              {record.status === 1 ? '封禁' : '解封'}
+            </Button>
+          </Popconfirm>
           <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
           <Popconfirm title="确认删除该用户？" onConfirm={() => handleDelete(record.id)}>
             <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>

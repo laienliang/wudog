@@ -1,5 +1,9 @@
 import { Controller, Post, Get, Inject, Query, Body, Param } from '@midwayjs/decorator';
+import { InjectEntityModel } from '@midwayjs/typeorm';
+import { Repository } from 'typeorm';
 import { FinancialRecordService } from '../service/financial-record.service';
+import { Order } from '../entity/order.entity';
+import { FinancialRecord } from '../entity/financial-record.entity';
 
 /**
  * 财务记录控制器
@@ -9,6 +13,12 @@ import { FinancialRecordService } from '../service/financial-record.service';
 export class FinancialRecordController {
   @Inject()
   financialRecordService: FinancialRecordService;
+
+  @InjectEntityModel(Order)
+  orderRepo: Repository<Order>;
+
+  @InjectEntityModel(FinancialRecord)
+  recordRepo: Repository<FinancialRecord>;
 
   /**
    * 获取财务记录列表（分页）
@@ -68,6 +78,21 @@ export class FinancialRecordController {
   async settleBatch(@Body() body: { ids: number[] }) {
     const result = await this.financialRecordService.settleBatch(body.ids);
     return { code: 200, message: '批量结算成功', data: result };
+  }
+
+  /**
+   * 自动生成结算单
+   * POST /api/financial-records/generate
+   * 根据 R11-05 规则，对已完成的订单按周期生成待结算财务记录
+   */
+  @Post('/generate')
+  async generate() {
+    try {
+      const result = await this.financialRecordService.generateSettlementBills();
+      return { code: 200, message: `成功生成 ${result.generated} 条结算单，跳过 ${result.skipped} 条已有记录`, data: result };
+    } catch (error) {
+      return { code: 500, message: error.message, data: null };
+    }
   }
 
   /**
@@ -143,6 +168,96 @@ export class FinancialRecordController {
         code: 200,
         message: 'success',
         data: Array.from(merchantMap.values()),
+      };
+    } catch (error) {
+      return { code: 500, message: error.message, data: null };
+    }
+  }
+
+  /**
+   * 对账接口
+   * GET /api/financial-records/reconciliation
+   * 对比订单表和财务记录表，找出差异数据
+   */
+  @Get('/reconciliation')
+  async reconciliation() {
+    try {
+      // 平台总体对比：已完成订单总额 vs 财务记录总额
+      const orderTotal = await this.orderRepo.createQueryBuilder('o')
+        .select('COALESCE(SUM(o.total_amount),0)', 'total')
+        .addSelect('COUNT(*)', 'count')
+        .where('o.is_deleted = 0')
+        .andWhere('o.status IN (:...s)', { s: ['completed', 'paid', 'shipped'] })
+        .getRawOne();
+
+      const recordTotal = await this.recordRepo.createQueryBuilder('r')
+        .select('COALESCE(SUM(r.order_amount),0)', 'total')
+        .addSelect('COUNT(*)', 'count')
+        .where('r.is_deleted = 0')
+        .getRawOne();
+
+      // 按商家维度对比：找出有订单但无财务记录的商家
+      const ordersByMerchant = await this.orderRepo.createQueryBuilder('o')
+        .select('o.merchant_id', 'merchantId')
+        .addSelect('COUNT(*)', 'orderCount')
+        .addSelect('COALESCE(SUM(o.total_amount),0)', 'orderAmount')
+        .where('o.is_deleted = 0')
+        .andWhere('o.status IN (:...s)', { s: ['completed'] })
+        .andWhere('o.merchant_id IS NOT NULL')
+        .groupBy('o.merchant_id')
+        .getRawMany();
+
+      const recordsByMerchant = await this.recordRepo.createQueryBuilder('r')
+        .select('r.merchant_id', 'merchantId')
+        .addSelect('COUNT(*)', 'recordCount')
+        .addSelect('COALESCE(SUM(r.order_amount),0)', 'recordAmount')
+        .where('r.is_deleted = 0')
+        .groupBy('r.merchant_id')
+        .getRawMany();
+
+      const recordMap = new Map(recordsByMerchant.map((r: any) => [r.merchantId, r]));
+
+      const merchantDiff = ordersByMerchant.map((o: any) => {
+        const r = recordMap.get(o.merchantId);
+        const recordAmount = r ? Number(r.recordAmount) : 0;
+        const recordCount = r ? Number(r.recordCount) : 0;
+        const orderAmount = Number(o.orderAmount);
+        const diff = Math.round((orderAmount - recordAmount) * 100) / 100;
+        return {
+          merchantId: o.merchantId,
+          orderCount: Number(o.orderCount),
+          orderAmount,
+          recordCount,
+          recordAmount,
+          diff,
+          status: diff === 0 ? 'matched' : (recordCount === 0 ? 'missing_records' : 'amount_mismatch'),
+        };
+      });
+
+      // 找出有订单但完全没有财务记录的订单
+      const missingOrderIds = await this.orderRepo.createQueryBuilder('o')
+        .leftJoin('financial_record', 'r', 'r.order_id = o.id AND r.is_deleted = 0')
+        .where('o.is_deleted = 0')
+        .andWhere('o.status = :s', { s: 'completed' })
+        .andWhere('r.id IS NULL')
+        .select(['o.id', 'o.order_no', 'o.merchant_id', 'o.total_amount', 'o.order_type'])
+        .take(50)
+        .getMany();
+
+      return {
+        code: 200,
+        message: 'success',
+        data: {
+          summary: {
+            orderTotal: Number(orderTotal?.total || 0),
+            orderCount: Number(orderTotal?.count || 0),
+            recordTotal: Number(recordTotal?.total || 0),
+            recordCount: Number(recordTotal?.count || 0),
+            diff: Math.round((Number(orderTotal?.total || 0) - Number(recordTotal?.total || 0)) * 100) / 100,
+          },
+          merchantDiff,
+          missingOrders: missingOrderIds,
+        },
       };
     } catch (error) {
       return { code: 500, message: error.message, data: null };

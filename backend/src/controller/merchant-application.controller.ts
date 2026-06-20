@@ -137,4 +137,16 @@ export class MerchantApplicationController {
       return { code: 401, message: 'token无效', data: null };
     }
   }
+
+  /**
+   * 超时未审核检查
+   * GET /api/merchant-applications/overdue-check
+   * 检查超过3个工作日未处理的申请并生成系统消息提醒
+   * @returns 超时申请数量和详情
+   */
+  @Get('/overdue-check')
+  async overdueCheck() {
+    const result = await this.merchantApplicationService.checkOverdueApplications();
+    return { code: 200, message: 'success', data: result };
+  }
 }

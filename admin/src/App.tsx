@@ -18,10 +18,12 @@ import BannerListPage from './pages/content/BannerList';
 import RecommendationListPage from './pages/content/RecommendationList';
 import OrderListPage from './pages/order/OrderList';
 import RefundApprovalPage from './pages/order/RefundApproval';
+import AbnormalOrderPage from './pages/order/AbnormalOrder';
 import MessageListPage from './pages/message/MessageList';
 import TemplateListPage from './pages/message/TemplateList';
 import SettlementListPage from './pages/finance/SettlementList';
 import FinancialReportPage from './pages/finance/FinancialReport';
+import ReconciliationPage from './pages/finance/Reconciliation';
 import SystemConfigPage from './pages/system/SystemConfig';
 import SensitiveWordPage from './pages/system/SensitiveWordList';
 import OperationLogPage from './pages/system/OperationLog';
@@ -86,10 +88,12 @@ export default function App() {
         <Route path="content/recommendation" element={<RecommendationListPage />} />
         <Route path="order/list" element={<OrderListPage />} />
         <Route path="order/refund" element={<RefundApprovalPage />} />
+        <Route path="order/abnormal" element={<AbnormalOrderPage />} />
         <Route path="message/list" element={<MessageListPage />} />
         <Route path="message/template" element={<TemplateListPage />} />
         <Route path="finance/list" element={<SettlementListPage />} />
         <Route path="finance/report" element={<FinancialReportPage />} />
+        <Route path="finance/reconciliation" element={<ReconciliationPage />} />
         <Route path="system/config" element={<SystemConfigPage />} />
         <Route path="system/sensitive" element={<SensitiveWordPage />} />
         <Route path="system/log" element={<OperationLogPage />} />
