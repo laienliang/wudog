@@ -136,7 +136,7 @@ export default function AdminListPage() {
           <Form.Item name="username" label="用户名" rules={[{ required: true }]}><Input /></Form.Item>
           <Form.Item name="password" label="密码" rules={editing ? [] : [{ required: true }]}><Input.Password placeholder={editing ? '留空不修改' : ''} /></Form.Item>
           <Form.Item name="name" label="姓名" rules={[{ required: true }]}><Input /></Form.Item>
-          <Form.Item name="phone" label="手机号"><Input /></Form.Item>
+          <Form.Item name="phone" label="手机号" rules={[{ required: true, message: '请输入手机号' }, { pattern: /^1\d{10}$/, message: '请输入正确的11位手机号' }]}><Input maxLength={11} /></Form.Item>
           <Form.Item name="role_id" label="角色"><Select options={roles.map(r => ({ label: r.name, value: r.id }))} allowClear placeholder="选择角色" /></Form.Item>
           <Form.Item name="status" label="状态" initialValue={1}><Select options={[{ label: '启用', value: 1 }, { label: '禁用', value: 0 }]} /></Form.Item>
         </Form>

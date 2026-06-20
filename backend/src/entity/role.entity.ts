@@ -20,9 +20,6 @@ export class Role {
   @Column({ type: 'tinyint', default: 1, comment: '状态：1-启用 0-禁用' })
   status: number;
 
-  @Column({ type: 'simple-json', nullable: true, comment: '菜单权限列表（JSON数组）' })
-  permissions: string;
-
   @CreateDateColumn({ type: 'datetime' })
   created_at: Date;
 

@@ -77,6 +77,8 @@ export class ContainerLifeCycle {
       // 白名单路由（不需要认证）
       const whiteList = [
         '/api/auth/login',
+        '/api/auth/verify-sms',
+        '/api/auth/resend-sms',
         '/api/merchant-auth/login',
         '/api/announcements/list',
         '/api/carousels/list',
@@ -84,7 +86,7 @@ export class ContainerLifeCycle {
         '/api/recommendations/list',
         '/api/upload/file',
         '/api/upload/image',
-      '/api/upload/oss-token',
+        '/api/upload/oss-token',
       ];
 
       // 检查是否在白名单中
