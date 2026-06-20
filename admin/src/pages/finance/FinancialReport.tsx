@@ -4,9 +4,10 @@
  * 包含总营收、平台收入、商家收入、待结算金额等关键指标
  */
 import { useEffect, useState } from 'react';
-import { Table, Card, Col, Row, Spin, Tag } from 'antd';
-import { DollarOutlined, ShopOutlined, BankOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import { Table, Card, Col, Row, Spin, Tag, Button } from 'antd';
+import { DollarOutlined, ShopOutlined, BankOutlined, ClockCircleOutlined, DownloadOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
+import { exportToExcel } from '../../utils/export';
 
 /**
  * 财务报表页面组件
@@ -59,7 +60,10 @@ export default function FinancialReportPage() {
 
   return (
     <Spin spinning={loading}>
-      <h2 style={{ marginBottom: 'var(--spacing-md)', fontSize: 'var(--text-h2)', fontFamily: 'var(--font-family-heading)', fontWeight: 'var(--weight-bold)', color: 'var(--color-text-primary)' }}>财务报表</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600 }}>财务报表</h2>
+        <Button icon={<DownloadOutlined />} onClick={() => exportToExcel(merchantData, columns.map((c: any) => ({ title: String(c.title), dataIndex: String(c.dataIndex), render: c.render })), `财务报表_${new Date().toLocaleDateString('zh-CN')}`)} disabled={merchantData.length === 0}>导出报表</Button>
+      </div>
       {/* 财务概览统计卡片 */}
       <Row gutter={16} style={{ marginBottom: 24 }}>
         {summaryCards.map((card) => (

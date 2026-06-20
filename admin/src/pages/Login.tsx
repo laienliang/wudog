@@ -7,7 +7,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Form, Input, Button, message } from 'antd';
-import { UserOutlined, LockOutlined, SafetyCertificateOutlined } from '@ant-design/icons';
+import { UserOutlined, LockOutlined, SafetyCertificateOutlined, MobileOutlined, MessageOutlined } from '@ant-design/icons';
 import request from '../utils/request';
 import Captcha from '../components/Captcha';
 
@@ -95,13 +95,40 @@ function Cloud({ top, size, opacity, duration, delay, reverse }: {
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
   const [captchaCode, setCaptchaCode] = useState('');
+  const [smsCountdown, setSmsCountdown] = useState(0);
+  const [smsLoading, setSmsLoading] = useState(false);
   const navigate = useNavigate();
   const [form] = Form.useForm();
 
-  const onFinish = async (values: { username: string; password: string; captcha: string }) => {
-    // 验证码校验（不区分大小写）
+  /** 发送短信验证码 */
+  const handleSendCode = async () => {
+    try {
+      const phone = form.getFieldValue('phone');
+      if (!phone || !/^1\d{10}$/.test(phone)) {
+        message.error('请输入正确的手机号');
+        return;
+      }
+      setSmsLoading(true);
+      const res: any = await request.post('/auth/send-code', { phone });
+      if (res.code === 200) {
+        message.success('验证码已发送（请查看后端日志）');
+        setSmsCountdown(60);
+        const timer = setInterval(() => {
+          setSmsCountdown(prev => {
+            if (prev <= 1) { clearInterval(timer); return 0; }
+            return prev - 1;
+          });
+        }, 1000);
+      } else {
+        message.error(res.message || '发送失败');
+      }
+    } catch { message.error('发送失败'); } finally { setSmsLoading(false); }
+  };
+
+  const onFinish = async (values: { username: string; password: string; captcha: string; smsCode?: string }) => {
+    // 图形验证码校验（不区分大小写）
     if (values.captcha.toUpperCase() !== captchaCode) {
-      message.error('验证码错误');
+      message.error('图形验证码错误');
       form.setFieldValue('captcha', '');
       return;
     }
@@ -111,6 +138,7 @@ export default function LoginPage() {
       const res: any = await request.post('/auth/login', {
         username: values.username,
         password: values.password,
+        code: values.smsCode || undefined,
       });
       if (res.code === 200) {
         localStorage.setItem('token', res.data.token);
@@ -264,6 +292,43 @@ export default function LoginPage() {
             <Form.Item name="password" rules={[{ required: true, message: '请输入密码' }]} style={{ marginBottom: 18 }}>
               <Input.Password prefix={<LockOutlined style={{ color: 'rgba(255,255,255,0.35)' }} />} placeholder="密码"
                 style={{ height: 46, borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }} />
+            </Form.Item>
+            <Form.Item name="phone" style={{ marginBottom: 18 }}>
+              <Input prefix={<MobileOutlined style={{ color: 'rgba(255,255,255,0.35)' }} />} placeholder="手机号（二次验证）"
+                maxLength={11}
+                style={{ height: 46, borderRadius: 10, background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.12)', color: '#fff' }} />
+            </Form.Item>
+            <Form.Item name="smsCode" style={{ marginBottom: 18 }}>
+              <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>
+                <Input
+                  prefix={<MessageOutlined style={{ color: 'rgba(255,255,255,0.35)' }} />}
+                  placeholder="短信验证码（任意6位数字）"
+                  maxLength={6}
+                  style={{
+                    flex: 1,
+                    height: 46,
+                    borderRadius: 10,
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    color: '#fff',
+                  }}
+                />
+                <Button
+                  onClick={handleSendCode}
+                  loading={smsLoading}
+                  disabled={smsCountdown > 0}
+                  style={{
+                    height: 46,
+                    borderRadius: 10,
+                    minWidth: 120,
+                    background: 'rgba(255,255,255,0.08)',
+                    border: '1px solid rgba(255,255,255,0.12)',
+                    color: 'rgba(255,255,255,0.7)',
+                  }}
+                >
+                  {smsCountdown > 0 ? `${smsCountdown}s` : '获取验证码'}
+                </Button>
+              </div>
             </Form.Item>
             <Form.Item name="captcha" rules={[{ required: true, message: '请输入验证码' }]} style={{ marginBottom: 24 }}>
               <div style={{ display: 'flex', gap: 12, alignItems: 'center' }}>

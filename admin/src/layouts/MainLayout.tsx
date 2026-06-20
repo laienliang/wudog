@@ -77,6 +77,7 @@ const menuItems = [
     children: [
       { key: '/order/list', label: '全局订单' },
       { key: '/order/refund', label: '退款审批' },
+      { key: '/order/abnormal', label: '异常订单' },
     ],
   },
   {
@@ -95,6 +96,7 @@ const menuItems = [
     children: [
       { key: '/finance/list', label: '结算列表' },
       { key: '/finance/report', label: '财务报表' },
+      { key: '/finance/reconciliation', label: '对账管理' },
     ],
   },
   {

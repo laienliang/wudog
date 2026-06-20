@@ -5,8 +5,9 @@
  */
 import { useEffect, useState } from 'react';
 import { Table, Button, Space, Input, Select, message, Popconfirm, Tag } from 'antd';
-import { SearchOutlined, CheckOutlined, ThunderboltOutlined } from '@ant-design/icons';
+import { SearchOutlined, CheckOutlined, ThunderboltOutlined, DownloadOutlined } from '@ant-design/icons';
 import request from '../../utils/request';
+import { exportToExcel } from '../../utils/export';
 
 /**
  * 结算列表页面组件
@@ -66,6 +67,13 @@ export default function SettlementListPage() {
     else message.error(res.message);
   };
 
+  /** 自动生成结算单 */
+  const handleGenerate = async () => {
+    const res: any = await request.post('/financial-records/generate');
+    if (res.code === 200) { message.success(res.message); loadData(); }
+    else message.error(res.message || '生成失败');
+  };
+
   /** 表格列配置 */
   const columns = [
     { title: 'ID', dataIndex: 'id', width: 80 },
@@ -95,7 +103,20 @@ export default function SettlementListPage() {
 
   return (
     <div>
-      <h2 style={{ marginBottom: 'var(--spacing-md)', fontSize: 'var(--text-h2)', fontFamily: 'var(--font-family-heading)', fontWeight: 'var(--weight-bold)', color: 'var(--color-text-primary)' }}>财务结算</h2>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
+        <h2 style={{ margin: 0, fontSize: 20, fontWeight: 600 }}>财务结算</h2>
+        <Button icon={<DownloadOutlined />} onClick={() => exportToExcel(data, [
+          { title: 'ID', dataIndex: 'id' },
+          { title: '订单号', dataIndex: 'order_no' },
+          { title: '商家ID', dataIndex: 'merchant_id' },
+          { title: '订单金额', dataIndex: 'order_amount', render: (v: number) => Number(v || 0).toFixed(2) },
+          { title: '佣金比例', dataIndex: 'commission_rate', render: (v: number) => `${(v * 100).toFixed(1)}%` },
+          { title: '佣金金额', dataIndex: 'commission_amount', render: (v: number) => Number(v || 0).toFixed(2) },
+          { title: '商家收入', dataIndex: 'merchant_income', render: (v: number) => Number(v || 0).toFixed(2) },
+          { title: '结算状态', dataIndex: 'settlement_status', render: (v: string) => v === 'settled' ? '已结算' : '待结算' },
+          { title: '结算时间', dataIndex: 'settled_at' },
+        ], `结算数据_${new Date().toLocaleDateString('zh-CN')}`)} disabled={data.length === 0}>导出</Button>
+      </div>
       {/* 筛选和批量操作区域 */}
       <Space style={{ marginBottom: 16 }} wrap>
         <Select placeholder="结算状态" allowClear style={{ width: 140 }}
@@ -103,10 +124,15 @@ export default function SettlementListPage() {
           onChange={(val) => onFilter({ ...filters, settlement_status: val })} />
         <Input placeholder="商家ID" style={{ width: 140 }}
           onChange={(e) => onFilter({ ...filters, merchant_id: e.target.value || undefined })} />
-        <Button type="primary" icon={<ThunderboltOutlined />} onClick={handleBatchSettle}
-          disabled={selectedRowKeys.length === 0}>
-          批量结算 ({selectedRowKeys.length})
-        </Button>
+        <Popconfirm title={`确认批量结算 ${selectedRowKeys.length} 条记录？`} onConfirm={handleBatchSettle} disabled={selectedRowKeys.length === 0}>
+          <Button type="primary" icon={<ThunderboltOutlined />}
+            disabled={selectedRowKeys.length === 0}>
+            批量结算 ({selectedRowKeys.length})
+          </Button>
+        </Popconfirm>
+        <Popconfirm title="确认生成结算单？将根据T+7/T+15规则为已完成订单生成待结算记录" onConfirm={handleGenerate}>
+          <Button icon={<CheckOutlined />}>生成结算单</Button>
+        </Popconfirm>
       </Space>
       {/* 结算记录列表表格，支持行选择 */}
       <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
