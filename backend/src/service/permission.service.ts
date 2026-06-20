@@ -49,10 +49,20 @@ export class PermissionService {
 
   /**
    * 根据角色 ID 查找关联的权限列表
+   * 超级管理员（name='超级管理员' 且 type='system'）默认拥有全部权限
    * @param roleId 角色 ID
    * @returns 权限实体数组
    */
   async findByRoleId(roleId: number) {
+    // 超级管理员直接返回全部权限
+    const role = await this.rolePermissionRepo.manager.getRepository('role').findOne({ where: { id: roleId } });
+    if (role && role.name === '超级管理员' && role.type === 'system') {
+      return await this.permissionRepo.find({
+        where: { is_deleted: 0 },
+        order: { sort_order: 'ASC', id: 'ASC' },
+      });
+    }
+
     const rolePermissions = await this.rolePermissionRepo.find({ where: { role_id: roleId } });
     if (rolePermissions.length === 0) {
       return [];
