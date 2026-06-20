@@ -123,6 +123,19 @@ export class ContainerLifeCycle {
               return;
             }
 
+            // 检查是否被强制下线：token 签发时间早于强制下线时间则拒绝
+            try {
+              const redisService = await ctx.requestContext.getAsync('redisService');
+              const offlineTime = await redisService.get(`merchant:offline:${payload.id}`);
+              if (offlineTime && payload.iat * 1000 < Number(offlineTime)) {
+                ctx.status = 401;
+                ctx.body = { code: 401, message: '账号已被强制下线，请重新登录', data: null };
+                return;
+              }
+            } catch {
+              // Redis 异常不影响正常业务
+            }
+
             // 将商家信息挂载到 ctx.state
             ctx.state.merchant = {
               id: merchant.id,

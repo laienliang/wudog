@@ -66,9 +66,11 @@ function transformDates(obj: any): any {
  */
 request.interceptors.response.use(
   (response) => {
-    const { data } = response;
-    if (data.code === 401) {
-      message.error('登录已过期，请重新登录');
+    const { data, config } = response;
+    // 登录接口的 401 是密码错误，不跳转登录页
+    const isLoginApi = config.url?.includes('/login');
+    if (data.code === 401 && !isLoginApi) {
+      message.error(data.message || '登录已过期，请重新登录');
       const isMerchant = window.location.pathname.startsWith('/merchant-portal');
       if (isMerchant) {
         localStorage.removeItem('merchant_token');
@@ -85,7 +87,28 @@ request.interceptors.response.use(
     return transformDates(data);
   },
   (error) => {
-    message.error(error.message || '网络错误');
+    if (error.response) {
+      const { status, data } = error.response;
+      if (status === 401) {
+        const msg = data?.message || '登录已过期，请重新登录';
+        const isMerchant = window.location.pathname.startsWith('/merchant-portal');
+        message.error(msg, 2, () => {
+          if (isMerchant) {
+            localStorage.removeItem('merchant_token');
+            localStorage.removeItem('merchant');
+            window.location.href = '/merchant-portal/login';
+          } else {
+            localStorage.removeItem('token');
+            localStorage.removeItem('admin');
+            window.location.href = '/login';
+          }
+        });
+        return Promise.reject(error);
+      }
+      message.error(data?.message || `请求失败 (${status})`);
+    } else {
+      message.error(error.message || '网络错误');
+    }
     return Promise.reject(error);
   }
 );

@@ -69,10 +69,12 @@ export class AuthController {
       };
       if (failCount >= 5) {
         updates.locked_until = new Date(Date.now() + 30 * 60 * 1000); // 锁定30分钟
+        await this.adminService.update(admin.id, updates);
         console.log(`[安全] 管理员 ${admin.username} 连续${failCount}次密码错误，已锁定30分钟`);
+        return { code: 423, message: '密码错误次数过多，账号已锁定 30 分钟', data: null };
       }
       await this.adminService.update(admin.id, updates);
-      return { code: 401, message: '用户名或密码错误', data: null };
+      return { code: 401, message: `用户名或密码错误，剩余 ${5 - failCount} 次机会`, data: null };
     }
 
     // 密码正确 → 清除锁定状态
