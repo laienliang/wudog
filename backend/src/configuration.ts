@@ -40,20 +40,9 @@ export class ContainerLifeCycle {
       prefix: '/uploads',
     }));
 
-    // 配置 multer 文件上传
-    const storage = multer.diskStorage({
-      destination: (req: any, file: any, cb: any) => {
-        cb(null, uploadsDir);
-      },
-      filename: (req: any, file: any, cb: any) => {
-        const ext = file.originalname.split('.').pop();
-        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 8)}.${ext}`;
-        cb(null, fileName);
-      },
-    });
-
+    // 配置 multer 文件上传（memoryStorage 避免磁盘 I/O，上传文件直接存在内存中）
     const upload = multer({
-      storage,
+      storage: multer.memoryStorage(),
       limits: { fileSize: 5 * 1024 * 1024 },
       fileFilter: (req: any, file: any, cb: any) => {
         const allowedTypes = ['image/jpeg', 'image/png', 'image/gif', 'image/webp', 'image/svg+xml'];
@@ -94,7 +83,8 @@ export class ContainerLifeCycle {
         '/api/activity-banners/list',
         '/api/recommendations/list',
         '/api/upload/file',
-        '/api/upload/oss-token',
+        '/api/upload/image',
+      '/api/upload/oss-token',
       ];
 
       // 检查是否在白名单中
