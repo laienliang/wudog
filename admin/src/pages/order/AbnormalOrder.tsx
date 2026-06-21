@@ -73,8 +73,8 @@ export default function AbnormalOrderPage() {
     }},
     { title: '创建时间', dataIndex: 'created_at', width: 170, render: (v: string) => v ? new Date(v).toLocaleString('zh-CN') : '-' },
     {
-      title: '操作', width: 120, render: (_: any, record: any) => (
-        <Button type="link" danger icon={<CloseCircleOutlined />} onClick={() => handleClose(record.id)}>
+      title: '操作', width: 120, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Button type="link" size="small" danger icon={<CloseCircleOutlined />} onClick={() => handleClose(record.id)}>
           关闭订单
         </Button>
       ),
@@ -93,7 +93,7 @@ export default function AbnormalOrderPage() {
     { title: '拒绝原因', dataIndex: 'refund_reject_reason', ellipsis: true, render: (v: string) => v || '-' },
     { title: '更新时间', dataIndex: 'updated_at', width: 170, render: (v: string) => v ? new Date(v).toLocaleString('zh-CN') : '-' },
     {
-      title: '操作', width: 100, render: () => <Tag color="orange">需人工跟进</Tag>,
+      title: '操作', width: 120, fixed: 'right' as const, render: () => <Tag color="orange">需人工跟进</Tag>,
     },
   ];
 
@@ -128,6 +128,7 @@ export default function AbnormalOrderPage() {
                   dataSource={unpaidOrders}
                   loading={loading}
                   size="small"
+                  scroll={{ x: 'max-content' }}
                   pagination={{ pageSize: 10, showTotal: t => `共 ${t} 条` }}
                 />
               ),
@@ -142,6 +143,7 @@ export default function AbnormalOrderPage() {
                   dataSource={refundDisputes}
                   loading={loading}
                   size="small"
+                  scroll={{ x: 'max-content' }}
                   pagination={{ pageSize: 10, showTotal: t => `共 ${t} 条` }}
                 />
               ),

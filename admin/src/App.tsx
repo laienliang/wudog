@@ -37,22 +37,46 @@ import AccountSettings from './pages/merchant-portal/AccountSettings';
 import MerchantMessages from './pages/merchant-portal/MerchantMessages';
 
 /**
+ * 解析 JWT token 并检查是否过期
+ * @returns token 有效且未过期返回 true，否则返回 false
+ */
+function isTokenValid(token: string): boolean {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    if (payload.exp && payload.exp * 1000 < Date.now()) {
+      return false;
+    }
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * 管理后台路由守卫
- * 检查 localStorage 中的 admin token
+ * 检查 localStorage 中的 admin token 是否存在且未过期
  */
 function AdminProtectedRoute({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('token');
-  if (!token) return <Navigate to="/login" replace />;
+  if (!token || !isTokenValid(token)) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('admin');
+    return <Navigate to="/login" replace />;
+  }
   return <>{children}</>;
 }
 
 /**
  * 商家后台路由守卫
- * 检查 localStorage 中的 merchant token
+ * 检查 localStorage 中的 merchant token 是否存在且未过期
  */
 function MerchantProtectedRoute({ children }: { children: React.ReactNode }) {
   const token = localStorage.getItem('merchant_token');
-  if (!token) return <Navigate to="/merchant-portal/login" replace />;
+  if (!token || !isTokenValid(token)) {
+    localStorage.removeItem('merchant_token');
+    localStorage.removeItem('merchant');
+    return <Navigate to="/merchant-portal/login" replace />;
+  }
   return <>{children}</>;
 }
 

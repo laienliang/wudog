@@ -3,8 +3,8 @@
  * 支持本地上传和 OSS 直传两种方式，提供上传进度、文件类型和大小校验
  */
 import { useState, useEffect, useRef } from 'react';
-import { Upload, message, Modal } from 'antd';
-import { PlusOutlined, LoadingOutlined, EyeOutlined } from '@ant-design/icons';
+import { Upload, message, Image } from 'antd';
+import { PlusOutlined, LoadingOutlined } from '@ant-design/icons';
 import type { UploadFile, UploadProps } from 'antd';
 import request from '../utils/request';
 
@@ -219,9 +219,7 @@ export default function ImageUpload({
     return true;
   };
 
-  /**
-   * 点击预览图片 — 弹窗展示，不跳转下载
-   */
+  /** 点击预览图片 — 使用 antd Image 内置预览（深色遮罩 + 工具栏） */
   const handlePreview = async (file: UploadFile) => {
     const url = file.url || file.response?.data?.url || getFullUrl(value || '');
     if (url) {
@@ -254,22 +252,18 @@ export default function ImageUpload({
           </div>
         )}
       </Upload>
-      <Modal
-        open={previewOpen}
-        footer={null}
-        onCancel={() => setPreviewOpen(false)}
-        centered
-        width={640}
-        styles={{ body: { textAlign: 'center', padding: 0 } }}
-      >
-        {previewUrl && (
-          <img
-            alt="预览"
-            src={previewUrl}
-            style={{ maxWidth: '100%', maxHeight: '70vh', display: 'block' }}
-          />
-        )}
-      </Modal>
+      {/* 使用 antd Image 内置预览（深色遮罩 + 缩放/旋转工具栏） */}
+      {previewUrl && (
+        <Image
+          style={{ display: 'none' }}
+          src={previewUrl}
+          preview={{
+            visible: previewOpen,
+            onVisibleChange: (visible) => setPreviewOpen(visible),
+            src: previewUrl,
+          }}
+        />
+      )}
     </>
   );
 }

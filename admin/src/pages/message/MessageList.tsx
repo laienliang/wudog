@@ -125,14 +125,14 @@ export default function MessageListPage() {
     },
     { title: '创建时间', dataIndex: 'created_at', width: 180 },
     {
-      title: '操作', width: 220, render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>查看</Button>
+      title: '操作', width: 240, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => handleViewDetail(record)}>查看</Button>
           {record.is_read !== 1 && (
-            <Button type="link" icon={<CheckOutlined />} onClick={() => handleMarkRead(record.id)}>标为已读</Button>
+            <Button type="link" size="small" icon={<CheckOutlined />} onClick={() => handleMarkRead(record.id)}>标为已读</Button>
           )}
           <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+            <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
         </Space>
       ),
@@ -153,7 +153,7 @@ export default function MessageListPage() {
         <Button type="primary" icon={<PlusOutlined />} onClick={() => { sendForm.resetFields(); setSendOpen(true); }}>发送消息</Button>
       </Space>
       {/* 消息列表表格 */}
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
 
       {/* 消息详情弹窗 */}

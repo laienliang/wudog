@@ -2,6 +2,9 @@
  * 数据看板控制器
  * 提供平台运营数据统计接口，包含多维度统计数据
  * 统计维度：时间维度（今日/本周/本月）、模块维度、商家维度、财务维度
+ *
+ * 注意：所有时间比较使用 MySQL 函数（CURDATE/DATE_SUB）而非 JS Date，
+ * 避免 Node.js 与 MySQL 之间的时区偏差
  */
 import { Controller, Get, Inject } from '@midwayjs/decorator';
 import { Context } from '@midwayjs/koa';
@@ -52,7 +55,6 @@ export class DashboardController {
   /**
    * 获取平台总览数据
    * GET /api/dashboard/overview
-   * 返回多维度统计数据：用户、订单、商家、财务、趋势
    */
   @Get('/overview')
   async overview() {
@@ -93,21 +95,17 @@ export class DashboardController {
 
   /**
    * 获取用户统计（今日/本周/本月 DAU、新增用户、总数）
+   * 使用 MySQL CURDATE()/DATE_SUB() 避免时区问题
    */
   private async getUserStats() {
-    const now = new Date();
-    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
-    const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - 7); weekStart.setHours(0, 0, 0, 0);
-    const monthStart = new Date(now); monthStart.setDate(1); monthStart.setHours(0, 0, 0, 0);
-
     const [total, todayActive, weekActive, monthActive, todayNew, weekNew, monthNew] = await Promise.all([
       this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.last_login_at >= :d', { d: todayStart }).getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.last_login_at >= :d', { d: weekStart }).getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.last_login_at >= :d', { d: monthStart }).getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.created_at >= :d', { d: todayStart }).getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.created_at >= :d', { d: weekStart }).getCount(),
-      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.created_at >= :d', { d: monthStart }).getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('DATE(u.last_login_at) = CURDATE()').getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.last_login_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)').getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.last_login_at >= DATE_FORMAT(CURDATE(), "%Y-%m-01")').getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('DATE(u.created_at) = CURDATE()').getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)').getCount(),
+      this.userRepo.createQueryBuilder('u').where('u.is_deleted = 0').andWhere('u.created_at >= DATE_FORMAT(CURDATE(), "%Y-%m-01")').getCount(),
     ]);
 
     return { total, todayActive, weekActive, monthActive, todayNew, weekNew, monthNew };
@@ -117,21 +115,16 @@ export class DashboardController {
    * 获取订单统计（今日/本周/本月 订单数和 GMV、总数）
    */
   private async getOrderStats() {
-    const now = new Date();
-    const todayStart = new Date(now); todayStart.setHours(0, 0, 0, 0);
-    const weekStart = new Date(now); weekStart.setDate(weekStart.getDate() - 7); weekStart.setHours(0, 0, 0, 0);
-    const monthStart = new Date(now); monthStart.setDate(1); monthStart.setHours(0, 0, 0, 0);
-
     const baseQb = () => this.orderRepo.createQueryBuilder('o').where('o.is_deleted = 0');
 
     const [total, todayCount, weekCount, monthCount, todayGMV, weekGMV, monthGMV] = await Promise.all([
       baseQb().getCount(),
-      baseQb().andWhere('o.created_at >= :d', { d: todayStart }).getCount(),
-      baseQb().andWhere('o.created_at >= :d', { d: weekStart }).getCount(),
-      baseQb().andWhere('o.created_at >= :d', { d: monthStart }).getCount(),
-      baseQb().andWhere('o.created_at >= :d', { d: todayStart }).select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
-      baseQb().andWhere('o.created_at >= :d', { d: weekStart }).select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
-      baseQb().andWhere('o.created_at >= :d', { d: monthStart }).select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
+      baseQb().andWhere('DATE(o.created_at) = CURDATE()').getCount(),
+      baseQb().andWhere('o.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)').getCount(),
+      baseQb().andWhere('o.created_at >= DATE_FORMAT(CURDATE(), "%Y-%m-01")').getCount(),
+      baseQb().andWhere('DATE(o.created_at) = CURDATE()').select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
+      baseQb().andWhere('o.created_at >= DATE_SUB(CURDATE(), INTERVAL 7 DAY)').select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
+      baseQb().andWhere('o.created_at >= DATE_FORMAT(CURDATE(), "%Y-%m-01")').select('COALESCE(SUM(o.total_amount),0)', 'sum').getRawOne(),
     ]);
 
     return {
@@ -148,7 +141,6 @@ export class DashboardController {
    */
   private async getMerchantStats() {
     const total = await this.merchantRepo.createQueryBuilder('m').where('m.is_deleted = 0').getCount();
-    // 活跃商家：有已完成订单的商家
     const activeResult = await this.orderRepo.createQueryBuilder('o')
       .select('COUNT(DISTINCT o.merchant_id)', 'count')
       .where('o.is_deleted = 0')
@@ -187,6 +179,7 @@ export class DashboardController {
 
   /**
    * 获取近7天订单趋势（按日期分组）
+   * 使用 MySQL DATE() 函数比较，避免时区偏差
    */
   private async getOrderTrend() {
     const days: string[] = [];
@@ -196,16 +189,14 @@ export class DashboardController {
     for (let i = 6; i >= 0; i--) {
       const d = new Date(now);
       d.setDate(d.getDate() - i);
-      d.setHours(0, 0, 0, 0);
-      const next = new Date(d);
-      next.setDate(next.getDate() + 1);
       const label = `${d.getMonth() + 1}/${d.getDate()}`;
       days.push(label);
 
+      // 用 DATE() 函数提取日期部分比较
+      const dateStr = `${d.getFullYear()}-${String(d.getMonth() + 1).padStart(2, '0')}-${String(d.getDate()).padStart(2, '0')}`;
       const count = await this.orderRepo.createQueryBuilder('o')
         .where('o.is_deleted = 0')
-        .andWhere('o.created_at >= :start', { start: d })
-        .andWhere('o.created_at < :end', { end: next })
+        .andWhere('DATE(o.created_at) = :date', { date: dateStr })
         .getCount();
       counts.push(count);
     }
@@ -257,7 +248,6 @@ export class DashboardController {
       .limit(5)
       .getRawMany();
 
-    // 补充商家名称
     const merchantIds = results.map(r => r.merchantId).filter(Boolean);
     let merchantMap: Record<number, string> = {};
     if (merchantIds.length > 0) {
@@ -301,16 +291,12 @@ export class DashboardController {
    * 获取超时未审核的申请数量（超过3天）
    */
   private async getOverdueApplications() {
-    const threeDaysAgo = new Date();
-    threeDaysAgo.setDate(threeDaysAgo.getDate() - 3);
-
     const count = await this.applicationRepo.createQueryBuilder('a')
       .where('a.is_deleted = 0')
       .andWhere('a.status = :s', { s: 'pending' })
-      .andWhere('a.created_at < :d', { d: threeDaysAgo })
+      .andWhere('a.created_at < DATE_SUB(CURDATE(), INTERVAL 3 DAY)')
       .getCount();
 
     return { count };
   }
 }
-

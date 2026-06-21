@@ -67,16 +67,15 @@ export default function SettlementListPage() {
     else message.error(res.message);
   };
 
-  /** 自动生成结算单 */
+  /** 自动生成结算单 — 扫描所有已完成且尚无财务记录的订单，创建待结算记录 */
   const handleGenerate = async () => {
-    const res: any = await request.post('/financial-records/generate');
-    if (res.code === 200) { message.success(res.message); loadData(); }
+    const res: any = await request.post('/financial-records/generate', {});
+    if (res.code === 200) { message.success(res.message); setSelectedRowKeys([]); loadData(); }
     else message.error(res.message || '生成失败');
   };
 
   /** 表格列配置 */
   const columns = [
-    { title: 'ID', dataIndex: 'id', width: 80 },
     { title: '订单号', dataIndex: 'order_no', width: 180 },
     { title: '商家ID', dataIndex: 'merchant_id', width: 100 },
     { title: '订单金额', dataIndex: 'order_amount', render: (v: number) => `¥${Number(v || 0).toFixed(2)}` },
@@ -89,14 +88,14 @@ export default function SettlementListPage() {
     },
     { title: '结算时间', dataIndex: 'settled_at', width: 180 },
     {
-      title: '操作', width: 120, render: (_: any, record: any) => (
-        <Space>
+      title: '操作', width: 100, fixed: 'right' as const, render: (_: any, record: any) => (
+        <>
           {record.settlement_status !== 'settled' && (
             <Popconfirm title="确认结算？" onConfirm={() => handleSettle(record.id)}>
-              <Button type="link" icon={<CheckOutlined />}>结算</Button>
+              <Button type="link" size="small" icon={<CheckOutlined />}>结算</Button>
             </Popconfirm>
           )}
-        </Space>
+        </>
       ),
     },
   ];
@@ -130,12 +129,12 @@ export default function SettlementListPage() {
             批量结算 ({selectedRowKeys.length})
           </Button>
         </Popconfirm>
-        <Popconfirm title="确认生成结算单？将根据T+7/T+15规则为已完成订单生成待结算记录" onConfirm={handleGenerate}>
+        <Popconfirm title="将为所有已完成且尚无结算记录的订单生成待结算记录，确认？" onConfirm={handleGenerate}>
           <Button icon={<CheckOutlined />}>生成结算单</Button>
         </Popconfirm>
       </Space>
       {/* 结算记录列表表格，支持行选择 */}
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
     </div>

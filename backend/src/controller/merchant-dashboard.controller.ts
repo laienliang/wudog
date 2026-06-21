@@ -53,16 +53,12 @@ export class MerchantDashboardController {
     }
 
     try {
-      // 今日开始时间
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-
-      // 今日订单数
+      // 今日订单数（用 MySQL CURDATE() 避免时区偏差）
       const todayOrders = await this.orderRepo
         .createQueryBuilder('o')
         .where('o.merchant_id = :merchantId', { merchantId })
         .andWhere('o.is_deleted = 0')
-        .andWhere('o.created_at >= :today', { today })
+        .andWhere('DATE(o.created_at) = CURDATE()')
         .getCount();
 
       // 待发货数（已支付）

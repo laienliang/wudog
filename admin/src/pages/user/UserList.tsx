@@ -161,17 +161,17 @@ export default function UserListPage() {
     },
     { title: '最后登录', dataIndex: 'last_login_at' },
     {
-      title: '操作', width: 280, render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EyeOutlined />} onClick={() => openDetail(record)}>查看</Button>
+      title: '操作', width: 280, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => openDetail(record)}>查看</Button>
           <Popconfirm title={`确认${record.status === 1 ? '封禁' : '解封'}用户「${record.nickname || record.username}」？`} onConfirm={() => handleBan(record)}>
-            <Button type="link" icon={record.status === 1 ? <StopOutlined /> : <CheckCircleOutlined />}>
+            <Button type="link" size="small" icon={record.status === 1 ? <StopOutlined /> : <CheckCircleOutlined />}>
               {record.status === 1 ? '封禁' : '解封'}
             </Button>
           </Popconfirm>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
+          <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
           <Popconfirm title="确认删除该用户？" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+            <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
         </Space>
       ),
@@ -210,6 +210,7 @@ export default function UserListPage() {
         columns={columns}
         dataSource={data}
         loading={loading}
+        scroll={{ x: 'max-content' }}
         pagination={{
           current: page, pageSize, total, showSizeChanger: true,
           showTotal: t => `共 ${t} 条`,

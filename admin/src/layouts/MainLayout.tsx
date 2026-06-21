@@ -157,12 +157,14 @@ export default function MainLayout() {
         return true;
       })
       .map((item: any) => {
+        // 剥离自定义属性 permissionCode，避免 antd Menu 将其透传到 DOM 触发 React 警告
+        const { permissionCode, ...rest } = item;
         if (item.children) {
           const filteredChildren = filterByPermissions(item.children);
           if (filteredChildren.length === 0 && !item.key.startsWith('/')) return null;
-          return { ...item, children: filteredChildren };
+          return { ...rest, children: filteredChildren };
         }
-        return item;
+        return rest;
       })
       .filter(Boolean);
   };
@@ -189,86 +191,97 @@ export default function MainLayout() {
     .filter((item: any) => item.children?.some((c: any) => c.key === location.pathname))
     .map((item) => item.key);
 
+  /** 侧边栏宽度（折叠/展开） */
+  const siderWidth = collapsed ? 80 : 220;
+
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ height: '100vh', overflow: 'hidden' }}>
       <Sider
         trigger={null}
         collapsible
         collapsed={collapsed}
         width={220}
+        collapsedWidth={80}
         style={{
           background: 'var(--color-sider-bg)',
           boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
-          position: 'relative',
+          position: 'fixed',
+          left: 0,
+          top: 0,
+          bottom: 0,
           overflow: 'hidden',
+          zIndex: 10,
         }}
       >
-        {/* Logo 区域 */}
-        <div style={{
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-          gap: collapsed ? 0 : 10,
-          color: '#FFFFFF',
-          fontSize: collapsed ? 16 : 18,
-          fontWeight: 'var(--weight-bold)',
-          fontFamily: 'var(--font-family-heading)',
-          whiteSpace: 'nowrap',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-          letterSpacing: '0.5px',
-          padding: '0 16px',
-        }}>
-          <img
-            src="/logo.png"
-            alt="乌东文旅"
-            style={{
-              width: collapsed ? 32 : 36,
-              height: collapsed ? 32 : 36,
-              objectFit: 'contain',
-              transition: 'all 0.2s',
-            }}
-          />
-          {!collapsed && <span>乌东文旅管理后台</span>}
+        {/* 内部 flex 容器，确保装饰带始终固定在侧边栏最底部 */}
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          {/* Logo 区域 */}
+          <div style={{
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: collapsed ? 0 : 10,
+            color: '#FFFFFF',
+            fontSize: collapsed ? 16 : 18,
+            fontWeight: 'var(--weight-bold)',
+            fontFamily: 'var(--font-family-heading)',
+            whiteSpace: 'nowrap',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            letterSpacing: '0.5px',
+            padding: '0 16px',
+            flexShrink: 0,
+          }}>
+            <img
+              src="/logo.png"
+              alt="乌东文旅"
+              style={{
+                width: collapsed ? 32 : 36,
+                height: collapsed ? 32 : 36,
+                objectFit: 'contain',
+                transition: 'all 0.2s',
+              }}
+            />
+            {!collapsed && <span>乌东文旅管理后台</span>}
+          </div>
+
+          {/* 导航菜单 - 可滚动区域 */}
+          <div style={{ flex: 1, overflow: 'auto' }}>
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              defaultOpenKeys={openKeys}
+              items={menuItems}
+              onClick={({ key }) => navigate(key)}
+              style={{
+                borderRight: 0,
+                background: 'transparent',
+              }}
+            />
+          </div>
+
+          {/* 底部苗族蜡染装饰带 - 固定在侧边栏最底部 */}
+          <div style={{
+            flexShrink: 0,
+            height: 6,
+            background: `repeating-linear-gradient(
+              90deg,
+              var(--color-primary) 0px,
+              var(--color-primary) 12px,
+              transparent 12px,
+              transparent 16px,
+              var(--color-embroidery) 16px,
+              var(--color-embroidery) 20px,
+              transparent 20px,
+              transparent 24px
+            )`,
+            opacity: 0.7,
+          }} />
         </div>
-
-        {/* 导航菜单 */}
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          defaultOpenKeys={openKeys}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{
-            borderRight: 0,
-            background: 'transparent',
-          }}
-        />
-
-        {/* 底部苗族蜡染装饰带 */}
-        <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
-          height: 6,
-          background: `repeating-linear-gradient(
-            90deg,
-            var(--color-primary) 0px,
-            var(--color-primary) 12px,
-            transparent 12px,
-            transparent 16px,
-            var(--color-embroidery) 16px,
-            var(--color-embroidery) 20px,
-            transparent 20px,
-            transparent 24px
-          )`,
-          opacity: 0.7,
-        }} />
       </Sider>
 
-      <Layout>
+      <Layout style={{ marginLeft: siderWidth, transition: 'margin-left 0.2s', display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* 顶部栏 */}
         <Header style={{
           background: 'var(--color-bg-card)',
@@ -279,6 +292,8 @@ export default function MainLayout() {
           boxShadow: 'var(--shadow-light)',
           borderBottom: '1px solid var(--color-border-light)',
           height: 64,
+          lineHeight: '64px',
+          flexShrink: 0,
         }}>
           <Button
             type="text"
@@ -300,16 +315,21 @@ export default function MainLayout() {
           </Dropdown>
         </Header>
 
-        {/* 内容区域 */}
+        {/* 内容区域 - 可滚动 */}
         <Content style={{
-          margin: 'var(--spacing-lg)',
+          flex: 1,
+          overflow: 'auto',
           padding: 'var(--spacing-lg)',
-          background: 'var(--color-bg-card)',
-          borderRadius: 'var(--radius-lg)',
-          minHeight: 280,
-          boxShadow: 'var(--shadow-light)',
         }}>
-          <Outlet />
+          <div style={{
+            background: 'var(--color-bg-card)',
+            borderRadius: 'var(--radius-lg)',
+            padding: 'var(--spacing-lg)',
+            minHeight: 280,
+            boxShadow: 'var(--shadow-light)',
+          }}>
+            <Outlet />
+          </div>
         </Content>
       </Layout>
     </Layout>

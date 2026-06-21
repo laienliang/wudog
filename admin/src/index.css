@@ -119,6 +119,33 @@ button,
   border-color: var(--color-primary) !important;
 }
 
+/* 非激活页码数字颜色更鲜艳 */
+.ant-pagination-item a {
+  color: var(--color-text-primary) !important;
+  font-weight: var(--weight-medium);
+}
+
+.ant-pagination-item:hover a {
+  color: var(--color-primary) !important;
+}
+
+/* 上/下一页箭头颜色 */
+.ant-pagination-prev .ant-pagination-item-link,
+.ant-pagination-next .ant-pagination-item-link {
+  color: var(--color-text-secondary) !important;
+}
+
+.ant-pagination-prev:hover .ant-pagination-item-link,
+.ant-pagination-next:hover .ant-pagination-item-link {
+  color: var(--color-primary) !important;
+  border-color: var(--color-primary) !important;
+}
+
+/* 禁用态 */
+.ant-pagination-disabled .ant-pagination-item-link {
+  color: var(--color-text-disabled) !important;
+}
+
 /* ── 选中文字颜色 ── */
 ::selection {
   background: var(--color-primary-light);

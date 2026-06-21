@@ -135,10 +135,8 @@ export default function OrderListPage() {
     { title: '支付时间', dataIndex: 'pay_time' },
     { title: '创建时间', dataIndex: 'created_at' },
     {
-      title: '操作', width: 100, render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EyeOutlined />} onClick={() => openDetail(record)}>详情</Button>
-        </Space>
+      title: '操作', width: 100, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => openDetail(record)}>详情</Button>
       ),
     },
   ];
@@ -180,6 +178,7 @@ export default function OrderListPage() {
         columns={columns}
         dataSource={data}
         loading={loading}
+        scroll={{ x: 'max-content' }}
         pagination={{
           current: page, pageSize, total, showSizeChanger: true,
           showTotal: t => `共 ${t} 条`,
