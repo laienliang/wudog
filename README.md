@@ -355,146 +355,472 @@ wudong-group6/
 
 ### 四、后端接口
 
-每个实体提供 5 个标准接口：列表（分页）、详情、新增、更新、软删除。
+共 22 个 Controller，107 个 HTTP 接口。每个实体提供标准 CRUD 接口：列表（分页）、详情、新增、更新、删除。
 
-#### 认证接口
-- `POST /api/auth/login` — 管理员登录
-- `GET /api/auth/info` — 获取当前管理员信息
-- `POST /api/merchant-auth/login` — 商家登录
+#### 认证接口（AuthController）
 
-#### 管理员管理
-- `GET /api/admin/list` — 管理员列表
-- `POST /api/admin/create` — 新增管理员
-- `PUT /api/admin/update/:id` — 更新管理员
-- `DELETE /api/admin/delete/:id` — 删除管理员
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/auth/login` | 管理员登录（验证账号密码，发送短信验证码） |
+| POST | `/api/auth/resend-sms` | 重新发送短信验证码 |
+| POST | `/api/auth/verify-sms` | 短信验证码校验（完成登录，返回 JWT） |
+| GET | `/api/auth/info` | 获取当前登录管理员信息 |
+| GET | `/api/auth/permissions` | 获取当前登录管理员的权限列表 |
 
-#### 角色管理
-- `GET /api/roles/list` — 角色列表
-- `POST /api/roles/create` — 新增角色
-- `PUT /api/roles/update/:id` — 更新角色
-- `DELETE /api/roles/delete/:id` — 删除角色
+#### 管理员管理（AdminController）
 
-#### 用户管理
-- `GET /api/users/list` — 用户列表
-- `PUT /api/users/update/:id` — 更新用户
-- `POST /api/users/ban/:id` — 封禁用户
-- `POST /api/users/unban/:id` — 解封用户
-- `DELETE /api/users/delete/:id` — 删除用户
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/admin/list` | 管理员列表（分页） |
+| GET | `/api/admin/detail/:id` | 管理员详情 |
+| POST | `/api/admin/create` | 创建管理员 |
+| PUT | `/api/admin/update/:id` | 更新管理员 |
+| DELETE | `/api/admin/delete/:id` | 删除管理员 |
 
-#### 商家管理
-- `GET /api/merchants/list` — 商家列表
-- `GET /api/merchants/detail/:id` — 商家详情
-- `POST /api/merchants/create` — 新增商家
-- `PUT /api/merchants/update/:id` — 更新商家
-- `DELETE /api/merchants/delete/:id` — 删除商家
+#### 角色管理（RoleController）
 
-#### 入驻审核
-- `GET /api/merchant-applications/list` — 申请列表
-- `POST /api/merchant-applications/approve/:id` — 审核通过
-- `POST /api/merchant-applications/reject/:id` — 审核驳回
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/roles/list` | 角色列表（分页） |
+| GET | `/api/roles/detail/:id` | 角色详情 |
+| POST | `/api/roles/create` | 创建角色 |
+| PUT | `/api/roles/update/:id` | 更新角色 |
+| DELETE | `/api/roles/delete/:id` | 删除角色 |
+| GET | `/api/roles/:id/permissions` | 获取角色的权限列表 |
+| PUT | `/api/roles/:id/permissions` | 设置角色的权限 |
 
-#### 内容管理
-- `GET /api/announcements/list` — 公告列表
-- `POST /api/announcements/create` — 新增公告
-- `PUT /api/announcements/update/:id` — 更新公告
-- `DELETE /api/announcements/delete/:id` — 删除公告
+#### 权限管理（PermissionController）
 
-- `GET /api/carousels/list` — 轮播图列表
-- `POST /api/carousels/create` — 新增轮播图
-- `PUT /api/carousels/update/:id` — 更新轮播图
-- `DELETE /api/carousels/delete/:id` — 删除轮播图
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/permissions/list` | 权限列表（分页） |
+| GET | `/api/permissions/tree` | 权限树形结构 |
+| GET | `/api/permissions/detail/:id` | 权限详情 |
+| POST | `/api/permissions/create` | 创建权限 |
+| PUT | `/api/permissions/update/:id` | 更新权限 |
+| DELETE | `/api/permissions/delete/:id` | 删除权限 |
+| GET | `/api/permissions/role/:roleId` | 获取指定角色的权限列表 |
+| POST | `/api/permissions/role/:roleId` | 设置角色权限 |
 
-- `GET /api/activity-banners/list` — 活动横幅列表
-- `POST /api/activity-banners/create` — 新增横幅
-- `PUT /api/activity-banners/update/:id` — 更新横幅
-- `DELETE /api/activity-banners/delete/:id` — 删除横幅
+#### 用户管理（UserController）
 
-- `GET /api/recommendations/list` — 推荐位列表
-- `POST /api/recommendations/create` — 新增推荐
-- `PUT /api/recommendations/update/:id` — 更新推荐
-- `DELETE /api/recommendations/delete/:id` — 删除推荐
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/users/list` | 用户列表（分页） |
+| GET | `/api/users/detail/:id` | 用户详情 |
+| POST | `/api/users/create` | 创建用户 |
+| PUT | `/api/users/update/:id` | 更新用户 |
+| DELETE | `/api/users/delete/:id` | 删除用户 |
+| POST | `/api/users/ban/:id` | 封禁用户 |
+| POST | `/api/users/unban/:id` | 解封用户 |
 
-#### 订单管理
-- `GET /api/orders/list` — 订单列表
-- `POST /api/orders/refund-approve/:id` — 退款审批通过
-- `POST /api/orders/refund-reject/:id` — 退款审批驳回
+#### 商家管理（MerchantController）
 
-#### 消息管理
-- `GET /api/system-messages/list` — 系统消息列表
-- `GET /api/system-messages/read/:id` — 标记已读
-- `DELETE /api/system-messages/delete/:id` — 删除消息
-- `POST /api/system-messages/send` — 发送消息
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/merchants/list` | 商家列表（分页） |
+| GET | `/api/merchants/detail/:id` | 商家详情 |
+| POST | `/api/merchants/create` | 创建商家 |
+| PUT | `/api/merchants/update/:id` | 更新商家 |
+| DELETE | `/api/merchants/delete/:id` | 删除商家 |
+| POST | `/api/merchants/force-offline/:id` | 强制商家下线（Redis 使 token 失效） |
 
-- `GET /api/message-templates/list` — 消息模板列表
-- `POST /api/message-templates/create` — 新增模板
-- `PUT /api/message-templates/update/:id` — 更新模板
-- `DELETE /api/message-templates/delete/:id` — 删除模板
+#### 入驻审核（MerchantApplicationController）
 
-#### 财务管理
-- `GET /api/financial-records/list` — 结算列表
-- `POST /api/financial-records/settle/:id` — 单条结算
-- `POST /api/financial-records/batch-settle` — 批量结算
-- `GET /api/financial-records/summary` — 财务汇总
-- `GET /api/financial-records/merchant-summary` — 商家收入汇总
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/merchant-applications/list` | 申请列表（分页） |
+| GET | `/api/merchant-applications/detail/:id` | 申请详情 |
+| POST | `/api/merchant-applications/create` | 提交入驻申请 |
+| PUT | `/api/merchant-applications/update/:id` | 更新入驻申请 |
+| DELETE | `/api/merchant-applications/delete/:id` | 删除入驻申请 |
+| POST | `/api/merchant-applications/approve/:id` | 审核通过（自动创建商家账号） |
+| POST | `/api/merchant-applications/reject/:id` | 审核驳回 |
+| GET | `/api/merchant-applications/overdue-check` | 超时未审核检查（超过 3 个工作日） |
 
-#### 系统管理
-- `GET /api/system-configs/list` — 系统配置列表
-- `PUT /api/system-configs/update/:key` — 更新配置
+#### 公告管理（AnnouncementController）
 
-- `GET /api/sensitive-words/list` — 敏感词列表
-- `POST /api/sensitive-words/create` — 新增敏感词
-- `PUT /api/sensitive-words/update/:id` — 更新敏感词
-- `DELETE /api/sensitive-words/delete/:id` — 删除敏感词
-- `POST /api/sensitive-words/batch-import` — 批量导入敏感词
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/announcements/list` | 公告列表（分页） |
+| GET | `/api/announcements/detail/:id` | 公告详情 |
+| POST | `/api/announcements/create` | 创建公告 |
+| PUT | `/api/announcements/update/:id` | 更新公告 |
+| DELETE | `/api/announcements/delete/:id` | 删除公告 |
 
-- `GET /api/operation-logs/list` — 操作日志列表
+#### 轮播图管理（CarouselController）
 
-#### 商家后台
-- `GET /api/merchant-dashboard/stats` — 商家统计数据
-- `GET /api/merchant-dashboard/messages` — 商家消息列表
-- `GET /api/merchant-dashboard/messages/read/:id` — 标记消息已读
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/carousels/list` | 轮播图列表（分页） |
+| GET | `/api/carousels/detail/:id` | 轮播图详情 |
+| POST | `/api/carousels/create` | 创建轮播图 |
+| PUT | `/api/carousels/update/:id` | 更新轮播图 |
+| DELETE | `/api/carousels/delete/:id` | 删除轮播图 |
 
-#### 文件上传
-- `POST /api/upload/image` — 图片上传
+#### 活动横幅管理（ActivityBannerController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/activity-banners/list` | 横幅列表（分页） |
+| GET | `/api/activity-banners/detail/:id` | 横幅详情 |
+| POST | `/api/activity-banners/create` | 创建横幅 |
+| PUT | `/api/activity-banners/update/:id` | 更新横幅 |
+| DELETE | `/api/activity-banners/delete/:id` | 删除横幅 |
+
+#### 推荐位管理（RecommendationController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/recommendations/list` | 推荐列表（分页） |
+| GET | `/api/recommendations/detail/:id` | 推荐详情 |
+| POST | `/api/recommendations/create` | 创建推荐 |
+| PUT | `/api/recommendations/update/:id` | 更新推荐 |
+| DELETE | `/api/recommendations/delete/:id` | 删除推荐 |
+
+#### 订单管理（OrderController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/orders/list` | 订单列表（分页，支持类型/状态/关键词筛选） |
+| GET | `/api/orders/detail/:id` | 订单详情 |
+| POST | `/api/orders/create` | 创建订单（自动发送新订单通知给商家） |
+| PUT | `/api/orders/update/:id` | 更新订单（支付完成时发送收款通知） |
+| POST | `/api/orders/refund-approve/:id` | 退款审批通过 |
+| POST | `/api/orders/refund-reject/:id` | 退款审批驳回 |
+| GET | `/api/orders/abnormal` | 查询异常订单（长时间未支付 + 退款争议） |
+| POST | `/api/orders/close/:id` | 手动关闭未支付订单 |
+
+#### 系统消息（SystemMessageController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/system-messages/list` | 消息列表（分页） |
+| GET | `/api/system-messages/detail/:id` | 消息详情 |
+| POST | `/api/system-messages/create` | 创建系统消息 |
+| POST | `/api/system-messages/batch-send` | 批量发送系统消息 |
+| PUT | `/api/system-messages/read/:id` | 标记消息为已读 |
+| DELETE | `/api/system-messages/delete/:id` | 删除消息 |
+
+#### 消息模板（MessageTemplateController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/message-templates/list` | 模板列表（分页） |
+| GET | `/api/message-templates/detail/:id` | 模板详情 |
+| POST | `/api/message-templates/create` | 创建模板 |
+| PUT | `/api/message-templates/update/:id` | 更新模板 |
+| DELETE | `/api/message-templates/delete/:id` | 删除模板 |
+
+#### 财务管理（FinancialRecordController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/financial-records/list` | 结算列表（分页） |
+| GET | `/api/financial-records/detail/:id` | 结算详情 |
+| POST | `/api/financial-records/settle/:id` | 单笔结算 |
+| POST | `/api/financial-records/settle-batch` | 批量结算 |
+| POST | `/api/financial-records/generate` | 自动生成结算单 |
+| GET | `/api/financial-records/summary` | 财务汇总（总营收/平台收入/商家收入/待结算） |
+| GET | `/api/financial-records/merchant-summary` | 商家收入汇总（按商家分组） |
+| GET | `/api/financial-records/reconciliation` | 对账接口（对比订单表和财务记录表） |
+
+#### 系统配置（SystemConfigController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/system-configs/list` | 配置列表 |
+| GET | `/api/system-configs/detail/:key` | 根据 key 获取配置详情 |
+| PUT | `/api/system-configs/update/:key` | 根据 key 更新配置 |
+| POST | `/api/system-configs/create` | 创建配置 |
+
+#### 敏感词管理（SensitiveWordController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/sensitive-words/list` | 敏感词列表（分页） |
+| GET | `/api/sensitive-words/detail/:id` | 敏感词详情 |
+| POST | `/api/sensitive-words/create` | 创建敏感词 |
+| PUT | `/api/sensitive-words/update/:id` | 更新敏感词 |
+| DELETE | `/api/sensitive-words/delete/:id` | 删除敏感词 |
+| POST | `/api/sensitive-words/batch-import` | 批量导入敏感词 |
+
+#### 操作日志（OperationLogController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/operation-logs/list` | 日志列表（分页，支持操作人/类型/关键词筛选） |
+| GET | `/api/operation-logs/detail/:id` | 日志详情 |
+
+#### 数据看板（DashboardController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/dashboard/overview` | 平台总览数据（用户/订单/商家/财务统计、趋势、TOP 商家、超时申请） |
+
+#### 商家后台（MerchantDashboardController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| GET | `/api/merchant-dashboard/stats` | 商家统计数据（今日订单/待发货/待退款/总营业额） |
+| GET | `/api/merchant-dashboard/messages` | 商家消息列表（分页） |
+| GET | `/api/merchant-dashboard/messages/read/:id` | 标记消息已读 |
+| GET | `/api/merchant-dashboard/statistics` | 商家详细统计（支持时间范围，含销售/订单趋势、状态/类型分布） |
+
+#### 商家认证（MerchantAuthController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/merchant-auth/login` | 商家登录（含密码错误锁定、异地登录检测） |
+| GET | `/api/merchant-auth/info` | 获取当前登录商家信息 |
+| PUT | `/api/merchant-auth/profile` | 更新商家资料（店铺名/联系人/地址/简介/Logo/密码） |
+| POST | `/api/merchant-auth/send-sms-code` | 发送手机验证码（演示模式） |
+| PUT | `/api/merchant-auth/bind-phone` | 绑定手机号（演示模式） |
+
+#### 文件上传（UploadController）
+
+| 方法 | 路径 | 说明 |
+|------|------|------|
+| POST | `/api/upload/image` | 上传单张图片（支持本地存储和 OSS） |
+| POST | `/api/upload/images` | 批量上传图片 |
+| GET | `/api/upload/file/:filename` | 获取本地上传的文件（返回文件流） |
+| POST | `/api/upload/oss-token` | 获取 OSS 上传签名（前端直传） |
+| POST | `/api/upload/delete` | 删除 OSS 文件 |
+| POST | `/api/upload/moderation-callback` | OSS 内容审核回调（审核不通过自动删除） |
 
 ---
 
-## 运行说明
+## 部署说明
 
-### 1. 数据库初始化
+### 一、环境要求
 
+| 依赖 | 版本要求 | 说明 |
+|------|----------|------|
+| Node.js | >= 18.0.0 | 推荐 LTS 版本 |
+| npm | >= 8.0.0 | 随 Node.js 安装 |
+| MySQL | >= 5.7 | 推荐 8.0+ |
+| Redis | >= 6.0 | 用于 Token 黑名单、权限缓存、商家下线管理 |
+
+### 二、依赖服务
+
+#### 1. MySQL 数据库
+
+本项目使用 MySQL 作为主数据库，通过 TypeORM 进行 ORM 操作。
+
+**数据库配置：**
+- 默认数据库名：`wudong_admin`
+- 默认端口：`3306`
+- 字符集：建议使用 `utf8mb4`
+
+**初始化步骤：**
 ```bash
-# 执行建表语句
-mysql -u root -p < backend/sql/init.sql
+# 1. 创建数据库
+mysql -u root -p -e "CREATE DATABASE IF NOT EXISTS wudong_admin DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;"
+
+# 2. 执行建表语句
+mysql -u root -p wudong_admin < backend/sql/init.sql
 ```
 
-### 2. 启动后端
+#### 2. 阿里云 OSS（文件存储）
+
+项目使用阿里云 OSS 进行图片等静态资源存储。如不需要文件上传功能，可跳过此配置。
+
+**配置步骤：**
+1. 登录 [阿里云控制台](https://oss.console.aliyun.com/)，创建 Bucket
+2. 获取 AccessKey ID 和 AccessKey Secret
+3. 在 `backend/.env` 中填入对应配置
+
+#### 3. Redis
+
+项目使用 Redis 进行 Token 黑名单管理、RBAC 权限缓存和商家强制下线功能。
+
+**配置步骤：**
+1. 安装并启动 Redis 服务（默认端口 6379）
+2. 在 `backend/.env` 中配置 Redis 连接信息
+
+> 注：Redis 服务具有容错设计，连接异常时会降级为直接查询数据库，不影响核心业务功能。
+
+### 三、环境变量配置
+
+在 `backend/` 目录下创建 `.env` 文件，可参考 `.env.example` 模板：
 
 ```bash
 cd backend
-npm install
-npm run dev
-# 后端运行在 http://localhost:3000
+cp .env.example .env
 ```
 
-### 3. 启动管理后台
+**环境变量说明：**
+
+| 变量名 | 必填 | 默认值 | 说明 |
+|--------|------|--------|------|
+| **服务配置** | | | |
+| `PORT` | 否 | `3000` | 后端服务监听端口 |
+| `NODE_ENV` | 否 | `local` | 运行环境：`local` / `development` / `production` |
+| **数据库配置** | | | |
+| `DB_HOST` | 否 | `localhost` | MySQL 主机地址 |
+| `DB_PORT` | 否 | `3306` | MySQL 端口 |
+| `DB_USER` | 否 | `root` | MySQL 用户名 |
+| `DB_PASSWORD` | 否 | `123456` | MySQL 密码 |
+| `DB_DATABASE` | 否 | `wudong_admin` | 数据库名称 |
+| **JWT 配置** | | | |
+| `JWT_SECRET` | 否 | `wudong-admin-jwt-secret-2026` | JWT 签名密钥，生产环境务必修改 |
+| **Redis 配置** | | | |
+| `REDIS_HOST` | 否 | `127.0.0.1` | Redis 主机地址 |
+| `REDIS_PORT` | 否 | `6379` | Redis 端口 |
+| `REDIS_PASSWORD` | 否 | - | Redis 密码（无密码留空） |
+| `REDIS_DB` | 否 | `0` | Redis 数据库编号（0-15） |
+| **阿里云 OSS 配置** | | | |
+| `OSS_ACCESS_KEY_ID` | 是* | - | 阿里云 AccessKey ID |
+| `OSS_ACCESS_KEY_SECRET` | 是* | - | 阿里云 AccessKey Secret |
+| `OSS_BUCKET` | 否 | `wudong-travel` | OSS Bucket 名称 |
+| `OSS_REGION` | 否 | `oss-cn-guiyang` | OSS 区域（如 `oss-cn-guiyang`、`oss-cn-hangzhou`） |
+| `OSS_ENDPOINT` | 否 | - | OSS Endpoint，优先于 region（如 `oss-cn-guiyang.aliyuncs.com`） |
+| `OSS_DIR` | 否 | `uploads/` | 上传目录前缀 |
+| `OSS_CNAME` | 否 | - | 自定义域名（可选） |
+| `OSS_SECURE` | 否 | `true` | 是否使用 HTTPS |
+
+> *注：仅在需要文件上传功能时必填。
+
+**完整 `.env` 示例：**
+
+```env
+# 服务配置
+PORT=3000
+NODE_ENV=local
+
+# 数据库配置
+DB_HOST=localhost
+DB_PORT=3306
+DB_USER=root
+DB_PASSWORD=your_password_here
+DB_DATABASE=wudong_admin
+
+# JWT 密钥（生产环境请修改为强随机字符串）
+JWT_SECRET=your-jwt-secret-here
+
+# Redis 配置
+REDIS_HOST=127.0.0.1
+REDIS_PORT=6379
+REDIS_PASSWORD=
+REDIS_DB=0
+
+# 阿里云 OSS 配置（可选）
+OSS_ACCESS_KEY_ID=your_access_key_id
+OSS_ACCESS_KEY_SECRET=your_access_key_secret
+OSS_BUCKET=wudong-travel
+OSS_REGION=oss-cn-guiyang
+OSS_DIR=uploads/
+OSS_SECURE=true
+```
+
+### 四、启动命令
+
+#### 方式一：本地开发（推荐）
+
+**1. 安装依赖**
 
 ```bash
-cd admin
+# 安装后端依赖
+cd backend
 npm install
-npm run dev
-# 管理后台运行在 http://localhost:5174
+
+# 安装前端依赖（新终端）
+cd ../admin
+npm install
 ```
 
-### 4. 登录
+**2. 初始化数据库**
 
-**管理后台：**
-- 默认管理员账号：`admin`
-- 默认密码：`admin123`
+```bash
+mysql -u root -p < backend/sql/init.sql
+```
 
-**商家后台：**
-- 访问地址：`http://localhost:5174/merchant-portal/login`
-- 商家账号需通过管理员创建或商家入驻申请
+**3. 配置环境变量**
+
+```bash
+cd backend
+cp .env.example .env
+# 编辑 .env 文件，填入数据库密码等配置
+```
+
+**4. 启动服务**
+
+```bash
+# 终端1：启动后端（端口 3000）
+cd backend
+npm run dev
+
+# 终端2：启动前端（端口 5174）
+cd admin
+npm run dev
+```
+
+**5. 访问系统**
+
+| 后台 | 地址 | 说明 |
+|------|------|------|
+| 管理后台 | http://localhost:5174 | 默认账号 `admin` / `admin123` |
+| 商家后台 | http://localhost:5174/merchant-portal/login | 商家账号需管理员创建 |
+| 后端 API | http://localhost:3000/api | RESTful 接口 |
+
+#### 方式二：生产部署
+
+**1. 构建项目**
+
+```bash
+# 构建后端
+cd backend
+npm run build
+
+# 构建前端
+cd ../admin
+npm run build
+```
+
+**2. 启动生产服务**
+
+```bash
+# 启动后端（生产模式）
+cd backend
+npm start
+
+# 前端静态文件位于 admin/dist/，使用 Nginx 或其他 Web 服务器托管
+```
+
+**3. Nginx 配置示例**
+
+```nginx
+server {
+    listen 80;
+    server_name your-domain.com;
+
+    # 前端静态文件
+    location / {
+        root /path/to/admin/dist;
+        try_files $uri $uri/ /index.html;
+    }
+
+    # 后端 API 代理
+    location /api {
+        proxy_pass http://localhost:3000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+    }
+
+    # 上传文件代理
+    location /uploads {
+        proxy_pass http://localhost:3000;
+    }
+}
+```
+
+#### 方式三：运行测试
+
+```bash
+cd backend
+npm test              # 运行测试
+npm run test:coverage # 运行测试并生成覆盖率报告
+```
 
 ---
 

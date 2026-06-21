@@ -1,11 +1,17 @@
 import { Controller, Post, Put, Inject, Body, Get, Headers } from '@midwayjs/decorator';
+import { ApiOperation, ApiBody, ApiTags, ApiResponse, ApiBearerAuth } from '@midwayjs/swagger';
 import { MerchantService } from '../service/merchant.service';
+import { SystemMessageService } from '../service/system-message.service';
+import { IpLocationService } from '../service/ip-location.service';
 import { JwtService } from '@midwayjs/jwt';
+import { Context } from '@midwayjs/koa';
 
 /**
  * 商家认证控制器
  * 处理商家登录认证相关的 API 请求，包括登录和获取商家信息
  */
+@ApiTags('MerchantAuth')
+@ApiBearerAuth()
 @Controller('/api/merchant-auth')
 export class MerchantAuthController {
   @Inject()
@@ -14,6 +20,15 @@ export class MerchantAuthController {
   @Inject()
   jwtService: JwtService;
 
+  @Inject()
+  systemMessageService: SystemMessageService;
+
+  @Inject()
+  ipLocationService: IpLocationService;
+
+  @Inject()
+  ctx: Context;
+
   /**
    * 商家登录
    * POST /api/merchant-auth/login
@@ -21,6 +36,33 @@ export class MerchantAuthController {
    * @returns 登录成功返回 JWT token 和商家基本信息
    */
   @Post('/login')
+  @ApiOperation({ summary: '商家登录' })
+  @ApiBody({
+    schema: {
+      properties: {
+        username: { type: 'string', description: '商家用户名', example: 'merchant01' },
+        password: { type: 'string', description: '登录密码', example: 'shop123456' },
+      },
+      example: {
+        username: 'merchant01',
+        password: 'shop123456',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '登录成功',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: {
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxxxx',
+          merchant: { id: 1, username: 'merchant01', shop_name: '苗乡酸汤鱼', module_type: '餐饮美食', phone: '13800138001', contact_phone: '13800138001' },
+        },
+      },
+    },
+  })
   async login(@Body() body: { username: string; password: string }) {
     const bcrypt = require('bcryptjs');
     const merchant = await this.merchantService.findByUsername(body.username);
@@ -65,8 +107,34 @@ export class MerchantAuthController {
       username: merchant.username,
       role: 'merchant'
     });
+
+    // 获取客户端 IP
+    const forwarded = this.ctx.headers['x-forwarded-for'];
+    const clientIp = (Array.isArray(forwarded) ? forwarded[0] : forwarded?.split(',')[0]?.trim())
+      || (Array.isArray(this.ctx.headers['x-real-ip']) ? this.ctx.headers['x-real-ip'][0] : this.ctx.headers['x-real-ip'])
+      || this.ctx.ip
+      || '127.0.0.1';
+
+    // 查询登录地点
+    const location = await this.ipLocationService.getLocation(clientIp);
+
+    // 异地登录检测：上次有记录且地点不同 → 发送系统消息提醒
+    if (merchant.last_login_location && location && merchant.last_login_location !== location) {
+      console.log(`[安全] 商家 ${merchant.username} 异地登录: ${merchant.last_login_location} → ${location} (IP: ${clientIp})`);
+
+      await this.systemMessageService.create({
+        user_id: null as any, // 管理员可见
+        message_type: 'system',
+        title: '商家异地登录提醒',
+        content: `商家「${merchant.shop_name}」（${merchant.username}）于 ${new Date().toLocaleString('zh-CN')} 在 ${location}（IP: ${clientIp}）登录，上次登录地点为 ${merchant.last_login_location}。请关注账号安全。`,
+        is_read: 0,
+      });
+    }
+
     await this.merchantService.update(merchant.id, {
       last_login_at: new Date(),
+      last_login_ip: clientIp,
+      last_login_location: location || merchant.last_login_location || '',
       login_fail_count: 0,
       locked_until: null,
     });
@@ -75,7 +143,7 @@ export class MerchantAuthController {
       message: 'success',
       data: {
         token,
-        merchant: { id: merchant.id, username: merchant.username, shop_name: merchant.shop_name, module_type: merchant.module_type }
+        merchant: { id: merchant.id, username: merchant.username, shop_name: merchant.shop_name, module_type: merchant.module_type, phone: merchant.phone, contact_phone: merchant.contact_phone }
       }
     };
   }
@@ -87,6 +155,32 @@ export class MerchantAuthController {
    * @returns 当前登录商家的完整信息（含店铺详情）
    */
   @Get('/info')
+  @ApiOperation({ summary: '获取当前登录商家信息' })
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: {
+          id: 1,
+          username: 'merchant01',
+          shop_name: '苗乡酸汤鱼',
+          module_type: '餐饮美食',
+          contact_name: '张老板',
+          contact_phone: '13800138001',
+          phone: '13800138001',
+          logo: 'https://example.com/logo.png',
+          description: '正宗苗家酸汤鱼，传承百年工艺',
+          address: '贵州省黔东南州雷山县西江千户苗寨',
+          status: 1,
+          joined_at: '2025-01-15T08:00:00.000Z',
+          last_login_at: '2026-06-21T10:30:00.000Z',
+        },
+      },
+    },
+  })
   async info(@Headers('authorization') auth: string) {
     try {
       const token = auth?.replace('Bearer ', '');
@@ -103,6 +197,7 @@ export class MerchantAuthController {
           module_type: merchant.module_type,
           contact_name: merchant.contact_name,
           contact_phone: merchant.contact_phone,
+          phone: merchant.phone,
           logo: merchant.logo,
           description: merchant.description,
           address: merchant.address,
@@ -125,6 +220,49 @@ export class MerchantAuthController {
    * @returns 更新后的商家信息
    */
   @Put('/profile')
+  @ApiOperation({ summary: '更新当前登录商家资料' })
+  @ApiBody({
+    schema: {
+      properties: {
+        shop_name: { type: 'string', description: '店铺名称', example: '苗乡酸汤鱼·旗舰店' },
+        contact_name: { type: 'string', description: '联系人姓名', example: '张老板' },
+        contact_phone: { type: 'string', description: '联系电话', example: '13800138001' },
+        address: { type: 'string', description: '店铺地址', example: '贵州省黔东南州雷山县西江千户苗寨古街A12号' },
+        description: { type: 'string', description: '店铺简介', example: '正宗苗家酸汤鱼，传承百年工艺，选用本地新鲜河鱼' },
+        logo: { type: 'string', description: '店铺Logo URL', example: 'https://example.com/logo.png' },
+        password: { type: 'string', description: '新密码（不修改则不传）', example: 'newpassword123' },
+      },
+      example: {
+        shop_name: '苗乡酸汤鱼·旗舰店',
+        contact_name: '张老板',
+        contact_phone: '13800138001',
+        address: '贵州省黔东南州雷山县西江千户苗寨古街A12号',
+        description: '正宗苗家酸汤鱼，传承百年工艺，选用本地新鲜河鱼',
+        logo: 'https://example.com/logo.png',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '更新成功',
+    schema: {
+      example: {
+        code: 200,
+        message: '更新成功',
+        data: {
+          id: 1,
+          username: 'merchant01',
+          shop_name: '苗乡酸汤鱼·旗舰店',
+          module_type: '餐饮美食',
+          contact_name: '张老板',
+          contact_phone: '13800138001',
+          logo: 'https://example.com/logo.png',
+          description: '正宗苗家酸汤鱼，传承百年工艺，选用本地新鲜河鱼',
+          address: '贵州省黔东南州雷山县西江千户苗寨古街A12号',
+        },
+      },
+    },
+  })
   async updateProfile(@Headers('authorization') auth: string, @Body() body: any) {
     try {
       const token = auth?.replace('Bearer ', '');
@@ -164,6 +302,116 @@ export class MerchantAuthController {
           description: item.description,
           address: item.address,
         }
+      };
+    } catch {
+      return { code: 401, message: 'token无效', data: null };
+    }
+  }
+
+  /**
+   * 发送手机验证码（演示模式）
+   * POST /api/merchant-auth/send-sms-code
+   * 演示模式：只需输入任意6位数字即可通过验证
+   */
+  @Post('/send-sms-code')
+  @ApiOperation({ summary: '发送手机验证码（演示模式）' })
+  @ApiBody({
+    schema: {
+      properties: {
+        phone: { type: 'string', description: '手机号码', example: '13800138001' },
+      },
+      example: {
+        phone: '13800138001',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '发送成功',
+    schema: {
+      example: {
+        code: 200,
+        message: '验证码已发送（演示模式：输入任意6位数字即可）',
+        data: null,
+      },
+    },
+  })
+  async sendSmsCode(@Body() body: { phone: string }) {
+    try {
+      // 验证手机号格式
+      if (!body.phone || !/^1[3-9]\d{9}$/.test(body.phone)) {
+        return { code: 400, message: '请输入正确的手机号', data: null };
+      }
+
+      // 演示模式：模拟发送成功，实际不会发送短信
+      console.log(`[演示模式] 验证码请求：${body.phone}，输入任意6位数字即可`);
+
+      return {
+        code: 200,
+        message: '验证码已发送（演示模式：输入任意6位数字即可）',
+        data: null,
+      };
+    } catch (err) {
+      return { code: 500, message: '发送验证码失败', data: null };
+    }
+  }
+
+  /**
+   * 绑定手机号（演示模式）
+   * PUT /api/merchant-auth/bind-phone
+   * 演示模式：输入任意6位数字即可通过验证
+   */
+  @Put('/bind-phone')
+  @ApiOperation({ summary: '绑定手机号（演示模式）' })
+  @ApiBody({
+    schema: {
+      properties: {
+        phone: { type: 'string', description: '要绑定的手机号码', example: '13900139001' },
+        code: { type: 'string', description: '6位数字验证码（演示模式输入任意6位数字）', example: '123456' },
+      },
+      example: {
+        phone: '13900139001',
+        code: '123456',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '绑定成功',
+    schema: {
+      example: {
+        code: 200,
+        message: '手机号绑定成功',
+        data: null,
+      },
+    },
+  })
+  async bindPhone(
+    @Headers('authorization') auth: string,
+    @Body() body: { phone: string; code: string }
+  ) {
+    try {
+      const token = auth?.replace('Bearer ', '');
+      const payload: any = await this.jwtService.verify(token);
+      if (payload.role !== 'merchant') return { code: 403, message: '无权限', data: null };
+
+      // 验证手机号格式
+      if (!body.phone || !/^1[3-9]\d{9}$/.test(body.phone)) {
+        return { code: 400, message: '请输入正确的手机号', data: null };
+      }
+
+      // 演示模式：任意6位数字即可通过
+      if (!body.code || body.code.length !== 6 || !/^\d{6}$/.test(body.code)) {
+        return { code: 400, message: '请输入6位数字验证码', data: null };
+      }
+
+      // 验证通过，更新手机号
+      await this.merchantService.update(payload.id, { phone: body.phone });
+
+      return {
+        code: 200,
+        message: '手机号绑定成功',
+        data: null,
       };
     } catch {
       return { code: 401, message: 'token无效', data: null };
