@@ -1,4 +1,5 @@
 import { Controller, Post, Inject, Body, Get, Headers } from '@midwayjs/decorator';
+import { ApiOperation, ApiBody, ApiTags, ApiResponse, ApiBearerAuth } from '@midwayjs/swagger';
 import { AdminService } from '../service/admin.service';
 import { PermissionService } from '../service/permission.service';
 import { SystemMessageService } from '../service/system-message.service';
@@ -27,6 +28,8 @@ setInterval(() => {
  * 1. POST /api/auth/login       → 验证用户名+密码 → 发送短信 → 返回 masked 手机号 + smsToken
  * 2. POST /api/auth/verify-sms  → 验证短信验证码 → 返回 JWT token
  */
+@ApiTags('Auth')
+@ApiBearerAuth()
 @Controller('/api/auth')
 export class AuthController {
   @Inject()
@@ -55,6 +58,30 @@ export class AuthController {
    *          密码错误时返回 401
    */
   @Post('/login')
+  @ApiOperation({ summary: '管理员登录（第一步：验证账号密码）' })
+  @ApiBody({
+    schema: {
+      properties: {
+        username: { type: 'string', description: '用户名', example: 'admin' },
+        password: { type: 'string', description: '密码', example: 'admin123' },
+      },
+      example: {
+        username: 'admin',
+        password: 'admin123',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '验证通过，短信验证码已发送',
+    schema: {
+      example: {
+        code: 200,
+        message: '验证码已发送',
+        data: { needSms: true, phoneMask: '138****1234', smsToken: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' },
+      },
+    },
+  })
   async login(@Body() body: { username: string; password: string }) {
     const bcrypt = require('bcryptjs');
     const admin = await this.adminService.findByUsername(body.username);
@@ -131,6 +158,28 @@ export class AuthController {
    * @returns 重新发送结果
    */
   @Post('/resend-sms')
+  @ApiOperation({ summary: '重新发送短信验证码' })
+  @ApiBody({
+    schema: {
+      properties: {
+        smsToken: { type: 'string', description: '第一步返回的临时令牌', example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' },
+      },
+      example: {
+        smsToken: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '验证码已重新发送',
+    schema: {
+      example: {
+        code: 200,
+        message: '验证码已重新发送',
+        data: null,
+      },
+    },
+  })
   async resendSms(@Body() body: { smsToken: string }) {
     if (!body.smsToken) {
       return { code: 400, message: '参数不完整', data: null };
@@ -160,6 +209,33 @@ export class AuthController {
    * @returns 验证通过后返回 JWT token 和管理员基本信息
    */
   @Post('/verify-sms')
+  @ApiOperation({ summary: '短信验证码校验（第二步：完成登录）' })
+  @ApiBody({
+    schema: {
+      properties: {
+        smsToken: { type: 'string', description: '第一步返回的临时令牌', example: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890' },
+        code: { type: 'string', description: '6位短信验证码', example: '123456' },
+      },
+      example: {
+        smsToken: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+        code: '123456',
+      },
+    },
+  })
+  @ApiResponse({
+    status: 200,
+    description: '登录成功，返回JWT令牌',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: {
+          token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.xxx',
+          admin: { id: 1, username: 'admin', name: '张三', role_id: 1 },
+        },
+      },
+    },
+  })
   async verifySms(@Body() body: { smsToken: string; code: string }) {
     if (!body.smsToken || !body.code) {
       return { code: 400, message: '参数不完整', data: null };
@@ -246,6 +322,18 @@ export class AuthController {
    * @returns 当前登录管理员的基本信息
    */
   @Get('/info')
+  @ApiOperation({ summary: '获取当前登录管理员信息' })
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: { id: 1, username: 'admin', name: '张三', role_id: 1 },
+      },
+    },
+  })
   async info(@Headers('authorization') auth: string) {
     try {
       const token = auth?.replace('Bearer ', '');
@@ -265,6 +353,18 @@ export class AuthController {
    * @returns 当前管理员拥有的权限编码数组
    */
   @Get('/permissions')
+  @ApiOperation({ summary: '获取当前登录管理员的权限列表' })
+  @ApiResponse({
+    status: 200,
+    description: '获取成功',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: ['user:list', 'user:create', 'order:list', 'order:refund'],
+      },
+    },
+  })
   async permissions(@Headers('authorization') auth: string) {
     try {
       const token = auth?.replace('Bearer ', '');

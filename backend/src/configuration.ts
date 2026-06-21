@@ -8,6 +8,7 @@ import * as typeorm from '@midwayjs/typeorm';
 import * as jwt from '@midwayjs/jwt';
 import * as validate from '@midwayjs/validate';
 import * as cron from '@midwayjs/cron';
+import * as swagger from '@midwayjs/swagger';
 import { join } from 'path';
 
 // eslint-disable-next-line @typescript-eslint/no-var-requires
@@ -24,6 +25,7 @@ const multer = require('multer');
     jwt,
     validate,
     cron,
+    swagger,
   ],
   importConfigs: [join(__dirname, 'config')],
   conflictCheck: false,
@@ -98,6 +100,9 @@ export class ContainerLifeCycle {
         '/api/upload/file',
         '/api/upload/image',
         '/api/upload/oss-token',
+        '/swagger-ui',
+        '/swagger-ui/index.html',
+        '/api-docs',
       ];
 
       // 检查是否在白名单中
@@ -218,6 +223,8 @@ export class ContainerLifeCycle {
       '/api/merchant-dashboard',
       '/api/upload',
       '/api/test',
+      '/swagger-ui',
+      '/api-docs',
     ];
 
     /** 商家可访问的路由前缀白名单 */

@@ -7,6 +7,7 @@
  * 避免 Node.js 与 MySQL 之间的时区偏差
  */
 import { Controller, Get, Inject } from '@midwayjs/decorator';
+import { ApiOperation, ApiTags, ApiResponse, ApiBearerAuth } from '@midwayjs/swagger';
 import { Context } from '@midwayjs/koa';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
@@ -20,6 +21,8 @@ import { MerchantService } from '../service/merchant.service';
 import { OrderService } from '../service/order.service';
 import { FinancialRecordService } from '../service/financial-record.service';
 
+@ApiTags('Dashboard')
+@ApiBearerAuth()
 @Controller('/api/dashboard')
 export class DashboardController {
   @Inject()
@@ -57,6 +60,84 @@ export class DashboardController {
    * GET /api/dashboard/overview
    */
   @Get('/overview')
+  @ApiOperation({ summary: '获取平台总览数据' })
+  @ApiResponse({
+    status: 200,
+    description: '成功',
+    schema: {
+      example: {
+        code: 200,
+        message: 'success',
+        data: {
+          users: {
+            total: 12580,
+            todayActive: 326,
+            weekActive: 1850,
+            monthActive: 5620,
+            todayNew: 45,
+            weekNew: 280,
+            monthNew: 960,
+          },
+          orders: {
+            total: 38560,
+            todayCount: 128,
+            weekCount: 856,
+            monthCount: 3200,
+            todayGMV: 25600.5,
+            weekGMV: 178500.8,
+            monthGMV: 685200.0,
+          },
+          merchants: {
+            total: 320,
+            active: 185,
+          },
+          financial: {
+            totalRevenue: 5680000.0,
+            platformIncome: 568000.0,
+            merchantIncome: 5112000.0,
+            pendingSettlement: 125000.0,
+          },
+          orderTrend: {
+            days: ['6/15', '6/16', '6/17', '6/18', '6/19', '6/20', '6/21'],
+            counts: [98, 112, 105, 130, 118, 128, 128],
+          },
+          moduleDistribution: [
+            { module: 'homestay', count: 120 },
+            { module: 'attraction', count: 85 },
+            { module: 'food', count: 65 },
+            { module: 'specialty', count: 50 },
+          ],
+          moduleGMV: [
+            { type: 'homestay', count: 8500, gmv: 2550000.0 },
+            { type: 'attraction', count: 12000, gmv: 1800000.0 },
+            { type: 'food', count: 9800, gmv: 780000.0 },
+            { type: 'specialty', count: 8260, gmv: 550000.0 },
+          ],
+          topMerchants: [
+            { merchantId: 1, shopName: '乌东苗寨客栈', orderCount: 520, gmv: 385000.0 },
+            { merchantId: 2, shopName: '苗家酸汤鱼馆', orderCount: 480, gmv: 298000.0 },
+            { merchantId: 3, shopName: '苗银手工艺坊', orderCount: 350, gmv: 256000.0 },
+            { merchantId: 4, shopName: '乌东田园民宿', orderCount: 310, gmv: 215000.0 },
+            { merchantId: 5, shopName: '苗岭土特产店', orderCount: 280, gmv: 186000.0 },
+          ],
+          overdueApplications: {
+            count: 3,
+            list: [
+              { id: 10, shopName: '雷山苗歌民宿', daysOverdue: 5 },
+              { id: 15, shopName: '西江银饰工坊', daysOverdue: 4 },
+              { id: 18, shopName: '苗乡农家乐', daysOverdue: 3 },
+            ],
+          },
+          conversionRates: [
+            { type: 'homestay', total: 8500, completed: 7650, rate: 90.0 },
+            { type: 'attraction', total: 12000, completed: 11400, rate: 95.0 },
+            { type: 'food', total: 9800, completed: 8820, rate: 90.0 },
+            { type: 'specialty', total: 8260, completed: 7850, rate: 95.0 },
+          ],
+        },
+      },
+    },
+  })
   async overview() {
     try {
       const [userStats, orderStats, merchantStats, financialStats, orderTrend, moduleDistribution, moduleGMV, topMerchants, overdueApplications, conversionRates] = await Promise.all([

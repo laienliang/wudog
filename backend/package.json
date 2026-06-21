@@ -18,6 +18,7 @@
     "@midwayjs/jwt": "^3.0.0",
     "@midwayjs/koa": "^3.0.0",
     "@midwayjs/logger": "^4.0.1",
+    "@midwayjs/swagger": "^3.20.24",
     "@midwayjs/typeorm": "^3.0.0",
     "@midwayjs/upload": "^4.2.1",
     "@midwayjs/validate": "^3.0.0",
