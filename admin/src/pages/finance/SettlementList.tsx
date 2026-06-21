@@ -67,16 +67,15 @@ export default function SettlementListPage() {
     else message.error(res.message);
   };
 
-  /** 自动生成结算单 */
+  /** 自动生成结算单 — 扫描所有已完成且尚无财务记录的订单，创建待结算记录 */
   const handleGenerate = async () => {
-    const res: any = await request.post('/financial-records/generate');
-    if (res.code === 200) { message.success(res.message); loadData(); }
+    const res: any = await request.post('/financial-records/generate', {});
+    if (res.code === 200) { message.success(res.message); setSelectedRowKeys([]); loadData(); }
     else message.error(res.message || '生成失败');
   };
 
   /** 表格列配置 */
   const columns = [
-    { title: 'ID', dataIndex: 'id', width: 80 },
     { title: '订单号', dataIndex: 'order_no', width: 180 },
     { title: '商家ID', dataIndex: 'merchant_id', width: 100 },
     { title: '订单金额', dataIndex: 'order_amount', render: (v: number) => `¥${Number(v || 0).toFixed(2)}` },
@@ -130,7 +129,7 @@ export default function SettlementListPage() {
             批量结算 ({selectedRowKeys.length})
           </Button>
         </Popconfirm>
-        <Popconfirm title="确认生成结算单？将根据T+7/T+15规则为已完成订单生成待结算记录" onConfirm={handleGenerate}>
+        <Popconfirm title="将为所有已完成且尚无结算记录的订单生成待结算记录，确认？" onConfirm={handleGenerate}>
           <Button icon={<CheckOutlined />}>生成结算单</Button>
         </Popconfirm>
       </Space>

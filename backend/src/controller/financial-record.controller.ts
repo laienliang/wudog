@@ -87,12 +87,12 @@ export class FinancialRecordController {
   /**
    * 自动生成结算单
    * POST /api/financial-records/generate
-   * 根据 R11-05 规则，对已完成的订单按周期生成待结算财务记录
+   * @param body - 可选 orderIds（指定订单ID列表，仅为这些订单生成；不指定则扫描所有已完成订单）
    */
   @Post('/generate')
-  async generate() {
+  async generate(@Body() body: { orderIds?: number[] }) {
     try {
-      const result = await this.financialRecordService.generateSettlementBills();
+      const result = await this.financialRecordService.generateSettlementBills(body?.orderIds);
       return { code: 200, message: `成功生成 ${result.generated} 条结算单，跳过 ${result.skipped} 条已有记录`, data: result };
     } catch (error) {
       return { code: 500, message: error.message, data: null };

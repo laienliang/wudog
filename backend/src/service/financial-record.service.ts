@@ -108,14 +108,9 @@ export class FinancialRecordService {
 
   /**
    * 自动生成结算单
-   * 规则（R11-05）：
-   * - 门票/线路（ticket/route）：支付后 T+7 天可结算
-   * - 商品/餐厅/民宿（product/food_order/stay）：支付后 T+15 天可结算
-   * 仅对已完成（completed）且尚未生成财务记录的订单生成
+   * @param orderIds 可选，指定订单ID列表时仅为这些订单生成；不指定时扫描所有符合条件的订单
    */
-  async generateSettlementBills() {
-    const now = new Date();
-
+  async generateSettlementBills(orderIds?: number[]) {
     // 读取各模块抽佣比例
     const commissionRates: Record<string, number> = {};
     for (const key of ['commission_rate_clothing', 'commission_rate_food', 'commission_rate_stay', 'commission_rate_travel']) {
@@ -123,57 +118,53 @@ export class FinancialRecordService {
       commissionRates[key] = cfg ? Number(cfg.config_value) : 0.1;
     }
 
-    // 订单类型 -> 结算周期（天）和抽佣配置键
-    const typeConfig: Record<string, { days: number; rateKey: string }> = {
-      product: { days: 15, rateKey: 'commission_rate_clothing' },
-      food_order: { days: 15, rateKey: 'commission_rate_food' },
-      stay: { days: 15, rateKey: 'commission_rate_stay' },
-      ticket: { days: 7, rateKey: 'commission_rate_travel' },
-      route: { days: 7, rateKey: 'commission_rate_travel' },
+    // 订单类型 -> 抽佣配置键
+    const rateKeyMap: Record<string, string> = {
+      product: 'commission_rate_clothing',
+      food_order: 'commission_rate_food',
+      stay: 'commission_rate_stay',
+      ticket: 'commission_rate_travel',
+      route: 'commission_rate_travel',
     };
 
     let generated = 0;
     let skipped = 0;
 
-    for (const [orderType, config] of Object.entries(typeConfig)) {
-      // 计算结算到期时间线
-      const deadline = new Date(now);
-      deadline.setDate(deadline.getDate() - config.days);
+    // 构建查询：指定订单ID时仅查这些订单，否则查所有已完成的
+    const qb = this.orderRepo.createQueryBuilder('o')
+      .where('o.is_deleted = 0');
+    if (orderIds && orderIds.length > 0) {
+      qb.andWhere('o.id IN (:...ids)', { ids: orderIds });
+    } else {
+      qb.andWhere('o.status IN (:...statuses)', { statuses: ['completed', 'paid', 'shipped'] });
+    }
+    const orders = await qb.getMany();
 
-      // 查找符合条件的订单：已完成、已支付、支付时间早于结算线
-      const orders = await this.orderRepo.createQueryBuilder('o')
-        .where('o.is_deleted = 0')
-        .andWhere('o.order_type = :type', { type: orderType })
-        .andWhere('o.status = :status', { status: 'completed' })
-        .andWhere('o.pay_time IS NOT NULL')
-        .andWhere('o.pay_time <= :deadline', { deadline })
-        .getMany();
+    for (const order of orders) {
+      // 检查是否已有财务记录
+      const existing = await this.recordRepo.createQueryBuilder('r')
+        .where('r.order_id = :orderId', { orderId: order.id })
+        .andWhere('r.is_deleted = 0')
+        .getOne();
+      if (existing) { skipped++; continue; }
 
-      for (const order of orders) {
-        // 检查是否已有财务记录
-        const existing = await this.recordRepo.createQueryBuilder('r')
-          .where('r.order_id = :orderId', { orderId: order.id })
-          .andWhere('r.is_deleted = 0')
-          .getOne();
-        if (existing) { skipped++; continue; }
+      const rateKey = rateKeyMap[order.order_type] || 'commission_rate_clothing';
+      const amount = Number(order.total_amount || 0);
+      const rate = commissionRates[rateKey] || 0.1;
+      const commissionAmount = Math.round(amount * rate * 100) / 100;
+      const merchantIncome = Math.round((amount - commissionAmount) * 100) / 100;
 
-        const amount = Number(order.total_amount || 0);
-        const rate = commissionRates[config.rateKey] || 0.1;
-        const commissionAmount = Math.round(amount * rate * 100) / 100;
-        const merchantIncome = Math.round((amount - commissionAmount) * 100) / 100;
-
-        await this.recordRepo.save(this.recordRepo.create({
-          order_id: order.id,
-          order_no: order.order_no,
-          merchant_id: order.merchant_id,
-          order_amount: amount,
-          commission_rate: rate,
-          commission_amount: commissionAmount,
-          merchant_income: merchantIncome,
-          settlement_status: 'pending',
-        }));
-        generated++;
-      }
+      await this.recordRepo.save(this.recordRepo.create({
+        order_id: order.id,
+        order_no: order.order_no,
+        merchant_id: order.merchant_id,
+        order_amount: amount,
+        commission_rate: rate,
+        commission_amount: commissionAmount,
+        merchant_income: merchantIncome,
+        settlement_status: 'pending',
+      }));
+      generated++;
     }
 
     return { generated, skipped };

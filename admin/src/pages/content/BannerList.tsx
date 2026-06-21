@@ -111,11 +111,10 @@ export default function BannerListPage() {
 
   /** 表格列配置 */
   const columns = [
-    { title: 'ID', dataIndex: 'id', width: 80 },
     { title: '标题', dataIndex: 'title' },
     { title: '图片', dataIndex: 'image_url', render: (url: string) => {
-      const fullUrl = url?.startsWith('http') ? url : `http://localhost:3001${url}`;
-      return <Image src={fullUrl} width={100} height={50} style={{ objectFit: 'cover' }} />;
+      if (!url) return '-';
+      return <Image src={url} width={100} height={50} style={{ objectFit: 'cover' }} />;
     }},
     { title: '跳转链接', dataIndex: 'link_url', ellipsis: true },
     { title: '开始时间', dataIndex: 'start_time' },

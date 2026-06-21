@@ -57,69 +57,70 @@ export default function MerchantLayout() {
           background: 'var(--color-sider-bg)',
           boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
           overflow: 'hidden',
-          display: 'flex',
-          flexDirection: 'column',
         }}
       >
-        {/* Logo 区域 */}
-        <div style={{
-          height: 64,
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: collapsed ? 'center' : 'flex-start',
-          gap: collapsed ? 0 : 10,
-          color: '#FFFFFF',
-          fontSize: collapsed ? 16 : 18,
-          fontWeight: 'var(--weight-bold)',
-          fontFamily: 'var(--font-family-heading)',
-          whiteSpace: 'nowrap',
-          borderBottom: '1px solid rgba(255,255,255,0.08)',
-          letterSpacing: '0.5px',
-          paddingLeft: collapsed ? 0 : 20,
-          flexShrink: 0,
-        }}>
-          <img
-            src="/logo.png"
-            alt="乌东文旅"
-            style={{
-              width: collapsed ? 32 : 36,
-              height: collapsed ? 32 : 36,
-              objectFit: 'contain',
-              transition: 'all 0.2s',
-            }}
-          />
-          {!collapsed && <span>商家后台</span>}
-        </div>
+        {/* 内部 flex 容器，确保装饰带始终固定在侧边栏最底部 */}
+        <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+          {/* Logo 区域 */}
+          <div style={{
+            height: 64,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            gap: collapsed ? 0 : 10,
+            color: '#FFFFFF',
+            fontSize: collapsed ? 16 : 18,
+            fontWeight: 'var(--weight-bold)',
+            fontFamily: 'var(--font-family-heading)',
+            whiteSpace: 'nowrap',
+            borderBottom: '1px solid rgba(255,255,255,0.08)',
+            letterSpacing: '0.5px',
+            padding: '0 16px',
+            flexShrink: 0,
+          }}>
+            <img
+              src="/logo.png"
+              alt="乌东文旅"
+              style={{
+                width: collapsed ? 32 : 36,
+                height: collapsed ? 32 : 36,
+                objectFit: 'contain',
+                transition: 'all 0.2s',
+              }}
+            />
+            {!collapsed && <span>商家后台</span>}
+          </div>
 
-        {/* 导航菜单 - 可滚动区域 */}
-        <div style={{ flex: 1, overflow: 'auto' }}>
-          <Menu
-            theme="dark"
-            mode="inline"
-            selectedKeys={[location.pathname]}
-            items={menuItems}
-            onClick={({ key }) => navigate(key)}
-            style={{ borderRight: 0, background: 'transparent' }}
-          />
-        </div>
+          {/* 导航菜单 - 可滚动区域 */}
+          <div style={{ flex: 1, overflow: 'auto' }}>
+            <Menu
+              theme="dark"
+              mode="inline"
+              selectedKeys={[location.pathname]}
+              items={menuItems}
+              onClick={({ key }) => navigate(key)}
+              style={{ borderRight: 0, background: 'transparent' }}
+            />
+          </div>
 
-        {/* 底部苗族蜡染装饰带 - 固定在底部 */}
-        <div style={{
-          flexShrink: 0,
-          height: 6,
-          background: `repeating-linear-gradient(
-            90deg,
-            var(--color-primary) 0px,
-            var(--color-primary) 12px,
-            transparent 12px,
-            transparent 16px,
-            var(--color-embroidery) 16px,
-            var(--color-embroidery) 20px,
-            transparent 20px,
-            transparent 24px
-          )`,
-          opacity: 0.7,
-        }} />
+          {/* 底部苗族蜡染装饰带 - 固定在侧边栏最底部 */}
+          <div style={{
+            flexShrink: 0,
+            height: 6,
+            background: `repeating-linear-gradient(
+              90deg,
+              var(--color-primary) 0px,
+              var(--color-primary) 12px,
+              transparent 12px,
+              transparent 16px,
+              var(--color-embroidery) 16px,
+              var(--color-embroidery) 20px,
+              transparent 20px,
+              transparent 24px
+            )`,
+            opacity: 0.7,
+          }} />
+        </div>
       </Sider>
 
       <Layout style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>

@@ -234,6 +234,8 @@ export const themeConfig: ThemeConfig = {
       itemActiveBg: colors.primary,
       colorPrimary: colors.primary,
       colorPrimaryHover: colors.primaryHover,
+      itemBg: colors.bgCard,
+      itemActiveColor: '#FFFFFF',
     },
 
     // ── 标签页 ──
