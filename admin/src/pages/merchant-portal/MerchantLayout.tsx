@@ -48,7 +48,7 @@ export default function MerchantLayout() {
   };
 
   return (
-    <Layout style={{ minHeight: '100vh' }}>
+    <Layout style={{ height: '100vh', overflow: 'hidden' }}>
       <Sider
         trigger={null}
         collapsible
@@ -56,8 +56,9 @@ export default function MerchantLayout() {
         style={{
           background: 'var(--color-sider-bg)',
           boxShadow: '2px 0 8px rgba(0,0,0,0.15)',
-          position: 'relative',
           overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
         {/* Logo 区域 */}
@@ -75,6 +76,7 @@ export default function MerchantLayout() {
           borderBottom: '1px solid rgba(255,255,255,0.08)',
           letterSpacing: '0.5px',
           paddingLeft: collapsed ? 0 : 20,
+          flexShrink: 0,
         }}>
           <img
             src="/logo.png"
@@ -89,22 +91,21 @@ export default function MerchantLayout() {
           {!collapsed && <span>商家后台</span>}
         </div>
 
-        {/* 导航菜单 */}
-        <Menu
-          theme="dark"
-          mode="inline"
-          selectedKeys={[location.pathname]}
-          items={menuItems}
-          onClick={({ key }) => navigate(key)}
-          style={{ borderRight: 0, background: 'transparent' }}
-        />
+        {/* 导航菜单 - 可滚动区域 */}
+        <div style={{ flex: 1, overflow: 'auto' }}>
+          <Menu
+            theme="dark"
+            mode="inline"
+            selectedKeys={[location.pathname]}
+            items={menuItems}
+            onClick={({ key }) => navigate(key)}
+            style={{ borderRight: 0, background: 'transparent' }}
+          />
+        </div>
 
-        {/* 底部苗族蜡染装饰带 */}
+        {/* 底部苗族蜡染装饰带 - 固定在底部 */}
         <div style={{
-          position: 'absolute',
-          bottom: 0,
-          left: 0,
-          right: 0,
+          flexShrink: 0,
           height: 6,
           background: `repeating-linear-gradient(
             90deg,
@@ -121,7 +122,7 @@ export default function MerchantLayout() {
         }} />
       </Sider>
 
-      <Layout>
+      <Layout style={{ display: 'flex', flexDirection: 'column', overflow: 'hidden' }}>
         {/* 顶部栏 */}
         <Header style={{
           background: 'var(--color-bg-card)',
@@ -132,6 +133,8 @@ export default function MerchantLayout() {
           boxShadow: 'var(--shadow-light)',
           borderBottom: '1px solid var(--color-border-light)',
           height: 64,
+          lineHeight: '64px',
+          flexShrink: 0,
         }}>
           <Button
             type="text"
@@ -153,8 +156,10 @@ export default function MerchantLayout() {
           </Dropdown>
         </Header>
 
-        {/* 内容区域 */}
+        {/* 内容区域 - 可滚动 */}
         <Content style={{
+          flex: 1,
+          overflow: 'auto',
           margin: 'var(--spacing-lg)',
           padding: 'var(--spacing-lg)',
           background: 'var(--color-bg-card)',

@@ -122,11 +122,11 @@ export default function BannerListPage() {
     { title: '结束时间', dataIndex: 'end_time' },
     { title: '状态', dataIndex: 'status', render: (v: number) => v === 1 ? <Tag color="green">启用</Tag> : <Tag color="default">禁用</Tag> },
     {
-      title: '操作', render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
+      title: '操作', width: 150, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
           <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+            <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
         </Space>
       ),
@@ -141,7 +141,7 @@ export default function BannerListPage() {
         <Button type="primary" onClick={onSearch}>搜索</Button>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => openModal()}>新增横幅</Button>
       </Space>
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
       <Modal title={editing ? '编辑横幅' : '新增横幅'} open={modalOpen} onOk={handleSubmit} onCancel={() => setModalOpen(false)} destroyOnClose width={600}>
         <Form form={form} layout="vertical">

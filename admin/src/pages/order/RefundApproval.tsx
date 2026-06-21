@@ -117,12 +117,12 @@ export default function RefundApprovalPage() {
     { title: '状态', dataIndex: 'status', render: () => <Tag color="orange">退款中</Tag> },
     { title: '创建时间', dataIndex: 'created_at' },
     {
-      title: '操作', width: 200, render: (_: any, record: any) => (
-        <Space>
+      title: '操作', width: 180, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
           <Popconfirm title="确认通过该退款申请？" onConfirm={() => handleApprove(record)}>
-            <Button type="link" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }}>通过</Button>
+            <Button type="link" size="small" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }}>通过</Button>
           </Popconfirm>
-          <Button type="link" danger icon={<CloseOutlined />} onClick={() => openReject(record)}>驳回</Button>
+          <Button type="link" size="small" danger icon={<CloseOutlined />} onClick={() => openReject(record)}>驳回</Button>
         </Space>
       ),
     },
@@ -137,6 +137,7 @@ export default function RefundApprovalPage() {
         columns={columns}
         dataSource={data}
         loading={loading}
+        scroll={{ x: 'max-content' }}
         pagination={{
           current: page, pageSize, total, showSizeChanger: true,
           showTotal: t => `共 ${t} 条`,

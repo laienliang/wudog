@@ -175,14 +175,13 @@ export default function SystemConfigPage() {
 
   /** 表格列配置 */
   const columns = [
-    { title: 'ID', dataIndex: 'id', width: 80 },
     { title: '配置键', dataIndex: 'config_key', width: 240 },
     { title: '配置值', dataIndex: 'config_value', ellipsis: true },
     { title: '配置类型', dataIndex: 'config_type', width: 120, render: (v: string) => <Tag>{v}</Tag> },
     { title: '描述', dataIndex: 'description', ellipsis: true },
     {
-      title: '操作', width: 100, render: (_: any, record: any) => (
-        <Button type="link" icon={<EditOutlined />} onClick={() => openEditModal(record)}>编辑</Button>
+      title: '操作', width: 100, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openEditModal(record)}>编辑</Button>
       ),
     },
   ];
@@ -266,7 +265,7 @@ export default function SystemConfigPage() {
       <Space style={{ marginBottom: 16 }}>
         <Button icon={<ReloadOutlined />} onClick={loadData}>刷新</Button>
       </Space>
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
       <Modal title={`编辑配置 - ${editing?.config_key || ''}`} open={modalOpen} onOk={handleSubmit} onCancel={() => setModalOpen(false)} destroyOnClose>
         <Form form={form} layout="vertical">

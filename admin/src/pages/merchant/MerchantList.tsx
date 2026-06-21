@@ -120,16 +120,16 @@ export default function MerchantListPage() {
     { title: '状态', dataIndex: 'status', render: (v: number) => v === 1 ? <Tag color="green">正常</Tag> : <Tag color="red">禁用</Tag> },
     { title: '入驻时间', dataIndex: 'joined_at', width: 170 },
     {
-      title: '操作', render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EyeOutlined />} onClick={() => openDetail(record.id)}>详情</Button>
-          <Button type="link" onClick={() => toggleStatus(record)}>{record.status === 1 ? '禁用' : '启用'}</Button>
+      title: '操作', width: 320, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => openDetail(record.id)}>详情</Button>
+          <Button type="link" size="small" onClick={() => toggleStatus(record)}>{record.status === 1 ? '禁用' : '启用'}</Button>
           <Popconfirm title={`确认将「${record.shop_name}」强制下线？`} onConfirm={() => handleForceOffline(record)}>
-            <Button type="link" icon={<StopOutlined />} danger>强制下线</Button>
+            <Button type="link" size="small" icon={<StopOutlined />} danger>强制下线</Button>
           </Popconfirm>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
+          <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
           <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.id)}>
-            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+            <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
         </Space>
       ),
@@ -144,7 +144,7 @@ export default function MerchantListPage() {
         <Button type="primary" onClick={onSearch}>搜索</Button>
         <Button type="primary" icon={<PlusOutlined />} onClick={() => openModal()}>新增商家</Button>
       </Space>
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
 
       {/* 编辑/新增弹窗 */}

@@ -89,14 +89,14 @@ export default function SettlementListPage() {
     },
     { title: '结算时间', dataIndex: 'settled_at', width: 180 },
     {
-      title: '操作', width: 120, render: (_: any, record: any) => (
-        <Space>
+      title: '操作', width: 100, fixed: 'right' as const, render: (_: any, record: any) => (
+        <>
           {record.settlement_status !== 'settled' && (
             <Popconfirm title="确认结算？" onConfirm={() => handleSettle(record.id)}>
-              <Button type="link" icon={<CheckOutlined />}>结算</Button>
+              <Button type="link" size="small" icon={<CheckOutlined />}>结算</Button>
             </Popconfirm>
           )}
-        </Space>
+        </>
       ),
     },
   ];
@@ -135,7 +135,7 @@ export default function SettlementListPage() {
         </Popconfirm>
       </Space>
       {/* 结算记录列表表格，支持行选择 */}
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         rowSelection={{ selectedRowKeys, onChange: setSelectedRowKeys }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
     </div>

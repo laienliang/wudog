@@ -109,15 +109,15 @@ export default function ApplicationListPage() {
     }},
     { title: '申请时间', dataIndex: 'created_at' },
     {
-      title: '操作', render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<EyeOutlined />} onClick={() => showDetail(record)}>查看</Button>
+      title: '操作', width: 220, fixed: 'right' as const, render: (_: any, record: any) => (
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<EyeOutlined />} onClick={() => showDetail(record)}>查看</Button>
           {record.status === 'pending' && (
             <>
               <Popconfirm title={`确认通过「${record.shop_name}」的入驻申请？`} onConfirm={() => handleApprove(record)}>
-                <Button type="link" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }}>通过</Button>
+                <Button type="link" size="small" icon={<CheckOutlined />} style={{ color: 'var(--color-terraced)' }}>通过</Button>
               </Popconfirm>
-              <Button type="link" danger icon={<CloseOutlined />} onClick={() => openReject(record)}>驳回</Button>
+              <Button type="link" size="small" danger icon={<CloseOutlined />} onClick={() => openReject(record)}>驳回</Button>
             </>
           )}
         </Space>
@@ -135,7 +135,7 @@ export default function ApplicationListPage() {
         <Button type="primary" onClick={onSearch}>搜索</Button>
       </Space>
       {/* 申请列表表格 */}
-      <Table rowKey="id" columns={columns} dataSource={data} loading={loading}
+      <Table rowKey="id" columns={columns} dataSource={data} loading={loading} scroll={{ x: 'max-content' }}
         pagination={{ current: page, pageSize, total, showSizeChanger: true, showTotal: t => `共 ${t} 条`, onChange: (p, ps) => { setPage(p); setPageSize(ps); } }} />
       {/* 申请详情弹窗 */}
       <Modal title="申请详情" open={detailOpen} onCancel={() => setDetailOpen(false)} footer={null} width={600}>

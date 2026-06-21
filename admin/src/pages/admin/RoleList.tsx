@@ -135,16 +135,16 @@ export default function RoleListPage() {
     { title: '状态', dataIndex: 'status', render: (v: number) => v === 1 ? <Tag color="green">启用</Tag> : <Tag color="red">禁用</Tag> },
     {
       title: '操作', width: 260, fixed: 'right' as const, render: (_: any, record: any) => (
-        <Space>
-          <Button type="link" icon={<SettingOutlined />} onClick={() => openPermModal(record)}>分配权限</Button>
-          <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
+        <Space size="small" wrap>
+          <Button type="link" size="small" icon={<SettingOutlined />} onClick={() => openPermModal(record)}>分配权限</Button>
+          <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
           {record.type === 'system' ? (
             <Tooltip title="系统内置角色，不允许删除">
-              <Button type="link" danger icon={<DeleteOutlined />} disabled>删除</Button>
+              <Button type="link" size="small" danger icon={<DeleteOutlined />} disabled>删除</Button>
             </Tooltip>
           ) : (
             <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.id)}>
-              <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+              <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
             </Popconfirm>
           )}
         </Space>

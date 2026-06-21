@@ -114,15 +114,15 @@ export default function AdminListPage() {
         const role = roles.find(r => r.id === record.role_id);
         const isSystemRole = role?.type === 'system';
         return (
-          <Space>
-            <Button type="link" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
+          <Space size="small" wrap>
+            <Button type="link" size="small" icon={<EditOutlined />} onClick={() => openModal(record)}>编辑</Button>
             {isSystemRole ? (
               <Tooltip title="系统内置角色，不允许删除">
-                <Button type="link" danger icon={<DeleteOutlined />} disabled>删除</Button>
+                <Button type="link" size="small" danger icon={<DeleteOutlined />} disabled>删除</Button>
               </Tooltip>
             ) : (
               <Popconfirm title="确认删除？" onConfirm={() => handleDelete(record.id)}>
-                <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+                <Button type="link" size="small" danger icon={<DeleteOutlined />}>删除</Button>
               </Popconfirm>
             )}
           </Space>
