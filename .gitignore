@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.env
+.env.local
+*.log
+.DS_Store
+.idea/
+cool-admin-midway/node_modules/
+cool-admin-midway/dist/
+cool-admin-vue/node_modules/
+cool-admin-vue/dist/
