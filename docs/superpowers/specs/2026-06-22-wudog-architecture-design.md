@@ -73,12 +73,16 @@
 | `user_info` | 用户主表 | id, phone, nickname, avatar |
 | `user_address` | 收货地址 | id, user_id, name, phone, detail |
 | `user_wx` | 微信绑定 | id, user_id, openid, session_key, unionid |
-| `order_base` | 统一订单主表 | id, order_no, user_id, module_type, total_amount, status |
+| `merchant` | 商家表 | id, user_id, module_type, shop_name, contact_name, contact_phone, status |
+| `order_base` | 统一订单主表 | id, order_no, user_id, merchant_id, module_type, total_amount, status |
 | `cart_item` | 购物车 | id, user_id, goods_id, quantity |
 | `payment_record` | 支付记录 | id, order_no, amount, status, transaction_id |
 | `refund_record` | 退款记录 | id, order_no, amount, reason, status |
+| `financial_settlement` | 财务结算 | id, order_no, merchant_id, order_amount, commission_rate, commission_amount, merchant_income, settle_status |
 | `upload_file` | 文件上传 | id, url, size, type |
 | `message_record` | 消息通知 | id, user_id, type, content, is_read |
+| `message_template` | 消息模板 | id, template_name, module_type, variables, content, status |
+| `shipping_template` | 运费模板 | id, module_type, name, rules(JSON), is_default |
 
 ### 2.3 订单模型
 
@@ -87,8 +91,8 @@ order_base (订单主表)
 ├── id: 订单ID
 ├── order_no: 订单编号（全局唯一）
 ├── user_id: 用户ID
-├── module_type: 模块类型 (1=衣, 2=食, 3=住, 4=行)
 ├── merchant_id: 商家ID（可为空）
+├── module_type: 模块类型 (1=衣, 2=食, 3=住, 4=行)
 ├── total_amount: 总金额
 ├── pay_amount: 实付金额
 ├── status: 订单状态
@@ -97,24 +101,36 @@ order_base (订单主表)
 
 order_item_{module} (各模块订单明细表)
 ├── clothing_order_item (衣)
-├── food_order_item (食)
+├── food_product_order_item (食-农产品)
+├── food_booking_order_item (食-餐位预订)
 ├── lodging_order_item (住)
 └── travel_order_item (行)
+
+financial_settlement (财务结算)
+├── id: 主键
+├── order_no: 订单编号
+├── merchant_id: 商家ID
+├── order_amount: 订单金额
+├── commission_rate: 抽佣比例
+├── commission_amount: 平台抽佣
+├── merchant_income: 商家收入
+├── settle_status: 结算状态 (0待结算 1已结算)
+└── settle_time: 结算时间
 ```
 
 ### 2.4 业务表清单
 
-**第1组·衣**：`clothing_category`, `clothing_goods`, `clothing_goods_sku`, `clothing_review`, `clothing_collect`
+**第1组·衣**：`clothing_category`, `clothing_goods`(merchant_id), `clothing_goods_sku`, `clothing_review`, `clothing_collect`
 
-**第2组·食**：`food_restaurant`, `food_dish`, `food_time_slot`, `food_agriculture_category`, `food_agriculture_goods`, `food_review`, `food_booking`
+**第2组·食**：`food_restaurant`(merchant_id), `food_dish`, `food_time_slot`, `food_agriculture_category`, `food_agriculture_goods`(merchant_id), `food_review`, `food_booking`
 
-**第3组·住**：`lodging_hostel`, `lodging_room_type`, `lodging_calendar`, `lodging_review`, `lodging_collect`
+**第3组·住**：`lodging_hostel`(merchant_id), `lodging_room_type`, `lodging_calendar`, `lodging_hostel_policy`(入住须知), `lodging_review`, `lodging_collect`
 
-**第4组·行**：`travel_scenic`, `travel_ticket_type`, `travel_route`, `travel_route_day`, `travel_e_ticket`, `travel_guide`, `travel_review`, `travel_collect`
+**第4组·行**：`travel_scenic`(merchant_id), `travel_ticket_type`, `travel_route`(merchant_id), `travel_route_day`, `travel_e_ticket`, `travel_guide`, `travel_review`, `travel_collect`
 
-**第5组·社区**：`community_article`, `community_comment`, `community_topic`, `community_follow`, `community_like`, `community_report`, `community_image`, `community_video`
+**第5组·社区**：`community_article`, `community_comment`, `community_topic`, `community_follow`, `community_like`, `community_collect`(游记收藏), `community_report`, `community_image`, `community_video`
 
-**第6组·管理后台**：`admin_user`, `admin_role`, `admin_merchant_apply`, `admin_platform_banner`, `admin_platform_stat`, `admin_sensitive_word`, `admin_system_log`
+**第6组·管理后台**：`admin_user`(role_type), `admin_role`, `admin_merchant_apply`, `admin_merchant`(商家审核通过后), `admin_platform_banner`, `admin_platform_stat`, `admin_sensitive_word`, `admin_system_log`, `admin_notice`(公告), `admin_recommend_slot`(推荐位)
 
 ---
 
@@ -147,12 +163,15 @@ order_item_{module} (各模块订单明细表)
 | `/order/page` | POST | 我的订单列表 |
 | `/order/info` | POST | 订单详情 |
 | `/order/cancel` | POST | 取消订单 |
+| `/order/refund` | POST | 申请退款 |
 | `/payment/wechat` | POST | 发起微信支付 |
+| `/payment/callback` | POST | 微信支付回调（免认证） |
 | `/cart/page` | POST | 购物车列表 |
 | `/cart/add` | POST | 加入购物车 |
 | `/upload/file` | POST | 文件上传 |
 | `/search` | POST | 全局搜索 |
 | `/collect/page` | POST | 我的收藏 |
+| `/merchant/apply` | POST | 商家入驻申请 |
 
 ### 3.4 业务接口
 
@@ -166,7 +185,7 @@ order_item_{module} (各模块订单明细表)
 
 **社区**：`/community/article/page`, `/community/article/info`, `/community/article/add`, `/community/comment/page`, `/community/like`, `/community/follow`, `/community/topic/page`, `/community/report`
 
-**管理后台**：`/admin/user/page`, `/admin/merchant/apply/page`, `/admin/order/page`, `/admin/stat/dashboard`, `/admin/banner/page`, `/admin/sensitive/word/page`
+**管理后台**：`/admin/user/page`, `/admin/merchant/apply/page`, `/admin/merchant/page`, `/admin/order/page`, `/admin/order/refund`, `/admin/finance/settlement/page`, `/admin/stat/dashboard`, `/admin/banner/page`, `/admin/notice/page`, `/admin/recommend/page`, `/admin/sensitive/word/page`, `/admin/message/template/page`
 
 ### 3.5 统一接口规范
 
@@ -247,14 +266,19 @@ pages/
 ### 5.2 Git 分支策略
 
 ```
-master（主分支）
-├── feature/clothing      ← 第1组
-├── feature/food          ← 第2组
-├── feature/lodging       ← 第3组
-├── feature/travel        ← 第4组
-├── feature/community     ← 第5组
-└── feature/platform      ← 第6组
+master（生产分支，始终可部署）
+└── develop（集成分支，每周集成构建）
+    ├── feature/clothing      ← 第1组
+    ├── feature/food          ← 第2组
+    ├── feature/lodging       ← 第3组
+    ├── feature/travel        ← 第4组
+    ├── feature/community     ← 第5组
+    └── feature/platform      ← 第6组
 ```
+
+- 各组从 `develop` 拉出 `feature/模块名` 分支开发
+- 每周一次全组集成构建，验证接口兼容性
+- 开发完成后提 PR 合并到 `develop`，审核后合并到 `master`
 
 ### 5.3 模块代码组织
 
