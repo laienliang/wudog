@@ -6,7 +6,7 @@
 		}"
 	>
 		<div class="app-slider__logo">
-			<img src="/logo.png" />
+			<img src="/logo.svg" class="logo-img" />
 			<span v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
 		</div>
 
@@ -64,9 +64,9 @@ const keyWord = ref('');
 		padding: 0 21px;
 		user-select: none;
 
-		img {
-			height: 24px;
-			width: 24px;
+		.logo-img {
+			height: 36px;
+			width: auto;
 		}
 
 		span {
