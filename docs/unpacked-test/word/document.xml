@@ -1,0 +1,4535 @@
+<?xml version="1.0" encoding="UTF-8"?><w:document xmlns:wpc="http://schemas.microsoft.com/office/word/2010/wordprocessingCanvas" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" xmlns:m="http://schemas.openxmlformats.org/officeDocument/2006/math" xmlns:v="urn:schemas-microsoft-com:vml" xmlns:wp14="http://schemas.microsoft.com/office/word/2010/wordprocessingDrawing" xmlns:wp="http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing" xmlns:w10="urn:schemas-microsoft-com:office:word" xmlns:w="http://schemas.openxmlformats.org/wordprocessingml/2006/main" xmlns:w14="http://schemas.microsoft.com/office/word/2010/wordml" xmlns:w15="http://schemas.microsoft.com/office/word/2012/wordml" xmlns:wpg="http://schemas.microsoft.com/office/word/2010/wordprocessingGroup" xmlns:wpi="http://schemas.microsoft.com/office/word/2010/wordprocessingInk" xmlns:wne="http://schemas.microsoft.com/office/word/2006/wordml" xmlns:wps="http://schemas.microsoft.com/office/word/2010/wordprocessingShape" xmlns:cx="http://schemas.microsoft.com/office/drawing/2014/chartex" xmlns:cx1="http://schemas.microsoft.com/office/drawing/2015/9/8/chartex" xmlns:cx2="http://schemas.microsoft.com/office/drawing/2015/10/21/chartex" xmlns:cx3="http://schemas.microsoft.com/office/drawing/2016/5/9/chartex" xmlns:cx4="http://schemas.microsoft.com/office/drawing/2016/5/10/chartex" xmlns:cx5="http://schemas.microsoft.com/office/drawing/2016/5/11/chartex" xmlns:cx6="http://schemas.microsoft.com/office/drawing/2016/5/12/chartex" xmlns:cx7="http://schemas.microsoft.com/office/drawing/2016/5/13/chartex" xmlns:cx8="http://schemas.microsoft.com/office/drawing/2016/5/14/chartex" xmlns:aink="http://schemas.microsoft.com/office/drawing/2016/ink" xmlns:am3d="http://schemas.microsoft.com/office/drawing/2017/model3d" xmlns:w16cex="http://schemas.microsoft.com/office/word/2018/wordml/cex" xmlns:w16cid="http://schemas.microsoft.com/office/word/2016/wordml/cid" xmlns:w16="http://schemas.microsoft.com/office/word/2018/wordml" xmlns:w16sdtdh="http://schemas.microsoft.com/office/word/2020/wordml/sdtdatahash" xmlns:w16se="http://schemas.microsoft.com/office/word/2015/wordml/symex" mc:Ignorable="w14 w15 wp14">
+  <w:body>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200" w:before="2400"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="54"/>
+          <w:szCs w:val="54"/>
+        </w:rPr>
+        <w:t xml:space="preserve">SSH Key 配置完整教程</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">—— Git 版本控制密钥管理指南</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">适用平台：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="555555"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">macOS / Linux / Windows (Git Bash, Git for Windows, VS Code)</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">适用服务：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="555555"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">GitHub / GitLab / Gitee / Bitbucket 等任意 SSH 认证服务</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">文档版本：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="555555"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">v1.0</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:bottom w:val="single" w:color="1F4E79" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:spacing w:after="400" w:before="400"/>
+      </w:pPr>
+      <w:r>
+        <w:t xml:space="preserve"/>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">1. 什么是 SSH Key？</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t>SSH Key（Secure Shell Key）是一种基于密钥的身份验证机制。与传统的用户名密码登录方式不同，SSH Key 使用一对加密密钥来确认您的身份：</w:t>
+      </w:r>
+      
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1805"/>
+        <w:gridCol w:w="7221"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="1F4E79" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">类型</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="D6E4F0" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">说明</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">公钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">提交到 Git 平台（GitHub/Gitee 等），用于服务器端验证</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">私钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="24"/>
+                <w:szCs w:val="24"/>
+              </w:rPr>
+              <w:t xml:space="preserve">保存在本机，绝对不能泄露。用于解密和签名验证</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">为什么推荐使用 SSH Key？</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">更安全：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">比密码更难被暴力破解，密钥长度可达 4096 bit</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">更方便：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">配置一次后无需每次输入密码</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">更灵活：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">可以为不同平台、不同用途生成不同的密钥对</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">2. 检查是否已有 SSH Key</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">在生成新的密钥之前，先检查本机是否已经存在 SSH Key。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">操作步骤：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="0"/>
+          <w:numId w:val="2"/>
+        </w:numPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">打开终端（Terminal / Git Bash / PowerShell）</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="ListParagraph"/>
+        <w:numPr>
+          <w:ilvl w:val="0"/>
+          <w:numId w:val="2"/>
+        </w:numPr>
+        <w:spacing w:after="60"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">执行以下命令查看是否存在已有密钥：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ls ~/.ssh/id_*.pub</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">可能的结果：</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="2256"/>
+        <w:gridCol w:w="6770"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="E2EFDA" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="375623"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">结果</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="E2EFDA" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="375623"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">含义</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">显示文件路径</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">已存在密钥，可跳过生成步骤直接使用</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">No such file or directory</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">没有现有密钥，需要按照后续步骤生成新密钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">3. 生成 SSH Key</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">推荐使用 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Ed25519</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 算法，它是目前最安全且最高效的密钥算法。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="120" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">3.1 基本生成命令</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">在终端中执行以下命令（将邮箱替换为你的邮箱）：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-keygen -t ed25519 -C &quot;your_email@example.com&quot;</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">参数说明：</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1805"/>
+        <w:gridCol w:w="7221"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="D6E4F0" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="1F4E79"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">参数</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="D6E4F0" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="1F4E79"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">说明</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">-t ed25519</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">指定密钥算法为 Ed25519，安全且高效</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">-C &quot;email&quot;</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">添加注释（通常是你的邮箱），用于识别该密钥的归属</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="120" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">3.2 交互式配置流程</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">执行命令后，终端会提示你进行以下配置：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">保存文件的目录：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">按 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Enter</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 键接受默认路径 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">~/.ssh/id_ed25519</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> ，这是推荐的做法。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">设置密码短语（Passphrase）：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">输入两次密码短语以保护私钥。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="FF0000"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">强烈建议设置密码短语！</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="555555"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">即使私钥文件被盗，没有密码短语也无法使用。如果不想每次输入，可以配合 ssh-agent 使用。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">如果看到如下输出，说明密钥生成成功：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="200" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Your identification has been saved in /Users/xxx/.ssh/id_ed25519
+Your public key has been saved in /Users/xxx/.ssh/id_ed25519.pub
+
+The key fingerprint is:
+SHA256:xxxxxxxxxxxxxxxxxxxx your_email@example.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="120" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">3.3 备选方案：使用 RSA 算法</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">某些旧平台可能不支持 Ed25519，此时可以使用 RSA 算法：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-keygen -t rsa -b 4096 -C &quot;your_email@example.com&quot;</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">参数 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">-b 4096</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 表示密钥长度为 4096 位，提供更高的安全性。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">4. 配置 ssh-agent</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-agent 是一个管理密钥的守护进程。配置后，你只需输入一次密码短语，后续操作无需重复输入。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">4.1 macOS 系统</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">macOS 自带了 ssh-agent 的自动配置，只需在 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">~/.ssh/config</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 中添加配置即可：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第一步：创建或编辑 ~/.ssh/config 文件</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">touch ~/.ssh/config
+nano ~/.ssh/config</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第二步：添加以下内容并保存：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="80" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve"># ~/.ssh/config
+Host *
+    AddKeysToAgent yes
+    UseKeychain yes
+    IdentityFile ~/.ssh/id_ed25519</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第三步：添加密钥到 ssh-agent</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-add --apple-use-keychain ~/.ssh/id_ed25519</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">系统会弹出钥匙串访问对话框，输入密码后即可将密钥保存到系统钥匙串中。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">4.2 Linux 系统</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Linux 系统需要手动启动 ssh-agent 并添加密钥：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">编辑 ~/.bashrc 或 ~/.zshrc，添加以下内容：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve"># 启动 ssh-agent 并加载密钥
+eval &quot;$(ssh-agent -s)&quot;
+ssh-add ~/.ssh/id_ed25519</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">使配置生效：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">source ~/.bashrc   # 或 source ~/.zshrc</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">4.3 Windows 系统</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Windows 10/11 自带的 OpenSSH 支持自动启动 ssh-agent：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第一步：设置 ssh-agent 开机自启：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Set-Service -Name ssh-agent -StartupType Automatic
+Start-Service ssh-agent</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第二步：添加密钥：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-add ~/.ssh/id_ed25519</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">5. 将公钥添加到 Git 平台</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第一步：查看你的公钥内容</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">cat ~/.ssh/id_ed25519.pub</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">输出类似如下内容（整行复制）：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="200" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIxxxxxxxxxxxxxxxxxxxx your_email@example.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第二步：添加到各平台</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">5.1 GitHub</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">① 登录 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">github.com</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">，点击右上角头像 → </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Settings</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">（设置）</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">② 左侧菜单选择 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">SSH and GPG keys</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">③ 点击 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">New SSH key</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 按钮</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">④ 填写表单：</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="2256"/>
+        <w:gridCol w:w="6770"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="D6E4F0" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="1F4E79"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">字段</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="D6E4F0" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="1F4E79"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">填写说明</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">Title</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">自定义名称，如 &quot;My MacBook&quot;</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">Type</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">选择 ED25519（或 RSA）</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">Key</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">粘贴上一步复制的完整公钥内容</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">⑤ 点击 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Add SSH key</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 完成添加</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">5.2 Gitee（码云）</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">① 登录 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">gitee.com</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">，点击右上角头像 → </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">设置</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">② 左侧菜单选择 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">SSH公钥</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">③ 点击 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">添加公钥</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">，填写标题并粘贴公钥内容</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">④ 输入登录密码确认后即可完成</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="2E75B6"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">5.3 GitLab</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">① 登录后点击右上角头像 → </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Preferences</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">② 左侧菜单选择 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">SSH Keys</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">③ 粘贴公钥，设置过期时间（建议不设限制），点击 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Add key</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 完成</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">6. 测试连接</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">密钥添加完成后，测试是否能正常连接：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">以 GitHub 为例：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh -T git@github.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">首次连接会提示确认指纹，输入 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">yes</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 即可。成功后会看到：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="548235" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="548235" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="548235" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="548235" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="D5F5D5" w:val="clear"/>
+        <w:spacing w:after="80" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Hi username! You've successfully authenticated, but GitHub does not provide shell access.</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="555555"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">注意：这条信息是正常的！它表示认证成功，只是 GitHub 不提供 shell 访问权限。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">Gitee 测试命令：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh -T git@gitee.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">7. 配置 Git 用户信息</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">使用 SSH Key 前，确保 Git 的用户名和邮箱与 Git 平台注册的一致：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">设置用户名：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">git config --global user.name &quot;Your Name&quot;</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">设置邮箱：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">git config --global user.email &quot;your_email@example.com&quot;</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">查看当前配置：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">git config --global --list</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">8. 使用 SSH 克隆仓库</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">配置完成后，使用 SSH 地址克隆仓库：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">git clone git@github.com:username/repository.git</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">SSH 地址格式为：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="200" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">git@平台域名:用户名/仓库名.git</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">9. VS Code 中的 SSH Key 配置</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">VS Code 内置了 Git 支持，只要系统级 SSH Key 配置正确，VS Code 会自动使用。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">配置步骤：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">① 确保系统级 SSH Key 已配置完成（上述所有步骤）</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">② 在 VS Code 中使用 SSH 地址克隆仓库</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">③ 如需手动指定 SSH 密钥路径，在 </w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">.vscode/settings.json</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 中添加：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="200" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+        <w:t xml:space="preserve">{
+    &quot;git.ssh&quot;: &quot;/usr/bin/ssh&quot;,
+    &quot;terminal.integrated.env.osx&quot;: {
+        &quot;GIT_SSH_COMMAND&quot;: &quot;ssh -i ~/.ssh/id_ed25519&quot;
+    }
+}</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">10. 常见问题排查</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="160"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="FF0000"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">10.1 Permission denied (publickey)</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">原因：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 服务器未找到你的公钥或密钥文件权限不正确</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">解决方法：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">① 确认公钥已正确添加到 Git 平台</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">② 检查密钥文件权限：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">chmod 700 ~/.ssh
+chmod 600 ~/.ssh/id_ed25519
+chmod 644 ~/.ssh/id_ed25519.pub</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">③ 确认 ssh-agent 正在运行且已添加密钥：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-add -l</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="160"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="FF0000"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">10.2 Host key verification failed</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">原因：</w:t>
+      </w:r>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve"> 远程主机指纹发生变化（常见于重新安装系统后）</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">解决方法：删除旧的已知主机记录：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">ssh-keygen -R github.com</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading2"/>
+        <w:spacing w:after="80" w:before="160"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="FF0000"/>
+          <w:sz w:val="28"/>
+          <w:szCs w:val="28"/>
+        </w:rPr>
+        <w:t xml:space="preserve">10.3 使用了错误的密钥</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">如果你有多对密钥，SSH 可能选择了错误的那一对。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">解决方法：在 ~/.ssh/config 中为每个主机指定密钥：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Code"/>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="200" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="20"/>
+          <w:szCs w:val="20"/>
+        </w:rPr>
+        <w:t xml:space="preserve"># ~/.ssh/config
+
+Host github.com
+    HostName github.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_github
+
+Host gitee.com
+    HostName gitee.com
+    User git
+    IdentityFile ~/.ssh/id_ed25519_gitee</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">11. 安全注意事项</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="1805"/>
+        <w:gridCol w:w="7221"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="1F4E79" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">序号</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="1F4E79" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">安全建议</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">1</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">永远不要将私钥文件上传到任何平台或分享给他人</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">2</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">务必设置密码短语（Passphrase），为私钥增加额外保护层</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">3</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">定期更换密钥，尤其是设备丢失或怀疑密钥泄露时</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">4</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">为不同平台使用不同的密钥对，便于单独吊销</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="1805"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">5</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="7221"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">确保 ~/.ssh 目录权限为 700，私钥文件权限为 600</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">12. 撤销和重新生成密钥</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">如果需要撤销旧的 SSH Key（如设备丢失、换电脑等），请按以下步骤操作：</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第一步：在 Git 平台删除旧公钥</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">进入平台的 SSH Key 管理页面，找到对应的公钥记录并删除。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第二步：删除本地旧密钥</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pBdr>
+          <w:top w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:bottom w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:left w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+          <w:right w:val="single" w:color="2E75B6" w:sz="6" w:space="1"/>
+        </w:pBdr>
+        <w:shd w:fill="F5F5F5" w:val="clear"/>
+        <w:spacing w:after="120" w:before="120"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+          <w:sz w:val="22"/>
+          <w:szCs w:val="22"/>
+        </w:rPr>
+        <w:t xml:space="preserve">rm ~/.ssh/id_ed25519 ~/.ssh/id_ed25519.pub</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="80" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第三步：按照第 3 节重新生成新的密钥对</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="40" w:before="80"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="26"/>
+          <w:szCs w:val="26"/>
+        </w:rPr>
+        <w:t xml:space="preserve">第四步：将新公钥添加到 Git 平台</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="333333"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">重复第 5 节的步骤，将新生成的公钥添加到所有需要的平台。</w:t>
+      </w:r>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:pStyle w:val="Heading1"/>
+        <w:spacing w:after="200" w:before="480"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:b/>
+          <w:bCs/>
+          <w:color w:val="1F4E79"/>
+          <w:sz w:val="32"/>
+          <w:szCs w:val="32"/>
+        </w:rPr>
+        <w:t xml:space="preserve">附录：常用命令速查表</w:t>
+      </w:r>
+    </w:p>
+    <w:tbl>
+      <w:tblPr>
+        <w:tblW w:type="dxa" w:w="9026"/>
+        <w:tblBorders>
+          <w:top w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:left w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:bottom w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:right w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideH w:val="single" w:color="AAAAAA" w:sz="1"/>
+          <w:insideV w:val="single" w:color="AAAAAA" w:sz="1"/>
+        </w:tblBorders>
+      </w:tblPr>
+      <w:tblGrid>
+        <w:gridCol w:w="2256"/>
+        <w:gridCol w:w="6770"/>
+      </w:tblGrid>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="1F4E79" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">操作</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:shd w:fill="1F4E79" w:val="clear"/>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:b/>
+                <w:bCs/>
+                <w:color w:val="FFFFFF"/>
+                <w:sz w:val="22"/>
+                <w:szCs w:val="22"/>
+              </w:rPr>
+              <w:t xml:space="preserve">命令</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">生成密钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">ssh-keygen -t ed25519 -C &quot;email&quot;</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">查看公钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">cat ~/.ssh/id_ed25519.pub</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">添加密钥到代理</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">ssh-add ~/.ssh/id_ed25519</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">列出已添加的密钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">ssh-add -l</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">测试连接</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">ssh -T git@github.com</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">SSH 克隆仓库</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">git clone git@github.com:user/repo.git</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+      <w:tr>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="2256"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:pPr>
+              <w:jc w:val="center"/>
+            </w:pPr>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">移除所有密钥</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+        <w:tc>
+          <w:tcPr>
+            <w:tcW w:type="dxa" w:w="6770"/>
+            <w:tcBorders>
+              <w:top w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:left w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:bottom w:val="single" w:color="CCCCCC" w:sz="1"/>
+              <w:right w:val="single" w:color="CCCCCC" w:sz="1"/>
+            </w:tcBorders>
+            <w:tcMar>
+              <w:top w:type="dxa" w:w="60"/>
+              <w:left w:type="dxa" w:w="100"/>
+              <w:bottom w:type="dxa" w:w="60"/>
+              <w:right w:type="dxa" w:w="100"/>
+            </w:tcMar>
+          </w:tcPr>
+          <w:p>
+            <w:r>
+              <w:rPr>
+                <w:rFonts w:ascii="Consolas" w:cs="Consolas" w:eastAsia="Consolas" w:hAnsi="Consolas"/>
+                <w:sz w:val="20"/>
+                <w:szCs w:val="20"/>
+              </w:rPr>
+              <w:t xml:space="preserve">ssh-add -D</w:t>
+            </w:r>
+          </w:p>
+        </w:tc>
+      </w:tr>
+    </w:tbl>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="400"/>
+      </w:pPr>
+    </w:p>
+    <w:p>
+      <w:pPr>
+        <w:spacing w:after="200" w:before="400"/>
+        <w:jc w:val="center"/>
+      </w:pPr>
+      <w:r>
+        <w:rPr>
+          <w:rFonts w:ascii="Arial" w:cs="Arial" w:eastAsia="Arial" w:hAnsi="Arial"/>
+          <w:color w:val="999999"/>
+          <w:sz w:val="24"/>
+          <w:szCs w:val="24"/>
+        </w:rPr>
+        <w:t xml:space="preserve">—— 文档结束 ——</w:t>
+      </w:r>
+    </w:p>
+    <w:sectPr>
+      <w:pgSz w:w="11906" w:h="16838" w:orient="portrait"/>
+      <w:pgMar w:top="1440" w:right="1440" w:bottom="1440" w:left="1440" w:header="708" w:footer="708" w:gutter="0"/>
+      <w:pgNumType/>
+      <w:docGrid w:linePitch="360"/>
+    </w:sectPr>
+  </w:body>
+</w:document>
