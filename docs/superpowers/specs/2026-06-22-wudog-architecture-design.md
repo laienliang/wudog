@@ -68,21 +68,33 @@
 
 ### 2.2 公共表
 
+> 以下表已由 cool-admin 脚手架提供，**直接使用无需新建**：
+
+| 表名 | 说明 | 已有字段 |
+|------|------|---------|
+| `user_info` | 用户主表 | id, unionid, avatarUrl, nickName, phone, gender, status, loginType, password, description, createTime, updateTime |
+| `user_address` | 收货地址 | id, userId, contact, phone, province, city, district, address, isDefault, createTime, updateTime |
+| `user_wx` | 微信绑定 | id, unionid, openid, avatarUrl, nickName, gender, language, city, province, country, type, createTime, updateTime |
+| `base_sys_user` | 系统管理员 | id, departmentId, userId(创建者), username, password, nickName, headImg, phone, email, status, socketId, createTime, updateTime |
+| `base_sys_role` | 角色 | id, userId, name, label, remark, menuIdList(JSON), departmentIdList(JSON), createTime, updateTime |
+| `base_sys_menu` | 菜单 | id, parentId, name, router, perms, type, icon, orderNum, viewPath, keepAlive, isShow, createTime, updateTime |
+| `base_sys_log` | 操作日志 | id, userId, action, ip, params(JSON), createTime, updateTime |
+| `base_sys_param` | 系统参数配置 | id, paramKey, paramValue, createTime, updateTime |
+
+> 以下为**需要新建**的公共表：
+
 | 表名 | 说明 | 关键字段 |
 |------|------|---------|
-| `user_info` | 用户主表 | id, phone, nickname, avatar |
-| `user_address` | 收货地址 | id, user_id, name, phone, detail |
-| `user_wx` | 微信绑定 | id, user_id, openid, session_key, unionid |
-| `merchant` | 商家表 | id, user_id, module_type, shop_name, contact_name, contact_phone, status |
-| `order_base` | 统一订单主表 | id, order_no, user_id, merchant_id, module_type, total_amount, status |
-| `cart_item` | 购物车 | id, user_id, goods_id, quantity |
-| `payment_record` | 支付记录 | id, order_no, amount, status, transaction_id |
-| `refund_record` | 退款记录 | id, order_no, amount, reason, status |
-| `financial_settlement` | 财务结算 | id, order_no, merchant_id, order_amount, commission_rate, commission_amount, merchant_income, settle_status |
+| `merchant` | 商家表 | id, userId, moduleType, shopName, contactName, contactPhone, status |
+| `order_base` | 统一订单主表 | id, orderNo, userId, merchantId, moduleType, totalAmount, payAmount, status |
+| `cart_item` | 购物车 | id, userId, goodsId, quantity, skuId |
+| `payment_record` | 支付记录 | id, orderNo, amount, status, transactionId |
+| `refund_record` | 退款记录 | id, orderNo, amount, reason, status |
+| `financial_settlement` | 财务结算 | id, orderNo, merchantId, orderAmount, commissionRate, commissionAmount, merchantIncome, settleStatus |
 | `upload_file` | 文件上传 | id, url, size, type |
-| `message_record` | 消息通知 | id, user_id, type, content, is_read |
-| `message_template` | 消息模板 | id, template_name, module_type, variables, content, status |
-| `shipping_template` | 运费模板 | id, module_type, name, rules(JSON), is_default |
+| `message_record` | 消息通知 | id, userId, type, content, isRead |
+| `message_template` | 消息模板 | id, templateName, moduleType, variables, content, status |
+| `shipping_template` | 运费模板 | id, moduleType, name, rules(JSON), isDefault |
 
 ### 2.3 订单模型
 
@@ -130,7 +142,13 @@ financial_settlement (财务结算)
 
 **第5组·社区**：`community_article`, `community_comment`, `community_topic`, `community_follow`, `community_like`, `community_collect`(游记收藏), `community_report`, `community_image`, `community_video`
 
-**第6组·管理后台**：`admin_user`(role_type), `admin_role`, `admin_merchant_apply`, `admin_merchant`(商家审核通过后), `admin_platform_banner`, `admin_platform_stat`, `admin_sensitive_word`, `admin_system_log`, `admin_notice`(公告), `admin_recommend_slot`(推荐位)
+**第6组·管理后台**：
+
+> 以下复用 cool-admin 已有表：
+> `base_sys_user`（管理员，通过 roleType 区分平台管理员/商家）、`base_sys_role`（角色权限）、`base_sys_menu`（菜单权限）、`base_sys_log`（操作日志）
+
+> 以下为**新建表**：
+> `platform_merchant_apply`(商家入驻申请), `platform_banner`(轮播图), `platform_stat`(统计数据), `sensitive_word`(敏感词), `platform_notice`(公告), `platform_recommend_slot`(推荐位)
 
 ---
 
@@ -284,19 +302,34 @@ master（生产分支，始终可部署）
 
 ```
 cool-admin-midway/src/modules/
-├── common/           # 公共模块
-│   ├── user/
-│   ├── order/
-│   ├── payment/
-│   ├── cart/
-│   ├── upload/
-│   └── message/
-├── clothing/         # 第1组
-├── food/             # 第2组
-├── lodging/          # 第3组
-├── travel/           # 第4组
-├── community/        # 第5组
-└── platform/         # 第6组
+├── base/           # cool-admin 内置（已有）
+│   ├── sys/        #   系统用户/角色/菜单/日志/参数
+│   └── entity/     #   BaseEntity 基类
+├── user/           # cool-admin 内置（已有）
+│   ├── info/       #   用户信息 user_info
+│   ├── wx/         #   微信绑定 user_wx
+│   └── address/    #   收货地址 user_address
+├── common/         # 公共模块（新建）
+│   ├── merchant/       #   商家表
+│   ├── order/          #   订单主表 + 各模块订单明细
+│   ├── payment/        #   支付记录 + 退款记录
+│   ├── cart/           #   购物车
+│   ├── upload/         #   文件上传
+│   ├── message/        #   消息通知 + 消息模板
+│   ├── finance/        #   财务结算
+│   └── shipping/       #   运费模板
+├── clothing/     # 第1组（新建）
+├── food/         # 第2组（新建）
+├── lodging/      # 第3组（新建）
+├── travel/       # 第4组（新建）
+├── community/    # 第5组（新建）
+└── platform/     # 第6组（新建）
+    ├── banner/       #   轮播图
+    ├── notice/       #   公告
+    ├── recommend/    #   推荐位
+    ├── stat/         #   统计数据
+    ├── merchantApply/#   商家入驻申请
+    └── sensitive/    #   敏感词
 ```
 
 ### 5.4 接口契约管理
