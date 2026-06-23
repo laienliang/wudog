@@ -1,0 +1,9 @@
+{
+  "pid": 1172,
+  "startedAt": 1782180283578,
+  "command": "dev",
+  "cwd": "/Users/lianglaiyang_1/svn/理工/2026课程/项目/wudog/pc-web",
+  "port": 3000,
+  "hostname": "::1",
+  "url": "http://[::1]:3000"
+}
