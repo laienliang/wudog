@@ -49,13 +49,22 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../../utils/request';
 
 const activeTab = ref('recommend');
 const feeds = ref([]);
+const loading = ref(false);
+
+const fallbackFeeds = [
+  { id: 1, title: '清晨走进乌东梯田，雾气像一层轻纱', images: ['https://via.placeholder.com/750x420/E8F1FB/1F5FA8?text=梯田晨雾'], avatar: '', nickName: '山里来客', likes: 128, comments: 18 },
+  { id: 2, title: '在苗家长桌宴里尝到最热闹的一餐', images: ['https://via.placeholder.com/750x420/FFF1EA/E85D2F?text=长桌宴'], avatar: '', nickName: '阿央', likes: 86, comments: 12 },
+  { id: 3, title: '第一次体验蜡染，蓝白纹样太好看了', images: ['https://via.placeholder.com/750x420/F7F8FA/1F5FA8?text=蜡染体验'], avatar: '', nickName: '小满', likes: 64, comments: 9 },
+];
 
 function switchTab(tab) {
   activeTab.value = tab;
+  loadFeeds();
 }
 
 function goPublish() {
@@ -65,6 +74,34 @@ function goPublish() {
 function goDetail(item) {
   wx.navigateTo({ url: `/pages_community/article/detail?id=${item.id}` });
 }
+
+async function loadFeeds() {
+  loading.value = true;
+  try {
+    const res = await get('/page', {
+      type: 'article',
+      page: 1,
+      pageSize: 20,
+    });
+    feeds.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          title: item.title,
+          images: item.image ? [item.image] : [],
+          avatar: '',
+          nickName: item.meta || '乌东游客',
+          likes: item.likes || 0,
+          comments: item.comments || 0,
+        }))
+      : fallbackFeeds;
+  } catch (e) {
+    feeds.value = activeTab.value === 'latest' ? [...fallbackFeeds].reverse() : fallbackFeeds;
+  } finally {
+    loading.value = false;
+  }
+}
+
+onMounted(loadFeeds);
 </script>
 
 <style lang="scss" scoped>

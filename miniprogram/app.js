@@ -4,7 +4,7 @@ App({
     console.log('乌东文旅小程序启动');
   },
   globalData: {
-    baseUrl: 'http://localhost:8001/api/open',
+    baseUrl: 'http://localhost:8001/open/client',
     userInfo: null,
   },
 });

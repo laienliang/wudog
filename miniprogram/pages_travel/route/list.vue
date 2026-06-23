@@ -22,17 +22,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../../../utils/request';
 
-const routes = ref([
+const fallbackRoutes = [
   { id: 1, title: '乌东苗寨深度一日游', mainImage: 'https://via.placeholder.com/750x400/F7F8FA/D4A14B?text=一日游', days: 1, includes: ['三餐', '导游', '门票', '银饰体验'], price: 298 },
   { id: 2, title: '苗寨+梯田徒步两日游', mainImage: 'https://via.placeholder.com/750x400/F7F8FA/D4A14B?text=两日游', days: 2, nights: 1, includes: ['住宿', '三餐', '徒步', '长桌宴'], price: 498 },
   { id: 3, title: '苗年节庆三天游', mainImage: 'https://via.placeholder.com/750x400/F7F8FA/D4A14B?text=苗年游', days: 3, nights: 2, includes: ['住宿', '节庆活动', '歌舞', '银饰锻造'], price: 688 },
-]);
+];
+
+const routes = ref(fallbackRoutes);
 
 function goDetail(item) {
   wx.navigateTo({ url: `/pages_travel/route/detail?id=${item.id}` });
 }
+
+onMounted(async () => {
+  try {
+    const res = await get('/page', { type: 'route', page: 1, pageSize: 20 });
+    routes.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          title: item.title,
+          mainImage: item.image,
+          days: Number((item.meta || '').match(/\d+/)?.[0] || 1),
+          includes: [item.subtitle, item.description].filter(Boolean),
+          price: item.price || 0,
+        }))
+      : fallbackRoutes;
+  } catch (e) {
+    routes.value = fallbackRoutes;
+  }
+});
 </script>
 
 <style lang="scss" scoped>
@@ -72,7 +93,10 @@ function goDetail(item) {
 }
 
 .include-tag {
-  @extend .tag;
+  display: inline-block;
+  border-radius: var(--radius-sm);
+  background: var(--color-bg-secondary);
+  color: var(--color-text-secondary);
   font-size: 20rpx;
   padding: 4rpx 12rpx;
 }

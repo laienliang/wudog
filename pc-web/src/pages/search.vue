@@ -78,8 +78,10 @@ type SearchResult = {
 };
 
 const route = useRoute();
+const clientApi = useClientApi();
 const searchText = ref(String(route.query.q || ''));
 const activeType = ref('all');
+const remoteResults = ref<SearchResult[]>([]);
 
 const tabs = [
   { label: '全部', value: 'all' },
@@ -90,7 +92,7 @@ const tabs = [
   { label: '社区', value: 'community' },
 ];
 
-const results: SearchResult[] = [
+const fallbackResults: SearchResult[] = [
   {
     id: 1,
     type: 'goods',
@@ -165,16 +167,18 @@ const results: SearchResult[] = [
 
 const keyword = computed(() => String(route.query.q || '').trim());
 
-const filteredResults = computed(() => {
+const localResults = computed(() => {
   const value = keyword.value.toLowerCase();
 
-  if (!value) return results;
+  if (!value) return fallbackResults;
 
-  return results.filter((item) => {
+  return fallbackResults.filter((item) => {
     const text = [item.title, item.description, item.typeLabel, ...item.keywords].join(' ').toLowerCase();
     return text.includes(value) || value.split(/\s+/).some((word) => text.includes(word));
   });
 });
+
+const filteredResults = computed(() => remoteResults.value.length ? remoteResults.value : localResults.value);
 
 const visibleResults = computed(() => {
   if (activeType.value === 'all') return filteredResults.value;
@@ -186,13 +190,49 @@ watch(
   (value) => {
     searchText.value = String(value || '');
     activeType.value = 'all';
+    loadSearch();
   },
 );
+
+async function loadSearch() {
+  const value = keyword.value;
+  if (!value) {
+    remoteResults.value = [];
+    return;
+  }
+  try {
+    const res = await clientApi.search(value);
+    remoteResults.value = (res?.list || []).map((item) => ({
+      id: item.id,
+      type: mapType(item.type),
+      typeLabel: item.typeName,
+      title: item.title,
+      description: item.description || item.subtitle || '',
+      meta: item.meta || '',
+      price: item.price,
+      image: item.image || '',
+      path: item.path,
+      keywords: [item.title, item.typeName, item.description || ''],
+    }));
+  } catch (err) {
+    remoteResults.value = [];
+  }
+}
+
+function mapType(type: string): SearchResult['type'] {
+  if (type === 'restaurant' || type === 'agriculture') return 'food';
+  if (type === 'lodging') return 'lodging';
+  if (type === 'scenic' || type === 'route' || type === 'guide') return 'travel';
+  if (type === 'article') return 'community';
+  return 'goods';
+}
 
 function submitSearch() {
   const value = searchText.value.trim();
   navigateTo(value ? `/search?q=${encodeURIComponent(value)}` : '/search');
 }
+
+onMounted(loadSearch);
 
 useHead(() => ({
   title: `${keyword.value || '搜索'} - 乌东文旅`,

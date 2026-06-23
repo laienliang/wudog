@@ -81,7 +81,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../../../utils/request';
 
 const restaurant = ref({
   name: '苗家大院',
@@ -111,6 +112,32 @@ const selectedDate = ref('');
 const personCount = ref(2);
 const contactName = ref('');
 const contactPhone = ref('');
+
+onMounted(async () => {
+  const pages = getCurrentPages();
+  const current = pages[pages.length - 1];
+  const id = current?.options?.id || 1;
+  try {
+    const data = await get('/detail', { type: 'restaurant', id });
+    restaurant.value = {
+      name: data.title,
+      rating: data.rating || 5,
+      distance: data.address || data.meta || '乌东村',
+      description: data.description,
+    };
+    images.value = data.images?.length ? data.images : [data.image].filter(Boolean);
+    dishes.value = data.dishes?.length
+      ? data.dishes.map(item => ({
+          name: item.name,
+          price: item.price,
+          image: item.mainImage,
+          description: item.description,
+        }))
+      : dishes.value;
+  } catch (e) {
+    //
+  }
+});
 
 function onDateChange(e) {
   selectedDate.value = e.detail.value;

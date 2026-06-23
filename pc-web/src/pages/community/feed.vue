@@ -37,18 +37,40 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const activeTab = ref('recommend');
+const clientApi = useClientApi();
 
-const articles = ref([
+const fallbackArticles = [
   { title: '乌东苗寨的清晨，云雾中的吊脚楼', cover: 'https://via.placeholder.com/600x800/F7F8FA/1F5FA8?text=苗寨清晨', author: '旅行者小王', authorAvatar: 'https://via.placeholder.com/40x40/E8F1FB/1F5FA8?text=W', likes: 128, comments: 36 },
   { title: '第一次来乌东，就被长桌宴震撼了', cover: 'https://via.placeholder.com/600x400/F7F8FA/E85D2F?text=长桌宴', author: '美食达人', authorAvatar: 'https://via.placeholder.com/40x40/FFF1EA/E85D2F?text=M', likes: 256, comments: 82 },
   { title: '乌东梯田，秋天的金色画卷', cover: 'https://via.placeholder.com/600x600/F7F8FA/6B8E3D?text=梯田', author: '摄影师老李', authorAvatar: 'https://via.placeholder.com/40x40/F6FFED/6B8E3D?text=L', likes: 342, comments: 48 },
   { title: '亲手打了一只银镯子——乌东银饰体验', cover: 'https://via.placeholder.com/600x500/F7F8FA/D4A14B?text=银饰', author: '手工艺爱好者', authorAvatar: 'https://via.placeholder.com/40x40/FFF7E6/D4A14B?text=H', likes: 189, comments: 55 },
   { title: '苗年节的篝火晚会，太燃了', cover: 'https://via.placeholder.com/600x700/F7F8FA/E85D2F?text=苗年', author: '文化探索者', authorAvatar: 'https://via.placeholder.com/40x40/E8F1FB/1F5FA8?text=C', likes: 420, comments: 96 },
   { title: '苗寨民宿推荐｜吊脚楼里的星空之夜', cover: 'https://via.placeholder.com/600x450/F7F8FA/6B8E3D?text=民宿', author: '民宿控', authorAvatar: 'https://via.placeholder.com/40x40/F6FFED/6B8E3D?text=R', likes: 156, comments: 42 },
-]);
+];
+
+const articles = ref(fallbackArticles);
+
+onMounted(async () => {
+  try {
+    const res = await clientApi.page('article', { page: 1, pageSize: 20 });
+    articles.value = res?.list?.length
+      ? res.list.map((item, idx) => ({
+          id: item.id,
+          title: item.title,
+          cover: item.image || fallbackArticles[idx % fallbackArticles.length].cover,
+          author: item.meta || '乌东游客',
+          authorAvatar: fallbackArticles[idx % fallbackArticles.length].authorAvatar,
+          likes: item.likes || 0,
+          comments: item.comments || 0,
+        }))
+      : fallbackArticles;
+  } catch (err) {
+    articles.value = fallbackArticles;
+  }
+});
 
 useHead({
   title: '游记社区 - 乌东文旅',

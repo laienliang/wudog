@@ -73,7 +73,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../utils/request';
 
 const product = ref({
   id: 1,
@@ -99,6 +100,31 @@ const specs = ref([
 
 const activeSpec = ref(1);
 const isCollected = ref(false);
+const images = ref(product.value.images);
+
+onMounted(async () => {
+  const pages = getCurrentPages();
+  const current = pages[pages.length - 1];
+  const id = current?.options?.id || 1;
+  try {
+    const data = await get('/detail', { type: 'clothing', id });
+    product.value = {
+      ...product.value,
+      id: data.id,
+      title: data.title,
+      subtitle: data.subtitle || data.description,
+      price: data.price,
+      mainImage: data.image,
+      images: data.images?.length ? data.images : [data.image],
+      tags: ['非遗', data.typeName].filter(Boolean),
+      craftIntro: data.raw?.craftIntro || data.description || product.value.craftIntro,
+      inheritorName: data.raw?.inheritorName || product.value.inheritorName,
+    };
+    images.value = product.value.images;
+  } catch (e) {
+    images.value = product.value.images;
+  }
+});
 
 function toggleCollect() {
   isCollected.value = !isCollected.value;

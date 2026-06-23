@@ -57,8 +57,17 @@ function goDetail(item) {
 onMounted(async () => {
   loading.value = true;
   try {
-    const res = await get('/clothing/goods/page', { page: 1, pageSize: 20, status: 1 });
-    if (res?.list) goodsList.value = res.list;
+    const res = await get('/page', { type: 'clothing', page: 1, pageSize: 20 });
+    if (res?.list) {
+      goodsList.value = res.list.map(item => ({
+        id: item.id,
+        title: item.title,
+        subtitle: item.subtitle || item.description,
+        price: item.price,
+        mainImage: item.image,
+        sales: item.sales || 0,
+      }));
+    }
   } catch (e) {
     // 使用 mock 数据
     goodsList.value = [

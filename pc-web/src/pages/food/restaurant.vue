@@ -32,12 +32,35 @@
 </template>
 
 <script setup lang="ts">
-const restaurants = ref([
+const clientApi = useClientApi();
+
+const fallbackRestaurants = [
   { id: 1, name: '苗家大院', cover: 'https://via.placeholder.com/600x400/FFF1EA/E85D2F?text=苗家大院', tags: ['长桌宴', '苗家菜'], rating: 4.8, distance: '500m', description: '正宗苗家菜，特色长桌宴，体验最地道的乌东风味。' },
   { id: 2, name: '梯田人家', cover: 'https://via.placeholder.com/600x400/E8F1FB/1F5FA8?text=梯田人家', tags: ['农家菜', '观景'], rating: 4.5, distance: '800m', description: '坐拥梯田美景，食材全部来自本地农家。' },
   { id: 3, name: '银匠厨房', cover: 'https://via.placeholder.com/600x400/FFF7E6/D4A14B?text=银匠厨房', tags: ['银饰体验', '美食'], rating: 4.9, distance: '300m', description: '边看银饰锻造边品尝苗家美食，独特体验。' },
   { id: 4, name: '蜡染小馆', cover: 'https://via.placeholder.com/600x400/F6FFED/6B8E3D?text=蜡染小馆', tags: ['蜡染体验', '素食'], rating: 4.6, distance: '600m', description: '结合蜡染艺术的素食餐厅，清新雅致。' },
-]);
+];
+
+const restaurants = ref(fallbackRestaurants);
+
+onMounted(async () => {
+  try {
+    const res = await clientApi.page('restaurant', { page: 1, pageSize: 20 });
+    restaurants.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          name: item.title,
+          cover: item.image || fallbackRestaurants[0].cover,
+          tags: ['苗家菜', item.meta || '乌东风味'].filter(Boolean),
+          rating: item.rating || 5,
+          distance: item.address || '乌东村',
+          description: item.description || item.subtitle,
+        }))
+      : fallbackRestaurants;
+  } catch (err) {
+    restaurants.value = fallbackRestaurants;
+  }
+});
 
 useHead({
   title: '美食餐厅 - 乌东文旅',

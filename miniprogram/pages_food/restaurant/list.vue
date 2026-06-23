@@ -23,16 +23,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../../../utils/request';
 
-const restaurants = ref([
+const fallbackRestaurants = [
   { id: 1, name: '苗家大院', cover: 'https://via.placeholder.com/750x400/FFF1EA/E85D2F?text=苗家大院', tags: ['长桌宴', '苗家菜'], rating: 4.8, distance: '500m', description: '正宗苗家菜，特色长桌宴，体验最地道的乌东风味' },
   { id: 2, name: '梯田人家', cover: 'https://via.placeholder.com/750x400/E8F1FB/1F5FA8?text=梯田人家', tags: ['农家菜', '观景'], rating: 4.5, distance: '800m', description: '坐拥梯田美景，食材全部来自本地农家' },
-]);
+];
+
+const restaurants = ref(fallbackRestaurants);
 
 function goDetail(item) {
   wx.navigateTo({ url: `/pages_food/restaurant/detail?id=${item.id}` });
 }
+
+onMounted(async () => {
+  try {
+    const res = await get('/page', { type: 'restaurant', page: 1, pageSize: 20 });
+    restaurants.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          name: item.title,
+          cover: item.image,
+          tags: ['苗家菜', item.meta].filter(Boolean),
+          rating: item.rating || 5,
+          distance: item.address || item.meta || '乌东村',
+          description: item.description || item.subtitle,
+        }))
+      : fallbackRestaurants;
+  } catch (e) {
+    restaurants.value = fallbackRestaurants;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

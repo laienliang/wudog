@@ -1,8 +1,0 @@
-const restaurant_vue_vue_type_style_index_0_scoped_114e101f_lang = ".food-restaurant-page[data-v-114e101f]{background:var(--color-bg-secondary);min-height:100vh;padding:32px 0}.page-header[data-v-114e101f]{margin-bottom:24px}.page-header h1[data-v-114e101f]{font-size:28px;font-weight:700}.page-desc[data-v-114e101f]{color:var(--color-text-secondary);font-size:15px;margin-top:8px}.restaurant-grid[data-v-114e101f]{display:grid;gap:24px;grid-template-columns:repeat(2,1fr)}.restaurant-card[data-v-114e101f]{background:#fff;border-radius:var(--radius-lg);box-shadow:var(--shadow-light);overflow:hidden;transition:all .3s ease}.restaurant-card[data-v-114e101f]:hover{box-shadow:var(--shadow-medium)}.restaurant-card-link[data-v-114e101f]{display:block}.restaurant-cover[data-v-114e101f]{height:280px;-o-object-fit:cover;object-fit:cover;width:100%}.restaurant-body[data-v-114e101f]{padding:20px}.restaurant-name[data-v-114e101f]{font-size:20px;font-weight:500;margin-bottom:12px}.restaurant-tags[data-v-114e101f]{display:flex;gap:8px;margin-bottom:12px}.restaurant-meta[data-v-114e101f]{color:var(--color-text-secondary);display:flex;font-size:13px;gap:20px;margin-bottom:12px}.restaurant-desc[data-v-114e101f]{color:var(--color-text-tertiary);display:-webkit-box;font-size:14px;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}@media(max-width:768px){.restaurant-grid[data-v-114e101f]{grid-template-columns:1fr}}";
-
-const restaurantStyles_FEqHSC0G = [
-  restaurant_vue_vue_type_style_index_0_scoped_114e101f_lang
-];
-
-export { restaurantStyles_FEqHSC0G as default };
-//# sourceMappingURL=restaurant-styles.FEqHSC0G.mjs.map

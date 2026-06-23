@@ -2,7 +2,7 @@
  * 请求封装
  */
 
-const BASE_URL = 'http://localhost:8001/api/open';
+const BASE_URL = 'http://localhost:8001/open/client';
 
 function getToken() {
   return wx.getStorageSync('token') || '';
@@ -22,8 +22,9 @@ function request(url, method = 'GET', data = {}, header = {}) {
         ...header,
       },
       success(res) {
-        if (res.statusCode === 200 && res.data.code === 0) {
-          resolve(res.data.data);
+        const body = res.data || {};
+        if (res.statusCode === 200 && (body.code === 0 || body.code === 1000 || body.code === undefined)) {
+          resolve(body.data ?? body);
         } else if (res.statusCode === 401) {
           // Token 过期，跳转登录
           wx.removeStorageSync('token');
@@ -31,8 +32,8 @@ function request(url, method = 'GET', data = {}, header = {}) {
           wx.showToast({ title: '请先登录', icon: 'none' });
           resolve(null);
         } else {
-          wx.showToast({ title: res.data.message || '请求失败', icon: 'none' });
-          reject(res.data);
+          wx.showToast({ title: body.message || '请求失败', icon: 'none' });
+          reject(body);
         }
       },
       fail(err) {

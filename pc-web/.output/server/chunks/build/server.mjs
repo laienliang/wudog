@@ -513,12 +513,12 @@ const _routes = [
     name: "index",
     path: "/",
     meta: __nuxt_page_meta || {},
-    component: () => import('./index-DdBxvWCp.mjs')
+    component: () => import('./index-BVc-unFi.mjs')
   },
   {
     name: "search",
     path: "/search",
-    component: () => import('./search-DFy54_s7.mjs')
+    component: () => import('./search-DjgnV9mY.mjs')
   },
   {
     name: "user-login",
@@ -528,12 +528,12 @@ const _routes = [
   {
     name: "lodging-list",
     path: "/lodging/list",
-    component: () => import('./list-_jI8Rocw.mjs')
+    component: () => import('./list-CikGk4o6.mjs')
   },
   {
     name: "travel",
     path: "/travel",
-    component: () => import('./index-CjLrcuws.mjs')
+    component: () => import('./index-DbzN3-L7.mjs')
   },
   {
     name: "user-profile",
@@ -543,54 +543,54 @@ const _routes = [
   {
     name: "clothing-list",
     path: "/clothing/list",
-    component: () => import('./list-DxoVwU0E.mjs')
+    component: () => import('./list-CQqajBaY.mjs')
   },
   {
     name: "community-feed",
     path: "/community/feed",
-    component: () => import('./feed-B6wXG7tn.mjs')
+    component: () => import('./feed-vGSAB9A5.mjs')
   },
   {
     name: "food-restaurant",
     path: "/food/restaurant",
-    component: () => import('./restaurant-DM2AxSLU.mjs'),
+    component: () => import('./restaurant-CpRiVD1G.mjs'),
     children: [
       {
         name: "food-restaurant-id",
         path: ":id()",
-        component: () => import('./_id_-CEfkC_DO.mjs')
+        component: () => import('./_id_-Bixv4Nzy.mjs')
       }
     ]
   },
   {
     name: "community-publish",
     path: "/community/publish",
-    component: () => import('./publish-C-lKapIP.mjs')
+    component: () => import('./publish-BikJ6DyR.mjs')
   },
   {
     name: "travel-guide-id",
     path: "/travel/guide/:id()",
-    component: () => import('./_id_-CEnvV87_.mjs')
+    component: () => import('./_id_-BVWDI6E0.mjs')
   },
   {
     name: "travel-route-id",
     path: "/travel/route/:id()",
-    component: () => import('./_id_-DRD6d3Xw.mjs')
+    component: () => import('./_id_-esiRg-kc.mjs')
   },
   {
     name: "lodging-detail-id",
     path: "/lodging/detail/:id()",
-    component: () => import('./_id_-DoCGkCs_.mjs')
+    component: () => import('./_id_-D-BTRBUz.mjs')
   },
   {
     name: "clothing-detail-id",
     path: "/clothing/detail/:id()",
-    component: () => import('./_id_-Bi4xlbEV.mjs')
+    component: () => import('./_id_-ThPSp8lM.mjs')
   },
   {
     name: "community-article-id",
     path: "/community/article/:id()",
-    component: () => import('./_id_-eV1LtHd0.mjs')
+    component: () => import('./_id_-B8Sbtdzt.mjs')
   }
 ];
 const _wrapInTransition = (props, children) => {

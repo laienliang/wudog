@@ -27,11 +27,29 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const clientApi = useClientApi();
 const hostels = [
   { id: 1, name: '梯田观景民宿', image: 'https://via.placeholder.com/900x560/F7F8FA/6B8E3D?text=梯田观景', price: 388, tags: ['田园风', '吊脚楼'], description: '推窗可见梯田与山雾，适合周末慢旅行。', features: ['独立卫浴', '观景露台', '早餐', 'WiFi'] },
   { id: 2, name: '苗寨小院', image: 'https://via.placeholder.com/900x560/F7F8FA/6B8E3D?text=苗寨小院', price: 268, tags: ['民族风', '庭院'], description: '安静小院，临近古寨步道和手作工坊。', features: ['庭院', '空调', '茶室', '接送咨询'] },
 ];
-const hostel = computed(() => hostels.find((item) => item.id === Number(route.params.id)) || hostels[0]);
+const hostel = ref(hostels.find((item) => item.id === Number(route.params.id)) || hostels[0]);
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('lodging', String(route.params.id));
+    const rooms = data.rooms || [];
+    hostel.value = {
+      id: data.id,
+      name: data.title,
+      image: data.image || hostel.value.image,
+      price: rooms[0]?.price || data.price || hostel.value.price,
+      tags: [data.meta, data.address, data.raw?.styleTags].filter(Boolean),
+      description: data.description || hostel.value.description,
+      features: rooms[0]?.facilities?.split(/[，,]/).filter(Boolean) || hostel.value.features,
+    };
+  } catch (err) {
+    //
+  }
+});
 useHead(() => ({ title: `${hostel.value.name} - 乌东文旅` }));
 </script>
 

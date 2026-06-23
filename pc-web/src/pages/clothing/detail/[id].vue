@@ -41,13 +41,33 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const clientApi = useClientApi();
 const goodsMap = [
   { id: 1, title: '苗族银饰手镯', subtitle: '手工锻造，传承百年工艺', price: 368, sales: 128, image: 'https://via.placeholder.com/720x560/F7F8FA/1F5FA8?text=银饰手镯', tags: ['银饰', '手工锻造', '伴手礼'], detail: '由乌东银匠采用传统錾刻工艺制作，纹样取自苗族山水、蝴蝶与谷穗图腾。', features: ['足银材质，手工打磨', '附赠工坊溯源卡', '适合日常佩戴和节庆搭配'] },
   { id: 2, title: '蜡染布艺挂画', subtitle: '天然植物染料，纯手工制作', price: 198, sales: 86, image: 'https://via.placeholder.com/720x560/F7F8FA/1F5FA8?text=蜡染挂画', tags: ['蜡染', '家居装饰', '植物染'], detail: '采用传统蜡刀绘制纹样，经多次浸染和脱蜡完成，适合客厅、书房与民宿空间。', features: ['天然植物染料', '每幅纹理略有不同', '支持装裱搭配'] },
   { id: 3, title: '苗族刺绣香包', subtitle: '精美刺绣，天然香料填充', price: 68, sales: 256, image: 'https://via.placeholder.com/720x560/F7F8FA/1F5FA8?text=刺绣香包', tags: ['刺绣', '香包', '节庆礼物'], detail: '小巧香包由当地绣娘手工缝制，内置草本香料，适合随身佩戴。', features: ['手工刺绣', '草本香料', '多色可选'] },
 ];
 
-const goods = computed(() => goodsMap.find((item) => item.id === Number(route.params.id)) || goodsMap[0]);
+const goods = ref(goodsMap.find((item) => item.id === Number(route.params.id)) || goodsMap[0]);
+
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('clothing', String(route.params.id));
+    goods.value = {
+      id: data.id,
+      title: data.title,
+      subtitle: data.subtitle || data.description || '',
+      price: data.price || 0,
+      sales: data.sales || 0,
+      image: data.image || goods.value.image,
+      tags: ['非遗手作', data.typeName, data.meta].filter(Boolean),
+      detail: data.raw?.detailContent || data.description || goods.value.detail,
+      features: [data.raw?.craftIntro, data.raw?.inheritorName ? `传承人：${data.raw.inheritorName}` : '', '本地工坊发货'].filter(Boolean),
+    };
+  } catch (err) {
+    //
+  }
+});
 
 useHead(() => ({
   title: `${goods.value.title} - 乌东文旅`,

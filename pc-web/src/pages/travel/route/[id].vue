@@ -36,6 +36,7 @@
 
 <script setup lang="ts">
 const currentRoute = useRoute();
+const clientApi = useClientApi();
 const routes = [
   {
     id: 1,
@@ -70,7 +71,32 @@ const routes = [
     ],
   },
 ];
-const routePlan = computed(() => routes.find((item) => item.id === Number(currentRoute.params.id)) || routes[0]);
+const routePlan = ref(routes.find((item) => item.id === Number(currentRoute.params.id)) || routes[0]);
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('route', String(currentRoute.params.id));
+    routePlan.value = {
+      id: data.id,
+      title: data.title,
+      image: data.image || routePlan.value.image,
+      days: data.raw?.days || routePlan.value.days,
+      nights: Math.max((data.raw?.days || routePlan.value.days) - 1, 0),
+      people: '2人成团',
+      rating: data.rating || 5,
+      price: data.price || 0,
+      includes: data.raw?.includes?.split(/[，,、]/).filter(Boolean) || routePlan.value.includes,
+      description: data.description || routePlan.value.description,
+      timeline: data.days?.length
+        ? data.days.map((day) => ({
+            title: `第 ${day.day} 天`,
+            content: [day.description, day.spots, day.meals, day.accommodation].filter(Boolean).join(' · '),
+          }))
+        : routePlan.value.timeline,
+    };
+  } catch (err) {
+    //
+  }
+});
 useHead(() => ({ title: `${routePlan.value.title} - 乌东文旅` }));
 </script>
 

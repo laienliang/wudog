@@ -24,6 +24,7 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const clientApi = useClientApi();
 const guides = [
   {
     id: 1,
@@ -53,7 +54,26 @@ const guides = [
     ],
   },
 ];
-const guide = computed(() => guides.find((item) => item.id === Number(route.params.id)) || guides[0]);
+const guide = ref(guides.find((item) => item.id === Number(route.params.id)) || guides[0]);
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('guide', String(route.params.id));
+    guide.value = {
+      id: data.id,
+      title: data.title,
+      departure: data.raw?.departure || guide.value.departure,
+      destination: '乌东',
+      duration: data.raw?.duration || guide.value.duration,
+      cost: data.raw?.cost || guide.value.cost,
+      description: data.description || guide.value.description,
+      steps: [
+        { title: data.raw?.transport || '交通方式', content: data.raw?.content || data.description },
+      ],
+    };
+  } catch (err) {
+    //
+  }
+});
 useHead(() => ({ title: `${guide.value.title} - 乌东文旅` }));
 </script>
 

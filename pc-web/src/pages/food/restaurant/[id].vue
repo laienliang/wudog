@@ -34,11 +34,33 @@
 
 <script setup lang="ts">
 const route = useRoute();
+const clientApi = useClientApi();
 const restaurants = [
   { id: 1, name: '苗家大院', cover: 'https://via.placeholder.com/900x560/FFF1EA/E85D2F?text=苗家大院', tags: ['长桌宴', '苗家菜'], rating: 4.8, distance: '500m', avg: 88, description: '正宗苗家菜，特色长桌宴，适合家庭聚餐和团队体验。', menu: [{ name: '酸汤鱼', price: 128 }, { name: '苗家腊肉', price: 68 }, { name: '糯米饭', price: 28 }] },
   { id: 2, name: '梯田人家', cover: 'https://via.placeholder.com/900x560/E8F1FB/1F5FA8?text=梯田人家', tags: ['农家菜', '观景'], rating: 4.5, distance: '800m', avg: 76, description: '坐拥梯田美景，食材全部来自本地农家。', menu: [{ name: '梯田稻花鱼', price: 118 }, { name: '时令野菜', price: 36 }] },
 ];
-const restaurant = computed(() => restaurants.find((item) => item.id === Number(route.params.id)) || restaurants[0]);
+const restaurant = ref(restaurants.find((item) => item.id === Number(route.params.id)) || restaurants[0]);
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('restaurant', String(route.params.id));
+    restaurant.value = {
+      id: data.id,
+      name: data.title,
+      cover: data.image || restaurant.value.cover,
+      tags: ['苗家菜', data.meta].filter(Boolean),
+      rating: data.rating || 5,
+      distance: data.address || data.meta || '乌东村',
+      avg: data.price || 88,
+      description: data.description || restaurant.value.description,
+      menu: (data.dishes?.length ? data.dishes : restaurant.value.menu).map((dish) => ({
+        name: dish.name,
+        price: dish.price,
+      })),
+    };
+  } catch (err) {
+    //
+  }
+});
 useHead(() => ({ title: `${restaurant.value.name} - 乌东文旅` }));
 </script>
 

@@ -66,13 +66,15 @@
 </template>
 
 <script setup lang="ts">
-const categories = [
+const clientApi = useClientApi();
+
+const categories = ref([
   { id: 0, name: '全部' },
   { id: 1, name: '银饰' },
   { id: 2, name: '蜡染' },
   { id: 3, name: '刺绣' },
   { id: 4, name: '服饰' },
-];
+]);
 
 const sortOptions = [
   { label: '综合', value: 'default' },
@@ -88,14 +90,46 @@ const pageSize = 12;
 const total = ref(48);
 
 // Mock 数据
-const goodsList = ref([
+const fallbackGoods = [
   { id: 1, title: '苗族银饰手镯', subtitle: '手工锻造，传承百年工艺', price: 368, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=银饰手镯', sales: 128 },
   { id: 2, title: '蜡染布艺挂画', subtitle: '天然植物染料，纯手工制作', price: 198, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=蜡染挂画', sales: 86 },
   { id: 3, title: '苗族刺绣香包', subtitle: '精美刺绣，天然香料填充', price: 68, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=刺绣香包', sales: 256 },
   { id: 4, title: '苗服日常款', subtitle: '传统纹样，现代剪裁', price: 588, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=苗服', sales: 42 },
   { id: 5, title: '银头饰套装', subtitle: '新娘必备，精工细作', price: 1280, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=头饰', sales: 18 },
   { id: 6, title: '蜡染围巾', subtitle: '便携实用，送礼佳品', price: 128, mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=围巾', sales: 312 },
-]);
+];
+
+const goodsList = ref(fallbackGoods);
+
+async function loadGoods() {
+  try {
+    const [categoryRes, goodsRes] = await Promise.all([
+      clientApi.categories(),
+      clientApi.page('clothing', {
+        page: currentPage.value,
+        pageSize,
+        categoryId: activeCategory.value || undefined,
+      }),
+    ]);
+    categories.value = [{ id: 0, name: '全部' }, ...(categoryRes?.clothing || [])];
+    total.value = goodsRes?.pagination?.total || 0;
+    goodsList.value = goodsRes?.list?.length
+      ? goodsRes.list.map(item => ({
+          id: item.id,
+          title: item.title,
+          subtitle: item.subtitle || item.description,
+          price: item.price || 0,
+          mainImage: item.image,
+          sales: item.sales || 0,
+        }))
+      : fallbackGoods;
+  } catch (err) {
+    goodsList.value = fallbackGoods;
+  }
+}
+
+watch([activeCategory, currentPage], loadGoods);
+onMounted(loadGoods);
 
 useHead({
   title: '非遗商品 - 乌东文旅',

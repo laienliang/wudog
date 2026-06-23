@@ -20,7 +20,10 @@
 </template>
 
 <script setup lang="ts">
-const article = {
+const route = useRoute();
+const clientApi = useClientApi();
+
+const article = ref({
   title: '乌东苗寨的清晨，云雾中的吊脚楼',
   cover: 'https://via.placeholder.com/1000x560/F7F8FA/1F5FA8?text=苗寨清晨',
   author: '旅行者小王',
@@ -32,10 +35,27 @@ const article = {
     '沿着石板路往梯田方向走，能听见远处鸡鸣和溪水声。当地阿姨已经开始准备糯米饭，空气里有木柴和米香。',
     '最喜欢的是银饰工坊，老师傅一边敲打银片，一边讲纹样里的蝴蝶、谷穗和山路。那一刻，非遗不再只是展柜里的作品，而是还在生活里发光的手艺。',
   ],
-};
+});
+
+onMounted(async () => {
+  try {
+    const data = await clientApi.detail('article', String(route.params.id));
+    article.value = {
+      title: data.title,
+      cover: data.image || article.value.cover,
+      author: data.meta || '乌东游客',
+      authorAvatar: article.value.authorAvatar,
+      likes: data.likes || 0,
+      comments: data.comments || 0,
+      content: (data.raw?.content || data.description || '').split(/\n+/).filter(Boolean),
+    };
+  } catch (err) {
+    //
+  }
+});
 
 useHead({
-  title: `${article.title} - 乌东文旅`,
+  title: `${article.value.title} - 乌东文旅`,
 });
 </script>
 

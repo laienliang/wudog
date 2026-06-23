@@ -21,16 +21,38 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted } from 'vue';
+import { get } from '../../../utils/request';
 
-const scenics = ref([
+const fallbackScenics = [
   { id: 1, name: '乌东梯田景区', mainImage: 'https://via.placeholder.com/750x400/F7F8FA/D4A14B?text=梯田', address: '贵州省黔东南州', rating: 4.8, openHours: '06:00-18:00', description: '千年梯田，四季风光各异，春季灌水如镜，秋季金黄如画。' },
   { id: 2, name: '苗寨古村落', mainImage: 'https://via.placeholder.com/750x400/F7F8FA/D4A14B?text=古村落', address: '乌东村内', rating: 4.6, openHours: '全天开放', description: '保存完好的苗族古建筑群，吊脚楼、风雨桥、鼓楼一应俱全。' },
-]);
+];
+
+const scenics = ref(fallbackScenics);
 
 function goDetail(item) {
   wx.navigateTo({ url: `/pages_travel/scenic/detail?id=${item.id}` });
 }
+
+onMounted(async () => {
+  try {
+    const res = await get('/page', { type: 'scenic', page: 1, pageSize: 20 });
+    scenics.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          name: item.title,
+          mainImage: item.image,
+          address: item.address || item.meta,
+          rating: item.rating || 5,
+          openHours: item.meta || '全天开放',
+          description: item.description || item.subtitle,
+        }))
+      : fallbackScenics;
+  } catch (e) {
+    scenics.value = fallbackScenics;
+  }
+});
 </script>
 
 <style lang="scss" scoped>

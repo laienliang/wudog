@@ -126,16 +126,31 @@ function goArticle(art) {
 
 onMounted(async () => {
   try {
-    const goods = await get('/clothing/goods/page', { page: 1, pageSize: 5, status: 1 });
-    if (goods?.list) hotGoods.value = goods.list;
+    const home = await get('/home');
+    if (home?.banners?.length) {
+      banners.value = home.banners.map(item => ({ image: item.image, link: item.link || '' }));
+    }
+    if (home?.hot?.clothing?.length) {
+      hotGoods.value = home.hot.clothing.map(item => ({
+        id: item.id,
+        title: item.title,
+        subtitle: item.subtitle,
+        price: item.price,
+        mainImage: item.image,
+        sales: item.sales || 0,
+      }));
+    }
+    if (home?.articles?.length) {
+      articles.value = home.articles.map(item => ({
+        id: item.id,
+        title: item.title,
+        images: item.image ? [item.image] : [],
+        nickName: item.meta || '乌东游客',
+        likes: item.likes || 0,
+      }));
+    }
   } catch (e) {
-    // 静默失败，首页不影响使用
-  }
-  try {
-    const arts = await get('/community/article/page', { page: 1, pageSize: 3, status: 1 });
-    if (arts?.list) articles.value = arts.list;
-  } catch (e) {
-    //
+    // 首页兜底内容保留
   }
 });
 </script>
@@ -257,7 +272,9 @@ onMounted(async () => {
 }
 
 .hot-price {
-  @extend .price;
+  color: var(--color-secondary-orange);
+  font-weight: bold;
+  font-size: 32rpx;
 }
 
 .article-list {

@@ -44,7 +44,7 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, onMounted } from 'vue';
 
 const isLoggedIn = ref(false);
 const userInfo = ref({});
@@ -79,6 +79,15 @@ function goLogin() {
 function goProfile() {
   wx.navigateTo({ url: '/pages_user/profile' });
 }
+
+function refreshUser() {
+  const storedUser = wx.getStorageSync('userInfo');
+  const token = wx.getStorageSync('token');
+  userInfo.value = storedUser || {};
+  isLoggedIn.value = Boolean(token || storedUser?.nickName);
+}
+
+onMounted(refreshUser);
 </script>
 
 <style lang="scss" scoped>

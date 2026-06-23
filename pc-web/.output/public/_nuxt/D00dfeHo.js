@@ -1,0 +1,1 @@
+import{am as s}from"./B4KRNvnh.js";function r(){const i=s().public.apiBase;async function a(e,t){const c=await $fetch(e,{baseURL:i,query:t});return c?.data??c}return{home:()=>a("/home"),search:e=>a("/search",{keyword:e}),page:(e,t={})=>a("/page",{type:e,...t}),detail:(e,t)=>a("/detail",{type:e,id:t}),categories:()=>a("/categories"),cart:e=>a("/cart",{userId:e})}}export{r as u};

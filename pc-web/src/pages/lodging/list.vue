@@ -54,6 +54,7 @@
 <script setup lang="ts">
 const activePrice = ref('all');
 const facilities = ref<string[]>([]);
+const clientApi = useClientApi();
 
 function toggleFacility(f: string) {
   const idx = facilities.value.indexOf(f);
@@ -61,12 +62,33 @@ function toggleFacility(f: string) {
   else facilities.value.push(f);
 }
 
-const hostels = ref([
+const fallbackHostels = [
   { id: 1, name: '梯田观景民宿', mainImage: 'https://via.placeholder.com/600x400/F7F8FA/6B8E3D?text=梯田观景', styleTags: ['田园风', '吊脚楼'], rating: 4.9, reviewCount: 128, price: 388 },
   { id: 2, name: '苗寨小院', mainImage: 'https://via.placeholder.com/600x400/F7F8FA/6B8E3D?text=苗寨小院', styleTags: ['民族风', '庭院'], rating: 4.7, reviewCount: 86, price: 268 },
   { id: 3, name: '银匠木屋', mainImage: 'https://via.placeholder.com/600x400/F7F8FA/6B8E3D?text=银匠木屋', styleTags: ['文化', '观景'], rating: 4.8, reviewCount: 64, price: 458 },
   { id: 4, name: '古寨客栈', mainImage: 'https://via.placeholder.com/600x400/F7F8FA/6B8E3D?text=古寨客栈', styleTags: ['古建', '经济'], rating: 4.3, reviewCount: 210, price: 168 },
-]);
+];
+
+const hostels = ref(fallbackHostels);
+
+onMounted(async () => {
+  try {
+    const res = await clientApi.page('lodging', { page: 1, pageSize: 20 });
+    hostels.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          name: item.title,
+          mainImage: item.image || fallbackHostels[0].mainImage,
+          styleTags: [item.meta || '苗寨民宿', item.address || '乌东村'],
+          rating: item.rating || 5,
+          reviewCount: item.comments || 0,
+          price: item.price || 0,
+        }))
+      : fallbackHostels;
+  } catch (err) {
+    hostels.value = fallbackHostels;
+  }
+});
 
 useHead({
   title: '特色民宿 - 乌东文旅',

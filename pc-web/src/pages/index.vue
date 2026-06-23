@@ -143,12 +143,13 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 import { Swiper, SwiperSlide } from 'swiper/vue';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import 'swiper/css/navigation';
 import { Autoplay, Pagination, Navigation } from 'swiper/modules';
+import { useClientApi } from '~/composables/useClientApi';
 
 useHead({
   title: '乌东文旅 - 苗寨衣食住行综合服务平台',
@@ -165,7 +166,9 @@ const swiperModules = [Autoplay, Pagination, Navigation];
 
 const bannerActive = ref(0);
 
-const banners = [
+const clientApi = useClientApi();
+
+const fallbackBanners = [
   {
     image: 'https://via.placeholder.com/1920x600/1F5FA8/FFFFFF?text=乌东苗寨',
     title: '走进乌东苗寨',
@@ -189,6 +192,8 @@ const banners = [
   },
 ];
 
+const banners = ref(fallbackBanners);
+
 const modules = [
   { name: '衣', emoji: '🏮', description: '苗族银饰、蜡染、刺绣等非遗手工艺品', path: '/clothing/list', color: '#1F5FA8' },
   { name: '食', emoji: '🍲', description: '苗家长桌宴、特色农家菜、农产品特产', path: '/food/restaurant', color: '#E85D2F' },
@@ -206,7 +211,7 @@ const hotTabs = [
 const activeTab = ref('clothing');
 
 // 模拟数据
-const hotItems = {
+const fallbackHotItems = {
   clothing: [
     { title: '苗族银饰手镯', subtitle: '手工锻造，传承百年工艺', price: '368', image: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=银饰手镯', link: '/clothing/detail/1', rating: 5, sales: 128 },
     { title: '蜡染布艺挂画', subtitle: '天然植物染料，纯手工制作', price: '198', image: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=蜡染挂画', link: '/clothing/detail/2', rating: 4, sales: 86 },
@@ -233,14 +238,83 @@ const hotItems = {
   ],
 };
 
-const displayedItems = computed(() => hotItems[activeTab.value] || []);
+const hotItems = ref(fallbackHotItems);
 
-const articles = [
+const displayedItems = computed(() => hotItems.value[activeTab.value] || []);
+
+const fallbackArticles = [
   { title: '乌东苗寨的清晨，云雾中的吊脚楼', cover: 'https://via.placeholder.com/600x400/F7F8FA/1F5FA8?text=苗寨清晨', author: '旅行者小王', authorAvatar: 'https://via.placeholder.com/40x40/E8F1FB/1F5FA8?text=W', likes: 128, comments: 36 },
   { title: '第一次来乌东，就被长桌宴震撼了', cover: 'https://via.placeholder.com/600x400/F7F8FA/E85D2F?text=长桌宴', author: '美食达人', authorAvatar: 'https://via.placeholder.com/40x40/FFF1EA/E85D2F?text=M', likes: 256, comments: 82 },
   { title: '乌东梯田，秋天的金色画卷', cover: 'https://via.placeholder.com/600x400/F7F8FA/6B8E3D?text=梯田', author: '摄影师老李', authorAvatar: 'https://via.placeholder.com/40x40/F6FFED/6B8E3D?text=L', likes: 342, comments: 48 },
   { title: '亲手打了一只银镯子——乌东银饰体验', cover: 'https://via.placeholder.com/600x400/F7F8FA/D4A14B?text=银饰', author: '手工艺爱好者', authorAvatar: 'https://via.placeholder.com/40x40/FFF7E6/D4A14B?text=H', likes: 189, comments: 55 },
 ];
+
+const articles = ref(fallbackArticles);
+
+onMounted(async () => {
+  try {
+    const data = await clientApi.home();
+    banners.value = (data?.banners?.length ? data.banners : fallbackBanners).map((item, idx) => ({
+      image: item.image || fallbackBanners[idx % fallbackBanners.length].image,
+      title: item.title,
+      description: fallbackBanners[idx % fallbackBanners.length].description,
+      link: item.link || fallbackBanners[idx % fallbackBanners.length].link,
+      cta: fallbackBanners[idx % fallbackBanners.length].cta,
+    }));
+    if (data?.hot) {
+      hotItems.value = {
+        clothing: data.hot.clothing?.length ? data.hot.clothing.map((item) => ({
+          title: item.title,
+          subtitle: item.subtitle,
+          price: item.price?.toString() || '',
+          image: item.image || fallbackHotItems.clothing[0].image,
+          link: item.path,
+          rating: item.rating || 5,
+          sales: item.sales || 0,
+        })) : fallbackHotItems.clothing,
+        food: data.hot.food?.length ? data.hot.food.map((item) => ({
+          title: item.title,
+          subtitle: item.subtitle,
+          price: item.price?.toString() || '',
+          image: item.image || fallbackHotItems.food[0].image,
+          link: item.path,
+          rating: item.rating || 5,
+          likes: item.likes || 0,
+        })) : fallbackHotItems.food,
+        lodging: data.hot.lodging?.length ? data.hot.lodging.map((item) => ({
+          title: item.title,
+          subtitle: item.subtitle,
+          price: item.price?.toString() || '',
+          image: item.image || fallbackHotItems.lodging[0].image,
+          link: item.path,
+          rating: item.rating || 5,
+          likes: item.likes || 0,
+        })) : fallbackHotItems.lodging,
+        travel: data.hot.travel?.length ? data.hot.travel.map((item) => ({
+          title: item.title,
+          subtitle: item.subtitle,
+          price: item.price?.toString() || '',
+          image: item.image || fallbackHotItems.travel[0].image,
+          link: item.path,
+          rating: item.rating || 5,
+          likes: item.likes || 0,
+        })) : fallbackHotItems.travel,
+      };
+    }
+    articles.value = data?.articles?.length
+      ? data.articles.map((item, idx) => ({
+          title: item.title,
+          cover: item.image || fallbackArticles[idx % fallbackArticles.length].cover,
+          author: item.meta || '乌东文旅',
+          authorAvatar: fallbackArticles[idx % fallbackArticles.length].authorAvatar,
+          likes: item.likes || 0,
+          comments: item.comments || 0,
+        }))
+      : fallbackArticles;
+  } catch (err) {
+    //
+  }
+});
 </script>
 
 <style lang="scss" scoped>

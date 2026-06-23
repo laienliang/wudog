@@ -706,7 +706,9 @@ const _inlineRuntimeConfig = {
       }
     }
   },
-  "public": {}
+  "public": {
+    "apiBase": "http://localhost:8001/open/client"
+  }
 };
 const envOptions = {
   prefix: "NITRO_",

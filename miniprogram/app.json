@@ -1,6 +1,7 @@
 {
   "pages": [
     "pages/index/index",
+    "pages/search/index",
     "pages/category/category",
     "pages/community/community",
     "pages/mine/mine"
@@ -48,6 +49,7 @@
     {
       "root": "pages_user",
       "pages": [
+        { "path": "login" },
         { "path": "profile" },
         { "path": "orders" },
         { "path": "orderDetail" },

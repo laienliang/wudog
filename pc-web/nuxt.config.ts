@@ -7,6 +7,11 @@ export default defineNuxtConfig({
   css: ['element-plus/dist/index.css', '~/assets/css/main.scss'],
   devServer: { port: 3000 },
   srcDir: 'src/',
+  runtimeConfig: {
+    public: {
+      apiBase: process.env.NUXT_PUBLIC_API_BASE || 'http://localhost:8001/open/client',
+    },
+  },
   vite: {
     plugins: [
       AutoImport({
@@ -18,5 +23,5 @@ export default defineNuxtConfig({
     ],
   },
   modules: ['@pinia/nuxt'],
-  compatibilityDate: '2025-01-01',
+  compatibilityDate: '2026-06-23',
 });

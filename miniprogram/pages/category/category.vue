@@ -48,7 +48,8 @@
 </template>
 
 <script setup>
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import { get } from '../../utils/request';
 
 const categories = ref([
   { name: '银饰', children: [
@@ -75,10 +76,18 @@ const activeIdx = ref(0);
 const activeCategory = computed(() => categories.value[activeIdx.value]);
 
 const goodsList = ref([]);
+const loading = ref(false);
+
+const fallbackGoods = [
+  { id: 1, title: '苗族银饰手镯', price: '368', mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=银饰手镯', tags: ['银饰', '手工'] },
+  { id: 2, title: '蜡染布艺挂画', price: '198', mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=蜡染挂画', tags: ['蜡染', '非遗'] },
+  { id: 3, title: '苗族刺绣香包', price: '68', mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=刺绣香包', tags: ['刺绣', '伴手礼'] },
+  { id: 4, title: '节庆苗服体验款', price: '299', mainImage: 'https://via.placeholder.com/400x400/F7F8FA/1F5FA8?text=节庆苗服', tags: ['服饰', '节庆'] },
+];
 
 function switchCategory(idx) {
   activeIdx.value = idx;
-  // TODO: 调用 API 加载该分类下的商品
+  loadGoods();
 }
 
 function goSubCategory(sub) {
@@ -88,6 +97,41 @@ function goSubCategory(sub) {
 function goDetail(item) {
   wx.navigateTo({ url: `/pages_clothing/detail?id=${item.id}` });
 }
+
+async function loadGoods() {
+  loading.value = true;
+  try {
+    const categoryRes = await get('/categories');
+    if (categoryRes?.clothing?.length) {
+      categories.value = categoryRes.clothing.map(item => ({ ...item, children: [] }));
+    }
+    const res = await get('/page', {
+      type: 'clothing',
+      page: 1,
+      pageSize: 20,
+      keyword: activeCategory.value?.name,
+    });
+    goodsList.value = res?.list?.length
+      ? res.list.map(item => ({
+          id: item.id,
+          title: item.title,
+          price: item.price,
+          mainImage: item.image,
+          tags: [item.typeName, item.meta].filter(Boolean),
+        }))
+      : fallbackGoods;
+  } catch (e) {
+    goodsList.value = fallbackGoods.filter((item) => {
+      const name = activeCategory.value?.name || '';
+      return item.title.includes(name) || (item.tags || []).includes(name);
+    });
+    if (!goodsList.value.length) goodsList.value = fallbackGoods;
+  } finally {
+    loading.value = false;
+  }
+}
+
+onMounted(loadGoods);
 </script>
 
 <style lang="scss" scoped>
