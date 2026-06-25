@@ -833,7 +833,7 @@ CREATE TABLE IF NOT EXISTS settlement_records (
 
 -- 创建默认管理员 admin/admin123
 INSERT INTO users (username, password, role) VALUES
-('admin', '$2a$12$LJ3m4ys3GZvq3Gf.GI8lYOJHEB1xPQZVKvqLJ9WW1HL3q9fPGpSQO', 'super_admin');
+('admin', '$2a$12$Fp8aLBRMCTGKFl1/Ei7C7eTB6HfJGzD0yzj1OMvG.2wMVbCoHgE4u', 'super_admin');
 -- 密码: admin123 (bcrypt hash)
 
 -- 默认商品分类

@@ -1,6 +1,6 @@
 import Router from '@koa/router';
 import { OrderService } from '../service/order.service';
-import { requireAuth, getUserId, isAdmin } from '../middleware/auth.middleware';
+import { requireAuth, getUserId } from '../middleware/auth.middleware';
 
 export function createOrderRouter(service: OrderService): Router {
   const router = new Router();
