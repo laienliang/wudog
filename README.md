@@ -14,17 +14,26 @@
 ## 项目结构
 
 ```
-wudong-groupX-Y/
+wudong-code/
 ├── backend/              # 后端 API 服务（端口 3000）
-│   ├── src/
-│   │   ├── controllers/  # 路由 + 接口
-│   │   ├── services/     # 业务逻辑层
-│   │   ├── entity/       # TypeORM 实体（6张表）
-│   │   └── index.ts      # 入口
-│   └── sql/init.sql      # 建表语句
+│   └── src/
+│       ├── entities/     # TypeORM 实体（6张表）
+│       ├── services/     # 业务逻辑层
+│       ├── controllers/  # 路由 + 接口
+│       ├── middleware/   # JWT 鉴权
+│       └── index.ts      # 入口
 ├── web/                  # PC Web 游客端（端口 5173）
+│   └── src/
+│       ├── pages/        # 页面组件
+│       ├── api.ts        # API 封装
+│       └── App.tsx       # 路由
 ├── miniprogram/          # 微信小程序
+│   └── pages/            # 页面（首页/景区/路线/订单/我的）
 ├── admin/                # 管理后台（端口 5174）
+│   └── src/
+│       ├── pages/        # 管理页面
+│       ├── api.ts        # 管理员 API 封装
+│       └── App.tsx       # 路由 + 侧边栏
 └── README.md
 ```
 
@@ -101,6 +110,8 @@ npm run dev
 | 管理后台 | 5174 |
 
 ## API 接口
+
+完整接口文档见步骤分析文档。核心接口分类：
 
 - **公开接口**：`/api/scenic-spots`, `/api/routes`, `/api/orders`
 - **管理员接口**（需 JWT）：`/api/admin/*`
