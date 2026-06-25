@@ -1,0 +1,72 @@
+<!--pages/order/index.wxml-->
+<view class="container">
+  <view class="page-title">{{buying ? '选择票种/路线' : '我的订单'}}</view>
+
+  <!-- 购票模式 -->
+  <block wx:if="{{buying}}">
+    <view class="back-btn" bindtap="backToList">← 返回订单列表</view>
+
+    <view class="buy-tabs">
+      <view class="buy-tab {{buyType === 'ticket' ? 'active' : ''}}" bindtap="switchBuyType" data-type="ticket">门票</view>
+      <view class="buy-tab {{buyType === 'route' ? 'active' : ''}}" bindtap="switchBuyType" data-type="route">路线套餐</view>
+    </view>
+
+    <view class="item-list">
+      <block wx:for="{{itemList}}" wx:key="id">
+        <view class="item-card {{selectedId === item.id ? 'selected' : ''}}" bindtap="selectItem" data-id="{{item.id}}" data-price="{{item.sellPrice || item.price}}">
+          <view class="item-name">{{item.name}}{{item.scenicName ? ' · ' + item.scenicName : ''}}</view>
+          <view class="item-price">¥{{item.sellPrice || item.price}}</view>
+        </view>
+      </block>
+      <view class="empty-hint" wx:if="{{itemList.length === 0}}">加载中...</view>
+    </view>
+
+    <view class="buy-form" wx:if="{{selectedId}}">
+      <view class="form-row">
+        <text>数量</text>
+        <input type="number" value="{{quantity}}" bindinput="onQuantityChange" class="form-input" />
+      </view>
+      <view class="form-row" wx:if="{{buyType === 'ticket'}}">
+        <text>游玩日期</text>
+        <picker mode="date" value="{{visitDate}}" bindchange="onDateChange">
+          <view class="form-input">{{visitDate || '请选择日期'}}</view>
+        </picker>
+      </view>
+      <view class="total-row">
+        <text>合计：</text>
+        <text class="total-price">¥{{(selectedId ? (itemList.find(i => i.id === selectedId) ? (itemList.find(i => i.id === selectedId).sellPrice || itemList.find(i => i.id === selectedId).price || _tempPrice) : _tempPrice) : 0) * quantity}}</text>
+      </view>
+      <button class="btn btn-primary" bindtap="submitOrder" disabled="{{submitting}}">
+        {{submitting ? '提交中...' : '确认下单'}}
+      </button>
+    </view>
+  </block>
+
+  <!-- 订单列表模式 -->
+  <block wx:else>
+    <block wx:if="{{orders.length > 0}}">
+      <block wx:for="{{orders}}" wx:key="id">
+        <view class="order-card">
+          <view class="order-header">
+            <view class="order-name">{{item.itemName}}</view>
+            <view class="order-status {{statusClass[item.status]}}">{{statusText[item.status]}}</view>
+          </view>
+          <view class="order-meta">
+            <text>数量：{{item.quantity}}</text>
+            <text wx:if="{{item.visitDate}}">日期：{{item.visitDate}}</text>
+            <text>下单：{{formatTime(item.createdAt)}}</text>
+          </view>
+          <view class="order-total">¥{{item.totalPrice}}</view>
+          <view wx:if="{{item.status === 0}}" style="margin-top: 12rpx;">
+            <button class="btn btn-small" style="background: #ff4d4f; color: #fff;" bindtap="cancelOrder" data-id="{{item.id}}">取消订单</button>
+          </view>
+        </view>
+      </block>
+    </block>
+
+    <view class="empty-state" wx:else>
+      <text>暂无订单</text>
+      <button class="btn btn-primary" style="margin-top: 20rpx;" bindtap="switchBuyType" data-type="ticket">去订票</button>
+    </view>
+  </block>
+</view>
