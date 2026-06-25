@@ -1,0 +1,52 @@
+============================================
+乌东文旅平台 - 写入接口 curl 测试结果
+测试时间: 2026-06-19 18:35:17
+============================================
+
+【11】POST /api/miao-village/create
+Body: {name: 'test-village', ticketPrice: 50}
+Response:
+{"code":200,"message":"创建成功","data":{"name":"test-village","ticketPrice":50,"description":null,"address":null,"longitude":null,"latitude":null,"coverImage":null,"images":null,"openTime":null,"id":"3","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"status":1}}
+
+【12】POST /api/miao-village/create (参数错误-无name)
+Response:
+{"code":400,"message":"参数错误: name 不能为空","data":null}
+
+【13】PUT /api/miao-village/update/1
+Body: {ticketPrice: 120}
+Response:
+{"code":200,"message":"更新成功","data":{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"name":"西江千户苗寨","description":"世界上最大的苗族聚居村寨，吊脚楼依山而建，夜景璀璨。","address":"贵州省黔东南州雷山县西江镇","longitude":null,"latitude":null,"coverImage":"/images/xijiang.jpg","images":null,"ticketPrice":"120.00","openTime":"08:00-22:00","status":1}}
+
+【14】POST /api/order/create
+Body: {userId:1, accommodationId:1, roomId:1, checkInDate:2026-07-01, checkOutDate:2026-07-03, guests:2, totalPrice:1176}
+Response:
+{"code":200,"message":"预订成功","data":{"orderNo":"WD17818653182624606","userId":1,"accommodationId":1,"roomId":1,"checkInDate":"2026-07-01","checkOutDate":"2026-07-03","nights":2,"guests":2,"guestName":"wang","guestPhone":"13800138000","totalPrice":"1176.00","status":0,"remark":null,"id":"2","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0}}
+
+【15】GET /api/order/list?userId=1
+Response:
+{"code":200,"message":"success","data":{"total":2,"page":1,"pageSize":20,"list":[{"id":"2","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"orderNo":"WD17818653182624606","userId":"1","accommodationId":"1","roomId":"1","checkInDate":"2026-07-01","checkOutDate":"2026-07-03","nights":2,"guests":2,"guestName":"wang","guestPhone":"13800138000","totalPrice":"1176.00","remark":null,"status":0},{"id":"1","createdAt":"2026-06-19T10:14:26.000Z","updatedAt":"2026-06-19T10:14:40.000Z","isDeleted":0,"orderNo":"WD17818640665662712","userId":"1","accommodationId":"1","roomId":"1","checkInDate":"2026-07-01","checkOutDate":"2026-07-03","nights":2,"guests":2,"guestName":"wang","guestPhone":"13800138000","totalPrice":"1176.00","remark":"high floor","status":1}]}}
+
+【16】PUT /api/order/update/1 (status=1 已支付)
+Response:
+{"code":200,"message":"更新成功","data":{"id":"1","createdAt":"2026-06-19T10:14:26.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"orderNo":"WD17818640665662712","userId":"1","accommodationId":"1","roomId":"1","checkInDate":"2026-07-01","checkOutDate":"2026-07-03","nights":2,"guests":2,"guestName":"wang","guestPhone":"13800138000","totalPrice":"1176.00","remark":"high floor","status":1}}
+
+【17】POST /api/review/create
+Body: {userId:1, accommodationId:1, orderId:1, rating:5, content:'great'}
+Response:
+{"code":200,"message":"评价成功","data":{"userId":1,"accommodationId":1,"orderId":1,"rating":5,"content":"great","status":1,"images":null,"id":"2","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"isAnonymous":0}}
+
+【18】GET /api/review/list?accommodationId=1
+Response:
+{"code":200,"message":"success","data":{"total":1,"page":1,"pageSize":20,"list":[{"id":"2","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"userId":"1","accommodationId":"1","orderId":"1","rating":5,"content":"great","images":null,"isAnonymous":0,"status":1}]}}
+
+【19】DELETE /api/review/delete/1
+Response:
+{"code":200,"message":"删除成功","data":null}
+
+【20】GET /api/review/list?accommodationId=1 (删除后)
+Response:
+{"code":200,"message":"success","data":{"total":1,"page":1,"pageSize":20,"list":[{"id":"2","createdAt":"2026-06-19T10:35:18.000Z","updatedAt":"2026-06-19T10:35:18.000Z","isDeleted":0,"userId":"1","accommodationId":"1","orderId":"1","rating":5,"content":"great","images":null,"isAnonymous":0,"status":1}]}}
+
+============================================
+写入接口测试完成 - 共 10 个
+============================================

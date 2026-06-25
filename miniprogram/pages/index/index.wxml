@@ -1,0 +1,53 @@
+<!--pages/index/index.wxml - 首页/列表页-->
+<view class="container">
+  <!-- 搜索栏 -->
+  <view class="search-bar">
+    <input class="search-input" placeholder="搜索民宿/苗寨" value="{{keyword}}" bindinput="onSearchInput" />
+    <button class="search-btn" bindtap="onSearch">搜索</button>
+  </view>
+
+  <!-- 筛选栏 -->
+  <view class="filter-bar">
+    <picker mode="selector" range="{{villageNames}}" bindchange="onVillageChange">
+      <view class="filter-item">
+        <text>{{villageName || '全部苗寨'}}</text>
+        <text class="arrow">▼</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:elif="{{list.length === 0}}" class="empty">
+    <text>暂无数据</text>
+  </view>
+
+  <!-- 列表 -->
+  <view wx:else class="list">
+    <view class="card" wx:for="{{list}}" wx:key="id" bindtap="goDetail" data-id="{{item.id}}">
+      <!-- 封面图 -->
+      <image class="card-img" src="{{item.coverImage || '/images/default.jpg'}}" mode="aspectFill" />
+      <!-- 信息 -->
+      <view class="card-info">
+        <view class="card-title">{{item.name}}</view>
+        <view class="card-desc">{{item.description || '暂无描述'}}</view>
+        <view class="card-meta">
+          <text class="card-price">¥{{item.lowestPrice}}起</text>
+          <text class="card-rating">{{item.rating || '5.0'}}分</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view wx:if="{{hasMore && list.length > 0}}" class="load-more" bindtap="loadMore">
+    <text>加载更多</text>
+  </view>
+  <view wx:elif="{{list.length > 0}}" class="no-more">
+    <text>没有更多了</text>
+  </view>
+</view>

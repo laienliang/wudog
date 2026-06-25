@@ -1,0 +1,50 @@
+============================================
+乌东文旅平台 - 全量接口 curl 测试结果
+测试时间: 2026-06-19 18:35:00
+服务地址: http://localhost:3000
+============================================
+
+【1】GET /api/miao-village/list?page=1&pageSize=20
+curl -s 'http://localhost:3000/api/miao-village/list?page=1&pageSize=20'
+Response:
+{"code":200,"message":"success","data":{"total":2,"page":1,"pageSize":20,"list":[{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T10:14:40.000Z","isDeleted":0,"name":"西江千户苗寨","description":"世界上最大的苗族聚居村寨，吊脚楼依山而建，夜景璀璨。","address":"贵州省黔东南州雷山县西江镇","longitude":null,"latitude":null,"coverImage":"/images/xijiang.jpg","images":null,"ticketPrice":"110.00","openTime":"08:00-22:00","status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"name":"肇兴侗寨","description":"侗族文化中心，鼓楼与风雨桥闻名遐迩。","address":"贵州省黔东南州黎平县肇兴乡","longitude":null,"latitude":null,"coverImage":"/images/zhaoxing.jpg","images":null,"ticketPrice":"80.00","openTime":"08:00-18:00","status":1}]}}
+
+【2】GET /api/miao-village/detail/1
+Response:
+{"code":200,"message":"success","data":{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T10:14:40.000Z","isDeleted":0,"name":"西江千户苗寨","description":"世界上最大的苗族聚居村寨，吊脚楼依山而建，夜景璀璨。","address":"贵州省黔东南州雷山县西江镇","longitude":null,"latitude":null,"coverImage":"/images/xijiang.jpg","images":null,"ticketPrice":"110.00","openTime":"08:00-22:00","status":1}}
+
+【3】GET /api/accommodation/list?page=1&pageSize=20
+Response:
+{"code":200,"message":"success","data":{"total":4,"page":1,"pageSize":20,"list":[{"id":"4","createdAt":"2026-06-19T10:14:41.000Z","updatedAt":"2026-06-19T10:14:41.000Z","isDeleted":0,"villageId":"1","name":"test","type":"minsute","description":null,"address":null,"longitude":null,"latitude":null,"coverImage":null,"images":null,"lowestPrice":"300.00","highestPrice":null,"rating":"5.0","reviewCount":0,"facilities":null,"houseRules":null,"status":1},{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"苗岭云宿","type":"minsute","description":"苗寨山顶观景民宿，推窗见万家灯火。","address":"西江千户苗寨观景台旁","longitude":null,"latitude":null,"coverImage":"/images/miaoling.jpg","images":null,"lowestPrice":"388.00","highestPrice":"888.00","rating":"4.8","reviewCount":126,"facilities":null,"houseRules":null,"status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"风雨桥客栈","type":"inn","description":"风雨桥畔临水客栈，清晨可听溪流鸟鸣。","address":"西江千户苗寨风雨桥边","longitude":null,"latitude":null,"coverImage":"/images/fengyuqiao.jpg","images":null,"lowestPrice":"258.00","highestPrice":"458.00","rating":"4.6","reviewCount":89,"facilities":null,"houseRules":null,"status":1},{"id":"3","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"2","name":"侗寨山居","type":"minsute","description":"鼓楼旁木楼民宿，体验侗族大歌文化。","address":"肇兴侗寨核心区","longitude":null,"latitude":null,"coverImage":"/images/dongzhai.jpg","images":null,"lowestPrice":"298.00","highestPrice":"598.00","rating":"4.7","reviewCount":64,"facilities":null,"houseRules":null,"status":1}]}}
+
+【4】GET /api/accommodation/list?villageId=1
+Response:
+{"code":200,"message":"success","data":{"total":3,"page":1,"pageSize":20,"list":[{"id":"4","createdAt":"2026-06-19T10:14:41.000Z","updatedAt":"2026-06-19T10:14:41.000Z","isDeleted":0,"villageId":"1","name":"test","type":"minsute","description":null,"address":null,"longitude":null,"latitude":null,"coverImage":null,"images":null,"lowestPrice":"300.00","highestPrice":null,"rating":"5.0","reviewCount":0,"facilities":null,"houseRules":null,"status":1},{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"苗岭云宿","type":"minsute","description":"苗寨山顶观景民宿，推窗见万家灯火。","address":"西江千户苗寨观景台旁","longitude":null,"latitude":null,"coverImage":"/images/miaoling.jpg","images":null,"lowestPrice":"388.00","highestPrice":"888.00","rating":"4.8","reviewCount":126,"facilities":null,"houseRules":null,"status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"风雨桥客栈","type":"inn","description":"风雨桥畔临水客栈，清晨可听溪流鸟鸣。","address":"西江千户苗寨风雨桥边","longitude":null,"latitude":null,"coverImage":"/images/fengyuqiao.jpg","images":null,"lowestPrice":"258.00","highestPrice":"458.00","rating":"4.6","reviewCount":89,"facilities":null,"houseRules":null,"status":1}]}}
+
+【5】GET /api/accommodation/list?minPrice=200&maxPrice=400
+Response:
+{"code":200,"message":"success","data":{"total":4,"page":1,"pageSize":20,"list":[{"id":"4","createdAt":"2026-06-19T10:14:41.000Z","updatedAt":"2026-06-19T10:14:41.000Z","isDeleted":0,"villageId":"1","name":"test","type":"minsute","description":null,"address":null,"longitude":null,"latitude":null,"coverImage":null,"images":null,"lowestPrice":"300.00","highestPrice":null,"rating":"5.0","reviewCount":0,"facilities":null,"houseRules":null,"status":1},{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"苗岭云宿","type":"minsute","description":"苗寨山顶观景民宿，推窗见万家灯火。","address":"西江千户苗寨观景台旁","longitude":null,"latitude":null,"coverImage":"/images/miaoling.jpg","images":null,"lowestPrice":"388.00","highestPrice":"888.00","rating":"4.8","reviewCount":126,"facilities":null,"houseRules":null,"status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"风雨桥客栈","type":"inn","description":"风雨桥畔临水客栈，清晨可听溪流鸟鸣。","address":"西江千户苗寨风雨桥边","longitude":null,"latitude":null,"coverImage":"/images/fengyuqiao.jpg","images":null,"lowestPrice":"258.00","highestPrice":"458.00","rating":"4.6","reviewCount":89,"facilities":null,"houseRules":null,"status":1},{"id":"3","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"2","name":"侗寨山居","type":"minsute","description":"鼓楼旁木楼民宿，体验侗族大歌文化。","address":"肇兴侗寨核心区","longitude":null,"latitude":null,"coverImage":"/images/dongzhai.jpg","images":null,"lowestPrice":"298.00","highestPrice":"598.00","rating":"4.7","reviewCount":64,"facilities":null,"houseRules":null,"status":1}]}}
+
+【6】GET /api/accommodation/detail/1
+Response:
+{"code":200,"message":"success","data":{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"villageId":"1","name":"苗岭云宿","type":"minsute","description":"苗寨山顶观景民宿，推窗见万家灯火。","address":"西江千户苗寨观景台旁","longitude":null,"latitude":null,"coverImage":"/images/miaoling.jpg","images":null,"lowestPrice":"388.00","highestPrice":"888.00","rating":"4.8","reviewCount":126,"facilities":null,"houseRules":null,"status":1}}
+
+【7】GET /api/room/list?accommodationId=1
+Response:
+{"code":200,"message":"success","data":{"total":2,"page":1,"pageSize":20,"list":[{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"accommodationId":"1","name":"观景大床房","description":"全景落地窗，直面苗寨夜景","coverImage":"/images/room1.jpg","images":null,"area":"28.00","maxGuests":2,"bedType":"1.8m大床","floor":null,"price":"588.00","stock":3,"facilities":null,"status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"accommodationId":"1","name":"星空双床房","description":"独立阳台，可观星赏月","coverImage":"/images/room2.jpg","images":null,"area":"32.00","maxGuests":3,"bedType":"1.2m双床","floor":null,"price":"688.00","stock":2,"facilities":null,"status":1}]}}
+
+【8】GET /api/room/detail/1
+Response:
+{"code":200,"message":"success","data":{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"accommodationId":"1","name":"观景大床房","description":"全景落地窗，直面苗寨夜景","coverImage":"/images/room1.jpg","images":null,"area":"28.00","maxGuests":2,"bedType":"1.8m大床","floor":null,"price":"588.00","stock":3,"facilities":null,"status":1}}
+
+【9】GET /api/user/list?page=1&pageSize=20
+Response:
+{"code":200,"message":"success","data":{"total":2,"page":1,"pageSize":20,"list":[{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"username":"tourist01","password":"e10adc3949ba59abbe56e057f20f883e","nickname":"游客小王","phone":"13800138000","avatar":null,"gender":0,"status":1},{"id":"2","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"username":"traveler02","password":"e10adc3949ba59abbe56e057f20f883e","nickname":"旅人小李","phone":"13900139000","avatar":null,"gender":0,"status":1}]}}
+
+【10】GET /api/user/detail/1
+Response:
+{"code":200,"message":"success","data":{"id":"1","createdAt":"2026-06-19T09:51:23.000Z","updatedAt":"2026-06-19T09:51:23.000Z","isDeleted":0,"username":"tourist01","password":"e10adc3949ba59abbe56e057f20f883e","nickname":"游客小王","phone":"13800138000","avatar":null,"gender":0,"status":1}}
+
+============================================
+测试完成 - 共 10 个读取接口
+============================================

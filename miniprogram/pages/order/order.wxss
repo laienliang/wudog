@@ -1,0 +1,141 @@
+/* pages/order/order.wxss - 下单页样式 */
+.container {
+  padding: 20rpx;
+  padding-bottom: 160rpx;
+}
+
+/* 加载中 */
+.loading {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}
+
+/* 订单信息 */
+.order-info {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.info-title {
+  font-size: 36rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 16rpx;
+}
+
+.info-room {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.info-date {
+  display: flex;
+  justify-content: space-between;
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 16rpx;
+}
+
+.info-nights {
+  font-size: 28rpx;
+  color: #666;
+  margin-bottom: 20rpx;
+}
+
+.info-price {
+  font-size: 28rpx;
+  color: #666;
+}
+
+.price-value {
+  font-size: 40rpx;
+  color: #F53F3F;
+  font-weight: bold;
+}
+
+/* 表单区块 */
+.form-section {
+  background: #fff;
+  padding: 30rpx;
+  border-radius: 16rpx;
+  margin-bottom: 20rpx;
+  box-shadow: 0 2rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.form-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  margin-bottom: 20rpx;
+  padding-left: 16rpx;
+  border-left: 8rpx solid #165DFF;
+}
+
+.form-item {
+  display: flex;
+  align-items: center;
+  padding: 20rpx 0;
+  border-bottom: 1rpx solid #eee;
+}
+
+.form-label {
+  width: 120rpx;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.form-input {
+  flex: 1;
+  font-size: 28rpx;
+  padding: 10rpx 0;
+}
+
+.form-textarea {
+  width: 100%;
+  height: 160rpx;
+  font-size: 28rpx;
+  padding: 20rpx;
+  background: #F5F7FA;
+  border-radius: 12rpx;
+  margin-top: 16rpx;
+}
+
+/* 提交按钮 */
+.submit-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20rpx 30rpx;
+  background: #fff;
+  box-shadow: 0 -2rpx 12rpx rgba(0,0,0,0.05);
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #165DFF;
+  color: #fff;
+  font-size: 32rpx;
+  border-radius: 44rpx;
+  border: none;
+}
+
+.submit-btn[disabled] {
+  background: #ccc;
+}
+
+/* 空状态 */
+.empty {
+  text-align: center;
+  padding: 100rpx 0;
+  color: #999;
+  font-size: 28rpx;
+}

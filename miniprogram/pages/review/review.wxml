@@ -1,0 +1,63 @@
+<!--pages/review/review.wxml - 评价页-->
+<view class="container">
+
+  <!-- 住宿信息 -->
+  <view class="acc-info">
+    <text class="acc-name">🏠 {{accommodationName || '民宿'}}</text>
+    <text class="order-id">订单号：{{orderId}}</text>
+  </view>
+
+  <!-- 评分星级 -->
+  <view class="section">
+    <view class="section-title">总体评分</view>
+    <view class="stars-row">
+      <view
+        wx:for="{{stars}}"
+        wx:key="*this"
+        class="star {{item <= rating ? 'active' : ''}}"
+        data-star="{{item}}"
+        bindtap="onStarTap"
+      >★</view>
+      <text class="rating-text">{{rating}} 分</text>
+    </view>
+    <view class="rating-hint">
+      <text wx:if="{{rating === 1}}">非常差</text>
+      <text wx:elif="{{rating === 2}}">不满意</text>
+      <text wx:elif="{{rating === 3}}">一般</text>
+      <text wx:elif="{{rating === 4}}">满意</text>
+      <text wx:elif="{{rating === 5}}">非常满意</text>
+    </view>
+  </view>
+
+  <!-- 评价内容 -->
+  <view class="section">
+    <view class="section-title">评价内容</view>
+    <textarea
+      class="review-textarea"
+      placeholder="分享您的入住体验，帮助其他旅行者~"
+      value="{{content}}"
+      bindinput="onContentInput"
+      maxlength="500"
+      auto-height
+    ></textarea>
+    <view class="word-count">{{content.length}}/500</view>
+  </view>
+
+  <!-- 匿名选项 -->
+  <view class="section section-checkbox">
+    <checkbox checked="{{isAnonymous}}" bindchange="onAnonymousChange" color="#165DFF" />
+    <text>匿名评价（不显示您的昵称）</text>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="submit-wrap">
+    <button
+      class="submit-btn {{submitting ? 'disabled' : ''}}"
+      disabled="{{submitting}}"
+      bindtap="submitReview"
+    >
+      {{submitting ? '提交中...' : '发布评价'}}
+    </button>
+  </view>
+
+</view>

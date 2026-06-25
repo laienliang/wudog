@@ -1,0 +1,64 @@
+/* app.wxss - 全局样式 */
+page {
+  background-color: #F5F7FA;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+}
+
+/* 通用样式 */
+.container {
+  padding: 20rpx;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+
+.flex-col {
+  display: flex;
+  flex-direction: column;
+}
+
+.flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.text-ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.text-primary {
+  color: #165DFF;
+}
+
+.text-danger {
+  color: #F53F3F;
+}
+
+.text-gray {
+  color: #86909C;
+}
+
+.bg-white {
+  background-color: #fff;
+}
+
+.radius-md {
+  border-radius: 16rpx;
+}
+
+.padding-md {
+  padding: 24rpx;
+}
+
+.margin-bottom-md {
+  margin-bottom: 20rpx;
+}

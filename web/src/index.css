@@ -1,0 +1,390 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  background: #f5f6fa;
+  color: #333;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+/* ===== 导航栏 ===== */
+.navbar {
+  background: #1a3d6e;
+  color: #fff;
+  padding: 0 24px;
+  height: 56px;
+  display: flex;
+  align-items: center;
+  gap: 32px;
+  box-shadow: 0 2px 8px rgba(0,0,0,.15);
+}
+.navbar-brand {
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+.navbar-link {
+  color: rgba(255,255,255,.85);
+  font-size: 14px;
+  padding: 4px 0;
+  border-bottom: 2px solid transparent;
+  transition: color .2s, border-color .2s;
+}
+.navbar-link:hover,
+.navbar-link.active {
+  color: #fff;
+  border-bottom-color: #4fc3f7;
+}
+
+/* ===== 容器 ===== */
+.container {
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+}
+
+/* ===== 页面标题栏 ===== */
+.page-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.page-title {
+  font-size: 22px;
+  font-weight: 700;
+  color: #1a3d6e;
+}
+
+/* ===== 卡片 ===== */
+.card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+  padding: 20px;
+  margin-bottom: 16px;
+}
+
+/* ===== 搜索 / 筛选栏 ===== */
+.filter-bar {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+  padding: 16px 20px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+}
+.filter-bar input,
+.filter-bar select {
+  height: 36px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.filter-bar input:focus,
+.filter-bar select:focus {
+  border-color: #1a3d6e;
+}
+.filter-bar input[type="text"] { width: 200px; }
+.filter-bar input[type="number"] { width: 100px; }
+
+/* ===== 按钮 ===== */
+.btn {
+  height: 36px;
+  padding: 0 18px;
+  border: none;
+  border-radius: 6px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: opacity .2s, transform .1s;
+  white-space: nowrap;
+}
+.btn:hover { opacity: .88; }
+.btn:active { transform: scale(.97); }
+.btn-primary { background: #1a3d6e; color: #fff; }
+.btn-secondary { background: #eef2f9; color: #1a3d6e; }
+.btn-success { background: #27ae60; color: #fff; }
+.btn-danger { background: #e74c3c; color: #fff; }
+.btn-sm { height: 30px; padding: 0 12px; font-size: 13px; }
+
+/* ===== 民宿卡片列表 ===== */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+}
+.acc-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+  overflow: hidden;
+  cursor: pointer;
+  transition: box-shadow .2s, transform .2s;
+}
+.acc-card:hover {
+  box-shadow: 0 4px 18px rgba(0,0,0,.14);
+  transform: translateY(-3px);
+}
+.acc-card-cover {
+  width: 100%;
+  height: 180px;
+  object-fit: cover;
+  background: #e0e8f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 36px;
+  color: #aaa;
+}
+.acc-card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.acc-card-body {
+  padding: 14px 16px;
+}
+.acc-card-name {
+  font-size: 16px;
+  font-weight: 600;
+  margin-bottom: 6px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.acc-card-meta {
+  font-size: 13px;
+  color: #888;
+  margin-bottom: 8px;
+  display: flex;
+  gap: 10px;
+}
+.acc-card-price {
+  color: #e74c3c;
+  font-weight: 700;
+  font-size: 15px;
+}
+.acc-card-rating {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 13px;
+  color: #f39c12;
+  margin-top: 4px;
+}
+
+/* ===== 详情页 ===== */
+.detail-hero {
+  width: 100%;
+  height: 320px;
+  border-radius: 10px;
+  object-fit: cover;
+  background: #e0e8f4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 64px;
+  color: #aaa;
+  overflow: hidden;
+  margin-bottom: 24px;
+}
+.detail-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.detail-info-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+.info-item label {
+  display: block;
+  font-size: 12px;
+  color: #888;
+  margin-bottom: 4px;
+}
+.info-item span {
+  font-size: 15px;
+  font-weight: 500;
+}
+.badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 12px;
+  font-size: 12px;
+  background: #eef2f9;
+  color: #1a3d6e;
+}
+
+/* ===== 表格（房型） ===== */
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+}
+.data-table th {
+  background: #f0f4fb;
+  padding: 10px 14px;
+  text-align: left;
+  font-weight: 600;
+  color: #555;
+}
+.data-table td {
+  padding: 10px 14px;
+  border-bottom: 1px solid #f0f0f0;
+}
+.data-table tr:hover td {
+  background: #fafbff;
+}
+
+/* ===== 表单 ===== */
+.form-card {
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 1px 6px rgba(0,0,0,.08);
+  padding: 28px 32px;
+  max-width: 640px;
+}
+.form-row {
+  margin-bottom: 18px;
+}
+.form-row label {
+  display: block;
+  font-size: 14px;
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 6px;
+}
+.form-row input,
+.form-row select,
+.form-row textarea {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #d9d9d9;
+  border-radius: 6px;
+  font-size: 14px;
+  outline: none;
+  transition: border-color .2s;
+}
+.form-row input:focus,
+.form-row select:focus,
+.form-row textarea:focus {
+  border-color: #1a3d6e;
+  box-shadow: 0 0 0 3px rgba(26,61,110,.08);
+}
+.form-row textarea {
+  resize: vertical;
+  min-height: 90px;
+}
+.form-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+}
+.required-star {
+  color: #e74c3c;
+  margin-left: 2px;
+}
+
+/* ===== 状态提示 ===== */
+.loading-box {
+  text-align: center;
+  padding: 60px 0;
+  color: #888;
+  font-size: 15px;
+}
+.loading-spinner {
+  display: inline-block;
+  width: 32px;
+  height: 32px;
+  border: 3px solid #e0e8f4;
+  border-top-color: #1a3d6e;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+  margin-bottom: 12px;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.empty-box {
+  text-align: center;
+  padding: 60px 0;
+  color: #aaa;
+}
+.empty-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.error-box {
+  text-align: center;
+  padding: 40px 0;
+  color: #e74c3c;
+}
+
+/* ===== 分页 ===== */
+.pagination {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  margin-top: 28px;
+  align-items: center;
+  font-size: 14px;
+}
+.pagination button {
+  height: 32px;
+  min-width: 32px;
+  padding: 0 10px;
+  border: 1px solid #d9d9d9;
+  background: #fff;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s;
+}
+.pagination button:hover:not(:disabled) {
+  background: #eef2f9;
+  border-color: #1a3d6e;
+}
+.pagination button.active {
+  background: #1a3d6e;
+  color: #fff;
+  border-color: #1a3d6e;
+}
+.pagination button:disabled {
+  opacity: .4;
+  cursor: not-allowed;
+}
+
+/* ===== 评价 ===== */
+.review-item {
+  padding: 14px 0;
+  border-bottom: 1px solid #f0f0f0;
+}
+.review-item:last-child { border-bottom: none; }
+.review-stars { color: #f39c12; font-size: 16px; }
+.review-content { margin: 6px 0; font-size: 14px; color: #444; }
+.review-meta { font-size: 12px; color: #aaa; }
+
+/* ===== Tag ===== */
+.type-tag {
+  background: #e8f4fd;
+  color: #1565c0;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+}

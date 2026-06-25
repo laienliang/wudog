@@ -1,0 +1,46 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Build output
+dist/
+build/
+*.tsbuildinfo
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# WorkBuddy
+.workbuddy/
+
+# Database
+*.db
+*.sqlite
+
+# Uploads / temp
+tmp/
+temp/
+/public/uploads/
+
+# Package lock (optional - keep package-lock.json)
+# package-lock.json

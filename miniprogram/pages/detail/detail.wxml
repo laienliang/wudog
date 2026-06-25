@@ -1,0 +1,94 @@
+<!--pages/detail/detail.wxml - 住宿详情页-->
+<view class="container">
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading">
+    <text>加载中...</text>
+  </view>
+
+  <block wx:elif="{{detail}}">
+    <!-- 主图轮播 -->
+    <swiper class="swiper" indicator-dots="{{true}}" autoplay="{{true}}" interval="3000">
+      <swiper-item wx:for="{{detail.images || [detail.coverImage]}}" wx:key="*this">
+        <image class="swiper-img" src="{{item}}" mode="aspectFill" bindtap="previewImage" data-url="{{item}}" />
+      </swiper-item>
+    </swiper>
+
+    <!-- 基本信息 -->
+    <view class="info-section">
+      <view class="title">{{detail.name}}</view>
+      <view class="meta">
+        <text class="rating">{{detail.rating || '5.0'}}分</text>
+        <text class="review-count">{{detail.reviewCount || 0}}条评价</text>
+        <text class="type">{{detail.type === 'minsute' ? '民宿' : detail.type === 'inn' ? '客栈' : '酒店'}}</text>
+      </view>
+      <view class="price">
+        <text class="price-label">价格：</text>
+        <text class="price-value">¥{{detail.lowestPrice}}起</text>
+      </view>
+      <view class="address" wx:if="{{detail.address}}">
+        <text class="address-icon">📍</text>
+        <text>{{detail.address}}</text>
+      </view>
+    </view>
+
+    <!-- 设施 -->
+    <view class="section" wx:if="{{detail.facilities && detail.facilities.length > 0}}">
+      <view class="section-title">设施服务</view>
+      <view class="facility-list">
+        <view class="facility-item" wx:for="{{detail.facilities}}" wx:key="*this">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 入住须知 -->
+    <view class="section" wx:if="{{detail.houseRules}}">
+      <view class="section-title">入住须知</view>
+      <view class="rules">{{detail.houseRules}}</view>
+    </view>
+
+    <!-- 房型列表 -->
+    <view class="section">
+      <view class="section-title">房型选择</view>
+      <!-- 日期选择 -->
+      <view class="date-picker">
+        <picker mode="date" value="{{checkInDate}}" start="{{today}}" bindchange="onCheckInChange">
+          <view class="date-item">
+            <text class="date-label">入住</text>
+            <text class="date-value">{{checkInDate || '请选择'}}</text>
+          </view>
+        </picker>
+        <picker mode="date" value="{{checkOutDate}}" start="{{minCheckOut || today}}" bindchange="onCheckOutChange">
+          <view class="date-item">
+            <text class="date-label">离店</text>
+            <text class="date-value">{{checkOutDate || '请选择'}}</text>
+          </view>
+        </picker>
+      </view>
+
+      <!-- 房型卡片 -->
+      <view class="room-card" wx:for="{{rooms}}" wx:key="id">
+        <image class="room-img" src="{{item.coverImage || '/images/default.jpg'}}" mode="aspectFill" />
+        <view class="room-info">
+          <view class="room-name">{{item.name}}</view>
+          <view class="room-desc">{{item.description || '暂无描述'}}</view>
+          <view class="room-meta">
+            <text class="room-area">{{item.area}}m²</text>
+            <text class="room-bed">{{item.bedType}}</text>
+            <text class="room-guests">最多{{item.maxGuests}}人</text>
+          </view>
+          <view class="room-bottom">
+            <text class="room-price">¥{{item.price}}/晚</text>
+            <text class="room-stock">库存{{item.stock}}间</text>
+            <button class="book-btn" bindtap="goOrder" data-room-id="{{item.id}}">立即预订</button>
+          </view>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 空状态 -->
+  <view wx:else class="empty">
+    <text>暂无数据</text>
+  </view>
+</view>

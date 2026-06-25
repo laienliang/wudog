@@ -1,0 +1,100 @@
+<!--pages/order-list/order-list.wxml - 个人订单页-->
+<view class="container">
+
+  <!-- Tab 切换栏 -->
+  <scroll-view scroll-x="true" class="tab-scroll">
+    <view class="tab-bar">
+      <view
+        wx:for="{{tabs}}"
+        wx:key="key"
+        class="tab-item {{currentTab === index ? 'active' : ''}}"
+        data-index="{{index}}"
+        bindtap="onTabChange"
+      >
+        <text>{{item.label}}</text>
+      </view>
+    </view>
+  </scroll-view>
+
+  <!-- 加载中 -->
+  <view wx:if="{{loading}}" class="loading-wrap">
+    <text>加载中...</text>
+  </view>
+
+  <!-- 空状态 -->
+  <view wx:elif="{{list.length === 0}}" class="empty-wrap">
+    <view class="empty-icon">📋</view>
+    <text class="empty-text">暂无订单</text>
+    <text class="empty-hint">去首页预订心仪的民宿吧~</text>
+    <button class="empty-btn" bindtap="goHome">去逛逛</button>
+  </view>
+
+  <!-- 订单列表 -->
+  <view wx:else class="order-list">
+    <view
+      class="order-card"
+      wx:for="{{list}}"
+      wx:key="id"
+    >
+      <!-- 卡片头部：状态 + 订单号 -->
+      <view class="card-header">
+        <view class="header-left">
+          <text class="order-no">订单号：{{item.orderNo}}</text>
+          <text class="order-date">{{item.createdAt}}</text>
+        </view>
+        <view class="status-badge" style="background-color:{{item._statusInfo.bg}}; color:{{item._statusInfo.color}}">
+          {{item._statusInfo.text}}
+        </view>
+      </view>
+
+      <!-- 住宿信息 -->
+      <view class="card-body" bindtap="goDetail" data-id="{{item.id}}" data-accommodation-id="{{item.accommodationId}}">
+        <view class="accommodation-info">
+          <text class="acc-name">{{item.accommodationName || '民宿名称'}}</text>
+          <text class="room-name">{{item.roomName || '房型'}}</text>
+        </view>
+        <view class="date-row">
+          <text class="date-text">📅 {{item.checkInDate}} 至 {{item.checkOutDate}}</text>
+          <text class="nights-text">{{item.nights || 1}}晚</text>
+        </view>
+        <view class="guest-row" wx:if="{{item.guestName}}">
+          <text>入住人：{{item.guestName}}</text>
+          <text wx:if="{{item.guestPhone}}" style="margin-left:20rpx;">电话：{{item.guestPhone}}</text>
+        </view>
+        <view class="price-row">
+          <text class="total-price">¥{{item.totalPrice}}</text>
+        </view>
+      </view>
+
+      <!-- 操作按钮区 -->
+      <view class="card-footer">
+        <!-- 待支付：支付 + 取消 -->
+        <block wx:if="{{item.status === 0}}">
+          <button class="btn btn-default" catchtap="onCancel" data-id="{{item.id}}">取消订单</button>
+          <button class="btn btn-primary" catchtap="onPay" data-id="{{item.id}}">立即支付</button>
+        </block>
+
+        <!-- 已支付：确认完成 -->
+        <block wx:elif="{{item.status === 1}}">
+          <button class="btn btn-default" catchtap="onCancel" data-id="{{item.id}}">取消</button>
+          <button class="btn btn-success" catchtap="onComplete" data-id="{{item.id}}">确认完成</button>
+        </block>
+
+        <!-- 已完成：去评价 -->
+        <block wx:elif="{{item.status === 3}}">
+          <button class="btn btn-primary-outline" catchtap="onReview" data-item="{{item}}">
+            写评价
+          </button>
+        </block>
+
+        <!-- 已取消/已退款：无操作或重新预订 -->
+        <block wx:elif="{{item.status === 2 || item.status === 4}}">
+          <button class="btn btn-default" bindtap="goDetail" data-accommodation-id="{{item.accommodationId}}">
+            再次预订
+          </button>
+        </block>
+      </view>
+    </view>
+  </view>
+
+</view>

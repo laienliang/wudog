@@ -1,0 +1,134 @@
+/* pages/review/review.wxss */
+.container {
+  min-height: 100vh;
+  background: #f5f7fa;
+  padding-bottom: 60rpx;
+}
+
+/* ===== 住宿信息 ===== */
+.acc-info {
+  background: #fff;
+  padding: 28rpx 32rpx;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1rpx solid #eee;
+}
+
+.acc-name {
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #333;
+}
+
+.order-id {
+  font-size: 24rpx;
+  color: #999;
+}
+
+/* ===== 分区 ===== */
+.section {
+  background: #fff;
+  margin-top: 16rpx;
+  padding: 28rpx 32rpx;
+}
+
+.section-title {
+  font-size: 30rpx;
+  color: #333;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+
+/* ===== 星级评分 ===== */
+.stars-row {
+  display: flex;
+  align-items: center;
+}
+
+.star {
+  font-size: 56rpx;
+  color: #ddd;
+  margin-right: 12rpx;
+  line-height: 1;
+}
+
+.star.active {
+  color: #faad14;
+}
+
+.rating-text {
+  font-size: 30rpx;
+  color: #faad14;
+  font-weight: bold;
+  margin-left: 12rpx;
+}
+
+.rating-hint {
+  font-size: 26rpx;
+  color: #888;
+  margin-top: 10rpx;
+  margin-left: 4rpx;
+}
+
+/* ===== 文本框 ===== */
+.review-textarea {
+  width: 100%;
+  min-height: 240rpx;
+  border: 1rpx solid #e8e8e8;
+  border-radius: 12rpx;
+  padding: 20rpx 24rpx;
+  font-size: 28rpx;
+  color: #333;
+  box-sizing: border-box;
+  background: #fafafa;
+  line-height: 1.6;
+}
+
+.word-count {
+  text-align: right;
+  font-size: 24rpx;
+  color: #bbb;
+  margin-top: 10rpx;
+}
+
+/* ===== 匿名选项 ===== */
+.section-checkbox {
+  display: flex !important;
+  flex-direction: row !important;
+  align-items: center !important;
+  gap: 12rpx;
+}
+
+.section-checkbox text {
+  display: inline;
+  font-size: 26rpx;
+  color: #666;
+}
+
+/* ===== 提交按钮 ===== */
+.submit-wrap {
+  padding: 40rpx 40rpx;
+  margin-top: 30rpx;
+}
+
+.submit-btn {
+  width: 100%;
+  height: 88rpx;
+  line-height: 88rpx;
+  background: #165DFF;
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: bold;
+  border-radius: 44rpx;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(22, 93, 255, 0.3);
+}
+
+.submit-btn::after {
+  border: none;
+}
+
+.submit-btn.disabled {
+  opacity: 0.6;
+}
