@@ -1,0 +1,6 @@
+﻿<view class="login-container">
+  <view class="login-title">乌东文旅</view>
+  <input class="login-input" placeholder="用户名" value="{{username}}" bindinput="onUsernameInput" />
+  <input class="login-input" placeholder="密码" password value="{{password}}" bindinput="onPasswordInput" />
+  <button class="login-btn" bindtap="handleLogin">登录</button>
+</view>

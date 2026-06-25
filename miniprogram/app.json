@@ -1,0 +1,28 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/module1/index",
+    "pages/module2/index",
+    "pages/module3/index",
+    "pages/module4/index",
+    "pages/community/index",
+    "pages/user/index",
+    "pages/login/login"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1677ff",
+    "navigationBarTitleText": "乌东文旅",
+    "navigationBarTextStyle": "white"
+  },
+  "tabBar": {
+    "color": "#999",
+    "selectedColor": "#1677ff",
+    "list": [
+      { "pagePath": "pages/index/index", "text": "首页", "iconPath": "images/home.png", "selectedIconPath": "images/home-active.png" },
+      { "pagePath": "pages/module1/index", "text": "非遗", "iconPath": "images/shop.png", "selectedIconPath": "images/shop-active.png" },
+      { "pagePath": "pages/module2/index", "text": "美食", "iconPath": "images/food.png", "selectedIconPath": "images/food-active.png" },
+      { "pagePath": "pages/module3/index", "text": "民宿", "iconPath": "images/hotel.png", "selectedIconPath": "images/hotel-active.png" },
+      { "pagePath": "pages/module4/index", "text": "出行", "iconPath": "images/travel.png", "selectedIconPath": "images/travel-active.png" }
+    ]
+  }
+}
