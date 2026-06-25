@@ -1,0 +1,107 @@
+{
+  "pages": [
+    { "path": "pages/index/index", "options": {"enableShareAppMessage": true} },
+    { "path": "pages/category/category" },
+    { "path": "pages/community/community" },
+    { "path": "pages/mine/mine" },
+    { "path": "pages/search/index" }
+  ],
+  "subPackages": [
+    {
+      "root": "pages_clothing",
+      "pages": [
+        { "path": "list", "options": {"enableShareAppMessage": true} },
+        { "path": "detail" }
+      ]
+    },
+    {
+      "root": "pages_food",
+      "pages": [
+        { "path": "restaurant/list" },
+        { "path": "restaurant/detail" },
+        { "path": "agriculture/list" },
+        { "path": "agriculture/detail" }
+      ]
+    },
+    {
+      "root": "pages_lodging",
+      "pages": [
+        { "path": "list" },
+        { "path": "detail" }
+      ]
+    },
+    {
+      "root": "pages_travel",
+      "pages": [
+        { "path": "scenic/list" },
+        { "path": "scenic/detail" },
+        { "path": "route/list" },
+        { "path": "route/detail" }
+      ]
+    },
+    {
+      "root": "pages_community",
+      "pages": [
+        { "path": "article/detail" },
+        { "path": "publish" }
+      ]
+    },
+    {
+      "root": "pages_user",
+      "pages": [
+        { "path": "login" },
+        { "path": "profile" },
+        { "path": "orders" },
+        { "path": "orderDetail" },
+        { "path": "collect" },
+        { "path": "album" },
+        { "path": "address" }
+      ]
+    },
+    {
+      "root": "pages_cart",
+      "pages": [
+        { "path": "index" }
+      ]
+    }
+  ],
+  "tabBar": {
+    "color": "#7f8996",
+    "selectedColor": "#1f5fa8",
+    "backgroundColor": "#fffaf1",
+    "borderStyle": "white",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "static/tab/home.png",
+        "selectedIconPath": "static/tab/home-active.png"
+      },
+      {
+        "pagePath": "pages/category/category",
+        "text": "分类",
+        "iconPath": "static/tab/category.png",
+        "selectedIconPath": "static/tab/category-active.png"
+      },
+      {
+        "pagePath": "pages/community/community",
+        "text": "社区",
+        "iconPath": "static/tab/community.png",
+        "selectedIconPath": "static/tab/community-active.png"
+      },
+      {
+        "pagePath": "pages/mine/mine",
+        "text": "我的",
+        "iconPath": "static/tab/mine.png",
+        "selectedIconPath": "static/tab/mine-active.png"
+      }
+    ]
+  },
+  "globalStyle": {
+    "navigationBarBackgroundColor": "#1f5fa8",
+    "navigationBarTitleText": "乌东文旅",
+    "navigationBarTextStyle": "white",
+    "backgroundTextStyle": "light",
+    "backgroundColor": "#f7f8fa"
+  }
+}
