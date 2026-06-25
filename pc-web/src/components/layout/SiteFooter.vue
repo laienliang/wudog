@@ -30,13 +30,13 @@
         <div class="footer-col">
           <h4>联系我们</h4>
           <ul>
-            <li>电话：400-XXX-XXXX</li>
+            <li>电话：400-233-8888</li>
             <li>地址：贵州省黔东南州</li>
           </ul>
         </div>
       </div>
       <div class="footer-bottom">
-        <p>© 2026 乌东文旅 "衣食住行"综合服务平台 · 仅供教学演示</p>
+        <p>© 2026 乌东文旅 "衣食住行"综合服务平台</p>
       </div>
     </div>
   </footer>

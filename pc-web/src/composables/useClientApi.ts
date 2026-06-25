@@ -36,6 +36,16 @@ export function useClientApi() {
     return (res?.data ?? res) as T;
   }
 
+  async function post<T>(url: string, body?: Record<string, unknown>) {
+    const res = await $fetch<ApiResponse<T>>(url, {
+      baseURL,
+      method: 'POST',
+      body,
+    });
+
+    return (res?.data ?? res) as T;
+  }
+
   return {
     home: () =>
       request<{
@@ -52,5 +62,9 @@ export function useClientApi() {
     detail: (type: string, id: string | number) => request<ClientCard & Record<string, any>>('/detail', { type, id }),
     categories: () => request<{ clothing: Array<{ id: number; name: string }>; topics: any[] }>('/categories'),
     cart: (userId: number) => request<{ list: any[] }>('/cart', { userId }),
+    addCart: (body: { userId: number; goodsId: number; moduleType?: number; skuId?: number; skuName?: string; quantity?: number }) =>
+      post<{ success: boolean; item: any }>('/cart/add', body),
+    collectStatus: (userId: number, goodsId: number) => request<{ collected: boolean }>('/collect/status', { userId, goodsId }),
+    toggleCollect: (body: { userId: number; goodsId: number }) => post<{ success: boolean; collected: boolean }>('/collect/toggle', body),
   };
 }

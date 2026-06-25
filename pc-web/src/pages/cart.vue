@@ -11,7 +11,7 @@
       <div class="cart-list" v-if="cartItems.length">
         <div class="cart-item" v-for="(item, idx) in cartItems" :key="idx">
           <input type="checkbox" :checked="item.checked" @change="item.checked = ($event.target as HTMLInputElement).checked" class="cart-checkbox" />
-          <img :src="item.image" :alt="item.title" class="cart-img" />
+          <img :src="item.image" :alt="item.title" class="cart-img" @error="handleImageError" />
           <div class="cart-info">
             <h3 class="cart-title">{{ item.title }}</h3>
             <p class="cart-spec">{{ item.spec }}</p>
@@ -54,7 +54,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
 
 interface CartItem {
   id: number;
@@ -67,15 +67,106 @@ interface CartItem {
   image: string;
 }
 
-const cartItems = ref<CartItem[]>([
-  { id: 1, title: '苗族银饰手镯', spec: '中号（内径56mm）', description: '手工锻造，传承百年工艺', price: 368, quantity: 1, checked: true, image: 'https://via.placeholder.com/120x120/F7F8FA/1F5FA8?text=手镯' },
-  { id: 2, title: '蜡染布艺挂画', spec: '60×80cm', description: '天然植物染料，纯手工制作', price: 198, quantity: 2, checked: true, image: 'https://via.placeholder.com/120x120/F7F8FA/1F5FA8?text=蜡染' },
-  { id: 3, title: '苗绣香包', spec: '红色', description: '精美刺绣，天然香料', price: 68, quantity: 1, checked: false, image: 'https://via.placeholder.com/120x120/F7F8FA/1F5FA8?text=香包' },
-]);
+type ApiCartItem = {
+  id?: number;
+  goodsId?: number;
+  goodsTitle?: string;
+  title?: string;
+  skuName?: string;
+  spec?: string;
+  description?: string;
+  price?: number | string;
+  quantity?: number;
+  checked?: number | boolean;
+  mainImage?: string;
+  image?: string;
+  moduleType?: number;
+};
+
+const clientApi = useClientApi();
+const config = useRuntimeConfig();
+const fallbackImage = '/logo-wudong.png';
+const apiOrigin = computed(() => {
+  const apiBase = (config.public.apiBase as string) || '';
+  try {
+    return apiBase ? new URL(apiBase).origin : '';
+  } catch (err) {
+    return '';
+  }
+});
+
+const cartItems = ref<CartItem[]>([]);
 
 const allChecked = computed(() => cartItems.value.length > 0 && cartItems.value.every((i) => i.checked));
 const selectedCount = computed(() => cartItems.value.filter((i) => i.checked).reduce((s, i) => s + i.quantity, 0));
 const totalPrice = computed(() => cartItems.value.filter((i) => i.checked).reduce((s, i) => s + i.price * i.quantity, 0));
+
+function normalizeImage(image?: string) {
+  if (!image) {
+    return fallbackImage;
+  }
+
+  if (/^(https?:)?\/\//.test(image) || image.startsWith('data:') || image.startsWith('/')) {
+    if (image.startsWith('/upload/') && apiOrigin.value) {
+      return `${apiOrigin.value}${image}`;
+    }
+    return image;
+  }
+
+  if (image.startsWith('upload/') && apiOrigin.value) {
+    return `${apiOrigin.value}/${image}`;
+  }
+
+  return `/${image.replace(/^\/+/, '')}`;
+}
+
+function mapCartItem(item: ApiCartItem): CartItem {
+  return {
+    id: item.id || item.goodsId || 0,
+    title: item.goodsTitle || item.title || '未命名商品',
+    spec: item.skuName || item.spec || '默认规格',
+    description: item.description || '',
+    price: Number(item.price || 0),
+    quantity: Number(item.quantity || 1),
+    checked: item.checked === undefined ? true : Boolean(item.checked),
+    image: normalizeImage(item.mainImage || item.image),
+  };
+}
+
+async function resolveCartItem(item: ApiCartItem) {
+  const cartItem = mapCartItem(item);
+  const cartImage = item.mainImage || item.image;
+  if (cartImage || !item.goodsId) {
+    return cartItem;
+  }
+
+  try {
+    const type = item.moduleType === 2 ? 'agriculture' : 'clothing';
+    const detail = await clientApi.detail(type, item.goodsId);
+    const detailImage = detail?.image || detail?.images?.[0] || detail?.raw?.mainImage || detail?.raw?.images?.[0];
+    cartItem.image = normalizeImage(detailImage);
+  } catch (err) {
+    cartItem.image = fallbackImage;
+  }
+
+  return cartItem;
+}
+
+async function loadCart() {
+  try {
+    // 当前 PC 端还没有登录态接入，先沿用演示用户 ID 拉取后端购物车。
+    const res = await clientApi.cart(1);
+    cartItems.value = res?.list?.length ? await Promise.all(res.list.map(resolveCartItem)) : [];
+  } catch (err) {
+    cartItems.value = [];
+  }
+}
+
+function handleImageError(event: Event) {
+  const img = event.target as HTMLImageElement;
+  if (img.src.endsWith(fallbackImage)) return;
+  img.src = fallbackImage;
+}
 
 function toggleAll() {
   const checked = !allChecked.value;
@@ -93,6 +184,8 @@ function handleCheckout() {
   }
   alert(`结算 ${selectedCount.value} 件商品，合计 ¥${totalPrice.value.toFixed(2)}`);
 }
+
+onMounted(loadCart);
 
 useHead({
   title: '购物车 - 乌东文旅',

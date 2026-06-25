@@ -44,6 +44,14 @@
 
       <!-- 用户区 -->
       <div class="user-area">
+        <NuxtLink to="/cart" class="cart-entry" aria-label="购物车">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="9" cy="21" r="1" />
+            <circle cx="20" cy="21" r="1" />
+            <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h8.72a2 2 0 0 0 2-1.61L23 6H6" />
+          </svg>
+          <span>购物车</span>
+        </NuxtLink>
         <template v-if="isLoggedIn">
           <NuxtLink to="/user/profile" class="user-avatar">
             <img :src="userAvatar" alt="头像" />
@@ -244,6 +252,28 @@ function handleSearch() {
   align-items: center;
   gap: 12px;
   flex-shrink: 0;
+}
+
+.cart-entry {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  height: 36px;
+  padding: 0 14px;
+  border: 1px solid rgba(31, 95, 168, 0.16);
+  border-radius: var(--radius-full);
+  color: var(--color-primary);
+  background: rgba(255, 255, 255, 0.78);
+  font-size: 13px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: all 0.2s;
+}
+
+.cart-entry:hover {
+  background: rgba(31, 95, 168, 0.08);
+  transform: translateY(-1px);
 }
 
 .user-avatar {
