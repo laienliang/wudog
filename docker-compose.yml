@@ -55,6 +55,7 @@ services:
       COOL_EPS: "true"
       COOL_INIT_DB: "true"
       COOL_INIT_MENU: "true"
+      REDIS_HOST: redis
       UPLOAD_MAX_SIZE: 200mb
     ports:
       - "8001:8001"

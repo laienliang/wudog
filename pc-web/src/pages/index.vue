@@ -89,7 +89,7 @@
     <section class="article-section">
       <div class="container">
         <div class="section-header">
-          <h2 class="section-title">精选游记</h2>
+          <h2 class="section-title">精选游记-乌东之行</h2>
           <NuxtLink to="/community/feed" class="section-more">更多游记 ›</NuxtLink>
         </div>
 
