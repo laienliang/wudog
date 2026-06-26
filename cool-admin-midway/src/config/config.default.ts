@@ -1,12 +1,11 @@
 import { CoolConfig } from '@cool-midway/core';
 import { MidwayConfig } from '@midwayjs/core';
-import { CoolCacheStore } from '@cool-midway/core';
+import { redisStore } from 'cache-manager-ioredis-yet';
 import * as path from 'path';
-import { pCachePath, pUploadPath } from '../comm/path';
+import { pUploadPath } from '../comm/path';
 import { availablePort } from '../comm/port';
 
-// redis缓存
-// import { redisStore } from 'cache-manager-ioredis-yet';
+const uploadMaxSize = process.env.UPLOAD_MAX_SIZE || '200mb';
 
 export default {
   // 确保每个项目唯一，项目首次启动会自动生成
@@ -18,9 +17,18 @@ export default {
   asyncContextManager: {
     enable: true,
   },
+  // 请求体大小限制，避免大文件上传时在进入上传组件前被拦截
+  bodyParser: {
+    formLimit: uploadMaxSize,
+    jsonLimit: uploadMaxSize,
+    textLimit: uploadMaxSize,
+    xmlLimit: uploadMaxSize,
+  },
   // 静态文件配置
   staticFile: {
-    buffer: true,
+    dynamic: true,
+    preload: false,
+    buffer: false,
     dirs: {
       default: {
         prefix: '/',
@@ -34,35 +42,24 @@ export default {
   },
   // 文件上传
   upload: {
-    fileSize: '200mb',
+    fileSize: uploadMaxSize,
     whitelist: null,
   },
   // 缓存 可切换成其他缓存如：redis http://www.midwayjs.org/docs/extensions/caching
   cacheManager: {
     clients: {
       default: {
-        store: CoolCacheStore,
+        store: redisStore,
         options: {
-          path: pCachePath(),
+          port: process.env.REDIS_PORT ? parseInt(process.env.REDIS_PORT) : 6379,
+          host: process.env.REDIS_HOST || '127.0.0.1',
+          password: process.env.REDIS_PASSWORD || '',
           ttl: 0,
+          db: 0,
         },
       },
     },
   },
-  // cacheManager: {
-  //   clients: {
-  //     default: {
-  //       store: redisStore,
-  //       options: {
-  //         port: 6379,
-  //         host: '127.0.0.1',
-  //         password: '',
-  //         ttl: 0,
-  //         db: 0,
-  //       },
-  //     },
-  //   },
-  // },
   cool: {
     // 已经插件化，本地文件上传查看 plugin/config.ts，其他云存储查看对应插件的使用
     file: {},
