@@ -23,7 +23,7 @@ RUN npm install
 COPY . .
 RUN npm run build
 # 删除开发期依赖
-RUN rm -rf node_modules && rm package-lock.json    
+RUN rm -rf node_modules && rm -f package-lock.json
 # 安装生产环境依赖   
 RUN npm install                        
 

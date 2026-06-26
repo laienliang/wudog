@@ -23,20 +23,39 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'clothing.category' });
+const Crud = useCrud({ service: service.clothing.category, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
+
+function getName(row: any, keys: string[]) {
+  for (const key of keys) {
+    const value = key.split('.').reduce((data, name) => data?.[name], row);
+
+    if (value) {
+      return value;
+    }
+  }
+
+  return '-';
+}
 
 const Table = useTable({
   columns: [
     { type: 'selection', width: 50 },
     { label: '分类名称', prop: 'name', minWidth: 120 },
-    { label: '图标', prop: 'icon', width: 80, formatter: (row: any) => row.icon ? `<img src="${row.icon}" style="width:32px;height:32px;border-radius:4px;" />` : '-' },
-    { label: '父分类', prop: 'parentId', width: 100, formatter: (row: any) => row.parentId === 0 ? '<el-tag size="small">顶级</el-tag>' : row.parentId },
+    {
+      label: '图标',
+      prop: 'icon',
+      width: 80,
+      component: { name: 'cl-image', props: { size: 32 } },
+    },
+    { label: '父分类', prop: 'parentName', width: 120, formatter: (row: any) => row.parentId === 0 ? '顶级' : getName(row, ['parentName', 'parent.name', 'parentId']) },
     { label: '排序', prop: 'sort', width: 80 },
     {
       label: '状态',
       prop: 'status',
       width: 80,
-      formatter: (row: any) => row.status === 1 ? '<el-tag type="success" size="small">启用</el-tag>' : '<el-tag type="info" size="small">停用</el-tag>',
+      formatter: (row: any) => row.status === 1 ? '启用' : '停用',
     },
     { label: '创建时间', prop: 'createTime', width: 170 },
     { label: '操作', type: 'op', width: 120, buttons: ['edit', 'delete'] },
@@ -45,14 +64,25 @@ const Table = useTable({
 
 const Upsert = useUpsert({
   items: [
-    { label: '分类名称', prop: 'name', required: true, components: [{ name: 'el-input' }] },
-    { label: '图标URL', prop: 'icon', components: [{ name: 'el-input' }] },
-    { label: '父分类ID', prop: 'parentId', components: [{ name: 'el-input-number', props: { min: 0 } }] },
-    { label: '排序', prop: 'sort', components: [{ name: 'el-input-number', props: { min: 0 } }] },
+    { label: '分类名称', prop: 'name', required: true, component: { name: 'el-input' } },
+    { label: '图标', prop: 'icon', component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } } },
+    {
+      label: '父分类',
+      prop: 'parentId',
+      component: {
+        name: 'cl-select',
+        props: {
+          api: () => service.clothing.category.list({}),
+          labelKey: 'name',
+          valueKey: 'id',
+        },
+      },
+    },
+    { label: '排序', prop: 'sort', component: { name: 'el-input-number', props: { min: 0 } } },
     {
       label: '状态',
       prop: 'status',
-      components: [{ name: 'el-switch', props: { activeValue: 1, inactiveValue: 0, activeText: '启用', inactiveText: '停用' } }],
+      component: { name: 'el-switch', props: { activeValue: 1, inactiveValue: 0, activeText: '启用', inactiveText: '停用' } },
     },
   ],
 });

@@ -27,13 +27,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'food.agricultureCategory' });
+const Crud = useCrud({ service: service.food.agricultureCategory, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
   columns: [
     { type: 'selection' },
-    { label: 'ID', prop: 'id', minWidth: 80 },
-    { label: '父级ID', prop: 'parentId', minWidth: 100 },
     { label: '分类名称', prop: 'name', minWidth: 150 },
     { label: '图标', prop: 'icon', minWidth: 100 },
     { label: '排序', prop: 'sort', minWidth: 80 },
@@ -52,9 +52,9 @@ const Table = useTable({
 
 const Upsert = useUpsert({
   items: [
-    { label: '父级ID', prop: 'parentId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
+    { label: '父级分类', prop: 'parentId', value: 0, component: { name: 'cl-select', props: { api: () => service.food.agricultureCategory.list({}), labelKey: 'name', valueKey: 'id' } } },
     { label: '分类名称', prop: 'name', required: true, component: { name: 'el-input' } },
-    { label: '图标', prop: 'icon', component: { name: 'cl-upload' } },
+    { label: '图标', prop: 'icon', component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } } },
     { label: '排序', prop: 'sort', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
   ],
 });

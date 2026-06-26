@@ -490,7 +490,7 @@ export default defineComponent({
 		// 渲染表单
 		function renderContainer() {
 			// 表单项列表
-			const children = config.items.map(renderFormItem);
+			const children = config.items.map(renderFormItem).filter(Boolean);
 
 			// 表单标签位置
 			const labelPosition =
@@ -594,7 +594,7 @@ export default defineComponent({
 							}
 						});
 				}
-			});
+			}).filter(Boolean);
 
 			return (
 				<div

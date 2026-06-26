@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'travel.guide' });
+const Crud = useCrud({ service: service.travel.guide, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '标题', prop: 'title', minWidth: 150 },
 		{ label: '出发地', prop: 'departure', width: 120 },
 		{ label: '交通方式', prop: 'transport', width: 120 },
@@ -54,7 +55,7 @@ const Upsert = useUpsert({
 		{
 			label: '图片',
 			prop: 'images',
-			component: { name: 'cl-upload', props: { multiple: true } },
+			component: { name: 'cl-upload-space', props: { multiple: true, accept: 'image/*' } },
 		},
 	],
 });

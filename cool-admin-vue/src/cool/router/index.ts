@@ -72,6 +72,37 @@ router.onError((error: Error) => {
 	}
 });
 
+// 根据菜单路径兜底查找组件，兼容历史菜单 viewPath 填错的情况
+function getRouteComponent(route: any) {
+	const viewPath = route.viewPath;
+
+	if (viewPath) {
+		const component = files['/src/' + viewPath.replace('cool/', '')];
+
+		if (component) {
+			return component;
+		}
+	}
+
+	const localRoute = module.list
+		.flatMap(module => (module.views || []).concat(module.pages || []))
+		.find(item => item.path == route.path);
+
+	if (localRoute?.component) {
+		return localRoute.component;
+	}
+
+	const [moduleName, ...paths] = route.path.replace(/^\//, '').split('/');
+	const path = paths.join('/');
+	const maybePaths = [
+		`/src/modules/${moduleName}/views/${path}.vue`,
+		`/src/modules/${moduleName}/views/${path}/index.vue`,
+		`/src/modules/${moduleName}/views/crud/${path}/index.vue`
+	];
+
+	return maybePaths.map(path => files[path]).find(Boolean);
+}
+
 // 添加视图，页面路由
 router.append = function (routeData) {
 	if (!routeData) {
@@ -96,13 +127,17 @@ router.append = function (routeData) {
 					route.meta.iframeUrl = viewPath;
 					route.component = () => import('/$/base/views/frame.vue');
 				} else {
-					// 从文件系统中动态导入组件
-					route.component = files['/src/' + viewPath.replace('cool/', '')];
+					// 从文件系统中动态导入组件，失败时按路由路径兜底
+					route.component = getRouteComponent(route);
 				}
 			} else if (!route.redirect) {
-				// 如果没有组件路径且没有重定向，默认重定向到 404
-				route.redirect = '/404';
+				// 没有组件路径时，尝试从前端模块路由中匹配
+				route.component = getRouteComponent(route);
 			}
+		}
+
+		if (!route.component && !route.redirect) {
+			route.redirect = '/404';
 		}
 
 		// 支持 props 接收参数

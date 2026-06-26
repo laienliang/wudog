@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'platform.sensitiveWord' });
+const Crud = useCrud({ service: service.platform.sensitiveWord }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '敏感词', prop: 'word', minWidth: 150 },
 		{ label: '类型', prop: 'type', width: 100 },
 		{ label: '创建时间', prop: 'createTime', width: 170 },

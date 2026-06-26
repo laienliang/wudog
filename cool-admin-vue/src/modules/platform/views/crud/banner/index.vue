@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'platform.banner' });
+const Crud = useCrud({ service: service.platform.banner, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '标题', prop: 'title', minWidth: 150 },
 		{ label: '图片', prop: 'imageUrl', width: 120 },
 		{ label: '链接', prop: 'linkUrl', minWidth: 180 },
@@ -45,7 +46,7 @@ const Upsert = useUpsert({
 		{
 			label: '图片',
 			prop: 'imageUrl',
-			component: { name: 'cl-upload' },
+			component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } },
 		},
 		{ label: '链接', prop: 'linkUrl', component: { name: 'el-input' } },
 		{ label: '排序', prop: 'sort', component: { name: 'el-input-number' } },

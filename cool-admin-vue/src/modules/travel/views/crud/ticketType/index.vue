@@ -23,13 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'travel.ticketType' });
+const Crud = useCrud({ service: service.travel.ticketType, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
-		{ label: '景区ID', prop: 'scenicId', width: 100 },
 		{ label: '票种名称', prop: 'name', minWidth: 150 },
 		{ label: '价格', prop: 'price', width: 100 },
 		{ label: '库存', prop: 'stock', width: 100 },
@@ -41,7 +41,6 @@ const Table = useTable({
 
 const Upsert = useUpsert({
 	items: [
-		{ label: '景区ID', prop: 'scenicId', component: { name: 'el-input-number' } },
 		{ label: '票种名称', prop: 'name', component: { name: 'el-input' } },
 		{ label: '价格', prop: 'price', component: { name: 'el-input-number' } },
 		{ label: '库存', prop: 'stock', component: { name: 'el-input-number' } },

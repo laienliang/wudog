@@ -23,13 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'travel.route' });
+const Crud = useCrud({ service: service.travel.route, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
-		{ label: '商家ID', prop: 'merchantId', width: 100 },
 		{ label: '标题', prop: 'title', minWidth: 150 },
 		{ label: '天数', prop: 'days', width: 80 },
 		{ label: '价格', prop: 'price', width: 100 },
@@ -41,12 +41,12 @@ const Table = useTable({
 
 const Upsert = useUpsert({
 	items: [
-		{ label: '商家ID', prop: 'merchantId', component: { name: 'el-input-number' } },
+		{ label: '商家', prop: 'merchantId', component: { name: 'cl-select', props: { api: () => service.merchant.list({}), labelKey: 'shopName', valueKey: 'id' } } },
 		{ label: '标题', prop: 'title', component: { name: 'el-input' } },
 		{
 			label: '主图',
 			prop: 'mainImage',
-			component: { name: 'cl-upload' },
+			component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } },
 		},
 		{ label: '天数', prop: 'days', component: { name: 'el-input-number' } },
 		{ label: '价格', prop: 'price', component: { name: 'el-input-number' } },

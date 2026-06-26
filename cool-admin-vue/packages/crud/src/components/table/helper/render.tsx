@@ -82,7 +82,7 @@ export function useRender() {
 							},
 							default(scope: any) {
 								if (item.children) {
-									return item.children.map(deep);
+									return item.children.map(deep).filter(Boolean);
 								}
 
 								// 使用插槽
@@ -157,6 +157,10 @@ export function useRender() {
 	function renderOpButtons(buttons: any, { scope }: any) {
 		const list = getValue(buttons || ["edit", "delete"], { scope }) as ClTable.OpButton;
 
+		if (!isArray(list)) {
+			return [];
+		}
+
 		return list.map((vnode) => {
 			if (vnode === "info") {
 				return (
@@ -225,7 +229,7 @@ export function useRender() {
 					}
 				});
 			}
-		});
+		}).filter(Boolean);
 	}
 
 	// 渲染字典

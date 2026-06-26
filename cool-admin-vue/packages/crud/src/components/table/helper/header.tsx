@@ -54,8 +54,14 @@ export function renderHeader(item: ClTable.Column, { scope, slots }: any) {
 		</div>
 	);
 
+	const component = renderNode(item.search.component, { prop: item.prop });
+
+	if (!component) {
+		return item.label;
+	}
+
 	// 输入框
-	const input = h(renderNode(item.search.component, { prop: item.prop }), {
+	const input = h(component, {
 		clearable: true,
 		modelValue: item.search.value,
 		onVnodeMounted(vn) {

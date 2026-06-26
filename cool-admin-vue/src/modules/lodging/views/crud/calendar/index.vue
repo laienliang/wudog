@@ -27,13 +27,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'lodging.calendar' });
+const Crud = useCrud({ service: service.lodging.calendar, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
   columns: [
     { type: 'selection' },
-    { label: 'ID', prop: 'id', minWidth: 80 },
-    { label: '房型ID', prop: 'roomTypeId', minWidth: 100 },
     { label: '日期', prop: 'date', minWidth: 120 },
     { label: '可用库存', prop: 'availableStock', minWidth: 100 },
     { label: '价格', prop: 'price', minWidth: 100 },
@@ -53,7 +53,6 @@ const Table = useTable({
 
 const Upsert = useUpsert({
   items: [
-    { label: '房型ID', prop: 'roomTypeId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
     { label: '日期', prop: 'date', required: true, component: { name: 'el-date-picker', props: { type: 'date', valueFormat: 'YYYY-MM-DD' } } },
     { label: '可用库存', prop: 'availableStock', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
     { label: '价格', prop: 'price', required: true, value: 0, component: { name: 'el-input-number', props: { min: 0, precision: 2 } } },

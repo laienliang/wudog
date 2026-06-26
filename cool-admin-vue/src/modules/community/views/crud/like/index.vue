@@ -4,7 +4,8 @@
 			<cl-refresh-btn />
 			<cl-add-btn />
 			<cl-multi-delete-btn />
-			<cl-search-key placeholder="搜索点赞" />
+			<cl-flex1 />
+			<cl-search ref="Search" />
 		</cl-row>
 		<cl-row>
 			<cl-table ref="Table" />
@@ -18,30 +19,56 @@
 </template>
 
 <script setup lang="ts">
-import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
+import { useCrud, useSearch, useTable, useUpsert } from '@cool-vue/crud';
 import { useCool } from '/@/cool';
+import { createUserNameFormatter } from '/@/modules/base/utils';
 
 const { service } = useCool();
+const formatUserName = createUserNameFormatter(service);
 
-const Crud = useCrud({ service: 'community.like' });
+const Crud = useCrud({ service: service.community.like, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
+
+const targetTypeOptions = [
+	{ label: '游记', value: 1 },
+	{ label: '评论', value: 2 },
+];
+
+function getName(row: any, keys: string[]) {
+	for (const key of keys) {
+		const value = key.split('.').reduce((data, name) => data?.[name], row);
+
+		if (value) {
+			return value;
+		}
+	}
+
+	return '-';
+}
 
 const Table = useTable({
 	columns: [
-		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
-		{ label: '用户ID', prop: 'userId', width: 100 },
-		{ label: '目标类型', prop: 'targetType', width: 120 },
-		{ label: '目标ID', prop: 'targetId', width: 100 },
+			{ type: 'selection' },
+			{ label: '用户', prop: 'userName', minWidth: 120, formatter: formatUserName },
+			{ label: '目标类型', prop: 'targetType', width: 120, dict: targetTypeOptions },
+		{ label: '点赞对象', prop: 'targetName', minWidth: 160, formatter: (row: any) => getName(row, ['targetName', 'articleTitle', 'commentContent', 'target.title', 'target.content', 'targetId']) },
 		{ label: '创建时间', prop: 'createTime', width: 170 },
 		{ type: 'op', buttons: ['edit', 'delete'] },
 	],
 });
 
+const Search = useSearch({
+	items: [
+		{ label: '目标类型', prop: 'targetType', component: { name: 'cl-select', props: { options: targetTypeOptions, clearable: true } } },
+		{ label: '点赞对象', prop: 'targetId', component: { name: 'cl-select', props: { api: () => service.community.article.list({}), labelKey: 'title', valueKey: 'id', clearable: true } } },
+	],
+});
+
 const Upsert = useUpsert({
 	items: [
-		{ label: '用户ID', prop: 'userId', component: { name: 'el-input-number' } },
-		{ label: '目标类型', prop: 'targetType', component: { name: 'el-input' } },
-		{ label: '目标ID', prop: 'targetId', component: { name: 'el-input-number' } },
+		{ label: '目标类型', prop: 'targetType', value: 1, component: { name: 'cl-select', props: { options: targetTypeOptions } } },
+		{ label: '点赞对象', prop: 'targetId', component: { name: 'cl-select', props: { api: () => service.community.article.list({}), labelKey: 'title', valueKey: 'id' } } },
 	],
 });
 </script>

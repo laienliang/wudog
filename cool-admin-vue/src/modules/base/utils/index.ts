@@ -7,3 +7,4 @@ export function revisePath(path: string) {
 }
 
 export * from './permission';
+export * from './user';

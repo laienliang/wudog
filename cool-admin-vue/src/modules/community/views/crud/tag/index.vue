@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'community.tag' });
+const Crud = useCrud({ service: service.community.tag, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '标签名称', prop: 'name', minWidth: 150 },
 		{ label: '创建时间', prop: 'createTime', width: 170 },
 		{ type: 'op', buttons: ['edit', 'delete'] },

@@ -21,7 +21,9 @@ import { useCool } from '/@/cool';
 const { service } = useCool();
 
 // 统计数据只读，不支持增删改
-const Crud = useCrud({ service: 'platform.stat' });
+const Crud = useCrud({ service: service.platform.stat }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [

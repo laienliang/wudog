@@ -21,26 +21,36 @@
 <script setup lang="ts">
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
 import { useCool } from '/@/cool';
+import { ref } from 'vue';
 
 const { service } = useCool();
+const categoryNameMap = ref<Record<string, string>>({});
 
-const Crud = useCrud({ service: 'clothing.goods' });
+const Crud = useCrud({ service: service.clothing.goods, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
+
+function getCategoryName(row: any) {
+  const name = ['categoryName', 'category.name']
+    .map(key => key.split('.').reduce((data, field) => data?.[field], row))
+    .find(Boolean);
+
+  return name || categoryNameMap.value[row.categoryId] || '-';
+}
+
+service.clothing.category.list({}).then((list: any[]) => {
+  categoryNameMap.value = list.reduce((map, item) => {
+    map[item.id] = item.name;
+    return map;
+  }, {} as Record<string, string>);
+});
 
 const Table = useTable({
   columns: [
     { type: 'selection', width: 50 },
-    {
-      label: '商品',
-      prop: 'title',
-      minWidth: 180,
-      formatter: (row: any) => {
-        const img = row.mainImage
-          ? `<img src="${row.mainImage}" style="width:40px;height:40px;object-fit:cover;border-radius:6px;margin-right:8px;vertical-align:middle;" />`
-          : '';
-        return `${img}<span>${row.title}</span>`;
-      },
-    },
-    { label: '分类', prop: 'categoryId', minWidth: 100, slot: 'category' },
+    { label: '主图', prop: 'mainImage', width: 80, component: { name: 'cl-image', props: { size: 40 } } },
+    { label: '商品', prop: 'title', minWidth: 180 },
+    { label: '分类', prop: 'categoryName', width: 120, formatter: getCategoryName },
     {
       label: '价格',
       prop: 'price',
@@ -53,7 +63,7 @@ const Table = useTable({
       width: 100,
       formatter: (row: any) => row.marketPrice ? `¥${Number(row.marketPrice).toFixed(2)}` : '-',
     },
-    { label: '库存', prop: 'stock', width: 80, slot: 'stock' },
+    { label: '库存', prop: 'stock', width: 80 },
     { label: '销量', prop: 'sales', width: 80 },
     {
       label: '评分',
@@ -61,7 +71,7 @@ const Table = useTable({
       width: 80,
       formatter: (row: any) => {
         const r = parseFloat(row.rating) || 5;
-        return `<span style="color:#E85D2F;font-weight:bold;">${r.toFixed(2)}</span>`;
+        return r.toFixed(2);
       },
     },
     {
@@ -69,9 +79,7 @@ const Table = useTable({
       prop: 'status',
       width: 80,
       formatter: (row: any) => {
-        return row.status === 1
-          ? '<el-tag type="success" size="small">上架</el-tag>'
-          : '<el-tag type="info" size="small">下架</el-tag>';
+        return row.status === 1 ? '上架' : '下架';
       },
     },
     { label: '创建时间', prop: 'createTime', width: 170 },
@@ -86,31 +94,53 @@ const Table = useTable({
 
 const Upsert = useUpsert({
   items: [
-    { label: '商品标题', prop: 'title', required: true, components: [{ name: 'el-input' }] },
-    { label: '副标题', prop: 'subtitle', components: [{ name: 'el-input' }] },
-    { label: '分类ID', prop: 'categoryId', components: [{ name: 'el-input-number' }] },
-    { label: '商家ID', prop: 'merchantId', components: [{ name: 'el-input-number' }] },
+    { label: '商品标题', prop: 'title', required: true, component: { name: 'el-input' } },
+    { label: '副标题', prop: 'subtitle', component: { name: 'el-input' } },
+    {
+      label: '分类',
+      prop: 'categoryId',
+      component: {
+        name: 'cl-select',
+        props: {
+          api: () => service.clothing.category.list({}),
+          labelKey: 'name',
+          valueKey: 'id',
+        },
+      },
+    },
+    {
+      label: '商家',
+      prop: 'merchantId',
+      component: {
+        name: 'cl-select',
+        props: {
+          api: () => service.merchant.list({}),
+          labelKey: 'shopName',
+          valueKey: 'id',
+        },
+      },
+    },
     {
       label: '价格 (¥)',
       prop: 'price',
       required: true,
-      components: [{ name: 'el-input-number', props: { precision: 2, min: 0 } }],
+      component: { name: 'el-input-number', props: { precision: 2, min: 0 } },
     },
     {
       label: '市场价 (¥)',
       prop: 'marketPrice',
-      components: [{ name: 'el-input-number', props: { precision: 2, min: 0 } }],
+      component: { name: 'el-input-number', props: { precision: 2, min: 0 } },
     },
-    { label: '库存', prop: 'stock', components: [{ name: 'el-input-number', props: { min: 0 } }] },
-    { label: '主图URL', prop: 'mainImage', components: [{ name: 'el-input' }] },
-    { label: '图片列表(JSON)', prop: 'images', components: [{ name: 'el-input', props: { type: 'textarea', rows: 3 } }] },
-    { label: '工艺介绍', prop: 'craftIntro', components: [{ name: 'el-input', props: { type: 'textarea', rows: 3 } }] },
-    { label: '传承人', prop: 'inheritorName', components: [{ name: 'el-input' }] },
-    { label: '详情', prop: 'detailContent', components: [{ name: 'el-input', props: { type: 'textarea', rows: 5 } }] },
+    { label: '库存', prop: 'stock', component: { name: 'el-input-number', props: { min: 0 } } },
+    { label: '主图', prop: 'mainImage', component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } } },
+    { label: '图片列表', prop: 'images', component: { name: 'cl-upload-space', props: { multiple: true, accept: 'image/*' } } },
+    { label: '工艺介绍', prop: 'craftIntro', component: { name: 'el-input', props: { type: 'textarea', rows: 3 } } },
+    { label: '传承人', prop: 'inheritorName', component: { name: 'el-input' } },
+    { label: '详情', prop: 'detailContent', component: { name: 'el-input', props: { type: 'textarea', rows: 5 } } },
     {
       label: '状态',
       prop: 'status',
-      components: [{ name: 'el-switch', props: { activeValue: 1, inactiveValue: 0, activeText: '上架', inactiveText: '下架' } }],
+      component: { name: 'el-switch', props: { activeValue: 1, inactiveValue: 0, activeText: '上架', inactiveText: '下架' } },
     },
   ],
 });

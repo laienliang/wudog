@@ -24,18 +24,20 @@
 <script setup lang="ts">
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
 import { useCool } from '/@/cool';
+import { createUserNameFormatter } from '/@/modules/base/utils';
 
 const { service } = useCool();
+const formatUserName = createUserNameFormatter(service);
 
-const Crud = useCrud({ service: 'lodging.collect' });
+const Crud = useCrud({ service: service.lodging.collect, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
-  columns: [
-    { type: 'selection' },
-    { label: 'ID', prop: 'id', minWidth: 80 },
-    { label: '用户ID', prop: 'userId', minWidth: 100 },
-    { label: '民宿ID', prop: 'hostelId', minWidth: 100 },
-    {
+	  columns: [
+	    { type: 'selection' },
+	    { label: '用户', prop: 'userName', minWidth: 120, formatter: formatUserName },
+	    {
       label: '创建时间',
       prop: 'createTime',
       minWidth: 170,
@@ -50,8 +52,8 @@ const Table = useTable({
 
 const Upsert = useUpsert({
   items: [
-    { label: '用户ID', prop: 'userId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
-    { label: '民宿ID', prop: 'hostelId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
+    { label: '用户', prop: 'userId', value: '', component: { name: 'cl-select', props: { api: () => service.user.info.list({}), labelKey: 'nickName', valueKey: 'id' } } },
+    { label: '民宿', prop: 'hostelId', value: '', component: { name: 'cl-select', props: { api: () => service.lodging.hostel.list({}), labelKey: 'name', valueKey: 'id' } } },
   ],
 });
 </script>

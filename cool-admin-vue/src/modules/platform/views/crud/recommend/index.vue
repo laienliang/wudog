@@ -23,15 +23,15 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'platform.recommend' });
+const Crud = useCrud({ service: service.platform.recommend }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '名称', prop: 'name', minWidth: 150 },
 		{ label: '内容类型', prop: 'contentType', width: 120 },
-		{ label: '内容ID', prop: 'contentId', width: 100 },
 		{ label: '排序', prop: 'sort', width: 80 },
 		{ label: '创建时间', prop: 'createTime', width: 170 },
 		{ type: 'op', buttons: ['edit', 'delete'] },
@@ -42,7 +42,6 @@ const Upsert = useUpsert({
 	items: [
 		{ label: '名称', prop: 'name', component: { name: 'el-input' } },
 		{ label: '内容类型', prop: 'contentType', component: { name: 'el-input' } },
-		{ label: '内容ID', prop: 'contentId', component: { name: 'el-input-number' } },
 		{ label: '排序', prop: 'sort', component: { name: 'el-input-number' } },
 	],
 });

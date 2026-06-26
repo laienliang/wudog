@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'community.topic' });
+const Crud = useCrud({ service: service.community.topic, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '话题名称', prop: 'name', minWidth: 150 },
 		{ label: '描述', prop: 'description', minWidth: 180 },
 		{ label: '图标', prop: 'icon', width: 100 },
@@ -47,7 +48,7 @@ const Upsert = useUpsert({
 		{
 			label: '图标',
 			prop: 'icon',
-			component: { name: 'cl-upload' },
+			component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } },
 		},
 		{ label: '粉丝数', prop: 'followers', component: { name: 'el-input-number' } },
 		{ label: '文章数', prop: 'articles', component: { name: 'el-input-number' } },

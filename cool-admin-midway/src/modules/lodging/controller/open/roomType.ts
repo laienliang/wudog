@@ -8,8 +8,6 @@ import { LodgingRoomTypeEntity } from '../../entity/roomType';
   listQueryOp: {
     keyWordLikeFields: ['name'],
     fieldEq: ['hostelId'],
-    // list 接口添加 30 分钟缓存
-    cache: 30 * 60,
   },
 })
 export class OpenLodgingRoomTypeController extends BaseController {}

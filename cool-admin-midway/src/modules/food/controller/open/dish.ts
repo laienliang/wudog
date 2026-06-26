@@ -9,9 +9,5 @@ import { FoodDishService } from '../../service/dish';
   pageQueryOp: {
     fieldEq: ['restaurantId'],
   },
-  listQueryOp: {
-    // list 接口添加 30 分钟缓存
-    cache: 30 * 60,
-  },
 })
 export class OpenFoodDishController extends BaseController {}

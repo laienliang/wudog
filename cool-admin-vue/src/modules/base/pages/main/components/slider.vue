@@ -6,8 +6,8 @@
 		}"
 	>
 		<div class="app-slider__logo">
-			<img src="/logo.svg" class="logo-img" />
-			<span v-if="!app.isFold || browser.isMini">{{ app.info.name }}</span>
+			<img src="/logo-v6-sidebar.png" class="logo-img" />
+			<span class="app-name">乌东文旅</span>
 		</div>
 
 		<div class="app-slider__search">
@@ -60,16 +60,17 @@ const keyWord = ref('');
 	&__logo {
 		display: flex;
 		align-items: center;
+		justify-content: center;
 		height: 66px;
 		padding: 0 21px;
 		user-select: none;
 
 		.logo-img {
-			height: 36px;
+			height: 48px;
 			width: auto;
 		}
 
-		span {
+		.app-name {
 			color: #fff;
 			font-weight: bold;
 			font-size: 20px;

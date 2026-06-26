@@ -1,5 +1,5 @@
 import { Provide } from '@midwayjs/core';
-import { BaseService } from '@cool-midway/core';
+import { CoolCache, BaseService } from '@cool-midway/core';
 import { InjectEntityModel } from '@midwayjs/typeorm';
 import { Repository } from 'typeorm';
 import { ClothingGoodsEntity } from '../entity/goods';
@@ -8,4 +8,19 @@ import { ClothingGoodsEntity } from '../entity/goods';
 export class ClothingGoodsService extends BaseService {
   @InjectEntityModel(ClothingGoodsEntity)
   clothingGoodsEntity: Repository<ClothingGoodsEntity>;
+
+  @CoolCache(30 * 60) // 30 分钟缓存
+  async list(query?, option?, connectionName?) {
+    return super.list(query, option, connectionName);
+  }
+
+  @CoolCache(30 * 60) // 30 分钟缓存
+  async page(query?, option?, connectionName?) {
+    return super.page(query, option, connectionName);
+  }
+
+  @CoolCache(30 * 60) // 30 分钟缓存
+  async info(id, infoIgnoreProperty?) {
+    return super.info(id, infoIgnoreProperty);
+  }
 }

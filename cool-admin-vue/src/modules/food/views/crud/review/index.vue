@@ -5,7 +5,7 @@
       <cl-add-btn />
       <cl-multi-delete-btn />
       <cl-flex1 />
-      <cl-search-key placeholder="搜索评价内容" />
+      <cl-search ref="Search" />
     </cl-row>
 
     <cl-row>
@@ -22,20 +22,35 @@
 </template>
 
 <script setup lang="ts">
-import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
+import { useCrud, useSearch, useTable, useUpsert } from '@cool-vue/crud';
 import { useCool } from '/@/cool';
+import { createUserNameFormatter } from '/@/modules/base/utils';
 
 const { service } = useCool();
+const formatUserName = createUserNameFormatter(service);
 
-const Crud = useCrud({ service: 'food.review' });
+const Crud = useCrud({ service: service.food.review, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
+
+function getName(row: any, keys: string[]) {
+  for (const key of keys) {
+    const value = key.split('.').reduce((data, name) => data?.[name], row);
+
+    if (value) {
+      return value;
+    }
+  }
+
+  return '-';
+}
 
 const Table = useTable({
-  columns: [
+	columns: [
     { type: 'selection' },
-    { label: 'ID', prop: 'id', minWidth: 80 },
-    { label: '餐厅ID', prop: 'restaurantId', minWidth: 100 },
-    { label: '商品ID', prop: 'goodsId', minWidth: 100 },
-    { label: '用户ID', prop: 'userId', minWidth: 100 },
+    { label: '用户', prop: 'userName', minWidth: 120, formatter: formatUserName },
+    { label: '餐厅', prop: 'restaurantName', minWidth: 140, formatter: (row: any) => getName(row, ['restaurantName', 'restaurant.name', 'restaurantId']) },
+    { label: '商品', prop: 'goodsName', minWidth: 140, formatter: (row: any) => getName(row, ['goodsName', 'goods.name', 'dish.name', 'goodsId']) },
     { label: '评分', prop: 'rating', minWidth: 80 },
     { label: '评价内容', prop: 'content', minWidth: 200, showOverflowTooltip: true },
     {
@@ -51,14 +66,22 @@ const Table = useTable({
   ],
 });
 
+const Search = useSearch({
+  items: [
+    { label: '餐厅', prop: 'restaurantId', component: { name: 'cl-select', props: { api: () => service.food.restaurant.list({}), labelKey: 'name', valueKey: 'id', clearable: true } } },
+    { label: '商品', prop: 'goodsId', component: { name: 'cl-select', props: { api: () => service.food.dish.list({}), labelKey: 'name', valueKey: 'id', clearable: true } } },
+    { label: '用户', prop: 'userId', component: { name: 'cl-select', props: { api: () => service.user.info.list({}), labelKey: 'nickName', valueKey: 'id', clearable: true } } },
+  ],
+});
+
 const Upsert = useUpsert({
   items: [
-    { label: '餐厅ID', prop: 'restaurantId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
-    { label: '商品ID', prop: 'goodsId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
-    { label: '用户ID', prop: 'userId', value: 0, component: { name: 'el-input-number', props: { min: 0 } } },
+    { label: '餐厅', prop: 'restaurantId', value: '', component: { name: 'cl-select', props: { api: () => service.food.restaurant.list({}), labelKey: 'name', valueKey: 'id' } } },
+    { label: '商品', prop: 'goodsId', value: '', component: { name: 'cl-select', props: { api: () => service.food.dish.list({}), labelKey: 'name', valueKey: 'id' } } },
+    { label: '用户', prop: 'userId', value: '', component: { name: 'cl-select', props: { api: () => service.user.info.list({}), labelKey: 'nickName', valueKey: 'id' } } },
     { label: '评分', prop: 'rating', required: true, value: 5, component: { name: 'el-rate' } },
     { label: '评价内容', prop: 'content', component: { name: 'el-input', props: { type: 'textarea', rows: 3 } } },
-    { label: '图片', prop: 'images', component: { name: 'cl-upload', props: { multiple: true } } },
+    { label: '图片', prop: 'images', component: { name: 'cl-upload-space', props: { multiple: true, accept: 'image/*' } } },
   ],
 });
 </script>

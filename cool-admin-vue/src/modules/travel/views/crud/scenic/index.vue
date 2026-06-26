@@ -23,13 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'travel.scenic' });
+const Crud = useCrud({ service: service.travel.scenic, permission: { add: true, update: true, delete: true, page: true, list: true, info: true } }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
-		{ label: '商家ID', prop: 'merchantId', width: 100 },
 		{ label: '景区名称', prop: 'name', minWidth: 150 },
 		{ label: '地址', prop: 'address', minWidth: 180 },
 		{ label: '评分', prop: 'rating', width: 100 },
@@ -41,13 +41,13 @@ const Table = useTable({
 
 const Upsert = useUpsert({
 	items: [
-		{ label: '商家ID', prop: 'merchantId', component: { name: 'el-input-number' } },
+		{ label: '商家', prop: 'merchantId', value: 0, component: { name: 'cl-select', props: { api: () => service.merchant.list({}), labelKey: 'shopName', valueKey: 'id' } } },
 		{ label: '景区名称', prop: 'name', component: { name: 'el-input' } },
 		{ label: '地址', prop: 'address', component: { name: 'el-input' } },
 		{
 			label: '主图',
 			prop: 'mainImage',
-			component: { name: 'cl-upload' },
+			component: { name: 'cl-upload-space', props: { multiple: false, accept: 'image/*' } },
 		},
 		{ label: '描述', prop: 'description', component: { name: 'el-input', props: { type: 'textarea' } } },
 		{ label: '开放时间', prop: 'openHours', component: { name: 'el-input' } },

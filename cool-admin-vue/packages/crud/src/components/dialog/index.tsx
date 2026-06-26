@@ -214,7 +214,7 @@ export default defineComponent({
 											slots
 										});
 								}
-							})}
+							}).filter(Boolean)}
 						</div>
 					</div>
 				)

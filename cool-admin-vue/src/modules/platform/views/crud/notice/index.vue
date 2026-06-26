@@ -23,12 +23,13 @@ import { useCool } from '/@/cool';
 
 const { service } = useCool();
 
-const Crud = useCrud({ service: 'platform.notice' });
+const Crud = useCrud({ service: service.platform.notice }, app => {
+  app.refresh();
+});
 
 const Table = useTable({
 	columns: [
 		{ type: 'selection' },
-		{ label: 'ID', prop: 'id', width: 80 },
 		{ label: '标题', prop: 'title', minWidth: 180 },
 		{ label: '内容', prop: 'content', minWidth: 200 },
 		{ label: '排序', prop: 'sort', width: 80 },
