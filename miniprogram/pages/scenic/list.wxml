@@ -1,0 +1,18 @@
+<!--pages/scenic/list.wxml-->
+<view class="container">
+  <view class="page-title">景区门票</view>
+  <view class="card-grid">
+    <block wx:for="{{spots}}" wx:key="id">
+      <view class="card-col" bindtap="goDetail" data-id="{{item.id}}">
+        <view class="card">
+          <view class="card-img-placeholder"></view>
+          <view class="card-body">
+            <view class="card-title">{{item.name}}</view>
+            <view class="card-desc">{{item.address}}</view>
+          </view>
+        </view>
+      </view>
+    </block>
+  </view>
+  <view class="empty-state" wx:if="{{spots.length === 0}}">暂无景区</view>
+</view>
