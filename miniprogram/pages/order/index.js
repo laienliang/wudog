@@ -21,6 +21,7 @@ Page({
     quantity: 1,
     visitDate: '',
     submitting: false,
+    totalPrice: 0,  // 计算好的总价
   },
 
   onLoad(options) {
@@ -81,13 +82,29 @@ Page({
   selectItem(e) {
     const id = e.currentTarget.dataset.id
     const price = e.currentTarget.dataset.price
-    this.setData({ selectedId: id, _tempPrice: price })
+    this.setData({ selectedId: id, _tempPrice: price }, () => {
+      this.calculateTotalPrice()
+    })
+  },
+
+  // 计算总价
+  calculateTotalPrice() {
+    const { selectedId, itemList, _tempPrice, quantity } = this.data
+    if (!selectedId) {
+      this.setData({ totalPrice: 0 })
+      return
+    }
+    const item = itemList.find((i) => i.id === selectedId)
+    const unitPrice = item ? (item.sellPrice || item.price || _tempPrice) : _tempPrice
+    this.setData({ totalPrice: (unitPrice || 0) * quantity })
   },
 
   // 调整数量
   onQuantityChange(e) {
     const qty = parseInt(e.detail.value) || 1
-    this.setData({ quantity: qty })
+    this.setData({ quantity: qty }, () => {
+      this.calculateTotalPrice()
+    })
   },
 
   // 选择日期

@@ -3,33 +3,33 @@ const { request } = require('../utils/request')
 module.exports = {
   // ---- 景区 ----
   getScenicSpots(page = 1, pageSize = 10) {
-    return request(`/api/scenic-spots?page=${page}&pageSize=${pageSize}`)
+    return request(`/open/client/page?type=scenic&page=${page}&pageSize=${pageSize}`)
   },
   getScenicSpot(id) {
-    return request(`/api/scenic-spots/${id}`)
+    return request(`/open/client/detail?type=scenic&id=${id}`)
   },
 
   // ---- 票种 ----
   getTicketTypes(scenicId) {
-    return request(`/api/ticket-types?scenicId=${scenicId}`)
+    return request(`/open/client/page?type=ticket&scenicId=${scenicId}`)
   },
 
   // ---- 路线 ----
   getRoutes(page = 1, pageSize = 10) {
-    return request(`/api/routes?page=${page}&pageSize=${pageSize}`)
+    return request(`/open/client/page?type=route&page=${page}&pageSize=${pageSize}`)
   },
   getRoute(id) {
-    return request(`/api/routes/${id}`)
+    return request(`/open/client/detail?type=route&id=${id}`)
   },
 
   // ---- 订单 ----
   createOrder(data) {
-    return request('/api/orders', 'POST', data)
+    return request('/open/client/order/create', 'POST', data)
   },
   getMyOrders(userId, page = 1, pageSize = 10) {
-    return request(`/api/orders/my?userId=${userId}&page=${page}&pageSize=${pageSize}`)
+    return request(`/open/client/order/page?userId=${userId}&page=${page}&pageSize=${pageSize}`)
   },
   cancelOrder(id) {
-    return request(`/api/orders/${id}/cancel`, 'PUT')
+    return request('/open/client/order/status', 'POST', { id, status: 3 })
   },
 }

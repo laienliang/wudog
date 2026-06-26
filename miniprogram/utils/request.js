@@ -1,5 +1,7 @@
 // utils/request.js
-const BASE = '' // 开发者工具中配置请求域名合法域名
+// 开发环境：使用本地后端地址
+// 生产环境：需要配置为实际域名（且需在微信公众平台配置服务器域名白名单）
+const BASE = 'http://36.137.196.248:8001'
 
 function request(url, method = 'GET', data = {}) {
   return new Promise((resolve, reject) => {

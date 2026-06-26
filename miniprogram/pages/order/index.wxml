@@ -34,7 +34,7 @@
       </view>
       <view class="total-row">
         <text>合计：</text>
-        <text class="total-price">¥{{(selectedId ? (itemList.find(i => i.id === selectedId) ? (itemList.find(i => i.id === selectedId).sellPrice || itemList.find(i => i.id === selectedId).price || _tempPrice) : _tempPrice) : 0) * quantity}}</text>
+        <text class="total-price">¥{{totalPrice}}</text>
       </view>
       <button class="btn btn-primary" bindtap="submitOrder" disabled="{{submitting}}">
         {{submitting ? '提交中...' : '确认下单'}}
