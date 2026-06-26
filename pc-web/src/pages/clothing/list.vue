@@ -1,6 +1,6 @@
 <template>
   <div class="clothing-page">
-    <div class="container page-inner">
+    <div class="container">
       <!-- 页面标题 -->
       <div class="page-header">
         <h1>非遗商品</h1>
@@ -161,7 +161,7 @@ useHead({
 
 .filter-bar {
   background: #fff;
-  padding: 20px 0;
+  padding: 20px 24px;
   margin-bottom: 24px;
   border-radius: var(--radius-lg);
 }
