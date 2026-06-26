@@ -119,6 +119,7 @@ async function loadCategories() {
     }
     topics.value = (res?.topics || []).slice(0, 8)
   } catch (e) {
+    console.error('加载分类失败', e)
     topics.value = []
   }
 }
@@ -131,17 +132,14 @@ async function loadGoods() {
       page: 1,
       pageSize: 20,
     }
-    if (activeCategory.value?.id) {
+    if (activeCategory.value?.id && activeCategory.value.id !== 0) {
       query.categoryId = activeCategory.value.id
     }
     const res = await get('/page', query)
-    goodsList.value = res?.list?.length ? res.list.map(normalizeGoods) : fallbackGoods
+    goodsList.value = res?.list?.length ? res.list.map(normalizeGoods) : []
   } catch (e) {
-    const name = activeCategory.value?.name || ''
-    goodsList.value = name === '全部'
-      ? fallbackGoods
-      : fallbackGoods.filter(item => item.typeName === name || item.title.includes(name))
-    if (!goodsList.value.length) goodsList.value = fallbackGoods
+    console.error('加载商品失败', e)
+    goodsList.value = []
   } finally {
     loading.value = false
   }

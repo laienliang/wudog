@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/open': {
-        target: 'http://localhost:8001',
+        target: 'http://36.137.196.248:8001',
         changeOrigin: true,
         rewrite: path => path.replace(/^\/open/, '/open'),
       },

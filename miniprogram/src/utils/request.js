@@ -2,7 +2,7 @@
  * 请求封装
  */
 
-const DEFAULT_BASE_URL = 'http://localhost:8001/open/client';
+const DEFAULT_BASE_URL = 'http://36.137.196.248:8001/open/client';
 const BASE_URL = (import.meta.env.VITE_APP_BASE_URL || DEFAULT_BASE_URL).replace(/\/$/, '');
 
 function getToken() {
@@ -24,7 +24,8 @@ function request(url, method = 'GET', data = {}, header = {}) {
       },
       success(res) {
         const body = res.data || {};
-        if (res.statusCode === 200 && (body.code === 0 || body.code === undefined)) {
+        // Cool-Admin 成功状态码是 1000
+        if (res.statusCode === 200 && (body.code === 1000 || body.code === 0 || body.code === undefined)) {
           resolve(body.data ?? body);
         } else if (res.statusCode === 401) {
           uni.removeStorageSync('token');
