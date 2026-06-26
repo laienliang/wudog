@@ -1,7 +1,7 @@
 {
-  "name": "cool-admin",
+  "name": "wudong-cultural-tourism",
   "version": "8.0.0",
-  "description": "一个很酷的Ai快速开发框架",
+  "description": "乌东文旅·\"衣食住行\"综合管理平台",
   "private": true,
   "dependencies": {
     "@cool-midway/core": "^8.0.7",
@@ -21,6 +21,7 @@
     "@midwayjs/validate": "^3.20.3",
     "adm-zip": "^0.5.16",
     "axios": "^1.8.4",
+    "cache-manager-ioredis-yet": "^1.2.1",
     "cron": "^4.1.3",
     "download": "^8.0.0",
     "jsonwebtoken": "^9.0.2",
