@@ -325,32 +325,21 @@ git commit -m "cache: 添加分类和话题列表缓存（1小时）"
 **文件**：
 - `cool-admin-midway/src/modules/platform/controller/open/client.ts`
 
-- [ ] **Step 1：在 channelPage() 方法添加缓存装饰器**
+**接口对应关系**：`GET /open/client/page` — 前台频道分页 — TTL: 30 分钟
 
-修改前：
-```typescript
-@Get('/page', { summary: '前台频道分页' })
-async channelPage(
-  @Query('type') type,
-  @Query('page') page: number,
-  @Query('pageSize') pageSize: number,
-  @Query('keyword') keyword: string,
-  @Query('categoryId') categoryId: number,
-  @Query('status') status: number
-) {
-  return this.ok(
-    await this.platformClientService.page(type, {
-      page,
-      pageSize,
-      keyword,
-      categoryId,
-      status,
-    })
-  );
-}
+- [ ] **Step 1：打开文件并定位方法**
+
+```bash
+grep -n "async.*page\|@Get.*page" cool-admin-midway/src/modules/platform/controller/open/client.ts
 ```
 
-修改后：
+预期输出：找到包含 `/page` 路由的方法（可能是 `channelPage()` 或 `page()`）。
+
+- [ ] **Step 2：在方法上添加缓存装饰器**
+
+确认实际方法名后，在该方法上添加 `@CoolCache(30 * 60 * 1000)`。
+
+示例（假设方法名为 `channelPage`）：
 ```typescript
 @CoolCache(30 * 60 * 1000) // 30 分钟
 @Get('/page', { summary: '前台频道分页' })
@@ -438,36 +427,58 @@ git commit -m "cache: 添加全站搜索缓存（15分钟）"
 - `cool-admin-midway/src/modules/clothing/controller/open/category.ts`
 - `cool-admin-midway/src/modules/clothing/controller/open/goods.ts`
 
-- [ ] **Step 1：修改 category.ts**
+**接口对应关系**：
+| 接口路径 | 方法 | HTTP方法 | 文件 | TTL |
+|---------|------|---------|------|-----|
+| `/open/clothing/category/list` | list | GET | category.ts | 1 小时 |
+| `/open/clothing/goods/list` | list | GET | goods.ts | 30 分钟 |
+| `/open/clothing/goods/page` | page | POST | goods.ts | 30 分钟 |
 
-添加导入：
+- [ ] **Step 1：修改 category.ts - 添加分类列表缓存**
+
+打开文件并检查现有代码：
+```bash
+cat cool-admin-midway/src/modules/clothing/controller/open/category.ts
+```
+
+添加导入（如果未存在）：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
 ```
 
-在 list 方法添加缓存（1 小时）：
+在 list 方法上添加装饰器（TTL: 1 小时）：
 ```typescript
-@CoolCache(60 * 60 * 1000)
+@CoolCache(60 * 60 * 1000) // 1 小时
 @Get('/list', { summary: '分类列表' })
 async list(@Query() query) {
   return this.ok(await this.clothingCategoryService.list(query));
 }
 ```
 
-- [ ] **Step 2：修改 goods.ts**
+- [ ] **Step 2：修改 goods.ts - 添加商品列表和分页缓存**
 
-添加导入和缓存装饰器到 list 和 page 方法：
+打开文件并检查现有代码：
+```bash
+cat cool-admin-midway/src/modules/clothing/controller/open/goods.ts
+```
 
+添加导入（如果未存在）：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(30 * 60 * 1000)
+在 list 方法上添加装饰器（TTL: 30 分钟）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Get('/list', { summary: '商品列表' })
 async list(@Query() query) {
   return this.ok(await this.clothingGoodsService.list(query));
 }
+```
 
-@CoolCache(30 * 60 * 1000)
+在 page 方法上添加装饰器（TTL: 30 分钟）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Post('/page', { summary: '商品分页' })
 async page(@Body() body) {
   return this.ok(await this.clothingGoodsService.page(body));
@@ -477,18 +488,43 @@ async page(@Body() body) {
 - [ ] **Step 3：验证语法**
 
 ```bash
+cd cool-admin-midway
 npm run lint
 ```
+
+预期输出：无 TypeScript 或 ESLint 错误。
 
 - [ ] **Step 4：测试接口**
 
 ```bash
+# 测试分类列表
 curl http://localhost:8001/open/clothing/category/list
+
+# 测试商品列表
 curl http://localhost:8001/open/clothing/goods/list
-curl -X POST http://localhost:8001/open/clothing/goods/page -H "Content-Type: application/json" -d '{"page":1,"pageSize":10}'
+
+# 测试商品分页（POST 请求）
+curl -X POST http://localhost:8001/open/clothing/goods/page \
+  -H "Content-Type: application/json" \
+  -d '{"page":1,"pageSize":10}'
 ```
 
-- [ ] **Step 5：提交**
+预期：所有接口返回成功响应，第二次及后续调用响应时间显著降低（缓存命中）。
+
+- [ ] **Step 5：验证缓存生效**
+
+重复调用接口，观察响应时间：
+```bash
+# 第一次调用（缓存未命中）
+time curl http://localhost:8001/open/clothing/category/list > /dev/null
+
+# 第二次调用（缓存命中）
+time curl http://localhost:8001/open/clothing/category/list > /dev/null
+```
+
+预期：第二次响应时间 < 第一次响应时间 50%。
+
+- [ ] **Step 6：提交**
 
 ```bash
 git add src/modules/clothing/controller/open/
@@ -504,44 +540,73 @@ git commit -m "cache: 添加衣模块列表和分类缓存"
 - `cool-admin-midway/src/modules/food/controller/open/dish.ts`
 - `cool-admin-midway/src/modules/food/controller/open/agricultureGoods.ts`
 
-对每个文件的 list 和 page 方法（如存在）添加 `@CoolCache(30 * 60 * 1000)` 装饰器。
+**接口对应关系**：
+| 接口路径 | 方法 | HTTP方法 | 文件 | TTL |
+|---------|------|---------|------|-----|
+| `/open/food/restaurant/list` | list | GET | restaurant.ts | 30 分钟 |
+| `/open/food/restaurant/page` | page | POST | restaurant.ts | 30 分钟 |
+| `/open/food/dish/list` | list | GET | dish.ts | 30 分钟 |
+| `/open/food/dish/page` | page | POST | dish.ts | 30 分钟 |
+| `/open/food/agricultureGoods/list` | list | GET | agricultureGoods.ts | 30 分钟 |
+| `/open/food/agricultureGoods/page` | page | POST | agricultureGoods.ts | 30 分钟 |
 
-- [ ] **Step 1：修改 restaurant.ts、dish.ts、agricultureGoods.ts**
+- [ ] **Step 1：修改 restaurant.ts**
 
-示例（restaurant.ts）：
+添加导入：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(30 * 60 * 1000)
+在 list 方法上添加装饰器（TTL: 30 分钟）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Get('/list', { summary: '餐厅列表' })
 async list(@Query() query) {
   return this.ok(await this.foodRestaurantService.list(query));
 }
+```
 
-@CoolCache(30 * 60 * 1000)
+在 page 方法上添加装饰器（TTL: 30 分钟）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Post('/page', { summary: '餐厅分页' })
 async page(@Body() body) {
   return this.ok(await this.foodRestaurantService.page(body));
 }
 ```
 
-重复此模式到 dish.ts 和 agricultureGoods.ts。
+- [ ] **Step 2：修改 dish.ts**
 
-- [ ] **Step 2：验证语法**
+添加同样的导入和缓存装饰器到 list 和 page 方法。
+
+- [ ] **Step 3：修改 agricultureGoods.ts**
+
+添加同样的导入和缓存装饰器到 list 和 page 方法。
+
+- [ ] **Step 4：验证语法**
 
 ```bash
+cd cool-admin-midway
 npm run lint
 ```
 
-- [ ] **Step 3：测试**
+预期输出：无错误。
+
+- [ ] **Step 5：测试接口**
 
 ```bash
 curl http://localhost:8001/open/food/restaurant/list
 curl http://localhost:8001/open/food/dish/list
 curl http://localhost:8001/open/food/agricultureGoods/list
+
+curl -X POST http://localhost:8001/open/food/restaurant/page \
+  -H "Content-Type: application/json" \
+  -d '{"page":1,"pageSize":10}'
 ```
 
-- [ ] **Step 4：提交**
+预期：所有接口成功返回，缓存生效。
+
+- [ ] **Step 6：提交**
 
 ```bash
 git add src/modules/food/controller/open/
@@ -556,29 +621,51 @@ git commit -m "cache: 添加食模块列表缓存"
 - `cool-admin-midway/src/modules/lodging/controller/open/hostel.ts`
 - `cool-admin-midway/src/modules/lodging/controller/open/roomType.ts`
 
-对每个文件的 list 和 page 方法添加 `@CoolCache(30 * 60 * 1000)` 装饰器。
+**接口对应关系**：
+| 接口路径 | 方法 | HTTP方法 | 文件 | TTL |
+|---------|------|---------|------|-----|
+| `/open/lodging/hostel/list` | list | GET | hostel.ts | 30 分钟 |
+| `/open/lodging/hostel/page` | page | POST | hostel.ts | 30 分钟 |
+| `/open/lodging/roomType/list` | list | GET | roomType.ts | 30 分钟 |
+| `/open/lodging/roomType/page` | page | POST | roomType.ts | 30 分钟 |
 
-- [ ] **Step 1：修改文件**
+- [ ] **Step 1：修改 hostel.ts 和 roomType.ts**
 
+对每个文件添加导入：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(30 * 60 * 1000)
+在 list 和 page 方法上添加装饰器（TTL: 30 分钟）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Get('/list', { summary: '民宿列表' })
 async list(@Query() query) {
   return this.ok(await this.lodgingHostelService.list(query));
 }
+
+@CoolCache(30 * 60 * 1000) // 30 分钟
+@Post('/page', { summary: '民宿分页' })
+async page(@Body() body) {
+  return this.ok(await this.lodgingHostelService.page(body));
+}
 ```
 
-- [ ] **Step 2：验证和测试**
+- [ ] **Step 2：验证语法**
 
 ```bash
+cd cool-admin-midway
 npm run lint
+```
+
+- [ ] **Step 3：测试**
+
+```bash
 curl http://localhost:8001/open/lodging/hostel/list
 curl http://localhost:8001/open/lodging/roomType/list
 ```
 
-- [ ] **Step 3：提交**
+- [ ] **Step 4：提交**
 
 ```bash
 git add src/modules/lodging/controller/open/
@@ -594,30 +681,62 @@ git commit -m "cache: 添加住模块列表缓存"
 - `cool-admin-midway/src/modules/travel/controller/open/route.ts`
 - `cool-admin-midway/src/modules/travel/controller/open/guide.ts`
 
-对每个文件的 list 和 page 方法添加 `@CoolCache(30 * 60 * 1000)` 装饰器。
+**接口对应关系**：
+| 接口路径 | 方法 | HTTP方法 | 文件 | TTL |
+|---------|------|---------|------|-----|
+| `/open/travel/scenic/list` | list | GET | scenic.ts | 30 分钟 |
+| `/open/travel/scenic/page` | page | POST | scenic.ts | 30 分钟 |
+| `/open/travel/route/list` | list | GET | route.ts | 30 分钟 |
+| `/open/travel/route/page` | page | POST | route.ts | 30 分钟 |
+| `/open/travel/guide/list` | list | GET | guide.ts | 30 分钟 |
+| `/open/travel/guide/page` | page | POST | guide.ts | 30 分钟 |
 
-- [ ] **Step 1：修改文件**
+- [ ] **Step 1：修改 scenic.ts、route.ts、guide.ts**
 
+对每个文件添加导入：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(30 * 60 * 1000)
+在 list 和 page 方法上添加装饰器（TTL: 30 分钟）。
+
+示例（scenic.ts）：
+```typescript
+@CoolCache(30 * 60 * 1000) // 30 分钟
 @Get('/list', { summary: '景点列表' })
 async list(@Query() query) {
   return this.ok(await this.travelScenicService.list(query));
 }
+
+@CoolCache(30 * 60 * 1000) // 30 分钟
+@Post('/page', { summary: '景点分页' })
+async page(@Body() body) {
+  return this.ok(await this.travelScenicService.page(body));
+}
 ```
 
-- [ ] **Step 2：验证和测试**
+重复此模式到 route.ts 和 guide.ts。
+
+- [ ] **Step 2：验证语法**
 
 ```bash
+cd cool-admin-midway
 npm run lint
+```
+
+预期输出：无错误。
+
+- [ ] **Step 3：测试**
+
+```bash
 curl http://localhost:8001/open/travel/scenic/list
 curl http://localhost:8001/open/travel/route/list
 curl http://localhost:8001/open/travel/guide/list
 ```
 
-- [ ] **Step 3：提交**
+预期：所有接口成功返回，缓存生效。
+
+- [ ] **Step 4：提交**
 
 ```bash
 git add src/modules/travel/controller/open/
@@ -632,20 +751,32 @@ git commit -m "cache: 添加行模块列表缓存"
 - `cool-admin-midway/src/modules/community/controller/open/article.ts`
 - `cool-admin-midway/src/modules/community/controller/open/topic.ts`
 
+**接口对应关系**：
+| 接口路径 | 方法 | HTTP方法 | 文件 | TTL |
+|---------|------|---------|------|-----|
+| `/open/community/article/list` | list | GET | article.ts | 15 分钟 |
+| `/open/community/article/page` | page | POST | article.ts | 15 分钟 |
+| `/open/community/topic/list` | list | GET | topic.ts | 1 小时 |
+
 - [ ] **Step 1：修改 article.ts**
 
-对 list 和 page 方法添加 `@CoolCache(15 * 60 * 1000)`（15 分钟）：
-
+添加导入：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(15 * 60 * 1000)
+在 list 方法上添加装饰器（TTL: 15 分钟）：
+```typescript
+@CoolCache(15 * 60 * 1000) // 15 分钟
 @Get('/list', { summary: '文章列表' })
 async list(@Query() query) {
   return this.ok(await this.communityArticleService.list(query));
 }
+```
 
-@CoolCache(15 * 60 * 1000)
+在 page 方法上添加装饰器（TTL: 15 分钟，POST 方法）：
+```typescript
+@CoolCache(15 * 60 * 1000) // 15 分钟
 @Post('/page', { summary: '文章分页' })
 async page(@Body() body) {
   return this.ok(await this.communityArticleService.page(body));
@@ -654,27 +785,43 @@ async page(@Body() body) {
 
 - [ ] **Step 2：修改 topic.ts**
 
-对 list 方法添加 `@CoolCache(60 * 60 * 1000)`（1 小时）：
-
+添加导入：
 ```typescript
 import { CoolCache } from '@cool-midway/core';
+```
 
-@CoolCache(60 * 60 * 1000)
+在 list 方法上添加装饰器（TTL: 1 小时）：
+```typescript
+@CoolCache(60 * 60 * 1000) // 1 小时
 @Get('/list', { summary: '话题列表' })
 async list(@Query() query) {
   return this.ok(await this.communityTopicService.list(query));
 }
 ```
 
-- [ ] **Step 3：验证和测试**
+- [ ] **Step 3：验证语法**
 
 ```bash
+cd cool-admin-midway
 npm run lint
-curl http://localhost:8001/open/community/article/list
-curl http://localhost:8001/open/community/topic/list
 ```
 
-- [ ] **Step 4：提交**
+预期输出：无错误。
+
+- [ ] **Step 4：测试接口**
+
+```bash
+curl http://localhost:8001/open/community/article/list
+curl http://localhost:8001/open/community/topic/list
+
+curl -X POST http://localhost:8001/open/community/article/page \
+  -H "Content-Type: application/json" \
+  -d '{"page":1,"pageSize":10}'
+```
+
+预期：所有接口成功返回，缓存生效。
+
+- [ ] **Step 5：提交**
 
 ```bash
 git add src/modules/community/controller/open/
@@ -701,6 +848,12 @@ ab -n 20 -c 1 http://localhost:8001/open/client/home
 
 记录平均响应时间（应为 10-50ms）。
 
+预期输出示例：
+```
+Requests per second:    100.00 [#/sec]
+Time per request:       10.000 [ms]
+```
+
 - [ ] **Step 2：监控 Redis 缓存命中率**
 
 ```bash
@@ -714,17 +867,82 @@ redis-cli -p 16379 INFO stats
 
 目标：≥70%
 
-- [ ] **Step 3：测试缓存过期**
+预期输出示例：
+```
+keyspace_hits:100
+keyspace_misses:30
+```
 
-等待适当的 TTL 时间（或调整 TTL 以加速测试），验证缓存过期后重新查询数据库。
+- [ ] **Step 3：测试缓存过期机制**
+
+为了快速验证 TTL 过期逻辑，临时修改一个接口的 TTL 为 10 秒进行测试：
+
+在 `platform/controller/open/client.ts` 中，临时修改：
+```typescript
+@CoolCache(10 * 1000) // 临时改为 10 秒用于测试
+@Get('/home', { summary: '首页聚合数据' })
+async home() {
+  return this.ok(await this.platformClientService.home());
+}
+```
+
+重启应用后，执行以下步骤：
+
+1. 第一次调用（缓存未命中）：
+```bash
+echo "第一次调用" && time curl http://localhost:8001/open/client/home > /dev/null
+```
+
+2. 第二次立即调用（缓存命中）：
+```bash
+echo "第二次调用（缓存命中）" && time curl http://localhost:8001/open/client/home > /dev/null
+```
+
+3. 等待 11 秒后调用（缓存过期）：
+```bash
+echo "等待 11 秒..." && sleep 11
+echo "第三次调用（缓存已过期，重新查询）" && time curl http://localhost:8001/open/client/home > /dev/null
+```
+
+预期：第二次响应时间 < 第一次，第三次响应时间接近第一次。
+
+**完成测试后，将 TTL 改回 30 分钟**：
+```typescript
+@CoolCache(30 * 60 * 1000) // 改回 30 分钟
+```
 
 - [ ] **Step 4：创建测试报告**
 
 创建文件 `docs/redis-caching-test-report.md`，记录：
-- 性能提升指标
-- 缓存命中率
-- 内存使用情况
+- 性能提升指标（第一次 vs 缓存命中时的响应时间）
+- 缓存命中率（%）
+- 内存使用情况（MB）
+- TTL 过期验证结果
 - 发现的问题和优化建议
+
+示例格式：
+```markdown
+# Redis 缓存测试报告
+
+## 性能测试结果
+
+| 场景 | 响应时间 | 提升倍数 |
+|------|---------|---------|
+| 首次访问（缓存未命中） | 250ms | 基线 |
+| 缓存命中 | 15ms | 16.7x |
+
+## 缓存命中率
+
+- keyspace_hits: 100
+- keyspace_misses: 30
+- 命中率: 76.9%
+
+## TTL 过期验证
+
+- 预期 TTL: 10 秒
+- 实际过期时间: 10.2 秒
+- 结果: ✅ 通过
+```
 
 ---
 
