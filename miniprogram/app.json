@@ -1,0 +1,37 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/homestay/detail",
+    "pages/order/create",
+    "pages/order/list",
+    "pages/order/detail",
+    "pages/mine/favorites"
+  ],
+  "window": {
+    "navigationBarBackgroundColor": "#1F5FA8",
+    "navigationBarTitleText": "乌东苗寨民宿",
+    "navigationBarTextStyle": "white",
+    "backgroundColor": "#F5F7FA"
+  },
+  "tabBar": {
+    "color": "#9CA3AF",
+    "selectedColor": "#1F5FA8",
+    "backgroundColor": "#FFFFFF",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/order/list",
+        "text": "我的订单"
+      },
+      {
+        "pagePath": "pages/mine/favorites",
+        "text": "我的收藏"
+      }
+    ]
+  },
+  "sitemapLocation": "sitemap.json"
+}

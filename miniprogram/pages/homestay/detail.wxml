@@ -1,0 +1,51 @@
+<view class="page-container">
+  <view wx:if="{{loading}}" class="loading-text">加载中...</view>
+
+  <view wx:if="{{!loading && detail}}">
+    <swiper class="swiper" indicator-dots autoplay circular>
+      <swiper-item wx:for="{{detail.images}}" wx:key="*this">
+        <image src="{{item}}" mode="aspectFill" class="swiper-img" />
+      </swiper-item>
+    </swiper>
+    <view wx:if="{{detail.images.length === 0}}" class="no-img">暂无图片</view>
+
+    <view class="info-card">
+      <view class="name">{{detail.name}}</view>
+      <view class="address">📍 {{detail.address}}</view>
+      <view class="tags">
+        <text class="tag" wx:for="{{detail.styleTags}}" wx:key="*this">{{item}}</text>
+      </view>
+      <view class="rating-row">
+        <text class="stars">{{starsText}}</text>
+        <text class="rating-num">{{detail.rating}}分</text>
+      </view>
+      <view class="desc">{{detail.description}}</view>
+    </view>
+
+    <view class="section-title">🏠 可选房型</view>
+    <view wx:if="{{rooms.length === 0}}" class="empty-hint">暂无可用房型</view>
+    <view class="room-card" wx:for="{{rooms}}" wx:key="id">
+      <view class="room-info">
+        <view class="room-name">{{item.roomName}}</view>
+        <view class="room-meta">{{item.bedType}} · {{item.area}}㎡ · 可住{{item.maxPeople}}人</view>
+        <view class="room-price">¥{{item.basePrice}}<text class="unit">/晚</text></view>
+      </view>
+      <button class="book-btn" size="mini" bindtap="onBook" data-id="{{item.id}}" data-name="{{item.roomName}}" data-price="{{item.basePrice}}">立即预订</button>
+    </view>
+
+    <view class="section-title">💬 用户评价 ({{reviews.length}})</view>
+    <view wx:if="{{reviews.length === 0}}" class="empty-hint">暂无评价</view>
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-top">
+        <text class="review-stars">{{item.starsText}}</text>
+        <text class="review-date">{{item.createdAt}}</text>
+      </view>
+      <view class="review-content">{{item.content}}</view>
+      <view wx:if="{{item.merchantReply}}" class="reply">
+        <text class="reply-label">商家回复：</text>{{item.merchantReply}}
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{!loading && !detail}}" class="empty-hint">民宿不存在或已下架</view>
+</view>

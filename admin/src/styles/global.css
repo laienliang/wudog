@@ -1,0 +1,22 @@
+/* ============================================================
+   乌东文旅管理后台 — 全局样式
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\admin\src\styles\global.css
+   ============================================================ */
+:root {
+  --color-primary: #1F5FA8;
+  --color-accent: #E85D2F;
+}
+
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+}
+
+/* 登录页全屏背景 */
+.login-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #1F5FA8 0%, #0D3B6E 100%);
+}

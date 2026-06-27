@@ -1,0 +1,19 @@
+/* 预订页样式 */
+.book-card { background:linear-gradient(135deg,#1F5FA8,#0D3B6E); border-radius:20rpx; padding:32rpx; color:#fff; margin-bottom:24rpx; }
+.book-title { font-size:34rpx; font-weight:700; margin-bottom:12rpx; }
+.book-price { font-size:28rpx; opacity:0.9; }
+.form-card { background:#fff; border-radius:16rpx; padding:24rpx; margin-bottom:20rpx; }
+.form-label { font-size:30rpx; font-weight:600; margin-bottom:20rpx; color:var(--color-primary); }
+.form-input { border:2rpx solid #E5E7EB; border-radius:12rpx; padding:20rpx; font-size:28rpx; margin-bottom:16rpx; }
+.form-input.small { width:120rpx; text-align:center; }
+.form-row { display:flex; align-items:center; justify-content:space-between; padding:16rpx 0; }
+.nights-info { text-align:right; padding:8rpx 0; color:#6B7280; font-size:28rpx; }
+.submit-btn { width:100%; margin-top:32rpx; border-radius:16rpx; padding:28rpx; font-size:32rpx; font-weight:700; border:none; }
+.result-card { background:#fff; border-radius:20rpx; padding:40rpx; margin-top:32rpx; text-align:center; }
+.result-success { font-size:40rpx; font-weight:700; color:#10B981; margin-bottom:16rpx; }
+.result-no { font-size:26rpx; color:#6B7280; margin-bottom:8rpx; }
+.result-total { font-size:32rpx; margin-bottom:24rpx; }
+.qr-section { background:#F9FAFB; border-radius:16rpx; padding:32rpx; margin:24rpx 0; }
+.qr-label { font-size:28rpx; color:#6B7280; margin-bottom:16rpx; }
+.qr-code { font-size:48rpx; font-weight:900; letter-spacing:8rpx; color:var(--color-primary); font-family:'Courier New',monospace; }
+.qr-tip { font-size:24rpx; color:#9CA3AF; margin-top:12rpx; }

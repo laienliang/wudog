@@ -1,0 +1,47 @@
+/* ★ 房态日历网格 */
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 2px;
+}
+.cal-header-cell {
+  text-align: center;
+  font-weight: 600;
+  padding: 8px;
+  background: #fafafa;
+  font-size: 13px;
+}
+.cal-cell {
+  min-height: 80px;
+  padding: 6px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.15s;
+  border: 1px solid transparent;
+}
+.cal-cell.active:hover {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 1px var(--color-primary);
+}
+.cal-cell.dimmed {
+  opacity: 0.3;
+  cursor: default;
+}
+.cal-cell.batch-mode {
+  cursor: crosshair;
+}
+.cal-date {
+  font-size: 13px;
+  font-weight: 500;
+  display: block;
+}
+.cal-price {
+  font-size: 11px;
+  color: #E85D2F;
+  display: block;
+}
+.cal-stock {
+  font-size: 10px;
+  color: #999;
+  display: block;
+}

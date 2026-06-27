@@ -1,0 +1,55 @@
+<!-- ============================================================
+   预订操作页 — 填写入住人 + 提交订单 + 展示核销二维码
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\pages\order\create.wxml
+   ============================================================ -->
+<view class="page-container">
+  <view class="book-card">
+    <view class="book-title">预订：{{roomName}}</view>
+    <view class="book-price">¥{{price}}/晚 × {{nights}}晚 = <text class="price">¥{{totalPrice}}</text></view>
+  </view>
+
+  <!-- 日期选择 -->
+  <view class="form-card">
+    <view class="form-label">选择日期</view>
+    <picker mode="date" start="{{today}}" end="{{maxDate}}" value="{{checkIn}}" bindchange="onCheckIn">
+      <view class="form-input">入住：{{checkIn || '请选择'}}</view>
+    </picker>
+    <picker mode="date" start="{{checkIn || today}}" end="{{maxPlusOne}}" value="{{checkOut}}" bindchange="onCheckOut">
+      <view class="form-input">离店：{{checkOut || '请选择'}}</view>
+    </picker>
+    <view wx:if="{{nights > 0}}" class="nights-info">共 <text style="color:var(--color-primary);font-weight:700;">{{nights}}</text> 晚</view>
+  </view>
+
+  <!-- 入住人信息 -->
+  <view class="form-card">
+    <view class="form-label">入住人信息</view>
+    <input class="form-input" placeholder="入住人姓名" value="{{contactName}}" bindinput="onInput" data-field="contactName" />
+    <input class="form-input" placeholder="联系电话" type="number" value="{{contactPhone}}" bindinput="onInput" data-field="contactPhone" />
+    <view class="form-row">
+      <text>预订间数</text>
+      <input class="form-input small" type="number" value="{{roomCount}}" bindinput="onInput" data-field="roomCount" />
+    </view>
+    <view class="form-row">
+      <text>入住人数</text>
+      <input class="form-input small" type="number" value="{{guestCount}}" bindinput="onInput" data-field="guestCount" />
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <button class="btn-accent submit-btn" bindtap="onSubmit" loading="{{submitting}}" disabled="{{!canSubmit}}">
+    {{submitting ? '提交中...' : '提交订单 ¥' + totalPrice}}
+  </button>
+
+  <!-- 下单成功 → 展示核销二维码 -->
+  <view wx:if="{{orderResult}}" class="result-card">
+    <view class="result-success">✅ 下单成功</view>
+    <view class="result-no">订单号：{{orderResult.order_no}}</view>
+    <view class="result-total">总价：<text class="price">¥{{orderResult.total_price}}</text></view>
+    <view class="qr-section">
+      <view class="qr-label">入住核销码</view>
+      <view class="qr-code">{{orderResult.check_in_code}}</view>
+      <view class="qr-tip">入住时向前台出示此码</view>
+    </view>
+    <button class="btn-primary" bindtap="onViewOrder">查看我的订单</button>
+  </view>
+</view>

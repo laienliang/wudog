@@ -1,0 +1,76 @@
+/* ============================================================
+   民宿卡片样式
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\components\HomestayCard\style.css
+   ============================================================ */
+.homestay-card {
+  border-radius: var(--radius-lg) !important;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.homestay-card:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-lg);
+}
+.card-cover {
+  position: relative;
+  height: 200px;
+  overflow: hidden;
+}
+.card-cover img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.fav-btn {
+  position: absolute;
+  top: var(--spacing-sm);
+  right: var(--spacing-sm);
+  background: rgba(255,255,255,0.9) !important;
+  border: none !important;
+}
+.card-body {
+  padding: 4px 0;
+}
+.card-title {
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  margin-bottom: var(--spacing-xs);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.card-address {
+  color: var(--color-text-secondary);
+  font-size: var(--font-size-sm);
+  margin-bottom: var(--spacing-sm);
+}
+.card-tags {
+  margin-bottom: var(--spacing-sm);
+}
+.card-tags .ant-tag {
+  margin-bottom: 4px;
+}
+.card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+.card-rating {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.rating-text {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
+.card-price {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.card-price em {
+  font-style: normal;
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+  color: var(--color-accent);
+}

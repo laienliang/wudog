@@ -1,0 +1,5 @@
+<!-- 加载中组件 -->
+<view class="loading-wrap" wx:if="{{show}}">
+  <view class="loading-spinner"></view>
+  <view class="loading-text">{{text || '加载中...'}}</view>
+</view>

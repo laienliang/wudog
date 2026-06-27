@@ -1,0 +1,52 @@
+/* ============================================================
+   乌东文旅 — 全局样式
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\styles\global.css
+   ============================================================ */
+@import './variables.css';
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  font-family: var(--font-family);
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  background: var(--color-bg);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  color: var(--color-primary-hover);
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+/* Ant Design 主题覆盖 */
+.ant-btn-primary {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+}
+.ant-btn-primary:hover {
+  background: var(--color-primary-hover) !important;
+  border-color: var(--color-primary-hover) !important;
+}
+.ant-tag {
+  border-radius: var(--radius-sm);
+}
+.ant-pagination .ant-pagination-item-active {
+  border-color: var(--color-primary);
+}
+.ant-pagination .ant-pagination-item-active a {
+  color: var(--color-primary);
+}

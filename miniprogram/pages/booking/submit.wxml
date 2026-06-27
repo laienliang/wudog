@@ -1,0 +1,46 @@
+<view class="page-container">
+  <view class="card room-card">
+    <view class="card-title">预订：{{roomName}}</view>
+    <view class="card-price">¥{{price}} / 晚 × {{nights}} 晚 = ¥{{totalPrice}}</view>
+  </view>
+
+  <view class="card">
+    <view class="section-label">入住日期</view>
+    <picker mode="date" start="{{today}}" end="{{maxDate}}" value="{{checkinDate}}" bindchange="onCheckinChange">
+      <view class="picker-row">{{checkinDate || '请选择入住日期'}}</view>
+    </picker>
+    <view class="section-label">离店日期</view>
+    <picker mode="date" start="{{checkinDate}}" end="{{maxDate}}" value="{{checkoutDate}}" bindchange="onCheckoutChange">
+      <view class="picker-row">{{checkoutDate || '请选择离店日期'}}</view>
+    </picker>
+    <view wx:if="{{nights > 0}}" class="nights-info">共 <text class="nights-num">{{nights}}</text> 晚</view>
+  </view>
+
+  <view class="card">
+    <view class="section-label">入住人信息</view>
+    <input class="form-input" placeholder="入住人姓名" value="{{contactName}}" bindinput="onContactName" />
+    <input class="form-input" placeholder="联系电话" type="number" value="{{contactPhone}}" bindinput="onContactPhone" />
+    <view class="form-row">
+      <text>预订间数</text>
+      <input class="form-input short" type="number" value="{{roomCount}}" bindinput="onRoomCount" />
+    </view>
+    <view class="form-row">
+      <text>入住人数</text>
+      <input class="form-input short" type="number" value="{{guestCount}}" bindinput="onGuestCount" />
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="onSubmit" loading="{{submitting}}" disabled="{{!canSubmit}}">提交订单 ¥{{totalPrice}}</button>
+
+  <view wx:if="{{result}}" class="card result-card">
+    <view class="result-icon">✅</view>
+    <view class="result-title">下单成功</view>
+    <view class="result-row">订单号：{{result.orderNo}}</view>
+    <view class="result-row">总价：¥{{result.totalPrice}}</view>
+    <view class="code-box">
+      <view class="code-label">入住核销码</view>
+      <view class="code-value">{{result.checkinCode}}</view>
+      <view class="code-tip">入住时向前台出示此码</view>
+    </view>
+  </view>
+</view>

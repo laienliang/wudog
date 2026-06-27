@@ -1,0 +1,60 @@
+/* ============================================================
+   Layout 样式
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\components\Layout\style.css
+   ============================================================ */
+.site-header {
+  background: #fff !important;
+  border-bottom: 1px solid var(--color-border);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  height: var(--header-height);
+  line-height: var(--header-height);
+  padding: 0 var(--spacing-lg);
+}
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-lg);
+}
+.logo {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  cursor: pointer;
+  white-space: nowrap;
+}
+.logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  color: var(--color-primary);
+}
+.header-search {
+  flex: 1;
+  display: flex;
+  gap: var(--spacing-sm);
+  max-width: 480px;
+}
+.header-nav {
+  display: flex;
+  gap: var(--spacing-sm);
+}
+.site-content {
+  padding: var(--spacing-lg);
+}
+.content-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}
+.site-footer {
+  text-align: center;
+  color: var(--color-text-secondary);
+  background: #fff;
+  border-top: 1px solid var(--color-border);
+}
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+}

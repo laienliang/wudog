@@ -1,0 +1,63 @@
+/* ============================================================
+   乌东文旅 — 全局设计变量
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\styles\variables.css
+   ============================================================ */
+:root {
+  /* 主色系 */
+  --color-primary: #1F5FA8;
+  --color-primary-hover: #174B8A;
+  --color-primary-light: #E8F0FA;
+  --color-accent: #E85D2F;
+  --color-accent-hover: #C94A20;
+
+  /* 中性色 */
+  --color-bg: #F5F7FA;
+  --color-bg-white: #FFFFFF;
+  --color-text: #1A1A2E;
+  --color-text-secondary: #6B7280;
+  --color-text-placeholder: #9CA3AF;
+  --color-border: #E5E7EB;
+  --color-border-light: #F0F0F0;
+
+  /* 功能色 */
+  --color-success: #10B981;
+  --color-warning: #F59E0B;
+  --color-error: #EF4444;
+  --color-info: #3B82F6;
+
+  /* 间距（8px 基准栅格） */
+  --spacing-xs: 4px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+  --spacing-xl: 32px;
+  --spacing-2xl: 48px;
+  --spacing-3xl: 64px;
+
+  /* 圆角 */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --radius-xl: 16px;
+  --radius-full: 9999px;
+
+  /* 阴影 */
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+  /* 字体 */
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Microsoft YaHei', sans-serif;
+  --font-size-xs: 12px;
+  --font-size-sm: 13px;
+  --font-size-base: 14px;
+  --font-size-md: 16px;
+  --font-size-lg: 18px;
+  --font-size-xl: 20px;
+  --font-size-2xl: 24px;
+  --font-size-3xl: 30px;
+
+  /* 布局 */
+  --max-width: 1200px;
+  --header-height: 64px;
+}

@@ -1,0 +1,17 @@
+/* 详情页样式 */
+.detail-page { }
+.detail-main { margin-top: var(--spacing-lg); display: grid; grid-template-columns: 1fr 320px; gap: var(--spacing-lg); }
+@media (max-width: 768px) { .detail-main { grid-template-columns: 1fr; } }
+.detail-info { background: #fff; border-radius: var(--radius-lg); padding: var(--spacing-lg); }
+.detail-header { display: flex; justify-content: space-between; align-items: center; }
+.detail-header h1 { font-size: var(--font-size-2xl); margin: 0; }
+.detail-address, .detail-contact { color: var(--color-text-secondary); margin: var(--spacing-sm) 0; }
+.room-section { margin-top: var(--spacing-xl); }
+.room-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-md); }
+.room-card { margin-bottom: var(--spacing-md); border-radius: var(--radius-lg); }
+.room-info { display: flex; justify-content: space-between; align-items: center; }
+.room-price-action { text-align: right; }
+.room-price { margin-bottom: var(--spacing-sm); }
+.room-price em { font-style: normal; font-size: var(--font-size-2xl); font-weight: 700; color: var(--color-accent); }
+.review-section { margin-top: var(--spacing-xl); }
+.review-section h2 { font-size: var(--font-size-xl); margin-bottom: var(--spacing-md); }

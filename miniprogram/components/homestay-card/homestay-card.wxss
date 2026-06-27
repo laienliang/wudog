@@ -1,0 +1,12 @@
+.hs-card { background:#fff; border-radius:20rpx; overflow:hidden; margin-bottom:24rpx; box-shadow:0 2rpx 12rpx rgba(0,0,0,0.06); }
+.hs-card.list { display:flex; }
+.hs-card.list .hs-cover { width:240rpx; height:200rpx; flex-shrink:0; }
+.hs-card.waterfall .hs-cover { width:100%; height:280rpx; }
+.hs-body { padding:20rpx; flex:1; }
+.hs-name { font-size:30rpx; font-weight:600; margin-bottom:8rpx; }
+.hs-address { font-size:24rpx; color:#9CA3AF; margin-bottom:12rpx; }
+.hs-tags { margin-bottom:12rpx; }
+.hs-footer { display:flex; justify-content:space-between; align-items:flex-end; }
+.hs-rating { display:flex; align-items:center; gap:8rpx; }
+.rating-text { font-size:22rpx; color:#9CA3AF; }
+.hs-price { font-size:24rpx; color:#9CA3AF; }

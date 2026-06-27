@@ -1,0 +1,41 @@
+<!-- ============================================================
+   我的住宿订单 — Tab: 全部/待支付/已确认/已入住/已完成
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\pages\order\list.wxml
+   ============================================================ -->
+<view class="page-container">
+  <!-- Tab 筛选 -->
+  <scroll-view scroll-x class="tab-bar">
+    <view class="tab-item {{activeTab === '' ? 'active' : ''}}" bindtap="onTab" data-tab="">全部</view>
+    <view class="tab-item {{activeTab === 'pending_payment' ? 'active' : ''}}" bindtap="onTab" data-tab="pending_payment">待支付</view>
+    <view class="tab-item {{activeTab === 'confirmed' ? 'active' : ''}}" bindtap="onTab" data-tab="confirmed">已确认</view>
+    <view class="tab-item {{activeTab === 'checking_in' ? 'active' : ''}}" bindtap="onTab" data-tab="checking_in">入住中</view>
+    <view class="tab-item {{activeTab === 'completed' ? 'active' : ''}}" bindtap="onTab" data-tab="completed">已完成</view>
+  </scroll-view>
+
+  <loading-box show="{{loading}}" />
+
+  <!-- 订单列表 -->
+  <view wx:if="{{!loading}}">
+    <view wx:if="{{list.length === 0}}"><empty-box text="暂无订单" /></view>
+    <view wx:for="{{list}}" wx:key="id" class="order-card">
+      <view class="order-header">
+        <text class="order-no">{{item.order_no}}</text>
+        <text class="order-status" style="color:{{statusMap[item.status].color}}">{{statusMap[item.status].label}}</text>
+      </view>
+      <view class="order-body" bindtap="onDetail" data-id="{{item.id}}">
+        <view class="order-dates">
+          <text>📅 {{item.check_in_date}} → {{item.check_out_date}}</text>
+          <text class="order-nights">({{item.nights}}晚)</text>
+        </view>
+        <view class="order-guest">👤 {{item.contact_name}} · {{item.contact_phone}} · {{item.guest_count}}人</view>
+        <view class="order-price">总价：<text class="price">¥{{item.total_price}}</text></view>
+        <view wx:if="{{item.check_in_code}}" class="order-code">
+          核销码：<text style="font-weight:700;color:var(--color-primary);">{{item.check_in_code}}</text>
+        </view>
+      </view>
+      <view class="order-actions" wx:if="{{item.status === 'pending_payment' || item.status === 'paid' || item.status === 'confirmed'}}">
+        <button class="btn-cancel" size="mini" bindtap="onCancel" data-id="{{item.id}}">取消订单</button>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,49 @@
+<!-- ============================================================
+   首页民宿列表 — 日期筛选 + 价格排序 + 瀑布卡片 + 下拉刷新 + 上拉分页
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\pages\index\index.wxml
+   ============================================================ -->
+<view class="page-container">
+  <!-- 搜索/筛选栏 -->
+  <view class="search-bar">
+    <view class="search-input" bindtap="onSearchTap">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">{{keyword || '搜索民宿名称、地址...'}}</text>
+    </view>
+    <picker mode="date" start="{{today}}" end="{{maxDate}}" value="{{checkIn}}" bindchange="onCheckInChange">
+      <view class="date-btn">{{checkIn || '入住'}}</view>
+    </picker>
+    <picker mode="date" start="{{tomorrow}}" end="{{maxPlusOne}}" value="{{checkOut}}" bindchange="onCheckOutChange">
+      <view class="date-btn">{{checkOut || '离店'}}</view>
+    </picker>
+  </view>
+
+  <!-- 排序栏 -->
+  <view class="sort-bar">
+    <view class="sort-item {{sort === 'rating_desc' ? 'active' : ''}}" bindtap="onSort" data-sort="rating_desc">评分优先</view>
+    <view class="sort-item {{sort === 'price_asc' ? 'active' : ''}}" bindtap="onSort" data-sort="price_asc">价格↑</view>
+    <view class="sort-item {{sort === 'price_desc' ? 'active' : ''}}" bindtap="onSort" data-sort="price_desc">价格↓</view>
+  </view>
+
+  <!-- 加载中 -->
+  <loading-box show="{{loading && page === 1}}" text="正在加载民宿..." />
+
+  <!-- 瀑布流列表 -->
+  <view wx:if="{{!loading || list.length > 0}}" class="waterfall">
+    <view class="waterfall-col">
+      <homestay-card wx:for="{{leftList}}" wx:key="id" item="{{item}}" type="waterfall" />
+    </view>
+    <view class="waterfall-col">
+      <homestay-card wx:for="{{rightList}}" wx:key="id" item="{{item}}" type="waterfall" />
+    </view>
+  </view>
+
+  <!-- 加载更多 -->
+  <view class="load-more" wx:if="{{list.length > 0}}">
+    <view wx:if="{{loadingMore}}"><loading-box show="{{true}}" text="加载更多..." /></view>
+    <view wx:elif="{{hasMore}}" class="load-more-text">上拉加载更多</view>
+    <view wx:else class="load-more-text">— 已加载全部 {{total}} 家民宿 —</view>
+  </view>
+
+  <!-- 空状态 -->
+  <empty-box wx:if="{{!loading && list.length === 0}}" text="暂无符合条件的民宿" showBtn bindretry="onRefresh" />
+</view>

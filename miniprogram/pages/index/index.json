@@ -1,0 +1,9 @@
+{
+  "navigationBarTitleText": "乌东苗寨民宿",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "homestay-card": "/components/homestay-card/homestay-card",
+    "empty-box": "/components/empty/empty",
+    "loading-box": "/components/loading/loading"
+  }
+}

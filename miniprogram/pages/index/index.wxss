@@ -1,0 +1,13 @@
+/* 首页样式 */
+.search-bar { display:flex; gap:16rpx; margin-bottom:20rpx; align-items:center; }
+.search-input { flex:1; display:flex; align-items:center; background:#fff; border-radius:16rpx; padding:18rpx 24rpx; border:2rpx solid #E5E7EB; }
+.search-icon { font-size:28rpx; margin-right:12rpx; }
+.search-placeholder { color:#9CA3AF; font-size:26rpx; }
+.date-btn { background:#fff; border:2rpx solid #E5E7EB; border-radius:16rpx; padding:18rpx 24rpx; font-size:26rpx; white-space:nowrap; color:var(--color-primary); }
+.sort-bar { display:flex; gap:16rpx; margin-bottom:20rpx; }
+.sort-item { padding:12rpx 28rpx; border-radius:32rpx; background:#fff; font-size:26rpx; color:#6B7280; }
+.sort-item.active { background:var(--color-primary); color:#fff; }
+.waterfall { display:flex; gap:16rpx; }
+.waterfall-col { flex:1; }
+.load-more { padding:30rpx 0; text-align:center; }
+.load-more-text { color:#9CA3AF; font-size:24rpx; }

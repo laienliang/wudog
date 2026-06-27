@@ -1,0 +1,79 @@
+/* ============================================================
+   全局样式 — 乌东视觉规范
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\app.wxss
+   ============================================================ */
+page {
+  --color-primary: #1F5FA8;
+  --color-accent: #E85D2F;
+  --color-bg: #F5F7FA;
+  --color-text: #1A1A2E;
+  --color-text-secondary: #6B7280;
+  --color-border: #E5E7EB;
+  --font-family: -apple-system, BlinkMacSystemFont, 'PingFang SC', 'Microsoft YaHei', sans-serif;
+
+  font-family: var(--font-family);
+  font-size: 28rpx;
+  color: var(--color-text);
+  background: var(--color-bg);
+  box-sizing: border-box;
+}
+
+/* 通用按钮 */
+.btn-primary {
+  background: var(--color-primary) !important;
+  color: #fff !important;
+  border-radius: 16rpx !important;
+}
+.btn-accent {
+  background: var(--color-accent) !important;
+  color: #fff !important;
+  border-radius: 16rpx !important;
+}
+
+/* 通用容器 */
+.page-container {
+  min-height: 100vh;
+  padding: 24rpx;
+}
+.section-title {
+  font-size: 34rpx;
+  font-weight: 700;
+  color: var(--color-text);
+  margin: 32rpx 0 20rpx;
+}
+
+/* 价格 */
+.price {
+  color: var(--color-accent);
+  font-weight: 700;
+}
+.price-symbol { font-size: 24rpx; }
+.price-large { font-size: 40rpx; }
+.price-normal { font-size: 32rpx; }
+
+/* 标签 */
+.tag {
+  display: inline-block;
+  padding: 4rpx 16rpx;
+  border-radius: 8rpx;
+  font-size: 22rpx;
+  margin-right: 12rpx;
+  margin-bottom: 8rpx;
+}
+.tag-blue { background: #E8F0FA; color: var(--color-primary); }
+.tag-orange { background: #FFF0EB; color: var(--color-accent); }
+.tag-gray { background: #F3F4F6; color: #6B7280; }
+
+/* 一行省略 */
+.ellipsis {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* 星级评分 */
+.stars {
+  display: inline-flex;
+  color: #F59E0B;
+  font-size: 24rpx;
+}

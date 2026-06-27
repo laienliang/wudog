@@ -1,0 +1,13 @@
+<!-- ============================================================
+   我的收藏民宿列表
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\pages\mine\favorites.wxml
+   ============================================================ -->
+<view class="page-container">
+  <loading-box show="{{loading}}" />
+  <view wx:if="{{!loading}}">
+    <empty-box wx:if="{{list.length === 0}}" text="还没有收藏任何民宿" />
+    <view wx:else>
+      <homestay-card wx:for="{{list}}" wx:key="id" item="{{item}}" type="list" />
+    </view>
+  </view>
+</view>

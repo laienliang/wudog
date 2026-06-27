@@ -1,0 +1,15 @@
+/* 日历组件样式 */
+.calendar-panel { margin: var(--spacing-md) 0; }
+.calendar-summary {
+  margin-top: var(--spacing-md);
+  font-size: var(--font-size-md);
+}
+.calendar-summary em {
+  font-style: normal;
+  color: var(--color-accent);
+  font-size: var(--font-size-xl);
+  font-weight: 700;
+}
+.date-cell { text-align: center; line-height: 1.2; }
+.date-price { font-size: 10px; color: var(--color-accent); display: block; }
+.date-stock { font-size: 10px; color: var(--color-text-secondary); }

@@ -1,0 +1,6 @@
+<!-- 空状态组件 -->
+<view class="empty-wrap">
+  <view class="empty-icon">📭</view>
+  <view class="empty-text">{{text || '暂无数据'}}</view>
+  <view wx:if="{{showBtn}}" class="empty-btn" bindtap="onRetry">重新加载</view>
+</view>
