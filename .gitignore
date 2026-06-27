@@ -1,7 +1,33 @@
+# Dependencies
 node_modules/
+
+# Build outputs
 dist/
-.DS_Store
-*.log
+.vite/
+
+# Environment
 .env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+npm-debug.log*
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
+
+# Uploads (keep directory, ignore files)
 uploads/*
 !uploads/.gitkeep
+
+# TypeScript
+*.tsbuildinfo
+
+# Miniprogram
+miniprogram/.idea/
