@@ -1,0 +1,25 @@
+<view class="container">
+  <scroll-view scroll-x class="tag-scroll">
+    <view class="tag-item {{activeTag === item ? 'tag-active' : ''}}" wx:for="{{styleTags}}" wx:key="*this" data-tag="{{item}}" bindtap="onTagTap">{{item}}</view>
+  </scroll-view>
+
+  <view wx:if="{{loading && homestays.length === 0}}" class="loading">加载中...</view>
+  <view wx:if="{{!loading && homestays.length === 0}}" class="empty">暂无民宿</view>
+
+  <view class="homestay-card" wx:for="{{homestays}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+    <image src="{{item.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="card-img" />
+    <view class="card-info">
+      <view class="card-name">{{item.name}}</view>
+      <view class="card-addr" wx:if="{{item.address}}">{{item.address}}</view>
+      <view class="card-tags" wx:if="{{item.styleTags}}">
+        <text class="style-tag" wx:for="{{item.styleTags.split(',')}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+      </view>
+      <view class="card-footer">
+        <text class="rating" wx:if="{{item.avgRating}}">⭐{{item.avgRating}}</text>
+        <text class="detail-link">查看详情 ></text>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{noMore && homestays.length > 0}}" class="no-more">— 没有更多了 —</view>
+</view>

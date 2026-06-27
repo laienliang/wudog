@@ -1,0 +1,25 @@
+.container { min-height: 100vh; background: #f5f5f5; padding-bottom: 40rpx; }
+.main-img { width: 100%; height: 400rpx; }
+.info-card { background: #fff; padding: 24rpx; margin-bottom: 16rpx; }
+.title { font-size: 36rpx; font-weight: 600; }
+.meta { display: flex; align-items: center; margin-top: 12rpx; }
+.theme-tag { display: inline-block; padding: 2rpx 12rpx; background: #e6f7ff; color: #1677ff; border-radius: 4rpx; font-size: 22rpx; margin-right: 12rpx; }
+.days { font-size: 26rpx; color: #666; margin-right: 12rpx; }
+.price { font-size: 36rpx; color: #e74c3c; font-weight: 600; }
+.intro { font-size: 26rpx; color: #666; line-height: 1.7; margin-top: 16rpx; }
+.info-block { margin-top: 16rpx; }
+.info-label { font-size: 28rpx; font-weight: 600; color: #333; }
+.info-text { font-size: 26rpx; color: #666; line-height: 1.7; margin-top: 4rpx; }
+
+.section { background: #fff; padding: 24rpx; margin-bottom: 16rpx; }
+.section-title { font-size: 30rpx; font-weight: 600; margin-bottom: 16rpx; }
+
+.day-card { padding: 20rpx; background: #f9f9f9; border-radius: 12rpx; margin-bottom: 16rpx; }
+.day-title { font-size: 28rpx; font-weight: 600; color: #1677ff; margin-bottom: 8rpx; }
+.day-desc { font-size: 26rpx; color: #666; line-height: 1.7; margin-bottom: 8rpx; }
+.day-grid { }
+.day-row { font-size: 24rpx; color: #666; line-height: 1.8; }
+.day-label { color: #999; }
+
+.loading { text-align: center; padding: 60rpx; color: #999; }
+.empty { text-align: center; padding: 60rpx; color: #999; font-size: 28rpx; }

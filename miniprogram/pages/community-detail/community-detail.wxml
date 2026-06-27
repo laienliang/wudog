@@ -1,0 +1,57 @@
+<view wx:if="{{loading}}" class="loading">加载中...</view>
+
+<view wx:elif="{{detail}}" class="page">
+  <swiper wx:if="{{detail.images && detail.images.length}}" class="swiper" indicator-dots bindchange="onSwiperChange">
+    <swiper-item wx:for="{{detail.images}}" wx:key="*this">
+      <image src="{{item}}" mode="aspectFill" class="swiper-img" />
+    </swiper-item>
+  </swiper>
+
+  <video wx:if="{{detail.video_url}}" src="{{detail.video_url}}" controls class="video" />
+
+  <view class="content">
+    <text class="title">{{detail.title}}</text>
+    <view wx:if="{{detail.location}}" class="location">📍 {{detail.location}}</view>
+    <view class="author-row">
+      <text class="author" bindtap="goUser">{{detail.author_nickname || '匿名'}}</text>
+      <text class="time">{{detail.created_at}}</text>
+    </view>
+    <view class="actions">
+      <view class="action-btn {{detail.liked ? 'liked' : ''}}" bindtap="onLike">
+        <text>{{detail.liked ? '❤️' : '🤍'}} {{detail.like_count || 0}}</text>
+      </view>
+      <view class="action-btn {{detail.favorited ? 'favorited' : ''}}" bindtap="onFavorite">
+        <text>{{detail.favorited ? '⭐' : '☆'}} {{detail.favorite_count || 0}}</text>
+      </view>
+      <view class="action-btn {{detail.followed ? 'followed' : ''}}" bindtap="onFollow">
+        <text>{{detail.followed ? '已关注' : '+ 关注'}}</text>
+      </view>
+    </view>
+    <rich-text nodes="{{detail.content}}" class="body" />
+    <view class="topic-row" wx:if="{{detail.topic_name}}">
+      <text class="topic-label" bindtap="goTopic">#{{detail.topic_name}}</text>
+    </view>
+  </view>
+
+  <!-- 举报 -->
+  <view class="report-section">
+    <text class="report-btn" bindtap="toggleReport">⚑ {{showReport ? '取消' : '举报'}}</text>
+    <view wx:if="{{showReport}}" class="report-form">
+      <input placeholder="请填写举报原因..." value="{{reportReason}}" bindinput="onReportInput" />
+      <button size="mini" type="warn" bindtap="onSubmitReport">提交举报</button>
+    </view>
+  </view>
+
+  <view class="comments">
+    <text class="section-title">评论（{{detail.comments ? detail.comments.length : 0}}）</text>
+    <comment-item wx:for="{{detail.comments}}" wx:key="id" item="{{item}}" />
+    <view wx:if="{{!detail.comments || detail.comments.length === 0}}" class="no-comment">暂无评论</view>
+  </view>
+
+  <view class="comment-input-bar">
+    <input placeholder="写评论..." value="{{commentText}}" bindinput="onCommentInput" confirm-type="send" bindconfirm="onSubmitComment" />
+    <button size="mini" type="primary" bindtap="onSubmitComment">发送</button>
+  </view>
+</view>
+
+<view wx:else class="empty">游记不存在或已删除</view>

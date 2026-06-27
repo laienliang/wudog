@@ -1,0 +1,39 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab {{tab === 'spots' ? 'tab-active' : ''}}" data-tab="spots" bindtap="onSwitchTab">景区门票</view>
+    <view class="tab {{tab === 'routes' ? 'tab-active' : ''}}" data-tab="routes" bindtap="onSwitchTab">旅游路线</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <!-- Spots -->
+  <view wx:if="{{tab === 'spots'}}">
+    <view wx:if="{{!loading && spots.length === 0}}" class="empty">暂无景区</view>
+    <view class="spot-card" wx:for="{{spots}}" wx:key="id" data-id="{{item.id}}" bindtap="goSpotDetail">
+      <image src="{{item.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="card-img" />
+      <view class="card-info">
+        <view class="card-name">{{item.name}}</view>
+        <view class="card-addr" wx:if="{{item.address}}">{{item.address}}</view>
+        <view class="card-time" wx:if="{{item.openTime}}">开放时间: {{item.openTime}}</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Routes -->
+  <view wx:if="{{tab === 'routes'}}">
+    <view wx:if="{{!loading && routes.length === 0}}" class="empty">暂无路线</view>
+    <view class="spot-card" wx:for="{{routes}}" wx:key="id" data-id="{{item.id}}" bindtap="goRouteDetail">
+      <image src="{{item.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="card-img" />
+      <view class="card-info">
+        <view class="card-name">{{item.title}}</view>
+        <view class="card-footer">
+          <view>
+            <text class="theme-tag" wx:if="{{item.theme}}">{{item.theme}}</text>
+            <text class="days">{{item.days}}天</text>
+          </view>
+          <text class="price">¥{{item.price}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

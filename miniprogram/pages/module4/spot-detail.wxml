@@ -1,0 +1,60 @@
+<view class="container" wx:if="{{!loading && spot}}">
+  <image src="{{spot.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="main-img" />
+
+  <view class="info-card">
+    <view class="name">{{spot.name}}</view>
+    <view class="addr">{{spot.address || ''}}</view>
+    <view class="time" wx:if="{{spot.openTime}}">开放时间: {{spot.openTime}}</view>
+    <view class="intro" wx:if="{{spot.intro}}">{{spot.intro}}</view>
+  </view>
+
+  <!-- Ticket Types -->
+  <view class="section">
+    <view class="section-title">票种选择</view>
+    <view class="ticket-item {{selectedTicket && selectedTicket.id === item.id ? 'ticket-active' : ''}}"
+      wx:for="{{spot.ticketTypes}}" wx:key="id" data-id="{{item.id}}" bindtap="onTicketTap">
+      <view class="ticket-header">
+        <text class="ticket-name">{{item.name}}</text>
+        <text class="ticket-price">¥{{item.price}}</text>
+      </view>
+      <view class="ticket-meta">
+        有效期: {{item.validDays}}天 | 库存: {{item.stock === -1 ? '不限' : item.stock}}
+      </view>
+      <view class="ticket-desc" wx:if="{{item.description}}">{{item.description}}</view>
+    </view>
+  </view>
+
+  <!-- Booking Form -->
+  <view class="section" wx:if="{{selectedTicket}}">
+    <view class="section-title">购票信息</view>
+    <view class="form">
+      <view class="form-item">
+        <text class="label">游客姓名</text>
+        <input value="{{visitorName}}" bindinput="onNameInput" class="input" placeholder="姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label">身份证号</text>
+        <input value="{{visitorIdCard}}" bindinput="onIdCardInput" class="input" placeholder="身份证号" />
+      </view>
+      <view class="form-item">
+        <text class="label">游玩日期</text>
+        <picker mode="date" value="{{visitDate}}" bindchange="onDateChange"><view class="picker">{{visitDate || '请选择'}}</view></picker>
+      </view>
+      <view class="form-item">
+        <text class="label">数量</text>
+        <input type="number" value="{{quantity}}" bindinput="onQtyChange" class="input" />
+      </view>
+    </view>
+    <view wx:if="{{selectedTicket}}" class="total">
+      合计: ¥{{selectedTicket.price * quantity}}
+    </view>
+  </view>
+
+  <view style="height:120rpx;"></view>
+  <view class="bottom-bar">
+    <button class="buy-btn" bindtap="handleBuy" loading="{{submitting}}">立即购票</button>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="loading">加载中...</view>
+<view wx:if="{{!loading && !spot}}" class="empty">景区不存在</view>

@@ -1,0 +1,18 @@
+<view class="page">
+  <view class="tabs">
+    <view class="tab {{tab === 'following' ? 'active' : ''}}" bindtap="switchTab" data-tab="following">关注</view>
+    <view class="tab {{tab === 'follower' ? 'active' : ''}}" bindtap="switchTab" data-tab="follower">粉丝</view>
+  </view>
+
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty">
+    {{tab === 'following' ? '还没有关注任何人' : '还没有粉丝'}}
+  </view>
+
+  <view wx:for="{{list}}" wx:key="id" class="user-item" bindtap="goUser" data-id="{{tab === 'following' ? item.followed_id : item.follower_id}}">
+    <view class="avatar">{{tab === 'following' ? 'U' + item.followed_id : 'U' + item.follower_id}}</view>
+    <view class="uname">用户{{tab === 'following' ? item.followed_id : item.follower_id}}</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="status">加载中...</view>
+  <view wx:if="{{noMore && list.length > 0}}" class="status">没有更多了</view>
+</view>

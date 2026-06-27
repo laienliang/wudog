@@ -1,0 +1,16 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{!loading && bookings.length === 0}}" class="empty">暂无预订</view>
+  <view class="booking-item" wx:for="{{bookings}}" wx:key="id">
+    <view class="header">
+      <text class="restaurant-name">{{item.restaurantName}}</text>
+      <text class="status" style="background:{{statusColor[item.status]}}">{{statusText[item.status] || item.status}}</text>
+    </view>
+    <view class="info">日期: {{item.bookingDate}} | 时段: {{item.slotName}}</view>
+    <view class="info">人数: {{item.guestCount}}人</view>
+    <view class="info">联系人: {{item.contactName}} {{item.contactPhone}}</view>
+    <view class="info" wx:if="{{item.remark}}">备注: {{item.remark}}</view>
+    <view class="info" wx:if="{{item.merchantRemark}}" style="color:#e74c3c;">商家备注: {{item.merchantRemark}}</view>
+    <button wx:if="{{item.status === 'pending'}}" class="cancel-btn" data-id="{{item.id}}" bindtap="cancelBooking">取消预订</button>
+  </view>
+</view>

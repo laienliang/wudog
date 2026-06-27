@@ -62,7 +62,10 @@ export function createAdminRouter(
           .where('o.status IN (:...statuses)', { statuses: ['paid', 'shipped', 'completed'] })
           .andWhere('o.is_deleted = 0')
           .getRawOne(),
-        orderRepo.count({ where: { is_deleted: 0 } }),
+        orderRepo.createQueryBuilder('o')
+          .where('o.is_deleted = 0')
+          .andWhere('o.created_at >= :today', { today })
+          .getCount(),
         merchantAppRepo.count({ where: { status: 'pending' } }),
       ]);
 
@@ -257,6 +260,36 @@ export function createAdminRouter(
         take: pageSize,
       });
       ctx.body = { code: 200, message: 'success', data: { list, total, page: parseInt(String(page)), pageSize: parseInt(String(pageSize)) } };
+    } catch (e: any) {
+      ctx.status = 400;
+      ctx.body = { code: 400, message: e.message };
+    }
+  });
+
+  // ====== 订单管理 ======
+  router.put('/admin/orders/status/:id', requireAuth('admin'), async (ctx: any) => {
+    try {
+      const id = parseInt(ctx.params.id);
+      const { status } = ctx.request.body as any;
+      const validStatuses = ['pending', 'paid', 'confirmed', 'shipped', 'completed', 'cancelled'];
+      if (!validStatuses.includes(status)) throw new Error('无效的订单状态');
+      const order = await orderRepo.findOne({ where: { id, is_deleted: 0 } });
+      if (!order) throw new Error('订单不存在');
+      order.status = status;
+      if (status === 'confirmed' || status === 'shipped' || status === 'completed') {
+        const log = logRepo.create({
+          operator_id: getUserId(ctx)!,
+          operator_name: (ctx.state.user as any).username,
+          action: 'order_status',
+          target_type: 'order',
+          target_id: id,
+          content: `订单状态变更: ${status}`,
+          ip: ctx.ip,
+        });
+        await logRepo.save(log);
+      }
+      await orderRepo.save(order);
+      ctx.body = { code: 200, message: '状态更新成功' };
     } catch (e: any) {
       ctx.status = 400;
       ctx.body = { code: 400, message: e.message };

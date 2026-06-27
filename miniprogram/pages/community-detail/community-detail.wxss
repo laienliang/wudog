@@ -1,0 +1,34 @@
+.page { padding-bottom: 100rpx; }
+.swiper { width: 100%; height: 460rpx; }
+.swiper-img { width: 100%; height: 100%; }
+.content { padding: 28rpx; background: #fff; margin-bottom: 16rpx; }
+.title { font-size: 38rpx; font-weight: bold; display: block; margin-bottom: 12rpx; }
+.author-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16rpx; }
+.author { font-size: 28rpx; color: #333; }
+.time { font-size: 24rpx; color: #999; }
+.actions { display: flex; gap: 16rpx; margin-bottom: 20rpx; }
+.action-btn { padding: 8rpx 24rpx; border-radius: 24rpx; font-size: 26rpx; border: 1rpx solid #ddd; }
+.action-btn.liked { background: #fff0f0; border-color: #ff4d4f; color: #ff4d4f; }
+.action-btn.followed { background: #1677ff; border-color: #1677ff; color: #fff; }
+.body { margin-top: 16rpx; font-size: 30rpx; line-height: 1.8; }
+.video { width: 100%; height: 400rpx; }
+.location { font-size: 26rpx; color: #666; margin-bottom: 8rpx; }
+.topic-row { margin-top: 16rpx; }
+.topic-label { display: inline-block; padding: 6rpx 20rpx; background: #f0f5ff; color: #1677ff; border-radius: 16rpx; font-size: 24rpx; }
+.report-section { padding: 0 28rpx 20rpx; background: #fff; }
+.report-btn { font-size: 26rpx; color: #ff4d4f; padding: 8rpx 16rpx; }
+.report-form { display: flex; gap: 12rpx; margin-top: 12rpx; }
+.report-form input { flex: 1; padding: 12rpx 16rpx; border: 1rpx solid #ff4d4f; border-radius: 8rpx; font-size: 26rpx; }
+.action-btn.favorited { background: #fffbe6; border-color: #faad14; color: #faad14; }
+.comments { padding: 28rpx; background: #fff; }
+.section-title { font-size: 30rpx; font-weight: bold; margin-bottom: 16rpx; display: block; }
+.no-comment { text-align: center; padding: 40rpx 0; color: #ccc; font-size: 26rpx; }
+.comment-input-bar {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  display: flex; align-items: center; gap: 16rpx;
+  padding: 16rpx 24rpx; background: #fff; border-top: 1rpx solid #eee;
+  box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.05);
+}
+.comment-input-bar input { flex: 1; background: #f5f5f5; border-radius: 32rpx; padding: 14rpx 24rpx; font-size: 28rpx; }
+.loading { text-align: center; padding: 200rpx 0; }
+.empty { text-align: center; padding: 200rpx 0; color: #999; }

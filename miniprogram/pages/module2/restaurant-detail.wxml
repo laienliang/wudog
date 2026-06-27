@@ -1,0 +1,80 @@
+<view class="container" wx:if="{{!loading && restaurant}}">
+  <image src="{{restaurant.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="main-img" />
+
+  <view class="info-card">
+    <view class="name">{{restaurant.name}}</view>
+    <view class="meta-line">{{restaurant.address || ''}}</view>
+    <view class="meta-line">营业时间: {{restaurant.businessHours || '未设置'}} | 容纳{{restaurant.capacity}}人</view>
+    <view class="meta-line" wx:if="{{restaurant.avgRating}}">⭐{{restaurant.avgRating}}</view>
+    <view class="intro" wx:if="{{restaurant.intro}}">{{restaurant.intro}}</view>
+  </view>
+
+  <!-- Dishes -->
+  <view class="section" wx:if="{{restaurant.dishes.length > 0}}">
+    <view class="section-title">菜品</view>
+    <view class="dish-list">
+      <view class="dish-item" wx:for="{{restaurant.dishes}}" wx:key="id">
+        <image src="{{item.image || '/images/placeholder.png'}}" mode="aspectFill" class="dish-img" />
+        <view class="dish-info">
+          <view class="dish-name">{{item.name}} <text wx:if="{{item.isSignature === 1}}" class="signature-tag">招牌</text></view>
+          <view class="dish-price">¥{{item.price}}</view>
+          <view class="dish-intro" wx:if="{{item.intro}}">{{item.intro}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- Time Slots -->
+  <view class="section">
+    <view class="section-title">选择时段</view>
+    <view class="slot-list">
+      <view class="slot-item {{selectedSlot && selectedSlot.id === item.id ? 'slot-active' : ''}}" wx:for="{{restaurant.slots}}" wx:key="id" data-id="{{item.id}}" bindtap="onSlotTap">{{item.slotName}}</view>
+    </view>
+  </view>
+
+  <!-- Booking Form -->
+  <view class="section">
+    <view class="section-title">预订信息</view>
+    <view class="form">
+      <view class="form-item">
+        <text class="label">日期</text>
+        <picker mode="date" value="{{bookingDate}}" bindchange="onDateChange"><view class="picker">{{bookingDate || '请选择日期'}}</view></picker>
+      </view>
+      <view class="form-item">
+        <text class="label">人数</text>
+        <input type="number" value="{{guestCount}}" bindinput="onGuestInput" class="input" />
+      </view>
+      <view class="form-item">
+        <text class="label">联系人</text>
+        <input value="{{contactName}}" bindinput="onNameInput" class="input" placeholder="姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label">电话</text>
+        <input type="number" value="{{contactPhone}}" bindinput="onPhoneInput" class="input" placeholder="手机号" maxlength="11" />
+      </view>
+      <view class="form-item">
+        <text class="label">备注</text>
+        <input value="{{remark}}" bindinput="onRemarkInput" class="input" placeholder="选填" />
+      </view>
+    </view>
+  </view>
+
+  <!-- Reviews -->
+  <view class="section">
+    <view class="section-title">评价 ({{reviews.length}})</view>
+    <view wx:if="{{reviews.length === 0}}" class="empty">暂无评价</view>
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-header">用户{{item.userId}} ⭐{{item.rating}}</view>
+      <view class="review-content" wx:if="{{item.content}}">{{item.content}}</view>
+      <view class="review-reply" wx:if="{{item.merchantReply}}">商家回复: {{item.merchantReply}}</view>
+    </view>
+  </view>
+
+  <view style="height:120rpx;"></view>
+  <view class="bottom-bar">
+    <button class="book-btn" bindtap="handleBooking" loading="{{submitting}}">立即预订</button>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="loading">加载中...</view>
+<view wx:if="{{!loading && !restaurant}}" class="empty">餐厅不存在</view>

@@ -1,0 +1,43 @@
+<view class="container" wx:if="{{!loading && route}}">
+  <image src="{{route.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="main-img" />
+
+  <view class="info-card">
+    <view class="title">{{route.title}}</view>
+    <view class="meta">
+      <text class="theme-tag" wx:if="{{route.theme}}">{{route.theme}}</text>
+      <text class="days">{{route.days}}天</text>
+      <text class="price">¥{{route.price}}</text>
+    </view>
+    <view class="intro" wx:if="{{route.intro}}">{{route.intro}}</view>
+    <view class="info-block" wx:if="{{route.includes}}">
+      <view class="info-label">包含项目</view>
+      <view class="info-text">{{route.includes}}</view>
+    </view>
+    <view class="info-block" wx:if="{{route.excludes}}">
+      <view class="info-label">不包含项目</view>
+      <view class="info-text">{{route.excludes}}</view>
+    </view>
+    <view class="info-block" wx:if="{{route.notes}}">
+      <view class="info-label">注意事项</view>
+      <view class="info-text">{{route.notes}}</view>
+    </view>
+  </view>
+
+  <!-- Itineraries -->
+  <view class="section" wx:if="{{route.itineraries.length > 0}}">
+    <view class="section-title">行程安排</view>
+    <view class="day-card" wx:for="{{route.itineraries}}" wx:key="id">
+      <view class="day-title">第{{item.dayNumber}}天</view>
+      <view class="day-desc" wx:if="{{item.description}}">{{item.description}}</view>
+      <view class="day-grid">
+        <view class="day-row" wx:if="{{item.spots}}"><text class="day-label">景点: </text>{{item.spots}}</view>
+        <view class="day-row" wx:if="{{item.meals}}"><text class="day-label">餐饮: </text>{{item.meals}}</view>
+        <view class="day-row" wx:if="{{item.accommodation}}"><text class="day-label">住宿: </text>{{item.accommodation}}</view>
+        <view class="day-row" wx:if="{{item.transport}}"><text class="day-label">交通: </text>{{item.transport}}</view>
+      </view>
+    </view>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="loading">加载中...</view>
+<view wx:if="{{!loading && !route}}" class="empty">路线不存在</view>

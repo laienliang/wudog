@@ -18,12 +18,12 @@ export default function Header() {
     }}>
       <Link to="/" style={{ fontSize: 20, fontWeight: 'bold', color: '#fff' }}>乌东文旅</Link>
       <nav style={{ display: 'flex', gap: 24, alignItems: 'center' }}>
-        <Link to="/list" style={{ color: '#fff' }}>首页</Link>
+        <Link to="/module5/list" style={{ color: '#fff' }}>首页</Link>
         <Link to="/module1" style={{ color: '#fff' }}>非遗商品</Link>
         <Link to="/module2" style={{ color: '#fff' }}>餐饮美食</Link>
         <Link to="/module3" style={{ color: '#fff' }}>民宿预订</Link>
         <Link to="/module4" style={{ color: '#fff' }}>景区出行</Link>
-        <Link to="/community" style={{ color: '#fff' }}>社区</Link>
+        <Link to="/module5/list" style={{ color: '#fff' }}>社区</Link>
         {token ? (
           <button onClick={handleLogout} style={{
             background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)',

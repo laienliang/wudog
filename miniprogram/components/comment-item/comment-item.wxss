@@ -1,0 +1,8 @@
+.comment { padding: 16rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.header { display: flex; justify-content: space-between; margin-bottom: 8rpx; }
+.author { font-size: 26rpx; color: #1677ff; }
+.time { font-size: 22rpx; color: #999; }
+.content { font-size: 28rpx; }
+.replies { margin-top: 12rpx; padding: 12rpx; background: #f9f9f9; border-radius: 8rpx; }
+.reply { margin-bottom: 8rpx; font-size: 26rpx; }
+.reply-author { color: #1677ff; }

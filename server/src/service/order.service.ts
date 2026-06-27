@@ -84,8 +84,10 @@ export class OrderService {
     return { list: orders, total, page: parseInt(String(page)), pageSize: parseInt(String(pageSize)) };
   }
 
-  async getOrderDetail(id: number) {
-    const order = await this.orderRepo.findOne({ where: { id, is_deleted: 0 } });
+  async getOrderDetail(id: number, userId?: number) {
+    const where: any = { id, is_deleted: 0 };
+    if (userId) where.user_id = userId;
+    const order = await this.orderRepo.findOne({ where });
     if (!order) throw new Error('订单不存在');
     const items = await this.orderItemRepo.find({ where: { order_id: id } });
     const payment = await this.paymentRepo.findOne({ where: { order_id: id } });

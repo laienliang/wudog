@@ -1,0 +1,19 @@
+<view class="page">
+  <view class="topic-header" wx:if="{{topic}}">
+    <view class="topic-name">#{{topic.name}}</view>
+    <view class="topic-desc" wx:if="{{topic.description}}">{{topic.description}}</view>
+    <view class="topic-stats">
+      <text>{{topic.note_count || 0}} 篇游记</text>
+      <text>{{topic.follow_count || 0}} 人关注</text>
+    </view>
+  </view>
+
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty">该话题下暂无游记</view>
+
+  <view wx:for="{{list}}" wx:key="id">
+    <travel-card item="{{item}}" bind:tap="goDetail" data-id="{{item.id}}" />
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{noMore && list.length > 0}}" class="no-more">没有更多了</view>
+</view>

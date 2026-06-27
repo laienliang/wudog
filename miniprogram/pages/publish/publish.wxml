@@ -1,0 +1,19 @@
+<view class="page">
+  <view class="form">
+    <input placeholder="请输入标题" value="{{title}}" bindinput="onTitleInput" maxlength="200" class="title-input" />
+    <textarea placeholder="请输入正文内容..." value="{{content}}" bindinput="onContentInput" class="content-input" />
+
+    <picker mode="selector" range="{{topics}}" range-key="name" bindchange="onTopicChange" value="{{topicIndex}}">
+      <view class="picker">
+        <text>话题：</text>
+        <text class="picker-val">{{topicIndex >= 0 ? topics[topicIndex].name : '点击选择（可选）'}}</text>
+        <text class="picker-arrow">›</text>
+      </view>
+    </picker>
+  </view>
+
+  <view class="btns">
+    <button bindtap="onSubmit" data-review="{{false}}" loading="{{submitting}}">保存草稿</button>
+    <button type="primary" bindtap="onSubmit" data-review="{{true}}" loading="{{submitting}}">提交审核</button>
+  </view>
+</view>

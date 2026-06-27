@@ -1,0 +1,13 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{!loading && tickets.length === 0}}" class="empty">暂无电子票</view>
+  <view class="ticket-item" wx:for="{{tickets}}" wx:key="id">
+    <view class="header">
+      <text class="ticket-code">{{item.ticketCode}}</text>
+      <text class="status" style="background:{{statusColor[item.status] || '#999'}}">{{statusText[item.status] || item.status}}</text>
+    </view>
+    <view class="info">游客: {{item.visitorName || '-'}} | 游玩日期: {{item.visitDate || '-'}}</view>
+    <view class="info">数量: {{item.quantity}} | 单价: ¥{{item.price}} | 小计: ¥{{item.quantity * item.price}}</view>
+    <view class="info" wx:if="{{item.usedAt}}">核销时间: {{item.usedAt}}</view>
+  </view>
+</view>

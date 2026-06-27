@@ -1,0 +1,7 @@
+{
+  "navigationBarTitleText": "话题详情",
+  "enablePullDownRefresh": true,
+  "usingComponents": {
+    "travel-card": "/components/travel-card/travel-card"
+  }
+}

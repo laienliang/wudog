@@ -1,0 +1,8 @@
+.page { padding: 0; }
+.tabs { display: flex; background: #fff; border-bottom: 1rpx solid #eee; }
+.tab { flex: 1; text-align: center; padding: 24rpx; font-size: 30rpx; color: #666; border-bottom: 4rpx solid transparent; }
+.tab.active { color: #1677ff; border-bottom-color: #1677ff; font-weight: bold; }
+.empty, .status { text-align: center; padding: 80rpx 40rpx; color: #999; font-size: 28rpx; }
+.user-item { display: flex; align-items: center; gap: 20rpx; padding: 24rpx 30rpx; background: #fff; border-bottom: 1rpx solid #f5f5f5; }
+.avatar { width: 80rpx; height: 80rpx; border-radius: 50%; background: linear-gradient(135deg, #1677ff, #764ba2); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 28rpx; }
+.uname { font-size: 30rpx; }

@@ -1,0 +1,26 @@
+.page { padding: 16rpx; padding-bottom: 120rpx; }
+.search-bar { padding: 20rpx; background: #fff; border-radius: 12rpx; margin-bottom: 16rpx; display: flex; align-items: center; }
+.search-bar input { font-size: 28rpx; flex: 1; }
+.search-icon { margin-left: 16rpx; font-size: 36rpx; }
+.topic-bar { white-space: nowrap; padding: 8rpx 0; margin-bottom: 16rpx; }
+.topic-tag {
+  display: inline-block; padding: 8rpx 24rpx; margin-right: 12rpx;
+  border-radius: 24rpx; font-size: 26rpx;
+  background: #f0f0f0; color: #666;
+}
+.topic-tag.active { background: #1677ff; color: #fff; }
+.empty { text-align: center; padding: 160rpx 0; color: #999; font-size: 28rpx; }
+.list { display: flex; flex-direction: column; gap: 16rpx; }
+.loading, .no-more { text-align: center; padding: 20rpx; color: #999; font-size: 24rpx; }
+.fab {
+  position: fixed; bottom: 80rpx; right: 40rpx;
+  width: 100rpx; height: 100rpx; background: #1677ff; color: #fff;
+  border-radius: 50%; text-align: center; line-height: 100rpx; font-size: 48rpx;
+  box-shadow: 0 4rpx 16rpx rgba(22,119,255,0.4); z-index: 99;
+}
+.msg-fab {
+  position: fixed; bottom: 200rpx; right: 40rpx;
+  width: 80rpx; height: 80rpx; background: #fff; border: 2rpx solid #eee;
+  border-radius: 50%; text-align: center; line-height: 80rpx; font-size: 36rpx;
+  box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1); z-index: 99;
+}

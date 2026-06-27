@@ -1,0 +1,33 @@
+<view class="page">
+  <!-- Category scroll bar -->
+  <scroll-view scroll-x class="category-bar">
+    <view class="cat-item {{activeCategory === 0 ? 'active' : ''}}" data-id="0" bindtap="onCategoryTap">全部</view>
+    <view class="cat-item {{activeCategory === item.id ? 'active' : ''}}" wx:for="{{categories}}" wx:key="id" data-id="{{item.id}}" bindtap="onCategoryTap">{{item.name}}</view>
+  </scroll-view>
+
+  <!-- Sort bar -->
+  <view class="sort-bar">
+    <view class="sort-item {{sort === 'newest' ? 'active' : ''}}" data-sort="newest" bindtap="onSortTap">最新</view>
+    <view class="sort-item {{sort === 'sales' ? 'active' : ''}}" data-sort="sales" bindtap="onSortTap">销量</view>
+    <view class="sort-item {{sort === 'price-asc' ? 'active' : ''}}" data-sort="price-asc" bindtap="onSortTap">价格↑</view>
+    <view class="sort-item {{sort === 'price-desc' ? 'active' : ''}}" data-sort="price-desc" bindtap="onSortTap">价格↓</view>
+  </view>
+
+  <!-- Product grid -->
+  <view class="product-grid" wx:if="{{products.length > 0}}">
+    <view class="product-card" wx:for="{{products}}" wx:key="id" data-id="{{item.id}}" bindtap="goDetail">
+      <image class="product-img" src="{{item.mainImage}}" mode="aspectFill" />
+      <view class="product-info">
+        <view class="product-title">{{item.title}}</view>
+        <view class="product-price-row">
+          <text class="product-price">¥{{item.price}}</text>
+          <text class="product-market-price" wx:if="{{item.marketPrice}}">¥{{item.marketPrice}}</text>
+        </view>
+        <view class="product-sales">已售 {{item.sales || 0}}</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty" wx:if="{{!loading && products.length === 0}}">暂无商品</view>
+  <view class="no-more" wx:if="{{noMore && products.length > 0}}">没有更多了</view>
+</view>

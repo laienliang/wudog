@@ -1,0 +1,80 @@
+<view class="container" wx:if="{{!loading && homestay}}">
+  <image src="{{homestay.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="main-img" />
+
+  <view class="info-card">
+    <view class="name">{{homestay.name}}</view>
+    <view class="addr">{{homestay.address || ''}}</view>
+    <view class="tags" wx:if="{{homestay.styleTags}}">
+      <text class="tag" wx:for="{{homestay.styleTags.split(',')}}" wx:key="*this">{{item}}</text>
+    </view>
+    <view class="facilities" wx:if="{{homestay.facilityTags}}">
+      设施: {{homestay.facilityTags}}
+    </view>
+    <view class="rating" wx:if="{{homestay.avgRating}}">⭐{{homestay.avgRating}}</view>
+    <view class="intro" wx:if="{{homestay.intro}}">{{homestay.intro}}</view>
+  </view>
+
+  <!-- Room Types -->
+  <view class="section">
+    <view class="section-title">房型选择</view>
+    <view class="room-item {{selectedRoom && selectedRoom.id === item.id ? 'room-active' : ''}}" wx:for="{{homestay.roomTypes}}" wx:key="id" data-id="{{item.id}}" bindtap="onRoomTap">
+      <view class="room-header">
+        <text class="room-name">{{item.name}}</text>
+        <text class="room-price">¥{{item.basePrice}}/晚</text>
+      </view>
+      <view class="room-meta">
+        {{item.bedType || ''}} {{item.area ? '| ' + item.area + '㎡' : ''}} {{item.capacity ? '| 最多' + item.capacity + '人' : ''}}
+      </view>
+      <view class="room-facilities" wx:if="{{item.facilities}}">设施: {{item.facilities}}</view>
+    </view>
+  </view>
+
+  <!-- Booking Form -->
+  <view class="section" wx:if="{{selectedRoom}}">
+    <view class="section-title">预订信息</view>
+    <view class="form">
+      <view class="form-item">
+        <text class="label">入住日期</text>
+        <picker mode="date" value="{{checkIn}}" bindchange="onCheckInChange"><view class="picker">{{checkIn || '请选择'}}</view></picker>
+      </view>
+      <view class="form-item">
+        <text class="label">离店日期</text>
+        <picker mode="date" value="{{checkOut}}" bindchange="onCheckOutChange"><view class="picker">{{checkOut || '请选择'}}</view></picker>
+      </view>
+      <view class="form-item">
+        <text class="label">入住人</text>
+        <input value="{{guestName}}" bindinput="onNameInput" class="input" placeholder="姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label">电话</text>
+        <input type="number" value="{{guestPhone}}" bindinput="onPhoneInput" class="input" placeholder="手机号" maxlength="11" />
+      </view>
+      <view class="form-item">
+        <text class="label">房间数</text>
+        <input type="number" value="{{roomCount}}" bindinput="onRoomCountChange" class="input" />
+      </view>
+    </view>
+    <view wx:if="{{checkIn && checkOut}}" class="total">
+      共 {{nights}} 晚 · ¥{{selectedRoom.basePrice * nights * roomCount}}
+    </view>
+  </view>
+
+  <!-- Reviews -->
+  <view class="section">
+    <view class="section-title">住客评价 ({{reviews.length}})</view>
+    <view wx:if="{{reviews.length === 0}}" class="empty">暂无评价</view>
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-header">用户{{item.userId}} ⭐{{item.rating}}</view>
+      <view class="review-content" wx:if="{{item.content}}">{{item.content}}</view>
+      <view class="review-reply" wx:if="{{item.merchantReply}}">商家回复: {{item.merchantReply}}</view>
+    </view>
+  </view>
+
+  <view style="height:120rpx;"></view>
+  <view class="bottom-bar">
+    <button class="book-btn" bindtap="handleBooking" loading="{{submitting}}">立即预订</button>
+  </view>
+</view>
+
+<view wx:if="{{loading}}" class="loading">加载中...</view>
+<view wx:if="{{!loading && !homestay}}" class="empty">民宿不存在</view>

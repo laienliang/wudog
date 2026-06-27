@@ -1,0 +1,13 @@
+<view class="comment">
+  <view class="header">
+    <text class="author">{{item.author_nickname || '匿名'}}</text>
+    <text class="time">{{item.created_at}}</text>
+  </view>
+  <text class="content">{{item.content}}</text>
+  <view wx:if="{{item.replies && item.replies.length}}" class="replies">
+    <view wx:for="{{item.replies}}" wx:key="id" class="reply">
+      <text class="reply-author">{{item.author_nickname}}：</text>
+      <text>{{item.content}}</text>
+    </view>
+  </view>
+</view>

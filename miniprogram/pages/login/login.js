@@ -1,24 +1,43 @@
-﻿Page({
-  data: { username: '', password: '' },
+import { request } from '../../utils/request';
+
+Page({
+  data: {
+    username: '',
+    password: '',
+    loading: false,
+  },
+
+  onLoad() {
+    const token = wx.getStorageSync('token');
+    if (token) {
+      wx.switchTab({ url: '/pages/index/index' }).catch(() => {
+        wx.redirectTo({ url: '/pages/index/index' });
+      });
+    }
+  },
+
   onUsernameInput(e) { this.setData({ username: e.detail.value }); },
   onPasswordInput(e) { this.setData({ password: e.detail.value }); },
-  handleLogin() {
-    if (!this.data.username || !this.data.password) {
-      wx.showToast({ title: '请输入用户名和密码', icon: 'none' });
-      return;
+
+  async onLogin() {
+    const { username, password } = this.data;
+    if (!username.trim() || !password.trim()) {
+      return wx.showToast({ title: '请输入用户名和密码', icon: 'none' });
     }
-    wx.request({
-      url: 'http://localhost:3000/admin/login',
-      method: 'POST',
-      data: { username: this.data.username, password: this.data.password },
-      success(res) {
-        if (res.data.code === 200) {
-          wx.setStorageSync('token', res.data.data.token);
-          wx.switchTab({ url: '/pages/index/index' });
-        } else {
-          wx.showToast({ title: res.data.message, icon: 'none' });
-        }
-      },
-    });
+    this.setData({ loading: true });
+    try {
+      const res = await request('/public/auth/login', 'POST', { username, password });
+      wx.setStorageSync('token', res.data.token);
+      wx.showToast({ title: '登录成功', icon: 'success' });
+      setTimeout(() => {
+        wx.switchTab({ url: '/pages/index/index' }).catch(() => {
+          wx.redirectTo({ url: '/pages/index/index' });
+        });
+      }, 800);
+    } catch {
+      wx.showToast({ title: '用户名或密码错误', icon: 'none' });
+    } finally {
+      this.setData({ loading: false });
+    }
   },
 });

@@ -1,6 +1,15 @@
-﻿<view class="login-container">
-  <view class="login-title">乌东文旅</view>
-  <input class="login-input" placeholder="用户名" value="{{username}}" bindinput="onUsernameInput" />
-  <input class="login-input" placeholder="密码" password value="{{password}}" bindinput="onPasswordInput" />
-  <button class="login-btn" bindtap="handleLogin">登录</button>
+<view class="page">
+  <view class="card">
+    <view class="title">乌东文旅</view>
+    <view class="subtitle">社区分享</view>
+
+    <input class="input" placeholder="用户名" value="{{username}}" bindinput="onUsernameInput" />
+    <input class="input" placeholder="密码" type="password" value="{{password}}" bindinput="onPasswordInput" />
+
+    <button class="login-btn" type="primary" bindtap="onLogin" loading="{{loading}}">
+      登录
+    </button>
+
+    <view class="hint">测试账号：admin / admin123</view>
+  </view>
 </view>

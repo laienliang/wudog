@@ -34,8 +34,9 @@ export function createOrderRouter(service: OrderService): Router {
   // 订单详情
   router.get('/public/order/detail/:id', requireAuth(), async (ctx: any) => {
     try {
+      const userId = getUserId(ctx);
       const id = parseInt(ctx.params.id);
-      const result = await service.getOrderDetail(id);
+      const result = await service.getOrderDetail(id, userId);
       ctx.body = { code: 200, message: 'success', data: result };
     } catch (e: any) {
       ctx.status = 400;

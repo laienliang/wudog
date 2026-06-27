@@ -6,8 +6,24 @@
     "pages/module3/index",
     "pages/module4/index",
     "pages/community/index",
+    "pages/community-detail/community-detail",
+    "pages/publish/publish",
+    "pages/topic/topic",
+    "pages/search/search",
+    "pages/follows/follows",
     "pages/user/index",
-    "pages/login/login"
+    "pages/messages/messages",
+    "pages/login/login",
+    "pages/module1/detail",
+    "pages/cart/cart",
+    "pages/module2/restaurant-detail",
+    "pages/module2/farm-detail",
+    "pages/module2/bookings",
+    "pages/module3/detail",
+    "pages/module3/orders",
+    "pages/module4/spot-detail",
+    "pages/module4/route-detail",
+    "pages/module4/orders"
   ],
   "window": {
     "navigationBarBackgroundColor": "#1677ff",
@@ -24,5 +40,9 @@
       { "pagePath": "pages/module3/index", "text": "民宿", "iconPath": "images/hotel.png", "selectedIconPath": "images/hotel-active.png" },
       { "pagePath": "pages/module4/index", "text": "出行", "iconPath": "images/travel.png", "selectedIconPath": "images/travel-active.png" }
     ]
+  },
+  "usingComponents": {
+    "travel-card": "/components/travel-card/travel-card",
+    "comment-item": "/components/comment-item/comment-item"
   }
 }

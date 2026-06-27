@@ -1,0 +1,41 @@
+<view class="container">
+  <view class="tab-bar">
+    <view class="tab-item {{tab === 'restaurant' ? 'active' : ''}}" data-tab="restaurant" bindtap="onTabTap">餐厅</view>
+    <view class="tab-item {{tab === 'farm' ? 'active' : ''}}" data-tab="farm" bindtap="onTabTap">农产品</view>
+  </view>
+
+  <scroll-view wx:if="{{tab === 'farm'}}" scroll-x class="category-bar">
+    <view class="cat-item {{activeCategory === 0 ? 'cat-active' : ''}}" data-id="0" bindtap="onCategoryTap">全部</view>
+    <view wx:for="{{farmCategories}}" wx:key="id" class="cat-item {{activeCategory === item.id ? 'cat-active' : ''}}" data-id="{{item.id}}" bindtap="onCategoryTap">{{item.name}}</view>
+  </scroll-view>
+
+  <view wx:if="{{tab === 'restaurant'}}" class="list">
+    <view class="card" wx:for="{{restaurants}}" wx:key="id" data-id="{{item.id}}" bindtap="goRestaurantDetail">
+      <image src="{{item.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="card-img" />
+      <view class="card-info">
+        <view class="card-title">{{item.name}}</view>
+        <view class="card-desc">{{item.address || ''}}</view>
+        <view class="card-meta">{{item.businessHours || ''}} {{item.avgRating ? '⭐' + item.avgRating : ''}}</view>
+      </view>
+    </view>
+    <view wx:if="{{restaurants.length === 0 && !loading}}" class="empty">暂无餐厅</view>
+  </view>
+
+  <view wx:if="{{tab === 'farm'}}" class="grid">
+    <view class="product-card" wx:for="{{farmProducts}}" wx:key="id" data-id="{{item.id}}" bindtap="goFarmDetail">
+      <image src="{{item.mainImage || '/images/placeholder.png'}}" mode="aspectFill" class="product-img" />
+      <view class="product-info">
+        <view class="product-name">{{item.name}}</view>
+        <view class="product-origin" wx:if="{{item.origin}}">{{item.origin}}</view>
+        <view class="product-footer">
+          <text class="product-price">¥{{item.price}}</text>
+          <text class="product-sales">已售{{item.sales}}</text>
+        </view>
+      </view>
+    </view>
+    <view wx:if="{{farmProducts.length === 0 && !loading}}" class="empty">暂无农产品</view>
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{noMore}}" class="no-more">— 没有更多了 —</view>
+</view>

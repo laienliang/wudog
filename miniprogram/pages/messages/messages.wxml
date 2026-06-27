@@ -1,0 +1,20 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="status">加载中...</view>
+
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty">
+    <view class="empty-icon">📬</view>
+    <view>暂无消息</view>
+  </view>
+
+  <view wx:for="{{list}}" wx:key="index" class="msg-item" bindtap="goDetail" data-id="{{item.noteId}}">
+    <view class="msg-icon">
+      <text wx:if="{{item.type === 'comment'}}">💬</text>
+      <text wx:elif="{{item.type === 'like'}}">❤️</text>
+      <text wx:else>👤</text>
+    </view>
+    <view class="msg-body">
+      <view class="msg-text">{{item.text}}</view>
+      <view class="msg-time">{{item.time}}</view>
+    </view>
+  </view>
+</view>

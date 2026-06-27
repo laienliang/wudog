@@ -1,0 +1,11 @@
+<view class="card" bindtap="onTap">
+  <image wx:if="{{item.images && item.images.length}}" src="{{item.images[0]}}" mode="aspectFill" class="cover" />
+  <view class="info">
+    <text class="title">{{item.title}}</text>
+    <view class="meta">
+      <text>{{item.author_nickname || '匿名'}}</text>
+      <text class="likes">❤ {{item.like_count || 0}}</text>
+    </view>
+    <text class="time">{{item.created_at}}</text>
+  </view>
+</view>

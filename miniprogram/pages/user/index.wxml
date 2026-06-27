@@ -1,0 +1,27 @@
+<view class="page">
+  <view class="profile" wx:if="{{user}}">
+    <view class="avatar">{{user.nickname ? user.nickname[0] : 'U'}}</view>
+    <view class="nickname">{{user.nickname}}</view>
+    <view class="stats">
+      <view class="stat" bindtap="goFollows" data-type="follower">
+        <text class="stat-num">{{user.noteCount || 0}}</text>
+        <text class="stat-label">游记</text>
+      </view>
+      <view class="stat" bindtap="goFollows" data-type="follower">
+        <text class="stat-num">{{user.followerCount || 0}}</text>
+        <text class="stat-label">粉丝</text>
+      </view>
+    </view>
+    <button class="follow-btn" bindtap="onFollow" wx:if="{{userId !== 1}}">
+      {{followed ? '已关注' : '+ 关注'}}
+    </button>
+  </view>
+
+  <view wx:if="{{loading}}" class="status">加载中...</view>
+
+  <view wx:if="{{notes.length === 0 && !loading}}" class="empty">暂无游记</view>
+
+  <view wx:for="{{notes}}" wx:key="id">
+    <travel-card item="{{item}}" bind:tap="goDetail" data-id="{{item.id}}" />
+  </view>
+</view>

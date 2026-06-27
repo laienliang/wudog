@@ -1,0 +1,14 @@
+<view class="container">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{!loading && bookings.length === 0}}" class="empty">暂无预订</view>
+  <view class="booking-item" wx:for="{{bookings}}" wx:key="id">
+    <view class="header">
+      <text class="homestay-name">民宿ID: {{item.homestayId}} | 房型ID: {{item.roomTypeId}}</text>
+      <text class="status" style="background:{{statusColor[item.status] || '#999'}}">{{statusText[item.status] || item.status}}</text>
+    </view>
+    <view class="info">{{item.checkInDate}} ~ {{item.checkOutDate}} ({{item.nights}}晚)</view>
+    <view class="info">{{item.guestName}} {{item.guestPhone}} | {{item.roomCount}}间 | ¥{{item.totalAmount}}</view>
+    <view class="info" wx:if="{{item.checkInCode}}">入住码: {{item.checkInCode}}</view>
+    <button wx:if="{{item.status === 'pending'}}" class="cancel-btn" data-id="{{item.id}}" bindtap="cancelBooking">取消预订</button>
+  </view>
+</view>

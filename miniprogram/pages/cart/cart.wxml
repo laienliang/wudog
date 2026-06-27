@@ -1,0 +1,36 @@
+<view class="page">
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+
+  <view wx:elif="{{items.length === 0}}" class="empty">
+    <text>购物车是空的</text>
+    <navigator url="/pages/module1/index" class="go-shop">去逛逛</navigator>
+  </view>
+
+  <block wx:else>
+    <view class="cart-list">
+      <view class="cart-item" wx:for="{{items}}" wx:key="id">
+        <image class="item-img" src="{{item.product_image || ''}}" mode="aspectFill" />
+        <view class="item-info">
+          <view class="item-name">{{item.product_name || '商品'}}</view>
+          <view class="item-spec" wx:if="{{item.sku_spec}}">{{item.sku_spec}}</view>
+          <view class="item-price">¥{{item.price}}</view>
+        </view>
+        <view class="item-qty">
+          <view class="qty-btn" data-id="{{item.id}}" data-qty="{{item.quantity - 1}}" bindtap="updateQty">-</view>
+          <view class="qty-val">{{item.quantity}}</view>
+          <view class="qty-btn" data-id="{{item.id}}" data-qty="{{item.quantity + 1}}" bindtap="updateQty">+</view>
+        </view>
+        <view class="item-subtotal">¥{{(item.price * item.quantity).toFixed(2)}}</view>
+        <view class="item-del" data-id="{{item.id}}" bindtap="removeItem">×</view>
+      </view>
+    </view>
+
+    <view class="bottom-bar">
+      <view class="total">
+        <text>合计：</text>
+        <text class="total-price">¥{{totalPrice}}</text>
+      </view>
+      <button class="btn-checkout" bindtap="goCheckout">去结算</button>
+    </view>
+  </block>
+</view>
