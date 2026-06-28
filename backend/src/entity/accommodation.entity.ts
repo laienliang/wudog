@@ -24,6 +24,9 @@ export class AccommodationEntity extends BaseEntity {
   @Column({ type: 'decimal', precision: 10, scale: 6, nullable: true, comment: '纬度' })
   latitude: number;
 
+  @Column({ type: 'varchar', length: 20, nullable: true, comment: '联系电话' })
+  phone: string;
+
   @Column({ type: 'varchar', length: 255, nullable: true, name: 'cover_image', comment: '封面图URL' })
   coverImage: string;
 

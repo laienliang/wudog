@@ -64,9 +64,19 @@ export default function AccommodationPage() {
 
   const openEdit = (record) => {
     setEditRecord(record)
+    // 只设置表单需要的字段，避免注入 id/createdAt/updatedAt 等多余字段
     form.setFieldsValue({
-      ...record,
+      name: record.name,
       villageId: record.villageId,
+      type: record.type,
+      price: record.lowestPrice,          // 后端字段 lowestPrice → 表单字段 price
+      phone: record.phone || '',
+      rating: record.rating,
+      address: record.address || '',
+      description: record.description || '',
+      facilities: Array.isArray(record.facilities) ? record.facilities.join(',') : (typeof record.facilities === 'string' ? record.facilities : ''),
+      checkInNotice: record.houseRules || '',  // 后端字段 houseRules → 表单字段 checkInNotice
+      coverImage: record.coverImage || '',
     })
     setModalOpen(true)
   }
@@ -74,9 +84,23 @@ export default function AccommodationPage() {
   const handleSubmit = () => {
     form.validateFields().then(values => {
       setSubmitting(true)
+      // 表单字段 → 后端实体字段映射
+      const payload = {
+        name: values.name,
+        villageId: values.villageId,
+        type: values.type,
+        lowestPrice: values.price,         // 表单字段 price → 后端字段 lowestPrice
+        phone: values.phone || '',
+        rating: values.rating,
+        address: values.address || '',
+        description: values.description || '',
+        facilities: values.facilities || '',       // 保持字符串格式，MySQL TEXT 列存 JSON 字符串
+        houseRules: values.checkInNotice || '', // 表单字段 checkInNotice → 后端字段 houseRules
+        coverImage: values.coverImage || '',
+      }
       const action = editRecord
-        ? updateAccommodation(editRecord.id, values)
-        : createAccommodation(values)
+        ? updateAccommodation(editRecord.id, payload)
+        : createAccommodation(payload)
       action
         .then(res => {
           if (res.code === 200) {

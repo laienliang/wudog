@@ -18,16 +18,16 @@ export default {
     origin: '*',
     allowMethods: 'GET,HEAD,PUT,POST,DELETE,PATCH,OPTIONS',
   },
-  // TypeORM 数据源配置 —— 请按本地 MySQL 实际情况修改
+  // TypeORM 数据源配置 —— 支持环境变量，方便 Docker 部署
   typeorm: {
     dataSource: {
       default: {
         type: 'mysql',
-        host: '127.0.0.1',
-        port: 3306,
-        username: 'root',
-        password: '123456',
-        database: 'wudong_tourism',
+        host: process.env.MYSQL_HOST || '127.0.0.1',
+        port: parseInt(process.env.MYSQL_PORT || '3306', 10),
+        username: process.env.MYSQL_USER || 'root',
+        password: process.env.MYSQL_PASSWORD || '123456',
+        database: process.env.MYSQL_DATABASE || 'wudong_tourism',
         synchronize: false, // 生产环境请关闭，使用 init.sql 建表
         logging: false,
         entities: [
@@ -43,6 +43,13 @@ export default {
         charset: 'utf8mb4',
       },
     },
+  },
+  // Redis 缓存配置
+  redis: {
+    host: process.env.REDIS_HOST || '127.0.0.1',
+    port: parseInt(process.env.REDIS_PORT || '6379', 10),
+    db: 0,
+    keyPrefix: 'wudong:',
   },
   // 日志
   midwayLogger: {
