@@ -1,0 +1,41 @@
+<view class="shell">
+  <view wx:if="{{message}}" class="muted">{{message}}</view>
+
+  <block wx:if="{{detail}}">
+    <image class="hero-image" mode="aspectFill" src="{{detail.coverImage || 'https://placehold.co/900x700?text=Wudong'}}" />
+
+    <view class="panel detail-head">
+      <text class="category">{{detail.categoryName}}</text>
+      <text class="title">{{detail.title}}</text>
+      <text class="muted">{{detail.subtitle || '暂无副标题'}}</text>
+      <text class="price">￥{{detail.minPrice}}{{detail.minPrice !== detail.maxPrice ? ' - ￥' + detail.maxPrice : ''}}</text>
+      <text class="stock {{detail.soldOut ? 'warn' : 'ok'}}">{{detail.soldOut ? '全部 SKU 无库存，当前售罄' : '当前可购买'}}</text>
+      <view class="detail-actions">
+        <button class="button-primary" bindtap="onToggleFavorite">{{detail.isFavorite ? '取消收藏' : '收藏商品'}}</button>
+        <button class="button-ghost" bindtap="goFavorites">去收藏页</button>
+      </view>
+    </view>
+
+    <view class="panel section">
+      <text class="section-title">工艺介绍</text>
+      <text class="muted">{{detail.craftIntro || '暂无工艺介绍'}}</text>
+    </view>
+
+    <view class="panel section">
+      <text class="section-title">传承人</text>
+      <text>{{detail.inheritorName || '暂无传承人姓名'}}</text>
+      <text class="muted">{{detail.inheritorIntro || '暂无传承人介绍'}}</text>
+    </view>
+
+    <view class="panel section">
+      <text class="section-title">SKU 列表</text>
+      <block wx:for="{{detail.skus}}" wx:key="id">
+        <view class="sku-row">
+          <text>{{item.name}}</text>
+          <text>售价：￥{{item.salePrice}}</text>
+          <text>库存：{{item.stock}}</text>
+        </view>
+      </block>
+    </view>
+  </block>
+</view>

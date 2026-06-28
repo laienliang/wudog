@@ -1,0 +1,39 @@
+page {
+  min-height: 100%;
+  background: linear-gradient(180deg, #f6efe8 0%, #efe2d3 100%);
+  color: #2e221c;
+  font-size: 28rpx;
+}
+
+.shell {
+  padding: 24rpx;
+}
+
+.panel {
+  background: rgba(255, 250, 245, 0.94);
+  border-radius: 28rpx;
+  padding: 24rpx;
+  box-shadow: 0 18rpx 50rpx rgba(120, 67, 39, 0.08);
+}
+
+.title {
+  font-size: 40rpx;
+  font-weight: 700;
+}
+
+.muted {
+  color: #6f5a4d;
+}
+
+.button-primary {
+  background: linear-gradient(120deg, #924722, #cf6b39);
+  color: #fff6ef;
+  border-radius: 999rpx;
+}
+
+.button-ghost {
+  border-radius: 999rpx;
+  border: 1px solid rgba(126, 83, 50, 0.18);
+  background: rgba(255, 248, 242, 0.92);
+  color: #432a1f;
+}

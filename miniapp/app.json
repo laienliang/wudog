@@ -1,0 +1,16 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/detail/index",
+    "pages/favorites/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "乌东非遗商品",
+    "navigationBarBackgroundColor": "#f6efe8",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f3ece4",
+    "backgroundTextStyle": "light"
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

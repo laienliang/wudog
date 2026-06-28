@@ -1,0 +1,310 @@
+{
+  "info": {
+    "name": "乌东非遗商品接口集合",
+    "_postman_id": "2a36d270-4d0e-4d36-93df-50ea1d7e29a6",
+    "description": "覆盖后台登录、商品分类、商品、详情与收藏的课程核心流程。",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://127.0.0.1:3000/api" },
+    { "key": "adminToken", "value": "" },
+    { "key": "appToken", "value": "" },
+    { "key": "captchaId", "value": "" },
+    { "key": "verifyCode", "value": "" },
+    { "key": "categoryId", "value": "" },
+    { "key": "productId", "value": "" },
+    { "key": "appPhone", "value": "13800000000" },
+    { "key": "appPassword", "value": "123456" }
+  ],
+  "item": [
+    {
+      "name": "1. 后台登录",
+      "item": [
+        {
+          "name": "获取验证码",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/admin/base/open/captcha"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('captchaId', body.data.captchaId);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "管理员登录",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"username\": \"admin\",\n  \"password\": \"123456\",\n  \"captchaId\": \"{{captchaId}}\",\n  \"verifyCode\": \"{{verifyCode}}\"\n}"
+            },
+            "url": "{{baseUrl}}/admin/base/open/login"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('adminToken', body.data.token);"
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "2. 商品分类",
+      "item": [
+        {
+          "name": "分类分页",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"pageSize\": 20,\n  \"keyWord\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/product-categories/page"
+          }
+        },
+        {
+          "name": "保存分类",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"手工织造类\",\n  \"status\": 1,\n  \"sortOrder\": 0,\n  \"remark\": \"Postman 创建\"\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/product-categories/save"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('categoryId', body.data.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "分类状态切换",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{categoryId}},\n  \"status\": 1\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/product-categories/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "3. 商品",
+      "item": [
+        {
+          "name": "商品分页",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"page\": 1,\n  \"pageSize\": 20,\n  \"keyWord\": \"\"\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/products/page"
+          }
+        },
+        {
+          "name": "保存商品",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"categoryId\": {{categoryId}},\n  \"title\": \"乌东非遗演示商品\",\n  \"subtitle\": \"课程联调用示例\",\n  \"description\": \"用于列表、详情和收藏演示。\",\n  \"craftIntro\": \"手工织造工艺介绍。\",\n  \"inheritorName\": \"传承人甲\",\n  \"inheritorIntro\": \"传承人介绍。\",\n  \"status\": 1,\n  \"sortOrder\": 0,\n  \"skus\": [\n    {\n      \"name\": \"默认款\",\n      \"salePrice\": 99,\n      \"originalPrice\": 129,\n      \"stock\": 8,\n      \"status\": 1,\n      \"specs\": [\"默认\"]\n    }\n  ],\n  \"images\": [\n    {\n      \"url\": \"https://example.com/product-main.jpg\",\n      \"isMain\": 1,\n      \"sortOrder\": 0\n    }\n  ]\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/products/save"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('productId', body.data.id);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "商品详情",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/wudong/products/info?id={{productId}}"
+          }
+        },
+        {
+          "name": "商品上下架",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": {{productId}},\n  \"status\": 1\n}"
+            },
+            "url": "{{baseUrl}}/admin/wudong/products/status"
+          }
+        }
+      ]
+    },
+    {
+      "name": "4. 普通用户",
+      "item": [
+        {
+          "name": "密码登录",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"phone\": \"{{appPhone}}\",\n  \"password\": \"{{appPassword}}\"\n}"
+            },
+            "url": "{{baseUrl}}/app/user/login/password"
+          },
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const body = pm.response.json();",
+                  "pm.collectionVariables.set('appToken', body.data.token);"
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "name": "分类列表",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": "{{baseUrl}}/app/wudong/product-categories/list"
+          }
+        },
+        {
+          "name": "商品分页",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "{{appToken}}" }
+            ],
+            "url": "{{baseUrl}}/app/wudong/products/page?page=1&pageSize=20"
+          }
+        },
+        {
+          "name": "商品详情",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "{{appToken}}" }
+            ],
+            "url": "{{baseUrl}}/app/wudong/products/detail?id={{productId}}"
+          }
+        }
+      ]
+    },
+    {
+      "name": "5. 收藏",
+      "item": [
+        {
+          "name": "添加收藏",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{appToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {{productId}}\n}"
+            },
+            "url": "{{baseUrl}}/app/wudong/favorites/add"
+          }
+        },
+        {
+          "name": "收藏分页",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "{{appToken}}" }
+            ],
+            "url": "{{baseUrl}}/app/wudong/favorites/page?page=1&pageSize=20"
+          }
+        },
+        {
+          "name": "取消收藏",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "{{appToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"productId\": {{productId}}\n}"
+            },
+            "url": "{{baseUrl}}/app/wudong/favorites/delete"
+          }
+        }
+      ]
+    }
+  ]
+}

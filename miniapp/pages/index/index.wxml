@@ -1,0 +1,65 @@
+<view class="shell">
+  <!-- ========== 调试面板（临时） ========== -->
+  <view class="debug-panel">
+    <text class="debug-title">🔍 页面调试信息</text>
+    <text class="debug-line">步骤：{{debugStep}}</text>
+    <text class="debug-line">状态：{{debugText}}</text>
+    <text class="debug-line">分类数量：{{debugCategoriesCount}}</text>
+    <text class="debug-line">商品数量：{{debugProductsCount}}</text>
+    <text class="debug-line" wx:if="{{debugError}}">错误：{{debugError}}</text>
+  </view>
+  <!-- ========== 调试面板结束 ========== -->
+
+  <view class="panel hero">
+    <text class="title">乌东非遗商品</text>
+    <text class="muted">分类、列表、详情和收藏都复用同一套用户端接口。</text>
+    <button class="button-ghost mini-link" bindtap="goFavorites">去我的收藏</button>
+  </view>
+
+  <view class="panel search-panel">
+    <input
+      class="search-input"
+      placeholder="搜索商品标题或副标题"
+      value="{{keyWord}}"
+      bindinput="onKeywordInput"
+      confirm-type="search"
+      bindconfirm="onSearch"
+    />
+    <button class="button-primary search-button" bindtap="onSearch">搜索</button>
+  </view>
+
+  <scroll-view class="category-strip" scroll-x="true">
+    <view class="category-row">
+      <view class="category-pill {{activeCategoryId === '' ? 'active' : ''}}" bindtap="onSelectCategory">
+        全部
+      </view>
+      <block wx:for="{{categories}}" wx:key="id">
+        <view
+          class="category-pill {{activeCategoryId === item.id ? 'active' : ''}}"
+          data-id="{{item.id}}"
+          bindtap="onSelectCategory"
+        >
+          {{item.name}}
+        </view>
+      </block>
+    </view>
+  </scroll-view>
+
+  <view wx:if="{{message}}" class="muted error">{{message}}</view>
+  <view wx:if="{{loading}}" class="muted">商品加载中...</view>
+
+  <view class="product-list">
+    <block wx:for="{{products}}" wx:key="id">
+      <view class="panel product-card" data-id="{{item.id}}" bindtap="goDetail">
+        <image class="product-image" mode="aspectFill" src="{{item.coverImage || 'https://placehold.co/640x480?text=Wudong'}}" />
+        <view class="product-copy">
+          <text class="category-label">{{item.categoryName}}</text>
+          <text class="product-title">{{item.title}}</text>
+          <text class="muted">{{item.subtitle || '暂无副标题'}}</text>
+          <text class="price">￥{{item.minPrice}}{{item.minPrice !== item.maxPrice ? ' - ￥' + item.maxPrice : ''}}</text>
+          <text class="sold-out {{item.soldOut ? 'warn' : 'ok'}}">{{item.soldOut ? '已售罄' : '可购买'}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+</view>

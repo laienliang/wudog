@@ -1,0 +1,137 @@
+[
+  {
+    "name": "乌东非遗商品",
+    "router": null,
+    "perms": null,
+    "type": 0,
+    "icon": "icon-goods",
+    "orderNum": 12,
+    "viewPath": null,
+    "keepAlive": true,
+    "isShow": true,
+    "childMenus": [
+      {
+        "name": "商品分类",
+        "router": "/wudong/product-categories",
+        "perms": null,
+        "type": 1,
+        "icon": "icon-menu",
+        "orderNum": 1,
+        "viewPath": "modules/wudong/views/product-categories/index.vue",
+        "keepAlive": true,
+        "isShow": true,
+        "childMenus": [
+          {
+            "name": "分页查询",
+            "router": null,
+            "perms": "wudong:product-categories:page,wudong:product-categories:info",
+            "type": 2,
+            "icon": null,
+            "orderNum": 1,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "新增编辑",
+            "router": null,
+            "perms": "wudong:product-categories:save,wudong:product-categories:info",
+            "type": 2,
+            "icon": null,
+            "orderNum": 2,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "状态切换",
+            "router": null,
+            "perms": "wudong:product-categories:status",
+            "type": 2,
+            "icon": null,
+            "orderNum": 3,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "软删除",
+            "router": null,
+            "perms": "wudong:product-categories:delete",
+            "type": 2,
+            "icon": null,
+            "orderNum": 4,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          }
+        ]
+      },
+      {
+        "name": "商品管理",
+        "router": "/wudong/products",
+        "perms": null,
+        "type": 1,
+        "icon": "icon-goods",
+        "orderNum": 2,
+        "viewPath": "modules/wudong/views/products/index.vue",
+        "keepAlive": true,
+        "isShow": true,
+        "childMenus": [
+          {
+            "name": "分页查询",
+            "router": null,
+            "perms": "wudong:products:page,wudong:products:info",
+            "type": 2,
+            "icon": null,
+            "orderNum": 1,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "新增编辑",
+            "router": null,
+            "perms": "wudong:products:save,wudong:products:info",
+            "type": 2,
+            "icon": null,
+            "orderNum": 2,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "上下架",
+            "router": null,
+            "perms": "wudong:products:status",
+            "type": 2,
+            "icon": null,
+            "orderNum": 3,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          },
+          {
+            "name": "软删除",
+            "router": null,
+            "perms": "wudong:products:delete",
+            "type": 2,
+            "icon": null,
+            "orderNum": 4,
+            "viewPath": null,
+            "keepAlive": false,
+            "isShow": true,
+            "childMenus": []
+          }
+        ]
+      }
+    ]
+  }
+]
