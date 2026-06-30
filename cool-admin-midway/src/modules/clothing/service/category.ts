@@ -9,7 +9,7 @@ export class ClothingCategoryService extends BaseService {
   @InjectEntityModel(ClothingCategoryEntity)
   clothingCategoryEntity: Repository<ClothingCategoryEntity>;
 
-  @CoolCache(60 * 60) // 1 小时缓存，分类数据相对稳定
+  @CoolCache(60 * 60 * 1000) // 1 小时缓存，分类数据相对稳定
   async list(query?, option?, connectionName?) {
     return super.list(query, option, connectionName);
   }

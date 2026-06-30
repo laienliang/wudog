@@ -9,17 +9,17 @@ export class CommunityArticleService extends BaseService {
   @InjectEntityModel(CommunityArticleEntity)
   communityArticleEntity: Repository<CommunityArticleEntity>;
 
-  @CoolCache(15 * 60) // 15 分钟缓存，UGC 内容更新较频繁
+  @CoolCache(15 * 60 * 1000) // 15 分钟缓存，UGC 内容更新较频繁
   async list(query?, option?, connectionName?) {
     return super.list(query, option, connectionName);
   }
 
-  @CoolCache(15 * 60) // 15 分钟缓存
+  @CoolCache(15 * 60 * 1000) // 15 分钟缓存
   async page(query?, option?, connectionName?) {
     return super.page(query, option, connectionName);
   }
 
-  @CoolCache(15 * 60) // 15 分钟缓存
+  @CoolCache(15 * 60 * 1000) // 15 分钟缓存
   async info(id, infoIgnoreProperty?) {
     return super.info(id, infoIgnoreProperty);
   }

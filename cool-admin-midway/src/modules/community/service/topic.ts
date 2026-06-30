@@ -9,7 +9,7 @@ export class CommunityTopicService extends BaseService {
   @InjectEntityModel(CommunityTopicEntity)
   communityTopicEntity: Repository<CommunityTopicEntity>;
 
-  @CoolCache(60 * 60) // 1 小时缓存，话题数据相对稳定
+  @CoolCache(60 * 60 * 1000) // 1 小时缓存，话题数据相对稳定
   async page(query?, option?, connectionName?) {
     return super.page(query, option, connectionName);
   }

@@ -13,25 +13,25 @@ export class OpenPlatformClientController extends BaseController {
   @Inject()
   platformClientService: PlatformClientService;
 
-  @CoolCache(30 * 60) // 30 分钟缓存
+  @CoolCache(30 * 60 * 1000) // 30 分钟缓存
   @Get('/home', { summary: '首页聚合数据' })
   async home() {
     return this.ok(await this.platformClientService.home());
   }
 
-  @CoolCache(15 * 60) // 15 分钟缓存
+  @CoolCache(15 * 60 * 1000) // 15 分钟缓存
   @Get('/search', { summary: '全站搜索' })
   async search(@Query('keyword') keyword: string, @Query('limit') limit: number) {
     return this.ok(await this.platformClientService.search(keyword, limit));
   }
 
-  @CoolCache(60 * 60) // 1 小时缓存
+  @CoolCache(60 * 60 * 1000) // 1 小时缓存
   @Get('/categories', { summary: '前台分类与话题' })
   async categories() {
     return this.ok(await this.platformClientService.categories());
   }
 
-  @CoolCache(30 * 60) // 30 分钟缓存
+  @CoolCache(30 * 60 * 1000) // 30 分钟缓存
   @Get('/page', { summary: '前台频道分页' })
   async channelPage(
     @Query('type') type,

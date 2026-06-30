@@ -9,7 +9,7 @@ export class FoodDishService extends BaseService {
   @InjectEntityModel(FoodDishEntity)
   foodDishEntity: Repository<FoodDishEntity>;
 
-  @CoolCache(30 * 60) // 30 分钟缓存
+  @CoolCache(30 * 60 * 1000) // 30 分钟缓存
   async list(query?, option?, connectionName?) {
     return super.list(query, option, connectionName);
   }
