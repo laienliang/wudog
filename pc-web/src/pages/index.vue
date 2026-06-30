@@ -329,6 +329,12 @@ onMounted(async () => {
   overflow: hidden;
 }
 
+.hero-banner :deep(.swiper),
+.hero-banner :deep(.swiper-wrapper),
+.hero-banner :deep(.swiper-slide) {
+  height: 100%;
+}
+
 .banner-item {
   width: 100%;
   height: 100%;
