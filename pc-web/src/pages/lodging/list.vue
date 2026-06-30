@@ -120,8 +120,8 @@ useHead({
 
 .filter-bar {
   background: #fff;
-  padding: 20px 0;
-  margin-bottom: 24px;
+  padding: 20px 20px;
+  margin-bottom: 24
   border-radius: var(--radius-lg);
 }
 
