@@ -10,7 +10,12 @@ Page({
     list: [], activeTab: '', loading: false, statusMap: ORDER_STATUS,
   },
 
-  onShow() { this.fetchData(); },
+  onShow() {
+    // 每次进入页面默认展示"全部"Tab，避免旧 Tab 筛选条件残留
+    // （wx.switchTab 不销毁页面实例，data 保持上次的值）
+    this.setData({ activeTab: '' });
+    this.fetchData();
+  },
 
   onTab(e) { this.setData({ activeTab: e.currentTarget.dataset.tab }); this.fetchData(); },
 
