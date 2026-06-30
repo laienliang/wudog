@@ -53,6 +53,7 @@ export class OrderController {
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };
     } catch (err: any) {
+      console.error('[OrderController.list] 查询订单列表失败:', err.message || err);
       return { code: 200, message: 'success', data: { total: 0, list: [] } };
     }
   }
@@ -115,6 +116,7 @@ export class OrderController {
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };
     } catch (err: any) {
+      console.error('[OrderController.adminList] 查询订单列表失败:', err.message || err);
       return { code: 200, message: 'success', data: { total: 0, list: [] } };
     }
   }
