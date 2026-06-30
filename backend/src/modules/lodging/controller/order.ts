@@ -32,7 +32,7 @@ export class OrderController {
   async create(@Body() body: OrderCreateDTO, ctx: Context) {
     const userId = this.getUserId(ctx);
     try {
-      const data = await this.orderService.create(body, Number(userId) || 1);
+      const data = await this.orderService.create(body, userId);
       return { code: 200, message: '下单成功', data };
     } catch (err: any) {
       return { code: 400, message: err.message || '下单失败', data: null };
