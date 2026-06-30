@@ -1,0 +1,20 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(\"C:/Program Files/Redis/redis-server.exe\" --service-start)",
+      "Bash(\"C:/Program Files/Redis/redis-server.exe\")",
+      "Bash(redis-cli ping *)",
+      "Bash(curl -s \"http://localhost:7001/api/v1/restaurants?page=1&pageSize=50\")",
+      "Bash(node -e ' *)",
+      "Bash(curl -s \"http://localhost:7001/api/v1/food-products?page=1&pageSize=50\")",
+      "Bash(curl -s \"http://localhost:7001/api/v1/dishes?page=1&pageSize=50\")",
+      "Bash(curl -s \"http://localhost:7001/api/v1/orders?page=1&pageSize=2\")",
+      "Bash(node *)",
+      "Bash(npx tsc *)",
+      "Bash(taskkill /F /IM node.exe)",
+      "Bash(npx midway-bin *)",
+      "Bash(mysql *)",
+      "Bash(git pull *)"
+    ]
+  }
+}
