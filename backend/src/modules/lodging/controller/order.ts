@@ -121,9 +121,9 @@ export class OrderController {
 
   /** PUT /api/lodging/admin/orders/:id/status — 订单状态流转 */
   @Put('/admin/orders/:id/status')
-  async updateStatus(@Param('id') id: number, @Body('status') status: number) {
+  async updateStatus(@Param('id') id: number, @Body('status') status: string) {
     try {
-      const data = await this.orderService.updateStatus(id, Number(status));
+      const data = await this.orderService.updateStatus(id, status);
       return { code: 200, message: '状态更新成功', data };
     } catch (err: any) {
       return { code: 400, message: err.message, data: null };
