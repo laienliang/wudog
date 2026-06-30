@@ -51,6 +51,18 @@ export class OrderService {
     });
     const savedOrder = await this.orderModel.save(order);
 
+    // MVP：下单后自动支付（无真实支付网关时演示用）
+    try {
+      await this.orderModel.update(savedOrder.id, {
+        status: OrderStatus.PAID,
+        payType: 'wechat',
+        payTime: new Date(),
+      });
+      savedOrder.status = OrderStatus.PAID;
+      savedOrder.payType = 'wechat';
+      savedOrder.payTime = new Date();
+    } catch (_) { /* 自动支付失败不影响下单 */ }
+
     // 2) 遍历 items 创建 OrderItem 明细并计算 subtotal
     const orderItems = input.items.map(item => {
       const orderItem = new OrderItem();

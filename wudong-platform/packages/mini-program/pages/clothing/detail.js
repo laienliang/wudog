@@ -1,4 +1,5 @@
 const { productApi, cartStorage } = require('../../utils/api');
+const BASE = 'http://127.0.0.1:7001/api/v1';
 
 Page({
   data: {
@@ -41,7 +42,16 @@ Page({
 
       // 检查是否已收藏
       const favIds = wx.getStorageSync('wudong_favorites') || [];
-      this.setData({ favorited: favIds.includes(parseInt(id)) });
+      let favorited = favIds.includes(parseInt(id));
+      try {
+        const token = wx.getStorageSync('token');
+        if (token) {
+          const res = await new Promise(r => wx.request({ url: BASE + '/favorites?targetType=product', header: { 'Authorization': 'Bearer ' + token }, success: r }));
+          const favs = res.data?.data || res.data || [];
+          if (favs.some(f => f.targetId === parseInt(id))) favorited = true;
+        }
+      } catch(_) {}
+      this.setData({ favorited });
     } catch (e) {
       wx.showToast({ title: '加载失败', icon: 'none' });
     }
@@ -67,17 +77,22 @@ Page({
   },
 
   onFavoriteTap() {
-    const favIds = wx.getStorageSync('wudong_favorites') || [];
     const id = this.data.product.id;
-    if (this.data.favorited) {
-      const updated = favIds.filter(f => f !== id);
-      wx.setStorageSync('wudong_favorites', updated);
-    } else {
-      favIds.push(id);
-      wx.setStorageSync('wudong_favorites', favIds);
+    const newState = !this.data.favorited;
+    // 本地存储
+    const favIds = wx.getStorageSync('wudong_favorites') || [];
+    wx.setStorageSync('wudong_favorites', newState ? [...favIds, id] : favIds.filter(f => f !== id));
+    this.setData({ favorited: newState });
+    wx.showToast({ title: newState ? '已收藏' : '已取消', icon: 'none' });
+    // 同步到后端
+    const token = wx.getStorageSync('token');
+    if (token) {
+      wx.request({
+        url: BASE + '/favorites', method: 'POST',
+        header: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        data: { targetType: 'product', targetId: id },
+      });
     }
-    this.setData({ favorited: !this.data.favorited });
-    wx.showToast({ title: this.data.favorited ? '已收藏' : '已取消', icon: 'none' });
   },
 
   onAddToCart() {

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Row, Col, Typography, Space, Tag, Button, Spin, Rate, Divider } from 'antd';
+import { Row, Col, Typography, Space, Tag, Button, Spin, Rate, Divider, Carousel } from 'antd';
 import {
   StarFilled, RightOutlined, EnvironmentOutlined, ArrowRightOutlined, LeftOutlined,
 } from '@ant-design/icons';
@@ -29,6 +29,7 @@ const HomePage: React.FC = () => {
   const [homestays, setHomestays] = useState<any[]>([]);
   const [scenicSpots, setScenicSpots] = useState<any[]>([]);
   const [travelogues, setTravelogues] = useState<any[]>([]);
+  const [banners, setBanners] = useState<any[]>([]);
   const scrollRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -37,11 +38,13 @@ const HomePage: React.FC = () => {
       api.get('/homestays?page=1&pageSize=4'),
       api.get('/scenic-spots?page=1&pageSize=4'),
       api.get('/travelogues?page=1&pageSize=4'),
-    ]).then(([pRes, hRes, sRes, tRes]) => {
+      api.get('/banners'),
+    ]).then(([pRes, hRes, sRes, tRes, bRes]) => {
       setProducts(pRes.data?.data?.list || []);
       setHomestays(hRes.data?.data?.list || []);
       setScenicSpots(sRes.data?.data?.list || []);
       setTravelogues(tRes.data?.data?.list || []);
+      setBanners(bRes.data || bRes || []);
     });
   }, []);
 
@@ -53,50 +56,56 @@ const HomePage: React.FC = () => {
     <div style={{ background: '#F8F7F4' }}>
 
       {/* ================================================================
-          HERO — 全屏首屏
+          HERO — 轮播 Banner
           ================================================================ */}
-      <div style={{
-        position: 'relative', overflow: 'hidden', minHeight: 520,
-        display: 'flex', alignItems: 'center', justifyContent: 'center',
-        background: `linear-gradient(to bottom, rgba(22,43,66,0.2) 0%, rgba(22,43,66,0.5) 50%, rgba(22,43,66,0.85) 100%), url(/hero-bg.jpg) center/cover no-repeat`,
-      }}>
-        <div style={{ ...CONTAINER, width: '100%', textAlign: 'center', padding: '120px 24px 140px', color: '#fff' }}>
-          <Tag style={{
-            background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)',
-            borderRadius: 20, padding: '4px 18px', fontSize: 13, color: 'rgba(255,255,255,0.9)', marginBottom: 28,
-            backdropFilter: 'blur(8px)', WebkitBackdropFilter: 'blur(8px)',
-          }}>🌿 黔东南 · 雷山 · 乌东苗寨</Tag>
-          <Title style={{
-            color: '#fff', fontSize: 60, marginBottom: 20, fontWeight: 700,
-            fontFamily: '"Noto Serif SC", "STSong", "SimSun", serif', letterSpacing: 8,
-            textShadow: '0 4px 30px rgba(0,0,0,0.3)',
-          }}>探寻苗寨之美</Title>
-          <Paragraph style={{
-            color: 'rgba(255,255,255,0.75)', fontSize: 16, maxWidth: 500,
-            margin: '0 auto 44px', lineHeight: 2, letterSpacing: 2,
-            textShadow: '0 2px 12px rgba(0,0,0,0.2)',
-          }}>苗族非遗文化 · 千户苗寨 · 梯田风光 · 长桌盛宴</Paragraph>
-          <Space size={16} wrap style={{ justifyContent: 'center' }}>
-            {[
-              { text: '🏔️ 探苗寨', path: '/travel' }, { text: '🍜 品苗宴', path: '/food' },
-              { text: '🏡 住苗居', path: '/accommodation' }, { text: '🎁 购苗礼', path: '/clothing' },
-            ].map(item => (
-              <Button key={item.text} size="large" onClick={() => navigate(item.path)}
-                style={{
-                  background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)',
-                  borderRadius: 24, color: '#fff', fontSize: 15, height: 48, padding: '0 30px',
-                  backdropFilter: 'blur(12px)', WebkitBackdropFilter: 'blur(12px)',
-                  boxShadow: '0 8px 24px rgba(0,0,0,0.15)', transition: 'all 0.3s ease',
-                }}
-                onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.18)'; e.currentTarget.style.transform = 'translateY(-3px)'; }}
-                onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.08)'; e.currentTarget.style.transform = 'translateY(0)'; }}>
-                {item.text}
-              </Button>
-            ))}
-          </Space>
+      {banners.length > 0 ? (
+        <Carousel autoplay autoplaySpeed={5000}>
+          {banners.map((b: any) => (
+            <div key={b.id} onClick={() => b.linkUrl && navigate(b.linkUrl)} style={{ cursor: b.linkUrl ? 'pointer' : 'default' }}>
+              <div style={{ position: 'relative', height: 520, display: 'flex', alignItems: 'center', justifyContent: 'center',
+                background: `linear-gradient(to bottom, rgba(22,43,66,0.1) 0%, rgba(22,43,66,0.4) 50%, rgba(22,43,66,0.8) 100%), url(${b.imageUrl}) center/cover no-repeat` }}>
+                <div style={{ textAlign: 'center', padding: '100px 24px', color: '#fff', maxWidth: 800 }}>
+                  <Title style={{ color: '#fff', fontSize: 48, fontWeight: 700, textShadow: '0 4px 30px rgba(0,0,0,0.3)', marginBottom: 24 }}>{b.title}</Title>
+                  <Space size={16} wrap style={{ justifyContent: 'center' }}>
+                    {[
+                      { text: '🏔️ 探苗寨', path: '/travel' }, { text: '🍜 品苗宴', path: '/food' },
+                      { text: '🏡 住苗居', path: '/accommodation' }, { text: '🎁 购苗礼', path: '/clothing' },
+                    ].map(item => (
+                      <Button key={item.text} size="large" onClick={(e) => { e.stopPropagation(); navigate(item.path); }}
+                        style={{ background: 'rgba(255,255,255,0.15)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 24, color: '#fff', fontSize: 15, height: 48, padding: '0 30px', backdropFilter: 'blur(12px)' }}>
+                        {item.text}
+                      </Button>
+                    ))}
+                  </Space>
+                </div>
+              </div>
+            </div>
+          ))}
+        </Carousel>
+      ) : (
+        <div style={{
+          position: 'relative', overflow: 'hidden', minHeight: 520,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          background: `linear-gradient(to bottom, rgba(22,43,66,0.2) 0%, rgba(22,43,66,0.5) 50%, rgba(22,43,66,0.85) 100%), url(/hero-bg.jpg) center/cover no-repeat`,
+        }}>
+          <div style={{ ...CONTAINER, width: '100%', textAlign: 'center', padding: '120px 24px 140px', color: '#fff' }}>
+            <Tag style={{ background: 'rgba(255,255,255,0.1)', border: '1px solid rgba(255,255,255,0.2)', borderRadius: 20, padding: '4px 18px', fontSize: 13, color: 'rgba(255,255,255,0.9)', marginBottom: 28, backdropFilter: 'blur(8px)' }}>🌿 黔东南 · 雷山 · 乌东苗寨</Tag>
+            <Title style={{ color: '#fff', fontSize: 60, marginBottom: 20, fontWeight: 700, fontFamily: '"Noto Serif SC", serif', letterSpacing: 8, textShadow: '0 4px 30px rgba(0,0,0,0.3)' }}>探寻苗寨之美</Title>
+            <Paragraph style={{ color: 'rgba(255,255,255,0.75)', fontSize: 16, maxWidth: 500, margin: '0 auto 44px', lineHeight: 2, letterSpacing: 2, textShadow: '0 2px 12px rgba(0,0,0,0.2)' }}>苗族非遗文化 · 千户苗寨 · 梯田风光 · 长桌盛宴</Paragraph>
+            <Space size={16} wrap style={{ justifyContent: 'center' }}>
+              {[
+                { text: '🏔️ 探苗寨', path: '/travel' }, { text: '🍜 品苗宴', path: '/food' },
+                { text: '🏡 住苗居', path: '/accommodation' }, { text: '🎁 购苗礼', path: '/clothing' },
+              ].map(item => (
+                <Button key={item.text} size="large" onClick={() => navigate(item.path)} style={{ background: 'rgba(255,255,255,0.08)', border: '1px solid rgba(255,255,255,0.25)', borderRadius: 24, color: '#fff', fontSize: 15, height: 48, padding: '0 30px', backdropFilter: 'blur(12px)' }}>
+                  {item.text}
+                </Button>
+              ))}
+            </Space>
+          </div>
+          <div style={{ position: 'absolute', bottom: 32, fontSize: 22, opacity: 0.4, animation: 'bounce 2s infinite', color: '#fff' }}>⌄</div>
         </div>
-        <div style={{ position: 'absolute', bottom: 32, fontSize: 22, opacity: 0.4, animation: 'bounce 2s infinite', color: '#fff' }}>⌄</div>
-      </div>
+      )}
 
       {/* ================================================================
           SERVICES — 6卡片 Grid 工整排列

@@ -8,13 +8,9 @@ Page({
   },
   async loadData(id) {
     try {
-      const [pRes, rRes] = await Promise.all([
-        new Promise(r => wx.request({ url: BASE + '/food-products/' + id, success: r })),
-        new Promise(r => wx.request({ url: BASE + '/products/' + (Number(id) + 11) + '/reviews', success: r })),
-      ]);
+      const pRes = await new Promise(r => wx.request({ url: BASE + '/food-products/' + id, success: r }));
       const pData = pRes.data?.data || pRes.data || {};
-      const rData = rRes.data?.data || [];
-      this.setData({ product: pData, reviews: Array.isArray(rData) ? rData : [] });
+      this.setData({ product: pData, reviews: [] });
     } catch (e) { wx.showToast({ title: '加载失败', icon: 'none' }); }
   },
   addToCart() {

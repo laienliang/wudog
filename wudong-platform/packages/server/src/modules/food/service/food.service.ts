@@ -139,6 +139,14 @@ export class FoodService {
     });
     const savedOrder = await this.orderModel.save(order);
 
+    // MVP：自动支付
+    try {
+      await this.orderModel.update(savedOrder.id, {
+        status: 'paid', payType: 'wechat', payTime: new Date(),
+      });
+      savedOrder.status = 'paid';
+    } catch (_) {}
+
     // 创建订单明细
     const item = this.orderItemModel.create({
       order: savedOrder,

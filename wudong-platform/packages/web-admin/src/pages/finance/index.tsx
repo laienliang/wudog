@@ -26,10 +26,10 @@ const COLORS = {
 /* ============================================================
    结算状态映射
    ============================================================ */
-const SETTLEMENT_STATUS_MAP: Record<string, { text: string; color: string }> = {
-  pending: { text: '待结算', color: 'orange' },
-  settled: { text: '已结算', color: 'blue' },
-  arrived: { text: '已到账', color: 'green' },
+const SETTLEMENT_STATUS_MAP: Record<number, { text: string; color: string }> = {
+  0: { text: '待结算', color: 'orange' },
+  1: { text: '已结算', color: 'blue' },
+  2: { text: '已到账', color: 'green' },
 };
 
 /* ============================================================
@@ -45,7 +45,7 @@ const FinancePage: React.FC = () => {
       const res = await adminApi.listFinance({
         page: current,
         pageSize,
-        status: status || undefined,
+        status: status !== undefined && status !== null ? Number(status) : undefined,
         ...rest,
       });
       const data = res.data || res;
@@ -66,7 +66,7 @@ const FinancePage: React.FC = () => {
 
   // 表格列配置
   const columns: ProColumns<any>[] = [
-    { title: '#', width: 45, render: (_: any, __: any, i: number) => i + 1 },
+    { title: '#', width: 45, search: false, render: (_: any, __: any, i: number) => i + 1 },
     {
       title: '结算单号',
       dataIndex: 'orderNo',
@@ -116,12 +116,13 @@ const FinancePage: React.FC = () => {
       align: 'center',
       valueType: 'select',
       valueEnum: {
-        pending: { text: '待结算', status: 'Warning' },
-        settled: { text: '已结算', status: 'Processing' },
-        arrived: { text: '已到账', status: 'Success' },
+        0: { text: '待结算', status: 'Warning' },
+        1: { text: '已结算', status: 'Processing' },
+        2: { text: '已到账', status: 'Success' },
       },
-      render: (v) => {
-        const statusInfo = SETTLEMENT_STATUS_MAP[v] || { text: v || '未知', color: 'default' };
+      render: (v: any) => {
+        const num = Number(v);
+        const statusInfo = SETTLEMENT_STATUS_MAP[num] || { text: v || '未知', color: 'default' };
         return <Tag color={statusInfo.color}>{statusInfo.text}</Tag>;
       },
     },

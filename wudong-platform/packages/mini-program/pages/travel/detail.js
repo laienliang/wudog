@@ -90,7 +90,7 @@ Page({
       for (var i = 0; i < tickets.length; i++) {
         var t = tickets[i];
         var n = q[t.id] || 0;
-        if (n > 0) items.push({ productType: 'ticket', productId: t.id, productName: t.name, unitPrice: Number(t.price), quantity: n });
+        if (n > 0) items.push({ productType: 'ticket', productId: t.id, productName: t.name, productImage: d.coverImage || '', unitPrice: Number(t.price), quantity: n });
       }
     } else {
       items.push({ productType: 'route', productId: d.id, productName: d.name, productImage: d.coverImage || '', unitPrice: Number(d.price), quantity: this.data.people });

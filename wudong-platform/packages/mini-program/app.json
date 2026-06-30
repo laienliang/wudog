@@ -24,6 +24,7 @@
     "pages/user/favorites",
     "pages/user/comments",
     "pages/user/messages",
+    "pages/user/merchant-register",
     "pages/order/detail",
     "pages/cart/index",
     "pages/search/index",

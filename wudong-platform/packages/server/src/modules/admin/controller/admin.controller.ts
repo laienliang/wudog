@@ -52,6 +52,12 @@ export class AdminController {
     return this.adminService.listApplications(q);
   }
 
+  @Post('/merchant-applications')
+  async submitApplication(@Body() b: any) {
+    const userId = b.userId || 1;
+    return this.adminService.submitApplication(userId, b);
+  }
+
   @Post('/merchant-applications/:id/review')
   async reviewApplication(
     @Param('id') id: number,

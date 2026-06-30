@@ -9,6 +9,8 @@ import {
   LogoutOutlined,
   HeartOutlined,
   FileTextOutlined,
+  ShopOutlined,
+  BellOutlined,
 } from '@ant-design/icons';
 import axios from 'axios';
 import HomePage from './pages/home';
@@ -32,6 +34,8 @@ import TravelogueDetail from './pages/community/travelogue-detail';
 import TopicPage from './pages/community/topic';
 import UserPage from './pages/community/user';
 import CreateTravelogue from './pages/community/create';
+import MerchantRegister from './pages/merchant/register';
+import MessagePage from './pages/message';
 
 const { Header, Content, Footer } = Layout;
 const api = axios.create({ baseURL: '/api/v1' });
@@ -83,6 +87,7 @@ const App: React.FC = () => {
     { key: 'orders', icon: <ShoppingCartOutlined />, label: '我的订单', onClick: () => navigate('/orders') },
     { key: 'favorites', icon: <HeartOutlined />, label: '我的收藏', onClick: () => navigate('/favorites') },
     { key: 'reviews', icon: <FileTextOutlined />, label: '我的评价', onClick: () => navigate('/my-reviews') },
+    { key: 'merchant', icon: <ShopOutlined />, label: '商家入驻', onClick: () => navigate('/merchant/register') },
     { type: 'divider' as const },
     { key: 'logout', icon: <LogoutOutlined />, label: '退出登录', onClick: handleLogout },
   ];
@@ -101,6 +106,7 @@ const App: React.FC = () => {
         <div style={{ display: 'flex', gap: 12 }}>
           <Button type="text" onClick={() => navigate('/favorites')}>收藏夹</Button>
           <Button type="text" icon={<ShoppingCartOutlined />} onClick={() => navigate('/cart')}>购物车</Button>
+          <Button type="text" icon={<BellOutlined />} onClick={() => navigate('/messages')} style={{ fontSize: 16 }} />
           {token ? (
             <Dropdown menu={{ items: userMenuItems }}>
               <Button type="primary" icon={<UserOutlined />}>用户</Button>
@@ -134,6 +140,8 @@ const App: React.FC = () => {
           <Route path="/community/travelogue/:id" element={<TravelogueDetail />} />
           <Route path="/community/topic/:id" element={<TopicPage />} />
           <Route path="/community/user/:id" element={<UserPage />} />
+          <Route path="/merchant/register" element={<MerchantRegister />} />
+          <Route path="/messages" element={<MessagePage />} />
         </Routes>
       </Content>
 

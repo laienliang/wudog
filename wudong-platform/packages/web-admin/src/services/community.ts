@@ -9,6 +9,7 @@ export const communityApi = {
 
   listComments(params?: any) { return api.get('/comments', { params }).then(r => r.data); },
   deleteComment(id: number) { return api.delete(`/comments/${id}`).then(r => r.data); },
+  replyComment(id: number, content: string) { return api.post(`/comments/${id}/reply`, { content }).then(r => r.data); },
 
   listTopics() { return api.get('/topics').then(r => r.data); },
   createTopic(data: any) { return api.post('/topics', data).then(r => r.data); },

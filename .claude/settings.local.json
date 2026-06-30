@@ -14,7 +14,8 @@
       "Bash(taskkill /F /IM node.exe)",
       "Bash(npx midway-bin *)",
       "Bash(mysql *)",
-      "Bash(git pull *)"
+      "Bash(git pull *)",
+      "Bash(curl -s \"http://localhost:7001/api/v1/admin/merchant-applications?page=1&pageSize=5\")"
     ]
   }
 }

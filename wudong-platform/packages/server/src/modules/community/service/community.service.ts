@@ -80,6 +80,13 @@ export class CommunityService {
 
   async deleteComment(id: number) { return this.commentModel.softDelete(id); }
 
+  async replyComment(commentId: number, content: string) {
+    const comment = await this.commentModel.findOne({ where: { id: commentId } });
+    if (!comment) throw new Error('评论不存在');
+    await this.commentModel.update(commentId, { reply: content } as any);
+    return { success: true };
+  }
+
   // ===== 点赞 =====
   async toggleLike(userId: number, targetType: string, targetId: number) {
     const existing = await this.likeModel.findOne({ where: { userId, targetType, targetId } });
@@ -113,6 +120,12 @@ export class CommunityService {
     if (existing) { await this.favoriteModel.delete(existing.id); return { favorited: false }; }
     await this.favoriteModel.save({ userId, targetType, targetId });
     return { favorited: true };
+  }
+
+  async listFavorites(userId: number, targetType?: string) {
+    const where: any = { userId };
+    if (targetType) where.targetType = targetType;
+    return this.favoriteModel.find({ where, order: { createdAt: 'DESC' } });
   }
 
   // ===== 举报 =====

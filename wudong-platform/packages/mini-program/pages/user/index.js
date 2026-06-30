@@ -15,4 +15,5 @@ Page({
   goToOrders() { wx.navigateTo({ url: '/pages/user/orders' }); },
   goToFavorites() { wx.navigateTo({ url: '/pages/user/favorites' }); },
   goToReviews() { wx.showToast({ title: '开发中', icon: 'none' }); },
+  goToMerchant() { wx.navigateTo({ url: '/pages/user/merchant-register' }); },
 });

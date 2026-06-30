@@ -47,6 +47,10 @@ const CommentTab: React.FC = () => {
   const [previewContent, setPreviewContent] = useState('');
   const [searchText, setSearchText] = useState('');
   const [statusFilter, setStatusFilter] = useState<string | undefined>(undefined);
+  const [replyOpen, setReplyOpen] = useState(false);
+  const [replyTarget, setReplyTarget] = useState<any>(null);
+  const [replyText, setReplyText] = useState('');
+  const [replying, setReplying] = useState(false);
 
   const columns: ProColumns<any>[] = [
     {
@@ -106,6 +110,7 @@ const CommentTab: React.FC = () => {
           </Tooltip>
           <Tooltip title="回复">
             <Button type="text" size="small" icon={<MessageOutlined />}
+              onClick={() => { setReplyTarget(r); setReplyText(''); setReplyOpen(true); }}
               style={{ color: C.success }} />
           </Tooltip>
           <Popconfirm title="确定删除该评论？" description="删除后不可恢复"
@@ -161,6 +166,27 @@ const CommentTab: React.FC = () => {
         onCancel={() => { setPreviewOpen(false); setPreviewContent(''); }}
         footer={null} width={480}>
         <div style={previewStyle}>{previewContent}</div>
+      </Modal>
+      <Modal title="回复评论" open={replyOpen} onCancel={() => setReplyOpen(false)}
+        onOk={async () => {
+          if (!replyText.trim()) { message.warning('请输入回复内容'); return; }
+          setReplying(true);
+          try {
+            await communityApi.replyComment(replyTarget.id, replyText);
+            message.success('回复成功');
+            setReplyOpen(false);
+            actionRef.current?.reload();
+          } catch { message.error('回复失败'); }
+          setReplying(false);
+        }}
+        confirmLoading={replying} okText="回复" cancelText="取消" width={520}>
+        <div style={{ marginBottom: 12, padding: 10, background: '#FAFAFA', borderRadius: 6, fontSize: 13, color: '#666' }}>
+          <Text strong>回复给：</Text>
+          <Text>{replyTarget?.user_name || '匿名用户'}</Text>
+          <div style={{ marginTop: 4, color: '#999' }}>{replyTarget?.content || ''}</div>
+        </div>
+        <Input.TextArea rows={4} value={replyText} onChange={e => setReplyText(e.target.value)}
+          placeholder="输入回复内容..." maxLength={500} showCount />
       </Modal>
     </>
   );

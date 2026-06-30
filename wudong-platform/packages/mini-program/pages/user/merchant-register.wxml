@@ -1,0 +1,35 @@
+<view class="page">
+  <view wx:if="{{done}}" class="success-page">
+    <view class="success-icon">✅</view>
+    <text class="success-title">申请已提交！</text>
+    <text class="success-desc">我们将在1-3个工作日内审核你的入驻申请</text>
+    <button class="btn" bindtap="goBack">返回</button>
+  </view>
+  <view wx:else>
+    <view class="header">
+      <text class="title">🏪 商家入驻</text>
+      <text class="subtitle">加入乌东文旅平台，开启线上经营</text>
+    </view>
+    <view class="form">
+      <view class="field">
+        <text class="label">店铺名称 *</text>
+        <input class="input" placeholder="输入你的店铺名称" bindinput="onShopNameInput" />
+      </view>
+      <view class="field">
+        <text class="label">经营类目 *</text>
+        <picker range="{{modules}}" range-key="label" bindchange="onModuleChange">
+          <view class="picker">{{moduleLabel || '请选择经营类目'}}</view>
+        </picker>
+      </view>
+      <view class="field">
+        <text class="label">联系人</text>
+        <input class="input" placeholder="联系人姓名" bindinput="onContactInput" />
+      </view>
+      <view class="field">
+        <text class="label">联系电话</text>
+        <input class="input" placeholder="手机号码" type="phone" bindinput="onPhoneInput" />
+      </view>
+      <button class="btn" bindtap="onSubmit" loading="{{submitting}}" disabled="{{submitting}}">提交入驻申请</button>
+    </view>
+  </view>
+</view>

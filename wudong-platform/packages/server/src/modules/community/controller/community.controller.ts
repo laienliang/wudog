@@ -1,11 +1,15 @@
 import { Controller, Get, Post, Put, Del, Param, Body, Query, Inject } from '@midwayjs/core';
 import { Context } from '@midwayjs/koa';
 import { CommunityService } from '../service/community.service';
+import { InjectEntityModel } from '@midwayjs/orm';
+import { Repository } from 'typeorm';
+import { SystemMessage } from '../../admin/entity/system-message.entity';
 
 @Controller('/api/v1')
 export class CommunityController {
   @Inject() ctx: Context;
   @Inject() communityService: CommunityService;
+  @InjectEntityModel(SystemMessage) messageModel: Repository<SystemMessage>;
 
   @Get('/travelogues') async listTravelogues(@Query() q: any) { return this.communityService.listTravelogues(q); }
   @Get('/travelogues/:id') async detailTravelogue(@Param('id') id: number) { return this.communityService.getTravelogue(id); }
@@ -19,6 +23,9 @@ export class CommunityController {
 
   @Get('/comments') async listComments(@Query() q: any) { return this.communityService.listComments(q); }
   @Post('/comments') async createComment(@Body() b: any) { return this.communityService.createComment(b); }
+  @Post('/comments/:id/reply') async replyComment(@Param('id') id: number, @Body() b: any) {
+    return this.communityService.replyComment(id, b.content);
+  }
   @Del('/comments/:id') async deleteComment(@Param('id') id: number) { await this.communityService.deleteComment(id); return { success: true }; }
 
   @Post('/likes') async toggleLike(@Body() b: { userId: number; targetType: string; targetId: number }) {
@@ -37,6 +44,10 @@ export class CommunityController {
   @Post('/favorites') async toggleFavorite(@Body() b: { userId: number; targetType: string; targetId: number }) {
     return this.communityService.toggleFavorite(b.userId || 1, b.targetType, b.targetId);
   }
+  @Get('/favorites') async listFavorites(@Query() q: any) {
+    const userId = q.userId || 1;
+    return this.communityService.listFavorites(userId, q.targetType);
+  }
 
   @Post('/reports') async createReport(@Body() b: any) { return this.communityService.reportModel.save(b); }
   @Get('/reports') async listReports(@Query() q: any) { return this.communityService.listReports(q); }
@@ -45,4 +56,21 @@ export class CommunityController {
   }
 
   @Get('/community/stats') async stats() { return this.communityService.getStats(); }
+
+  @Get('/messages') async userMessages(@Query() q: any) {
+    const userId = this.ctx.user?.userId || q.userId || 1;
+    const qb = this.messageModel.createQueryBuilder('m')
+      .where('m.deletedAt IS NULL')
+      .andWhere('(m.userId = :uid OR m.userId IS NULL)', { uid: userId })
+      .orderBy('m.createdAt', 'DESC')
+      .take(50);
+    return qb.getMany();
+  }
+
+  @Get('/banners') async banners() {
+    const rows = await this.messageModel.query(
+      'SELECT id, title, image_url AS imageUrl, link_url AS linkUrl, sort_order AS sortOrder FROM wd_admin_banner WHERE status = 1 AND deleted_at IS NULL ORDER BY sort_order ASC'
+    );
+    return rows;
+  }
 }

@@ -127,26 +127,19 @@ export class AccommodationService {
   // ===== 住宿评价 =====
   async listAccommodationReviews(query: any) {
     const { page = 1, pageSize = 10 } = query;
-    const homestayNames: Record<number, string> = {
-      1: '苗寨木楼客栈', 2: '梯田观景民宿', 3: '吊脚楼人家', 4: '苗绣人家', 5: '清溪别院',
-      6: '苗寨木楼客栈', 7: '梯田观景民宿', 8: '吊脚楼人家', 9: '苗绣人家', 10: '清溪别院',
-    };
     const sql = `SELECT r.id, r.product_id, r.rating, r.content, r.created_at AS createdAt, r.status,
       u.nickname AS user_name
       FROM wd_clothing_review r
       LEFT JOIN wd_user u ON r.user_id = u.id
-      WHERE r.deleted_at IS NULL
+      WHERE r.deleted_at IS NULL AND r.product_id >= 100
       ORDER BY r.id DESC
       LIMIT ? OFFSET ?`;
     const params: any[] = [Number(pageSize), (page - 1) * pageSize];
     const list = await this.homestayModel.query(sql, params);
-    const enriched = list.map((r: any) => ({
-      ...r,
-      homestay_name: homestayNames[Number(r.product_id)] || '乌东民宿',
-    }));
+    const enriched = list.map((r: any) => ({ ...r, homestay_name: '民宿' }));
 
     const countResult = await this.homestayModel.query(
-      `SELECT COUNT(*) AS total FROM wd_clothing_review WHERE deleted_at IS NULL`, []);
+      `SELECT COUNT(*) AS total FROM wd_clothing_review WHERE deleted_at IS NULL AND product_id >= 100`, []);
     const total = Number(countResult[0]?.total || 0);
     return { list: enriched, pagination: { page, pageSize, total, totalPages: Math.ceil(total / pageSize) } };
   }

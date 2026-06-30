@@ -279,10 +279,12 @@ export class AdminService {
       if (!existing) {
         await this.merchantModel.save({
           userId: app.userId,
+          user_id: app.userId,
           shopName: app.shopName,
           module: app.module,
           contactPerson: app.contactPerson,
           contactPhone: app.contactPhone,
+          shopType: 1,
           status: 1,
           approvedAt: new Date(),
         } as any);
@@ -291,6 +293,19 @@ export class AdminService {
     const labels = ['待审核', '已通过', '已驳回', '已封禁'];
     await this.log('reviewApplication', 'merchant_application', id, `审核入驻申请: ${labels[status] || status}${rejectReason ? ' 原因:' + rejectReason : ''}`);
     return { success: true };
+  }
+
+  async submitApplication(userId: number, data: any) {
+    const app = await this.merchantAppModel.save({
+      userId,
+      shopName: data.shopName,
+      module: data.module,
+      contactPerson: data.contactPerson || '',
+      contactPhone: data.contactPhone || '',
+      status: 0,
+    });
+    await this.log('submitApplication', 'merchant_application', app.id, '提交入驻申请');
+    return { success: true, message: '申请已提交，等待审核' };
   }
 
   // ===== 数据看板 =====
@@ -620,13 +635,16 @@ export class AdminService {
   // ===== 系统消息 =====
 
   async listMessages(query: any) {
-    const { page = 1, pageSize = 10 } = query;
+    const { page = 1, pageSize = 10, userId } = query;
     const qb = this.messageModel
       .createQueryBuilder('m')
       .where('m.deletedAt IS NULL')
       .orderBy('m.createdAt', 'DESC')
       .skip((page - 1) * pageSize)
       .take(pageSize);
+    if (userId) {
+      qb.andWhere('(m.userId = :userId OR m.userId IS NULL)', { userId: Number(userId) });
+    }
     const [list, total] = await qb.getManyAndCount();
     return {
       list,
@@ -653,16 +671,27 @@ export class AdminService {
   // ===== 财务 =====
 
   async listFinance(query: any) {
-    const { page = 1, pageSize = 10, status } = query;
+    const { page = 1, pageSize = 10, status, orderNo, shopName, amount, platformFee, merchantIncome } = query;
     const qb = this.financeModel
       .createQueryBuilder('f')
       .where('f.deletedAt IS NULL')
-      .orderBy('f.createdAt', 'DESC')
-      .skip((page - 1) * pageSize)
-      .take(pageSize);
-    if (status !== undefined) qb.andWhere('f.status = :st', { st: Number(status) });
-    const [list, total] = await qb.getManyAndCount();
-    const enriched = await Promise.all(
+      .orderBy('f.createdAt', 'DESC');
+    if (status !== undefined && status !== '' && status !== null) {
+      qb.andWhere('f.status = :st', { st: Number(status) });
+    }
+    if (amount !== undefined && amount !== '') {
+      qb.andWhere('f.amount LIKE :amount LIKE', { amount: `%${amount}%` });
+    }
+    if (platformFee !== undefined && platformFee !== '') {
+      qb.andWhere('f.platformFee LIKE :platformFee', { platformFee: `%${platformFee}%` });
+    }
+    if (merchantIncome !== undefined && merchantIncome !== '') {
+      qb.andWhere('f.merchantIncome LIKE :merchantIncome', { merchantIncome: `%${merchantIncome}%` });
+    }
+    const total = await qb.getCount();
+    qb.skip((page - 1) * pageSize).take(pageSize);
+    let list = await qb.getMany();
+    let enriched = await Promise.all(
       list.map(async (f: any) => {
         const order = await this.adminModel.query(
           'SELECT order_no AS orderNo FROM wd_order WHERE id = ?',
@@ -678,13 +707,19 @@ export class AdminService {
         };
       }),
     );
+    if (orderNo) {
+      enriched = enriched.filter((f: any) => f.orderNo.includes(orderNo));
+    }
+    if (shopName) {
+      enriched = enriched.filter((f: any) => f.shopName.includes(shopName));
+    }
     return {
       list: enriched,
       pagination: {
         page: Number(page),
         pageSize: Number(pageSize),
-        total,
-        totalPages: Math.ceil(total / Number(pageSize)),
+        total: enriched.length,
+        totalPages: Math.ceil(enriched.length / Number(pageSize)),
       },
     };
   }

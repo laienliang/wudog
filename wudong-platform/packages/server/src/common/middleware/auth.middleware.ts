@@ -57,7 +57,7 @@ export class AuthMiddleware {
       const isAccommodationEndpoint = ctx.path.startsWith('/api/v1/homestays') || ctx.path.startsWith('/api/v1/room-types') || ctx.path.startsWith('/api/v1/calendar') || ctx.path.startsWith('/api/v1/accommodation-orders') || ctx.path.startsWith('/api/v1/accommodation-reviews');
       const isOrderEndpoint = ctx.path.startsWith('/api/v1/orders');
       const isTravelEndpoint = ctx.path.startsWith('/api/v1/scenic-spots') || ctx.path.startsWith('/api/v1/ticket-types') || ctx.path.startsWith('/api/v1/routes') || ctx.path.startsWith('/api/v1/e-tickets');
-      const isCommunityEndpoint = ctx.path.startsWith('/api/v1/travelogues') || ctx.path.startsWith('/api/v1/comments') || ctx.path.startsWith('/api/v1/likes') || ctx.path.startsWith('/api/v1/topics') || ctx.path.startsWith('/api/v1/follows') || ctx.path.startsWith('/api/v1/favorites') || ctx.path.startsWith('/api/v1/reports') || ctx.path.startsWith('/api/v1/community/stats');
+      const isCommunityEndpoint = ctx.path.startsWith('/api/v1/travelogues') || ctx.path.startsWith('/api/v1/comments') || ctx.path.startsWith('/api/v1/likes') || ctx.path.startsWith('/api/v1/topics') || ctx.path.startsWith('/api/v1/follows') || ctx.path.startsWith('/api/v1/favorites') || ctx.path.startsWith('/api/v1/reports') || ctx.path.startsWith('/api/v1/community/stats') || ctx.path.startsWith('/api/v1/messages') || ctx.path.startsWith('/api/v1/banners');
 
       // [Security Finding - Accepted for MVP] 管理后台 API 全部免登录
       // 当前为 MVP 阶段，管理员鉴权暂不实现。生产环境上线前必须启用 JWT 验证，

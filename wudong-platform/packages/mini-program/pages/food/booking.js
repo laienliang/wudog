@@ -34,7 +34,7 @@ Page({
         data: { slotId: selectedSlot.id, merchantId: 1, date, guests, contactName, contactPhone },
         success: resolve, fail: reject,
       }));
-      wx.showToast({ title: '预订成功！请支付', icon: 'success' });
+      wx.showToast({ title: '预订成功，已支付', icon: 'success' });
       setTimeout(() => wx.navigateBack(), 1500);
     } catch (e) { wx.showToast({ title: '预订失败', icon: 'none' }); }
     this.setData({ submitting: false });

@@ -12,4 +12,7 @@ export class Comment extends BaseEntity {
   @Column({ name: 'parent_id', nullable: true }) parentId: number;
 
   @Column({ type: 'text', nullable: true }) content: string;
+
+  @Column({ type: 'text', nullable: true, comment: '管理员回复' })
+  reply: string;
 }
