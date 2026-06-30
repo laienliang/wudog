@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="header"><text class="header-title">📸 社区分享</text></view>
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'latest' ? 'active' : ''}}" bindtap="switchTab" data-tab="latest">最新</view>
+    <view class="tab-item {{activeTab === 'hot' ? 'active' : ''}}" bindtap="switchTab" data-tab="hot">热门</view>
+  </view>
+  <view wx:if="{{loading && list.length === 0}}" class="loading"><text>加载中...</text></view>
+  <view wx:elif="{{list.length === 0}}" class="empty"><text>暂无游记</text></view>
+  <view wx:else class="feed-list">
+    <view wx:for="{{list}}" wx:key="id" class="feed-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="feed-img" src="{{item.coverImage}}" mode="aspectFill" />
+      <view class="feed-body">
+        <text class="feed-title">{{item.title}}</text>
+        <view class="feed-meta">
+          <view class="feed-user"><view class="feed-avatar">{{item._avatar}}</view><text class="feed-name">{{item.user_name || '用户'}}</text></view>
+          <view class="feed-stats"><text>❤️ {{item.likeCount || 0}}</text><text>💬 {{item.commentCount || 0}}</text></view>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

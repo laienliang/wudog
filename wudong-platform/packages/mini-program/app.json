@@ -1,0 +1,84 @@
+{
+  "pages": [
+    "pages/home/index",
+    "pages/clothing/index",
+    "pages/clothing/detail",
+    "pages/clothing/list",
+    "pages/food/index",
+    "pages/food/detail",
+    "pages/food/booking",
+    "pages/food/product-detail",
+    "pages/accommodation/index",
+    "pages/accommodation/detail",
+    "pages/accommodation/booking",
+    "pages/travel/index",
+    "pages/travel/detail",
+    "pages/travel/booking",
+    "pages/community/index",
+    "pages/community/detail",
+    "pages/community/publish",
+    "pages/community/topic",
+    "pages/user/index",
+    "pages/user/profile",
+    "pages/user/orders",
+    "pages/user/favorites",
+    "pages/user/comments",
+    "pages/user/messages",
+    "pages/order/detail",
+    "pages/cart/index",
+    "pages/search/index",
+    "pages/login/index",
+    "pages/webview/index"
+  ],
+  "window": {
+    "navigationBarTitleText": "乌东文旅",
+    "navigationBarBackgroundColor": "#ffffff",
+    "navigationBarTextStyle": "black",
+    "backgroundColor": "#f5f5f5",
+    "backgroundTextStyle": "dark",
+    "enablePullDownRefresh": true
+  },
+  "tabBar": {
+    "color": "#999999",
+    "selectedColor": "#1F5FA8",
+    "backgroundColor": "#ffffff",
+    "borderStyle": "black",
+    "list": [
+      {
+        "pagePath": "pages/home/index",
+        "text": "首页",
+        "iconPath": "assets/icons/home.png",
+        "selectedIconPath": "assets/icons/home-active.png"
+      },
+      {
+        "pagePath": "pages/community/index",
+        "text": "社区",
+        "iconPath": "assets/icons/community.png",
+        "selectedIconPath": "assets/icons/community-active.png"
+      },
+      {
+        "pagePath": "pages/cart/index",
+        "text": "购物车",
+        "iconPath": "assets/icons/cart.png",
+        "selectedIconPath": "assets/icons/cart-active.png"
+      },
+      {
+        "pagePath": "pages/user/index",
+        "text": "我的",
+        "iconPath": "assets/icons/user.png",
+        "selectedIconPath": "assets/icons/user-active.png"
+      }
+    ]
+  },
+  "requiredPrivateInfos": [
+    "chooseLocation",
+    "getLocation"
+  ],
+  "permission": {
+    "scope.userLocation": {
+      "desc": "获取您的位置信息用于推荐附近的民宿和餐厅"
+    }
+  },
+  "style": "v2",
+  "sitemapLocation": "sitemap.json"
+}

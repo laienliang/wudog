@@ -1,0 +1,29 @@
+<view class="page">
+  <view wx:if="{{cart.length === 0}}" class="empty-state">
+    <text class="empty-icon">🛒</text>
+    <text class="empty-text">购物车是空的</text>
+    <button class="empty-btn" bindtap="onGoShopping">去逛逛</button>
+  </view>
+
+  <view wx:else>
+    <view wx:for="{{cart}}" wx:key="skuId" class="cart-item">
+      <image class="item-image" src="{{item.image || 'https://via.placeholder.com/80'}}" mode="aspectFill" />
+      <view class="item-info">
+        <text class="item-name">{{item.name}}</text>
+        <text class="item-sku" wx:if="{{item.skuName}}">{{item.skuName}}</text>
+        <text class="item-price">¥{{item.price}}</text>
+        <view class="qty-control">
+          <text class="qty-btn" data-skuid="{{item.skuId}}" bindtap="onMinus">−</text>
+          <text class="qty-num">{{item.quantity}}</text>
+          <text class="qty-btn" data-skuid="{{item.skuId}}" bindtap="onPlus">+</text>
+        </view>
+      </view>
+      <text class="item-delete" data-skuid="{{item.skuId}}" bindtap="onDelete">✕</text>
+    </view>
+
+    <view class="bottom-bar">
+      <text class="total">合计：<text class="total-price">¥{{total}}</text></text>
+      <button class="checkout-btn" bindtap="onCheckout">去结算</button>
+    </view>
+  </view>
+</view>

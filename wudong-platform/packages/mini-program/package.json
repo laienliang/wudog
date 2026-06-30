@@ -1,0 +1,14 @@
+{
+  "name": "@wudong/mini-program",
+  "version": "1.0.0",
+  "private": true,
+  "description": "乌东文旅平台 — 微信小程序端",
+  "scripts": {
+    "dev": "echo '请在微信开发者工具中打开此目录预览'",
+    "build": "echo '使用微信开发者工具上传构建'",
+    "lint": "eslint \"**/*.{js,wxs}\" --fix"
+  },
+  "devDependencies": {
+    "eslint": "^8.57.0"
+  }
+}

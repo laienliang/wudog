@@ -1,0 +1,18 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 60px; }
+.cover { width: 100%; height: 250px; }
+.info-section { background: #fff; padding: 16px; margin-bottom: 8px; }
+.name { font-size: 20px; font-weight: 700; display: block; margin-bottom: 4px; }
+.rating { font-size: 14px; color: #FAAD14; display: block; margin-bottom: 8px; }
+.address, .phone, .hours { font-size: 13px; color: #8C8C8C; display: block; margin-bottom: 4px; }
+.desc { font-size: 14px; color: #595959; display: block; margin-top: 12px; line-height: 1.6; }
+.section { background: #fff; padding: 16px; margin-bottom: 8px; }
+.section-title { font-size: 15px; font-weight: 600; display: block; margin-bottom: 12px; }
+.dish-item { display: flex; padding: 10px 0; border-bottom: 1px solid #f0f0f0; }
+.dish-info { flex: 1; }
+.dish-name { font-size: 15px; font-weight: 500; display: block; margin-bottom: 2px; }
+.dish-tag { font-size: 10px; color: #FF4D4F; border: 1px solid #FF4D4F; border-radius: 2px; padding: 0 4px; }
+.dish-desc { font-size: 12px; color: #999; display: block; }
+.dish-price { font-size: 15px; font-weight: 700; color: #E85D2F; }
+.slot-item { display: flex; justify-content: space-between; padding: 10px 0; font-size: 14px; border-bottom: 1px solid #f0f0f0; }
+.slot-price { color: #E85D2F; font-weight: 600; }
+.booking-btn { position: fixed; bottom: 0; left: 0; right: 0; height: 48px; line-height: 48px; background: #1F5FA8; color: #fff; text-align: center; font-size: 16px; }

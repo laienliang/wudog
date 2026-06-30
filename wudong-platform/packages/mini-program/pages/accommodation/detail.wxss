@@ -1,0 +1,80 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 40rpx; }
+.cover-img { width: 100%; height: 420rpx; background: #f5f5f5; }
+.info-section { background: #fff; padding: 24rpx 20rpx; margin-bottom: 16rpx; }
+.name { font-size: 20px; font-weight: 700; color: #1A1A1A; }
+.rating-row { display: flex; align-items: center; gap: 8rpx; margin-top: 8rpx; }
+.rating { font-size: 14px; color: #FAAD14; font-weight: 600; }
+.divider { color: #D9D9D9; }
+.address { font-size: 13px; color: #8C8C8C; }
+.phone { font-size: 13px; color: #595959; margin-top: 6rpx; display: block; }
+.section { background: #fff; padding: 20rpx; margin-bottom: 16rpx; }
+.section-label { font-size: 15px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 12rpx; }
+.facility-tags { display: flex; gap: 8rpx; flex-wrap: wrap; }
+.tag { padding: 4rpx 16rpx; border-radius: 20rpx; background: #F0F5FF; color: #1F5FA8; font-size: 12px; }
+.desc-text { font-size: 13px; color: #595959; line-height: 1.7; }
+
+/* ===== 评价 ===== */
+.review-item { padding: 14rpx 0; border-bottom: 1px solid #F5F5F5; }
+.review-item:last-child { border-bottom: none; }
+.review-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6rpx; }
+.review-user { display: flex; align-items: center; gap: 8rpx; }
+.review-avatar { width: 32rpx; height: 32rpx; background: #1F5FA8; color: #fff; border-radius: 50%; text-align: center; line-height: 32rpx; font-size: 12px; }
+.review-name { font-size: 13px; font-weight: 500; color: #1A1A1A; }
+.review-rating { font-size: 12px; color: #FAAD14; font-weight: 600; }
+.review-content { font-size: 13px; color: #595959; line-height: 1.6; margin-bottom: 6rpx; }
+.review-tags { display: flex; gap: 6rpx; margin-bottom: 4rpx; }
+.review-tag { padding: 2rpx 10rpx; border-radius: 10rpx; background: #F0F5FF; color: #1F5FA8; font-size: 10px; }
+.review-date { font-size: 11px; color: #BFBFBF; }
+
+/* ===== 房型卡片 ===== */
+.room-card { display: flex; justify-content: space-between; align-items: center; padding: 16rpx; border: 1px solid #F0F0F0; border-radius: 10px; margin-bottom: 12rpx; }
+.room-info { flex: 1; }
+.room-name { font-size: 14px; font-weight: 600; color: #1A1A1A; display: block; }
+.room-params { font-size: 12px; color: #8C8C8C; margin-top: 4rpx; display: block; }
+.room-right { text-align: right; display: flex; flex-direction: column; align-items: flex-end; gap: 8rpx; }
+.room-price { font-size: 18px; font-weight: 700; color: #E85D2F; }
+.unit { font-size: 12px; font-weight: 400; color: #BFBFBF; }
+.book-btn { background: #1F5FA8; color: #fff; border: none; border-radius: 6px; font-size: 12px; padding: 6rpx 20rpx; line-height: 1.8; }
+.book-btn::after { border: none; }
+.empty-text { text-align: center; color: #999; padding: 40rpx 0; font-size: 13px; }
+.back-btn { text-align: center; padding: 24rpx; color: #1F5FA8; font-size: 14px; }
+
+/* ===== 房型详情弹窗（宽松版） ===== */
+.popup-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 100; display: flex; align-items: center; justify-content: center; }
+.popup-content { background: #fff; border-radius: 16px; width: 92%; max-height: 85vh; overflow: hidden; position: relative; }
+.popup-close { position: absolute; top: 16rpx; right: 20rpx; width: 40rpx; height: 40rpx; background: rgba(0,0,0,0.4); color: #fff; border-radius: 50%; text-align: center; line-height: 40rpx; font-size: 16px; z-index: 10; }
+.popup-scroll { max-height: 85vh; }
+.popup-img { width: 100%; height: 360rpx; background: #f5f5f5; display: block; }
+.popup-body { padding: 28rpx 28rpx 32rpx; }
+.popup-name { font-size: 18px; font-weight: 700; color: #1A1A1A; }
+.popup-rating { font-size: 12px; color: #8C8C8C; margin-top: 6rpx; }
+
+/* Pill 标签 */
+.popup-pills { display: flex; gap: 10rpx; flex-wrap: wrap; margin: 20rpx 0; }
+.pill { padding: 6rpx 18rpx; border-radius: 20rpx; background: #F0F5FF; color: #1F5FA8; font-size: 12px; font-weight: 500; }
+
+/* 房间配套 */
+.popup-section { margin: 20rpx 0; }
+.popup-section-title { font-size: 14px; font-weight: 600; color: #1A1A1A; margin-bottom: 14rpx; display: block; }
+.amenities-grid { display: flex; flex-wrap: wrap; gap: 10rpx; }
+.amenity-item { width: 48%; display: flex; gap: 8rpx; align-items: center; padding: 6rpx 0; }
+.amenity-icon { font-size: 16px; width: 32rpx; text-align: center; flex-shrink: 0; }
+.amenity-label { font-size: 13px; font-weight: 600; color: #1A1A1A; display: inline; }
+.amenity-desc { font-size: 11px; color: #8C8C8C; margin-left: 4rpx; display: inline; }
+
+/* 库存 */
+.popup-stock { margin: 14rpx 0; font-size: 12px; color: #8C8C8C; padding: 10rpx 0; }
+.stock-num { font-weight: 700; color: #595959; }
+.stock-warn { color: #FF4D4F; margin-left: 8rpx; }
+
+/* 须知 */
+.popup-notice { background: #FAFAFA; border-radius: 8px; padding: 12rpx 16rpx; margin: 14rpx 0; }
+.popup-notice text { font-size: 10px; color: #8C8C8C; line-height: 1.8; }
+
+/* 底部操作 */
+.popup-bottom { border-top: 1px solid #F0F0F0; padding-top: 18rpx; margin-top: 10rpx; display: flex; justify-content: space-between; align-items: center; }
+.price-big { font-size: 24px; font-weight: 700; color: #E85D2F; }
+.price-unit { font-size: 12px; color: #BFBFBF; }
+.price-original { font-size: 12px; color: #BFBFBF; text-decoration: line-through; margin-left: 8rpx; }
+.popup-book-btn { background: #1F5FA8; color: #fff; border: none; border-radius: 8px; font-size: 14px; font-weight: 600; padding: 14rpx 28rpx; line-height: 1.2; height: auto; flex-shrink: 0; }
+.popup-book-btn::after { border: none; }

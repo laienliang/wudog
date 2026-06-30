@@ -1,0 +1,29 @@
+<view class="page">
+  <image class="cover" src="{{restaurant.coverImage}}" mode="aspectFill" />
+  <view class="info-section">
+    <text class="name">{{restaurant.name}}</text>
+    <text class="rating">★ {{restaurant.rating}}</text>
+    <text class="address">{{restaurant.address}}</text>
+    <text class="phone">{{restaurant.phone}}</text>
+    <text class="hours">营业时间：{{restaurant.openingHours}}</text>
+    <text class="desc">{{restaurant.description}}</text>
+  </view>
+  <view class="section" wx:if="{{dishes.length > 0}}">
+    <text class="section-title">推荐菜品</text>
+    <view wx:for="{{dishes}}" wx:key="id" class="dish-item">
+      <view class="dish-info">
+        <text class="dish-name">{{item.name}} <text wx:if="{{item.isSignature}}" class="dish-tag">招牌</text></text>
+        <text class="dish-desc">{{item.description}}</text>
+      </view>
+      <text class="dish-price">¥{{item.price}}</text>
+    </view>
+  </view>
+  <view class="section">
+    <text class="section-title">餐位时段</text>
+    <view wx:for="{{slots}}" wx:key="id" class="slot-item">
+      <text>{{item.name}}</text>
+      <text class="slot-price">¥{{item.price}}/位</text>
+    </view>
+  </view>
+  <view class="booking-btn" bindtap="goToBooking">预订餐位</view>
+</view>

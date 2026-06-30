@@ -1,0 +1,8 @@
+<view class="page">
+  <view wx:if="{{products.length === 0}}" class="empty">还没有收藏的商品</view>
+  <view wx:for="{{products}}" wx:key="id" class="prod-card" bindtap="goToDetail" data-id="{{item.id}}">
+    <image class="prod-img" src="{{item.mainImage}}" mode="aspectFill" />
+    <text class="prod-name">{{item.name}}</text>
+    <text class="prod-price">¥{{item.price}}</text>
+  </view>
+</view>

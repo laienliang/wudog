@@ -1,0 +1,68 @@
+<view class="page">
+  <view class="hero-wrap">
+    <image class="hero-img" src="{{travelogue.coverImage}}" mode="aspectFill" />
+    <view class="hero-overlay"></view>
+    <view class="hero-content">
+      <text class="hero-title">{{travelogue.title}}</text>
+      <text wx:if="{{travelogue.location}}" class="hero-loc">📍 {{travelogue.location}}</text>
+    </view>
+  </view>
+
+  <view class="author-card">
+    <view class="author-left" bindtap="goToUser" data-uid="{{travelogue.userId}}">
+      <view class="author-avatar">{{travelogue._avatar || '匿'}}</view>
+      <view class="author-info">
+        <text class="author-name">{{travelogue.user_name || '用户'}}</text>
+        <text class="author-date">{{travelogue._date}}</text>
+      </view>
+    </view>
+    <view class="author-stats">
+      <text class="stat-item">👁️ {{travelogue.viewCount || 0}}</text>
+      <text class="stat-item">❤️ {{travelogue.likeCount || 0}}</text>
+      <text class="stat-item">💬 {{comments.length}}</text>
+    </view>
+  </view>
+
+  <!-- 操作按钮行 -->
+  <view class="action-bar">
+    <view class="action-btn {{liked ? 'active' : ''}}" bindtap="toggleLike">{{liked ? '❤️' : '🤍'}} 点赞</view>
+    <view class="action-btn {{favorited ? 'active' : ''}}" bindtap="toggleFavorite">{{favorited ? '⭐' : '☆'}} 收藏</view>
+    <view class="action-btn" bindtap="onShareAppMessage">📤 分享</view>
+    <view class="action-btn" bindtap="showReportDialog">🚫 举报</view>
+  </view>
+
+  <view class="content-wrap" wx:if="{{travelogue.content}}">
+    <text class="content-text">{{travelogue.content}}</text>
+  </view>
+
+  <view wx:if="{{replyTo}}" class="reply-hint">
+    <text>回复 @{{replyTo.name}}：</text>
+    <text class="reply-cancel" bindtap="cancelReply">取消</text>
+  </view>
+
+  <view class="comment-section">
+    <text class="comment-section-title">💬 评论 ({{comments.length}})</text>
+    <view wx:if="{{comments.length === 0}}" class="empty-comments">暂无评论，快来抢沙发吧 🛋️</view>
+    <view wx:for="{{comments}}" wx:key="id" class="comment-item">
+      <view class="comment-avatar" bindtap="goToUser" data-uid="{{item.userId}}">{{item._avatar || '匿'}}</view>
+      <view class="comment-body">
+        <view class="comment-header">
+          <text class="comment-name" bindtap="goToUser" data-uid="{{item.userId}}">{{item.user_name || '用户'}}</text>
+          <text class="comment-time">{{item._date}}</text>
+        </view>
+        <text class="comment-text">{{item.content}}</text>
+        <view class="comment-actions"><text class="comment-reply" bindtap="replyTo" data-id="{{item.id}}" data-name="{{item.user_name}}">回复</text></view>
+      </view>
+    </view>
+  </view>
+
+  <view style="height: 140rpx;"></view>
+
+  <view class="footer-bar">
+    <view class="footer-input"><input placeholder="写评论..." value="{{commentText}}" bindinput="onCommentInput" /></view>
+    <view class="footer-actions">
+      <view class="footer-like {{liked ? 'liked' : ''}}" bindtap="toggleLike"><text>{{liked ? '❤️' : '🤍'}}</text></view>
+      <view class="footer-submit" bindtap="submitComment">发送</view>
+    </view>
+  </view>
+</view>

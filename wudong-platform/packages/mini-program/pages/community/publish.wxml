@@ -1,0 +1,17 @@
+<view class="page">
+  <view class="header">
+    <text class="header-title">发布游记</text>
+  </view>
+  <view class="form">
+    <input class="form-input" placeholder="标题" value="{{title}}" bindinput="onTitleInput" maxlength="50" />
+    <textarea class="form-textarea" placeholder="分享你在苗寨的精彩经历..." value="{{content}}" bindinput="onContentInput" />
+    <input class="form-input" placeholder="📍 位置（选填）" value="{{location}}" bindinput="onLocationInput" />
+    <view class="form-group">
+      <text class="form-label">话题</text>
+      <picker mode="selector" range="{{topics}}" range-key="name" bindchange="onTopicChange">
+        <text class="picker-value">{{selectedTopic || '选择话题'}}</text>
+      </picker>
+    </view>
+    <button class="submit-btn" bindtap="submitPublish">发布游记</button>
+  </view>
+</view>

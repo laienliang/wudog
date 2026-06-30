@@ -1,0 +1,84 @@
+<view class="page">
+  <!-- 封面 -->
+  <image class="cover" src="{{data.coverImage}}" mode="aspectFill" />
+
+  <!-- 信息区 -->
+  <view class="section">
+    <text class="name">{{data.name}}</text>
+    <text wx:if="{{itemType === 'scenic'}}" class="rating">★ {{data.rating}}</text>
+    <view wx:if="{{itemType === 'route'}}" class="tags">
+      <text class="tag">{{data.duration}}</text>
+      <text class="tag">最多{{data.maxPeople}}人</text>
+    </view>
+    <view wx:if="{{itemType === 'scenic'}}" class="meta">
+      <text>📍 {{data.address}}</text>
+      <text>🕒 {{data.openingHours}}</text>
+    </view>
+  </view>
+
+  <!-- 价格 -->
+  <view class="price-section">
+    <text class="price">¥{{minPrice}}</text>
+    <text class="unit">起</text>
+  </view>
+
+  <!-- 简介 -->
+  <view class="section" wx:if="{{data.description}}">
+    <text class="section-title">简介</text>
+    <text class="desc">{{data.description}}</text>
+  </view>
+
+  <!-- 路线：选择人数 -->
+  <view class="section" wx:if="{{itemType === 'route'}}">
+    <text class="section-title">预订人数</text>
+    <view class="people-picker">
+      <text class="step-btn" bindtap="changePeople" data-delta="-1">−</text>
+      <text class="people-num">{{people}}</text>
+      <text class="step-btn" bindtap="changePeople" data-delta="1">+</text>
+      <text class="people-limit">最多{{data.maxPeople || 99}}人</text>
+    </view>
+  </view>
+
+  <!-- 景区：票种列表 -->
+  <view class="section" wx:if="{{itemType === 'scenic' && ticketTypes.length > 0}}">
+    <text class="section-title">选择票种</text>
+    <view wx:for="{{ticketTypes}}" wx:key="id" class="ticket-item">
+      <view class="ticket-left">
+        <text class="ticket-name">{{item.name}}</text>
+        <text class="ticket-stock">库存 {{item.stock}} 张</text>
+      </view>
+      <view class="ticket-right">
+        <text class="ticket-price">¥{{item.price}}</text>
+        <view class="stepper">
+          <text class="step-btn" bindtap="updateQty" data-id="{{item.id}}" data-delta="-1">−</text>
+          <text class="step-num">{{qtys[item.id] || 0}}</text>
+          <text class="step-btn" bindtap="updateQty" data-id="{{item.id}}" data-delta="1">+</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 路线：行程安排 -->
+  <view class="section" wx:if="{{itemType === 'route' && itinerary.length > 0}}">
+    <text class="section-title">📋 行程安排</text>
+    <view wx:for="{{itinerary}}" wx:key="index" class="itin-day">
+      <view class="itin-header">
+        <text class="itin-day-num">第{{item.day || index + 1}}天</text>
+        <text class="itin-title">{{item.title}}</text>
+      </view>
+      <text class="itin-meal" wx:if="{{item.meal}}">🍽️ {{item.meal}}</text>
+      <text class="itin-desc">{{item.description}}</text>
+      <text class="itin-tips" wx:if="{{item.tips}}">💡 {{item.tips}}</text>
+    </view>
+  </view>
+
+  <!-- 预订栏 -->
+  <view class="booking-bar">
+    <view class="booking-left">
+      <text class="booking-total">¥{{totalAmount}}</text>
+      <text wx:if="{{totalCount > 0}}" class="booking-count">{{totalCount}}张</text>
+      <text wx:else class="booking-hint">{{itemType === 'scenic' ? '请选择票种' : '请选择人数'}}</text>
+    </view>
+    <button class="booking-btn" bindtap="submitOrder">立即预订</button>
+  </view>
+</view>

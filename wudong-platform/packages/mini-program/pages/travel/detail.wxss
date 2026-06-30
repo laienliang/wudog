@@ -1,0 +1,51 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 120rpx; }
+.cover { width: 100%; height: 400rpx; background: #f5f5f5; display: block; }
+
+.section { background: #fff; padding: 24rpx 20rpx; margin-bottom: 16rpx; }
+.name { font-size: 20px; font-weight: 700; color: #1A1A1A; display: block; }
+.rating { font-size: 14px; color: #FAAD14; font-weight: 600; display: block; margin-top: 6rpx; }
+.tags { display: flex; gap: 8rpx; margin-top: 8rpx; }
+.tag { padding: 4rpx 16rpx; border-radius: 20rpx; background: #F0F5FF; color: #1F5FA8; font-size: 12px; }
+.meta { font-size: 12px; color: #8C8C8C; margin-top: 6rpx; line-height: 1.6; }
+
+.price-section { background: #FFF1EA; padding: 20rpx; margin-bottom: 16rpx; }
+.price { font-size: 28px; font-weight: 700; color: #E85D2F; }
+.unit { font-size: 13px; color: #BFBFBF; margin-left: 4rpx; }
+
+.section-title { font-size: 15px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 12rpx; }
+.desc { font-size: 13px; color: #595959; line-height: 1.7; }
+
+/* 票种 */
+.ticket-item { display: flex; justify-content: space-between; align-items: center; padding: 16rpx; border: 1px solid #F0F0F0; border-radius: 10px; margin-bottom: 12rpx; }
+.ticket-left { flex: 1; }
+.ticket-name { font-size: 14px; font-weight: 600; color: #1A1A1A; display: block; }
+.ticket-stock { font-size: 11px; color: #8C8C8C; margin-top: 2rpx; }
+.ticket-right { display: flex; align-items: center; gap: 16rpx; }
+.ticket-price { font-size: 16px; font-weight: 700; color: #E85D2F; }
+.stepper { display: flex; align-items: center; gap: 8rpx; }
+.step-btn { width: 40rpx; height: 40rpx; border-radius: 50%; background: #F0F5FF; color: #1F5FA8; text-align: center; line-height: 40rpx; font-size: 16px; }
+.step-num { font-size: 15px; font-weight: 600; color: #1A1A1A; min-width: 32rpx; text-align: center; }
+
+/* 人数选择 */
+.people-picker { display: flex; align-items: center; gap: 16rpx; padding: 8rpx 0; }
+.people-num { font-size: 18px; font-weight: 700; color: #1A1A1A; min-width: 40rpx; text-align: center; }
+.people-limit { font-size: 11px; color: #BFBFBF; margin-left: 8rpx; }
+
+/* 行程 */
+.itin-day { padding: 16rpx 0; border-bottom: 1px solid #F5F5F5; }
+.itin-day:last-child { border-bottom: none; }
+.itin-header { display: flex; align-items: center; gap: 12rpx; margin-bottom: 8rpx; }
+.itin-day-num { width: 44rpx; height: 44rpx; border-radius: 50%; background: #1F5FA8; color: #fff; text-align: center; line-height: 44rpx; font-size: 13px; font-weight: 600; flex-shrink: 0; }
+.itin-title { font-size: 15px; font-weight: 600; color: #1A1A1A; }
+.itin-meal { font-size: 12px; color: #E85D2F; margin-bottom: 6rpx; }
+.itin-desc { font-size: 12px; color: #595959; line-height: 1.6; white-space: pre-line; }
+.itin-tips { font-size: 11px; color: #8C6B00; background: #FFFBE6; border-radius: 6px; padding: 8rpx 12rpx; margin-top: 8rpx; }
+
+/* 底部预订栏 */
+.booking-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; padding: 16rpx 24rpx; display: flex; align-items: center; box-shadow: 0 -4rpx 16rpx rgba(0,0,0,0.08); z-index: 50; }
+.booking-left { display: flex; flex-direction: column; }
+.booking-total { font-size: 40rpx; font-weight: 700; color: #E85D2F; line-height: 1.1; }
+.booking-count { font-size: 11px; color: #BFBFBF; }
+.booking-hint { font-size: 11px; color: #BFBFBF; }
+.booking-btn { background: #1F5FA8; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; padding: 16rpx 32rpx; height: auto; line-height: 1.2; flex-shrink: 0; margin-left: auto; margin-right: 10rpx; }
+.booking-btn::after { border: none; }

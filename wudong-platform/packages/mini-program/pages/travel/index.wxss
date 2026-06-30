@@ -1,0 +1,23 @@
+.page { min-height: 100vh; background: #f7f8fa; }
+
+/* Tab 栏 */
+.tab-bar { display: flex; background: #fff; padding: 0; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #F0F0F0; }
+.tab-item { flex: 1; text-align: center; padding: 24rpx 0; font-size: 14px; color: #8C8C8C; position: relative; }
+.tab-item.active { color: #1F5FA8; font-weight: 600; }
+.tab-line { position: absolute; bottom: 0; width: 50%; height: 3px; background: #1F5FA8; transition: transform 0.3s; border-radius: 2px; }
+
+.loading { text-align: center; padding: 80rpx; color: #999; font-size: 13px; }
+.empty { text-align: center; padding: 120rpx; color: #999; font-size: 14px; }
+
+/* 卡片列表 */
+.card-list { padding: 16rpx; }
+.card { background: #fff; border-radius: 16rpx; overflow: hidden; margin-bottom: 16rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.06); }
+.card-img { width: 100%; height: 320rpx; background: #f5f5f5; }
+.card-body { padding: 16rpx 20rpx 20rpx; }
+.card-title { font-size: 15px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 4rpx; }
+.card-rating { font-size: 12px; color: #FAAD14; font-weight: 600; display: block; margin-bottom: 6rpx; }
+.card-desc { font-size: 12px; color: #8C8C8C; display: block; margin-bottom: 2rpx; }
+.card-tags { display: flex; gap: 8rpx; margin-bottom: 8rpx; }
+.tag { padding: 2rpx 14rpx; border-radius: 20rpx; background: #F0F5FF; color: #1F5FA8; font-size: 11px; }
+.card-price { font-size: 18px; font-weight: 700; color: #E85D2F; }
+.unit { font-size: 12px; font-weight: 400; color: #BFBFBF; }

@@ -1,0 +1,21 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 20rpx; }
+.header { padding: 20rpx 20rpx 0; }
+.header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; }
+
+.tab-bar { display: flex; background: #fff; padding: 0 20rpx; margin: 16rpx; border-radius: 10rpx; }
+.tab-item { flex: 1; text-align: center; padding: 16rpx 0; font-size: 14px; color: #8C8C8C; }
+.tab-item.active { color: #1F5FA8; font-weight: 600; border-bottom: 3px solid #1F5FA8; }
+
+.loading { text-align: center; padding: 80rpx; color: #999; font-size: 13px; }
+.empty { text-align: center; padding: 120rpx; color: #999; font-size: 14px; }
+
+.feed-list { padding: 0 16rpx; }
+.feed-card { background: #fff; border-radius: 14rpx; overflow: hidden; margin-bottom: 16rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.06); }
+.feed-img { width: 100%; height: 340rpx; background: #f5f5f5; display: block; }
+.feed-body { padding: 16rpx 18rpx 18rpx; }
+.feed-title { font-size: 15px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 10rpx; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.feed-meta { display: flex; justify-content: space-between; align-items: center; }
+.feed-user { display: flex; align-items: center; gap: 8rpx; }
+.feed-avatar { width: 32rpx; height: 32rpx; border-radius: 50%; background: #1F5FA8; color: #fff; text-align: center; line-height: 32rpx; font-size: 12px; }
+.feed-name { font-size: 12px; color: #8C8C8C; }
+.feed-stats { display: flex; gap: 12rpx; font-size: 11px; color: #BFBFBF; }

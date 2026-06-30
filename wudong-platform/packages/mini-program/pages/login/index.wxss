@@ -1,0 +1,6 @@
+.page { min-height: 100vh; background: #f7f8fa; padding: 60px 24px; }
+.title { font-size: 24px; font-weight: 700; text-align: center; margin-bottom: 40px; color: #1A1A1A; }
+.form { background: #fff; padding: 24px; border-radius: 12px; }
+.input { height: 44px; border: 1px solid #e5e5e5; border-radius: 8px; padding: 0 12px; font-size: 14px; margin-bottom: 16px; width: 100%; box-sizing: border-box; }
+.login-btn { height: 44px; line-height: 44px; background: #1F5FA8; color: #fff; border-radius: 8px; font-size: 16px; margin-top: 8px; }
+.tip { display: block; text-align: center; font-size: 12px; color: #8C8C8C; margin-top: 16px; }

@@ -1,0 +1,21 @@
+<view class="page">
+  <view class="header">
+    <text class="header-title"># {{topic.name}}</text>
+    <text class="header-count">{{travelogues.length}} 篇游记</text>
+  </view>
+  <view wx:if="{{loading}}" class="loading"><text>加载中...</text></view>
+  <view wx:elif="{{travelogues.length === 0}}" class="empty"><text>该话题下暂无游记</text></view>
+  <view wx:else class="feed-list">
+    <view wx:for="{{travelogues}}" wx:key="id" class="feed-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="feed-img" src="{{item.coverImage}}" mode="aspectFill" />
+      <view class="feed-body">
+        <text class="feed-title">{{item.title}}</text>
+        <view class="feed-stats">
+          <text>❤️ {{item.likeCount || 0}}</text>
+          <text>💬 {{item.commentCount || 0}}</text>
+          <text>👁️ {{item.viewCount || 0}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

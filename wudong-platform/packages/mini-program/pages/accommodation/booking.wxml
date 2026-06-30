@@ -1,0 +1,111 @@
+<view class="page">
+
+  <!-- 顶部房源大图 -->
+  <image class="header-img" src="{{homestay.coverImage || ''}}" mode="aspectFill" />
+
+  <!-- 顶部房源信息卡片 -->
+  <view class="header-card">
+    <view class="header-info">
+      <text class="header-name">{{homestay.name}}</text>
+      <text class="header-type">{{roomType ? roomType.name : '请选择房型'}}</text>
+      <view class="header-meta">
+        <text class="header-rating">★ {{homestay.rating}}</text>
+        <text class="header-divider">|</text>
+        <text class="header-address">{{homestay.address || '乌东苗寨'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 日期选择卡片 -->
+  <view class="card">
+    <text class="card-title">选择日期</text>
+    <picker mode="date" value="{{checkIn}}" bindchange="onCheckInChange">
+      <view class="date-card">
+        <view class="date-left">
+          <text class="date-label">入住</text>
+          <text class="date-icon">›</text>
+        </view>
+        <text class="date-value {{checkIn ? '' : 'placeholder'}}">{{checkIn || '请选择'}}</text>
+      </view>
+    </picker>
+    <view class="date-connector">
+      <view class="connector-line"></view>
+      <text class="connector-text">共 <text class="nights-num">{{nights}}</text> 晚</text>
+      <view class="connector-line"></view>
+    </view>
+    <picker mode="date" value="{{checkOut}}" bindchange="onCheckOutChange">
+      <view class="date-card">
+        <view class="date-left">
+          <text class="date-label">离店</text>
+          <text class="date-icon">›</text>
+        </view>
+        <text class="date-value {{checkOut ? '' : 'placeholder'}}">{{checkOut || '请选择'}}</text>
+      </view>
+    </picker>
+  </view>
+
+  <!-- 联系人信息卡片 -->
+  <view class="card">
+    <text class="card-title">联系人信息</text>
+    <view class="form-item">
+      <text class="form-label">姓名</text>
+      <input class="form-input" placeholder="请输入入住人姓名" placeholder-class="form-placeholder"
+        value="{{name}}" bindinput="onNameInput" maxlength="20" />
+    </view>
+    <view class="form-divider"></view>
+    <view class="form-item">
+      <text class="form-label">手机</text>
+      <input class="form-input" placeholder="请输入手机号码" placeholder-class="form-placeholder"
+        value="{{phone}}" bindinput="onPhoneInput" type="number" maxlength="11" />
+    </view>
+    <view class="form-divider"></view>
+    <view class="form-item">
+      <text class="form-label">备注</text>
+      <input class="form-input" placeholder="选填，如特殊要求" placeholder-class="form-placeholder"
+        value="{{remark}}" bindinput="onRemarkInput" />
+    </view>
+  </view>
+
+  <!-- 入住须知卡片 -->
+  <view class="card">
+    <text class="card-title">预订须知</text>
+    <view class="notice-row">
+      <text class="notice-icon">🕐</text>
+      <text class="notice-text">入住：14:00后 · 离店：12:00前</text>
+    </view>
+    <view class="notice-row">
+      <text class="notice-icon">❌</text>
+      <text class="notice-text">入住前1天18:00前可免费取消</text>
+    </view>
+    <view class="notice-row">
+      <text class="notice-icon">🪪</text>
+      <text class="notice-text">请携带有效身份证件办理入住</text>
+    </view>
+  </view>
+
+  <!-- 底部悬浮价格栏 -->
+  <view class="footer-bar">
+    <view class="footer-left">
+      <text class="footer-total"><text class="yen">¥</text>{{totalAmount}}</text>
+      <text wx:if="{{roomType && nights > 0}}" class="footer-detail">¥{{roomType.price}} × {{nights}}晚</text>
+      <text wx:else class="footer-detail">请选择日期</text>
+    </view>
+    <button class="footer-btn" loading="{{submitting}}" disabled="{{submitting}}" bindtap="submitOrder">提交订单</button>
+  </view>
+
+  <!-- 成功弹窗 -->
+  <view wx:if="{{showSuccess}}" class="success-overlay">
+    <view class="success-box">
+      <text class="success-icon">✅</text>
+      <text class="success-title">预订成功！</text>
+      <text class="success-order">订单号：{{orderNo}}</text>
+      <view class="success-detail">
+        <text>{{homestay.name}}</text>
+        <text>{{roomType ? roomType.name : ''}}</text>
+        <text>{{checkIn}} 至 {{checkOut}} 共 {{nights}} 晚</text>
+        <text class="success-price">¥{{totalAmount}}</text>
+      </view>
+      <button class="success-btn" bindtap="goBack">返回民宿列表</button>
+    </view>
+  </view>
+</view>

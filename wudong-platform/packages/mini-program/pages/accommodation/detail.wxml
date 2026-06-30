@@ -1,0 +1,129 @@
+<view class="page">
+  <image class="cover-img" src="{{homestay.coverImage}}" mode="aspectFill" />
+
+  <view class="info-section">
+    <text class="name">{{homestay.name}}</text>
+    <view class="rating-row">
+      <text class="rating">★ {{homestay.rating}}</text>
+      <text class="divider">|</text>
+      <text class="address">{{homestay.address || '乌东苗寨'}}</text>
+    </view>
+    <text class="phone">📞 {{homestay.phone || '暂无电话'}}</text>
+  </view>
+
+  <!-- 设施 -->
+  <view class="section">
+    <text class="section-label">设施服务</text>
+    <view class="facility-tags">
+      <text wx:for="{{homestay.facilities || []}}" wx:key="index" class="tag">{{item}}</text>
+    </view>
+  </view>
+
+  <!-- 简介 -->
+  <view class="section" wx:if="{{homestay.description}}">
+    <text class="section-label">民宿简介</text>
+    <text class="desc-text">{{homestay.description}}</text>
+  </view>
+
+  <!-- 房型列表（点击查看详情） -->
+  <view class="section">
+    <text class="section-label">选择房型（点击查看详情）</text>
+    <view wx:for="{{roomTypes}}" wx:key="id" class="room-card" bindtap="showRoomDetail" data-id="{{item.id}}">
+      <view class="room-info">
+        <text class="room-name">{{item.name}}</text>
+        <text class="room-params">
+          {{item.area || ''}} {{item.bedType ? '· ' + item.bedType : ''}} {{item.maxGuests ? '· ' + item.maxGuests + '人' : ''}}
+        </text>
+      </view>
+      <view class="room-right">
+        <text class="room-price">¥{{item.price}}<text class="unit">/晚</text></text>
+        <button class="book-btn" catchtap="goToBooking" data-id="{{item.id}}">预订</button>
+      </view>
+    </view>
+    <view wx:if="{{roomTypes.length === 0}}" class="empty-text">暂无可用房型</view>
+  </view>
+
+  <!-- 住客评价 -->
+  <view class="section">
+    <text class="section-label">住客评价</text>
+    <view wx:for="{{reviews}}" wx:key="index" class="review-item">
+      <view class="review-header">
+        <view class="review-user">
+          <text class="review-avatar">{{reviewUserAvatar(item)}}</text>
+          <text class="review-name">{{item.user_name || '匿名用户'}}</text>
+        </view>
+        <text class="review-rating">★ {{item.rating}}</text>
+      </view>
+      <text class="review-content">{{item.content}}</text>
+      <view class="review-tags" wx:if="{{item.tags}}">
+        <text wx:for="{{item.tags}}" wx:key="index" class="review-tag">{{item}}</text>
+      </view>
+      <text class="review-date">{{item.createdAt ? item.createdAt.slice(0, 10) : ''}}</text>
+    </view>
+    <view wx:if="{{reviews.length === 0}}" class="empty-text">暂无评价</view>
+  </view>
+
+  <!-- 返回按钮 -->
+  <view class="back-btn" bindtap="goBack">← 返回</view>
+
+  <!-- 房型详情弹窗（丰富版） -->
+  <view wx:if="{{showPopup}}" class="popup-overlay" bindtap="closePopup">
+    <view class="popup-content" catchtap="stopPropagation">
+      <view class="popup-close" bindtap="closePopup">✕</view>
+
+      <scroll-view class="popup-scroll" scroll-y>
+        <!-- 房型大图 -->
+        <image class="popup-img" src="{{selectedRoom.images && selectedRoom.images[0] || homestay.coverImage}}" mode="aspectFill" />
+
+        <view class="popup-body">
+          <!-- 标题区 -->
+          <text class="popup-name">{{selectedRoom.name}}</text>
+          <view class="popup-rating">⭐ {{homestay.rating}} | {{homestay.name}} | {{selectedRoom.area || ''}}</view>
+
+          <!-- 核心参数 Pill 标签 -->
+          <view class="popup-pills">
+            <text class="pill">🛏️ {{selectedRoom.bedType || '大床'}}</text>
+            <text class="pill">🚿 独立卫浴</text>
+            <text class="pill">📶 免费WiFi</text>
+            <text class="pill">🏔️ 观景阳台</text>
+          </view>
+
+          <!-- 房间配套 Grid -->
+          <view class="popup-section">
+            <text class="popup-section-title">房间配套</text>
+            <view class="amenities-grid">
+              <view wx:for="{{amenities}}" wx:key="index" class="amenity-item">
+                <text class="amenity-icon">{{item.icon}}</text>
+                <view class="amenity-text">
+                  <text class="amenity-label">{{item.label}}</text>
+                  <text class="amenity-desc">{{item.desc}}</text>
+                </view>
+              </view>
+            </view>
+          </view>
+
+          <!-- 库存 -->
+          <view class="popup-stock">
+            <text>剩余 <text class="stock-num">{{selectedRoom.quantity || 0}}</text> 间</text>
+            <text wx:if="{{selectedRoom.quantity < 5}}" class="stock-warn">⚠️ 仅剩几间</text>
+          </view>
+
+          <!-- 预订须知 -->
+          <view class="popup-notice">
+            <text>🕐 入住14:00后 · 离店12:00前 | ❌ 入住前1天18:00前可免费取消</text>
+          </view>
+
+          <!-- 底部操作 -->
+          <view class="popup-bottom">
+            <view class="popup-price-row">
+              <text class="price-big">¥{{selectedRoom.price}}</text>
+              <text class="price-unit">/晚</text>
+              <text wx:if="{{selectedRoom.weekendPrice && selectedRoom.weekendPrice > 0}}" class="price-original">¥{{selectedRoom.weekendPrice}}</text>
+            </view>
+            <button class="popup-book-btn" bindtap="goToBooking" data-id="{{selectedRoom.id}}">立即预订</button>
+          </view>
+        </view>
+      </scroll-view>
+    </view>
+  </view>
+</view>

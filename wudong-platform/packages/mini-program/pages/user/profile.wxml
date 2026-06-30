@@ -1,0 +1,22 @@
+<view class="page">
+  <view class="header-card">
+    <view class="avatar-large">{{userAvatar}}</view>
+    <text class="profile-name">{{userName}}</text>
+    <view class="profile-stats">
+      <view class="stat-item"><text class="stat-num">{{travelogues.length}}</text><text class="stat-label">游记</text></view>
+      <view class="stat-item"><text class="stat-num">0</text><text class="stat-label">关注</text></view>
+      <view class="stat-item"><text class="stat-num">0</text><text class="stat-label">粉丝</text></view>
+    </view>
+  </view>
+  <view class="section-title">TA的游记</view>
+  <view wx:if="{{travelogues.length === 0}}" class="empty">暂无游记</view>
+  <view class="feed-list">
+    <view wx:for="{{travelogues}}" wx:key="id" class="feed-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="feed-img" src="{{item.coverImage}}" mode="aspectFill" />
+      <view class="feed-body">
+        <text class="feed-title">{{item.title}}</text>
+        <view class="feed-stats"><text>❤️ {{item.likeCount || 0}}</text><text>💬 {{item.commentCount || 0}}</text></view>
+      </view>
+    </view>
+  </view>
+</view>

@@ -1,0 +1,15 @@
+<view class="page">
+  <view class="profile" bindtap="goToProfile">
+    <view class="avatar">{{userAvatar}}</view>
+    <view class="info">
+      <text class="name">{{userName}}</text>
+      <text class="phone">查看个人主页 ›</text>
+    </view>
+  </view>
+  <view class="menu-list">
+    <view class="menu-item" bindtap="goToMessages"><text>💌 消息中心</text><text>></text></view>
+    <view class="menu-item" bindtap="goToOrders"><text>📋 我的订单</text><text>></text></view>
+    <view class="menu-item" bindtap="goToFavorites"><text>❤️ 我的收藏</text><text>></text></view>
+    <view class="menu-item" bindtap="goToReviews"><text>📝 我的评价</text><text>></text></view>
+  </view>
+</view>

@@ -1,0 +1,16 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 20rpx; }
+.header-card { background: #fff; padding: 40rpx 20rpx; text-align: center; margin-bottom: 16rpx; }
+.avatar-large { width: 80rpx; height: 80rpx; border-radius: 50%; background: #1F5FA8; color: #fff; text-align: center; line-height: 80rpx; font-size: 32px; margin: 0 auto 16rpx; }
+.profile-name { font-size: 18px; font-weight: 700; color: #1A1A1A; display: block; }
+.profile-stats { display: flex; justify-content: center; gap: 48rpx; margin-top: 20rpx; }
+.stat-item { text-align: center; }
+.stat-num { font-size: 18px; font-weight: 700; color: #1A1A1A; display: block; }
+.stat-label { font-size: 12px; color: #8C8C8C; }
+.section-title { font-size: 15px; font-weight: 600; color: #1A1A1A; padding: 16rpx 20rpx; }
+.empty { text-align: center; padding: 80rpx; color: #999; font-size: 14px; }
+.feed-list { padding: 0 16rpx; }
+.feed-card { background: #fff; border-radius: 14rpx; overflow: hidden; margin-bottom: 16rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.06); }
+.feed-img { width: 100%; height: 280rpx; background: #f5f5f5; display: block; }
+.feed-body { padding: 14rpx 18rpx 18rpx; }
+.feed-title { font-size: 14px; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 8rpx; }
+.feed-stats { display: flex; gap: 16rpx; font-size: 11px; color: #BFBFBF; }

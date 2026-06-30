@@ -1,0 +1,41 @@
+<view class="page">
+  <view class="tab-bar">
+    <view class="tab-item {{activeTab === 'scenic' ? 'active' : ''}}" bindtap="switchTab" data-tab="scenic">🏔️ 景区门票</view>
+    <view class="tab-item {{activeTab === 'route' ? 'active' : ''}}" bindtap="switchTab" data-tab="route">🗺️ 路线套餐</view>
+    <view class="tab-line" style="transform: translateX({{activeTab === 'scenic' ? '0' : '100%'}});"></view>
+  </view>
+
+  <view wx:if="{{activeTab === 'scenic'}}">
+    <view wx:if="{{loadingScenic && scenicSpots.length === 0}}" class="loading"><text>加载中...</text></view>
+    <view wx:elif="{{scenicSpots.length === 0}}" class="empty"><text>暂无景区</text></view>
+    <view wx:else class="card-list">
+      <view wx:for="{{scenicSpots}}" wx:key="id" class="card" bindtap="goToDetail" data-id="{{item.id}}" data-type="scenic">
+        <image class="card-img" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="card-body">
+          <text class="card-title">{{item.name}}</text>
+          <text class="card-rating">★ {{item.rating}}</text>
+          <text class="card-desc">📍 {{item.address}}</text>
+          <text class="card-desc">🕒 {{item.openingHours}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view wx:if="{{activeTab === 'route'}}">
+    <view wx:if="{{loadingRoute && routes.length === 0}}" class="loading"><text>加载中...</text></view>
+    <view wx:elif="{{routes.length === 0}}" class="empty"><text>暂无路线</text></view>
+    <view wx:else class="card-list">
+      <view wx:for="{{routes}}" wx:key="id" class="card" bindtap="goToDetail" data-id="{{item.id}}" data-type="route">
+        <image class="card-img" src="{{item.coverImage}}" mode="aspectFill" />
+        <view class="card-body">
+          <text class="card-title">{{item.name}}</text>
+          <view class="card-tags">
+            <text class="tag">{{item.duration}}</text>
+            <text class="tag">最多{{item.maxPeople}}人</text>
+          </view>
+          <text class="card-price">¥{{item.price}}<text class="unit">/人</text></text>
+        </view>
+      </view>
+    </view>
+  </view>
+</view>

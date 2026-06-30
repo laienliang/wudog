@@ -1,0 +1,6 @@
+.page { min-height: 100vh; background: #f7f8fa; padding: 16px; }
+.form-item { background: #fff; padding: 14px 16px; margin-bottom: 1px; display: flex; justify-content: space-between; align-items: center; }
+.label { font-size: 14px; color: #1A1A1A; }
+.value { font-size: 14px; color: #595959; }
+.input { font-size: 14px; text-align: right; flex: 1; }
+.submit-btn { margin-top: 24px; height: 44px; line-height: 44px; background: #1F5FA8; color: #fff; border-radius: 8px; font-size: 16px; }

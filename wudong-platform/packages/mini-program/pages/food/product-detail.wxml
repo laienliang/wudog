@@ -1,0 +1,25 @@
+<view class="page">
+  <image class="img" src="{{product.mainImage}}" mode="aspectFill" />
+  <view class="info">
+    <text class="name">{{product.name}}</text>
+    <text class="price">¥{{product.price}} <text class="unit">/ {{product.unit}}</text></text>
+    <text class="stock">库存：{{product.stock}}</text>
+    <text class="desc">{{product.description}}</text>
+  </view>
+
+  <view class="section">
+    <text class="section-title">商品评价</text>
+    <view wx:if="{{reviews.length === 0}}" class="empty">暂无评价</view>
+    <view wx:for="{{reviews}}" wx:key="id" class="review-item">
+      <view class="review-hd">
+        <text>★ {{item.rating}}</text>
+        <text class="review-time">{{item.createdAt}}</text>
+      </view>
+      <text class="review-text">{{item.content}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="cart-btn" bindtap="addToCart">加入购物车</view>
+  </view>
+</view>

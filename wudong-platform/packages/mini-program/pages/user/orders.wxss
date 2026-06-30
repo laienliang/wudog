@@ -1,0 +1,12 @@
+.page { min-height: 100vh; background: #f7f8fa; padding: 8px 16px; }
+.empty { text-align: center; padding: 80px 0; color: #999; font-size: 14px; }
+.order-card { background: #fff; border-radius: 8px; padding: 12px 16px; margin-bottom: 8px; }
+.order-hd { display: flex; justify-content: space-between; margin-bottom: 8px; }
+.order-no { font-size: 12px; color: #8C8C8C; }
+.order-status { font-size: 12px; }
+.order-status.pending_pay { color: #FAAD14; }
+.order-status.paid { color: #52C41A; }
+.order-status.completed { color: #52C41A; }
+.order-status.cancelled { color: #BFBFBF; }
+.order-amount { font-size: 18px; font-weight: 700; color: #E85D2F; }
+.order-time { font-size: 12px; color: #999; margin-top: 4px; display: block; }

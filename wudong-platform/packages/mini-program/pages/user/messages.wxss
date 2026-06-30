@@ -1,0 +1,11 @@
+.page { min-height: 100vh; background: #f7f8fa; }
+.header { padding: 24rpx 20rpx; background: #fff; margin-bottom: 16rpx; }
+.header-title { font-size: 20px; font-weight: 700; color: #1A1A1A; }
+.msg-list { background: #fff; }
+.msg-item { display: flex; align-items: center; gap: 16rpx; padding: 20rpx; border-bottom: 1px solid #F5F5F5; }
+.msg-icon { font-size: 24px; width: 48rpx; text-align: center; }
+.msg-body { flex: 1; }
+.msg-title { font-size: 14px; font-weight: 500; color: #1A1A1A; display: block; }
+.msg-desc { font-size: 12px; color: #8C8C8C; margin-top: 4rpx; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.msg-time { font-size: 11px; color: #BFBFBF; white-space: nowrap; }
+.empty { text-align: center; padding: 120rpx; color: #999; font-size: 14px; }

@@ -1,0 +1,70 @@
+.page { min-height: 100vh; background: #F7F8FA; padding: 0 0 120rpx; }
+
+/* ===== 顶部房源图片 ===== */
+.header-img { width: 100%; height: 400rpx; display: block; background: #f5f5f5; }
+
+/* ===== 顶部房源信息卡片 ===== */
+.header-card { margin: 0 24rpx; padding: 24rpx; background: #fff; border-radius: 16rpx; margin-top: -32rpx; margin-bottom: 20rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05); position: relative; z-index: 2; }
+.header-info { display: flex; flex-direction: column; }
+.header-name { font-size: 20px; font-weight: 700; color: #333; }
+.header-type { font-size: 15px; color: #666; margin-top: 6rpx; }
+.header-meta { display: flex; align-items: center; gap: 10rpx; margin-top: 8rpx; }
+.header-rating { font-size: 14px; color: #FAAD14; font-weight: 600; }
+.header-divider { color: #E8E8E8; font-size: 14px; }
+.header-address { font-size: 13px; color: #999; }
+.header-info { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+.header-name { font-size: 20px; font-weight: 700; color: #333; }
+.header-type { font-size: 15px; color: #666; margin-top: 6rpx; }
+.header-meta { display: flex; align-items: center; gap: 10rpx; margin-top: 8rpx; }
+.header-rating { font-size: 14px; color: #FAAD14; font-weight: 600; }
+.header-divider { color: #E8E8E8; font-size: 14px; }
+.header-address { font-size: 13px; color: #999; }
+
+/* ===== 卡片容器 ===== */
+.card { background: #fff; border-radius: 16rpx; margin: 0 24rpx 20rpx; padding: 24rpx 20rpx; box-shadow: 0 2rpx 10rpx rgba(0,0,0,0.05); }
+.card-title { font-size: 17px; font-weight: 600; color: #333; display: block; margin-bottom: 18rpx; }
+
+/* ===== 日期选择 ===== */
+.date-card { display: flex; align-items: center; justify-content: space-between; padding: 20rpx 0; }
+.date-left { display: flex; align-items: center; gap: 10rpx; }
+.date-label { font-size: 16px; color: #333; font-weight: 500; }
+.date-icon { font-size: 18px; color: #BFBFBF; }
+.date-value { font-size: 17px; font-weight: 600; color: #333; }
+.date-value.placeholder { color: #CCC; font-weight: 400; }
+.date-connector { display: flex; align-items: center; gap: 20rpx; padding: 12rpx 0; margin: 0 4rpx; }
+.connector-line { flex: 1; height: 1px; background: #EEE; }
+.connector-text { font-size: 14px; color: #999; white-space: nowrap; }
+.nights-num { color: #1F5FA8; font-weight: 700; font-size: 16px; }
+
+/* ===== 表单 ===== */
+.form-item { display: flex; align-items: center; padding: 24rpx 0; }
+.form-label { width: 90rpx; font-size: 16px; color: #666; flex-shrink: 0; }
+.form-input { flex: 1; font-size: 16px; color: #333; height: 44rpx; background: transparent; }
+.form-placeholder { color: #CCC; font-size: 16px; }
+.form-divider { height: 1px; background: #EEE; margin-left: 90rpx; }
+
+/* ===== 入住须知 ===== */
+.notice-row { display: flex; align-items: center; gap: 12rpx; padding: 10rpx 0; }
+.notice-icon { font-size: 16px; width: 36rpx; text-align: center; }
+.notice-text { font-size: 14px; color: #999; }
+
+/* ===== 底部悬浮栏 ===== */
+.footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #fff; height: 110rpx; padding: 0 6rpx 0 24rpx; display: flex; align-items: center; box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.05); z-index: 50; }
+.footer-left { display: flex; flex-direction: column; justify-content: center; }
+.footer-total { font-size: 40rpx; font-weight: 700; color: #E85D2F; line-height: 1.1; }
+.footer-total .yen { font-size: 30rpx; }
+.footer-detail { font-size: 22rpx; color: #BBB; margin-top: 4rpx; }
+.footer-btn { background: #1F5FA8; color: #fff; border: none; border-radius: 8px; font-size: 15px; font-weight: 500; padding: 16rpx 32rpx; height: auto; line-height: 1.2; flex-shrink: 0; margin: 0 6rpx 0 auto; }
+.footer-btn::after { border: none; }
+.footer-btn[disabled] { background: #BFBFBF; }
+
+/* ===== 成功弹窗 ===== */
+.success-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; z-index: 100; }
+.success-box { background: #fff; border-radius: 16px; padding: 48rpx 36rpx; text-align: center; width: 75%; }
+.success-icon { font-size: 52px; display: block; margin-bottom: 16rpx; }
+.success-title { font-size: 22px; font-weight: 700; color: #333; display: block; margin-bottom: 8rpx; }
+.success-order { font-size: 11px; color: #999; display: block; margin-bottom: 20rpx; }
+.success-detail { background: #F7F9FC; border-radius: 10rpx; padding: 16rpx; margin-bottom: 24rpx; text-align: left; font-size: 12px; color: #666; line-height: 1.8; }
+.success-price { font-size: 18px; font-weight: 700; color: #E85D2F; display: block; margin-top: 4rpx; }
+.success-btn { background: #1F5FA8; color: #fff; border: none; border-radius: 10rpx; font-size: 14px; padding: 16rpx 0; width: 100%; }
+.success-btn::after { border: none; }

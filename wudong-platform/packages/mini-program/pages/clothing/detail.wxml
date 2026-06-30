@@ -1,0 +1,62 @@
+<view class="page">
+  <swiper class="banner" indicator-dots autoplay circular>
+    <swiper-item wx:for="{{images}}" wx:key="index">
+      <image class="banner-img" src="{{item}}" mode="aspectFill" />
+    </swiper-item>
+    <swiper-item wx:if="{{images.length === 0}}">
+      <image class="banner-img" src="https://via.placeholder.com/400x400?text=暂无图片" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <view class="info-section">
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-subtitle" wx:if="{{product.subtitle}}">{{product.subtitle}}</view>
+    <view class="price-row">
+      <text class="price">¥{{selectedPrice || product.price}}</text>
+      <text class="market-price" wx:if="{{product.marketPrice}}">¥{{product.marketPrice}}</text>
+      <text class="sales">已售 {{product.sales || 0}}</text>
+    </view>
+    <view class="rating-row">
+      <text>★ {{product.rating || 5.0}} 分</text>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{skus.length > 0}}">
+    <view class="section-title">规格选择</view>
+    <view class="sku-list">
+      <view wx:for="{{skus}}" wx:key="id" class="sku-item {{selectedSkuId === item.id ? 'active' : ''}}" bindtap="onSkuTap" data-id="{{item.id}}">{{item.name}}</view>
+    </view>
+  </view>
+
+  <view class="section">
+    <view class="qty-row">
+      <text>数量</text>
+      <view class="qty-control">
+        <text class="qty-btn" bindtap="onQtyMinus">−</text>
+        <text class="qty-num">{{quantity}}</text>
+        <text class="qty-btn" bindtap="onQtyPlus">+</text>
+      </view>
+    </view>
+  </view>
+
+  <view class="section" wx:if="{{product.craftDescription}}">
+    <view class="section-title">工艺介绍</view>
+    <text class="section-content">{{product.craftDescription}}</text>
+  </view>
+
+  <view class="section">
+    <view class="section-title">商品评价</view>
+    <view wx:if="{{reviews.length === 0}}" class="empty">暂无评价</view>
+    <view wx:for="{{reviews}}" wx:key="id" class="review-item">
+      <view class="review-header"><text>★ {{item.rating}}</text><text class="review-time">{{item.createdAt}}</text></view>
+      <text class="review-content">{{item.content}}</text>
+    </view>
+  </view>
+
+  <view class="bottom-bar">
+    <view class="bar-item" bindtap="onFavoriteTap"><text>{{favorited ? '❤️' : '🤍'}}</text><text>收藏</text></view>
+    <view class="bar-item" bindtap="onContact">📞</view>
+    <view class="bar-item cart-btn" bindtap="onAddToCart"><text>加入购物车</text></view>
+    <view class="bar-item buy-btn" bindtap="onBuyNow"><text>立即购买</text></view>
+  </view>
+</view>

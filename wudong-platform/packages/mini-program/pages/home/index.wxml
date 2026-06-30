@@ -1,0 +1,34 @@
+<view class="page">
+  <view class="banner">
+    <text class="banner-title">🏔️ 欢迎来到乌东苗寨</text>
+    <text class="banner-desc">黔东南 · 苗族文化旅游一站式平台</text>
+  </view>
+
+  <view class="grid">
+    <view class="grid-item" bindtap="goToPage" data-url="/pages/clothing/list">
+      <text class="grid-icon">👗</text>
+      <text class="grid-label">民族服饰</text>
+    </view>
+    <view class="grid-item" bindtap="goToPage" data-url="/pages/food/index">
+      <text class="grid-icon">🍜</text>
+      <text class="grid-label">餐饮美食</text>
+    </view>
+    <view class="grid-item" bindtap="goToPage" data-url="/pages/accommodation/index">
+      <text class="grid-icon">🏠</text>
+      <text class="grid-label">民宿预订</text>
+    </view>
+    <view class="grid-item" bindtap="goToPage" data-url="/pages/travel/index">
+      <text class="grid-icon">🗺️</text>
+      <text class="grid-label">苗寨出游</text>
+    </view>
+  </view>
+
+  <view class="section-title">热门商品</view>
+  <view class="product-grid">
+    <view wx:for="{{products}}" wx:key="id" class="product-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="product-image" src="{{item.mainImage}}" mode="aspectFill" />
+      <view class="product-name">{{item.name}}</view>
+      <view class="product-price">¥{{item.price}}</view>
+    </view>
+  </view>
+</view>

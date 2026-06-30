@@ -1,0 +1,56 @@
+.page { min-height: 100vh; background: #f7f8fa; padding-bottom: 0; }
+
+/* ===== 沉浸式顶部大图 ===== */
+.hero-wrap { position: relative; width: 100%; height: 420rpx; overflow: hidden; }
+.hero-img { width: 100%; height: 100%; display: block; }
+.hero-overlay { position: absolute; bottom: 0; left: 0; right: 0; height: 60%; background: linear-gradient(to bottom, rgba(0,0,0,0), rgba(0,0,0,0.65)); }
+.hero-content { position: absolute; bottom: 28rpx; left: 24rpx; right: 24rpx; }
+.hero-title { font-size: 40rpx; font-weight: 700; color: #fff; display: block; line-height: 1.25; text-shadow: 0 2rpx 8rpx rgba(0,0,0,0.3); }
+.hero-loc { font-size: 22rpx; color: rgba(255,255,255,0.85); margin-top: 8rpx; display: inline-block; background: rgba(0,0,0,0.35); padding: 4rpx 14rpx; border-radius: 20rpx; }
+
+/* ===== 作者信息卡片 ===== */
+.author-card { background: #fff; border-radius: 24rpx 24rpx 0 0; margin-top: -20rpx; padding: 24rpx 24rpx 16rpx; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 2; }
+.author-left { display: flex; align-items: center; gap: 16rpx; }
+.author-avatar { width: 64rpx; height: 64rpx; border-radius: 50%; background: #1F5FA8; color: #fff; text-align: center; line-height: 64rpx; font-size: 24rpx; flex-shrink: 0; }
+.author-info { display: flex; flex-direction: column; }
+.author-name { font-size: 30rpx; font-weight: 600; color: #1A1A1A; line-height: 1.2; }
+.author-date { font-size: 22rpx; color: #8C8C8C; margin-top: 4rpx; }
+.author-stats { display: flex; gap: 16rpx; }
+.stat-item { font-size: 22rpx; color: #BFBFBF; }
+
+/* ===== 正文 ===== */
+.content-wrap { background: #fff; padding: 0 24rpx 30rpx; }
+.content-text { font-size: 28rpx; color: #333; line-height: 1.8; white-space: pre-wrap; display: block; }
+
+/* ===== 评论 ===== */
+.comment-section { background: #fff; padding: 20rpx 24rpx 0; margin-top: 16rpx; }
+.comment-section-title { font-size: 28rpx; font-weight: 600; color: #1A1A1A; display: block; margin-bottom: 16rpx; }
+.empty-comments { text-align: center; color: #BFBFBF; font-size: 24rpx; padding: 40rpx 0; }
+.comment-item { display: flex; gap: 14rpx; padding: 16rpx 0; border-bottom: 1px solid #F5F5F5; }
+.comment-item:last-child { border-bottom: none; }
+.comment-avatar { width: 48rpx; height: 48rpx; border-radius: 50%; background: #1F5FA8; color: #fff; text-align: center; line-height: 48rpx; font-size: 20rpx; flex-shrink: 0; }
+.comment-body { flex: 1; }
+.comment-header { display: flex; align-items: center; gap: 10rpx; margin-bottom: 4rpx; }
+.comment-name { font-size: 24rpx; font-weight: 600; color: #1A1A1A; }
+.comment-time { font-size: 20rpx; color: #BFBFBF; }
+.comment-text { font-size: 26rpx; color: #595959; line-height: 1.5; }
+.comment-actions { margin-top: 6rpx; }
+.comment-reply { font-size: 20rpx; color: #1F5FA8; padding: 4rpx 12rpx; border-radius: 6rpx; background: #F0F5FF; }
+
+/* ===== 操作按钮行 ===== */
+.action-bar { display: flex; background: #fff; padding: 12rpx 20rpx; gap: 8rpx; border-top: 1px solid #F5F5F5; }
+.action-btn { flex: 1; text-align: center; padding: 10rpx 0; font-size: 22rpx; color: #666; border-radius: 8rpx; background: #F7F8FA; }
+.action-btn.active { color: #FF4D4F; background: #FFF1F0; }
+
+/* ===== 回复提示 ===== */
+.reply-hint { background: #FFF7E6; padding: 12rpx 24rpx; display: flex; justify-content: space-between; font-size: 22rpx; color: #8C6B00; }
+.reply-cancel { color: #1F5FA8; padding: 0 8rpx; }
+
+/* ===== 底部固定悬浮栏 ===== */
+.footer-bar { position: fixed; bottom: 0; left: 0; right: 0; background: rgba(255,255,255,0.95); backdrop-filter: blur(10px); padding: 12rpx 20rpx; display: flex; align-items: center; gap: 16rpx; box-shadow: 0 -2rpx 10rpx rgba(0,0,0,0.06); z-index: 100; }
+.footer-input { flex: 1; height: 64rpx; background: #F5F5F5; border-radius: 32rpx; padding: 0 24rpx; font-size: 24rpx; display: flex; align-items: center; }
+.footer-input input { width: 100%; font-size: 24rpx; background: transparent; }
+.footer-actions { display: flex; align-items: center; gap: 12rpx; }
+.footer-like { width: 64rpx; height: 64rpx; border-radius: 50%; border: 1px solid #FF4D4F; text-align: center; line-height: 64rpx; font-size: 28rpx; }
+.footer-like.liked { background: #FF4D4F; }
+.footer-submit { background: #1F5FA8; color: #fff; border: none; border-radius: 32rpx; padding: 0 28rpx; height: 64rpx; line-height: 64rpx; font-size: 24rpx; text-align: center; }

@@ -1,0 +1,32 @@
+<view class="page">
+  <view class="section-title">🏡 苗寨民宿</view>
+  <view class="section-desc">体验原生态苗家生活，住进风景里</view>
+
+  <!-- 民宿列表 -->
+  <view wx:if="{{homestays.length === 0 && !loading}}" class="empty-state">
+    <text>暂无民宿数据</text>
+  </view>
+
+  <view class="homestay-list">
+    <view wx:for="{{homestays}}" wx:key="id" class="homestay-card" bindtap="goToDetail" data-id="{{item.id}}">
+      <image class="homestay-img" src="{{item.coverImage}}" mode="aspectFill" />
+      <view class="homestay-info">
+        <view class="homestay-header">
+          <text class="homestay-name">{{item.name}}</text>
+          <text class="homestay-rating">★ {{item.rating}}</text>
+        </view>
+        <view class="facility-tags">
+          <text wx:for="{{item.displayFacilities || []}}" wx:key="index" class="facility-tag">{{item}}</text>
+        </view>
+        <view class="homestay-footer">
+          <text class="homestay-address">📍 乌东苗寨</text>
+          <text class="homestay-price">¥{{item.min_price || '??'}}<text class="price-unit">起</text></text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <view class="load-more" wx:if="{{loading}}">
+    <text>加载中...</text>
+  </view>
+</view>
