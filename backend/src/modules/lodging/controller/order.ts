@@ -12,6 +12,16 @@ export class OrderController {
   @Inject()
   orderService: OrderService;
 
+  /**
+   * 统一获取当前用户 ID。
+   * 规则：优先取 JWT 注入的 currentUser.id；无鉴权时统一回退到 1（游客/开发环境）。
+   */
+  private getUserId(ctx: Context): number {
+    const id = (ctx as any)?.currentUser?.id;
+    if (id != null) return Number(id);
+    return 1; // 游客或开发环境统一回退
+  }
+
   // ==================== 游客端接口 ====================
 
   /**
@@ -20,8 +30,7 @@ export class OrderController {
    */
   @Post('/orders')
   async create(@Body() body: OrderCreateDTO, ctx: Context) {
-    // 游客端：从 header 或 body 获取临时用户ID，若无则用设备指纹
-    const userId = (ctx as any).currentUser?.id || body.contact_phone || 1;
+    const userId = this.getUserId(ctx);
     try {
       const data = await this.orderService.create(body, Number(userId) || 1);
       return { code: 200, message: '下单成功', data };
@@ -39,7 +48,7 @@ export class OrderController {
     ctx: Context
   ) {
     try {
-      const userId = (ctx as any).currentUser?.id || 1;
+      const userId = this.getUserId(ctx);
       const data = await this.orderService.list({ page, pageSize, status, userId });
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };
@@ -62,7 +71,7 @@ export class OrderController {
    */
   @Post('/order/cancel')
   async cancel(@Body() body: OrderCancelDTO, ctx: Context) {
-    const userId = (ctx as any).currentUser?.id || 1;
+    const userId = this.getUserId(ctx);
     try {
       const data = await this.orderService.cancel(body.orderId, userId, body.reason);
       return {
@@ -112,9 +121,9 @@ export class OrderController {
 
   /** PUT /api/lodging/admin/orders/:id/status — 订单状态流转 */
   @Put('/admin/orders/:id/status')
-  async updateStatus(@Param('id') id: number, @Body('status') status: string) {
+  async updateStatus(@Param('id') id: number, @Body('status') status: number) {
     try {
-      const data = await this.orderService.updateStatus(id, status);
+      const data = await this.orderService.updateStatus(id, Number(status));
       return { code: 200, message: '状态更新成功', data };
     } catch (err: any) {
       return { code: 400, message: err.message, data: null };
