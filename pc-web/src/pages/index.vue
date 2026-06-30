@@ -100,7 +100,13 @@
               <div class="article-card-body">
                 <h3 class="article-card-title">{{ art.title }}</h3>
                 <div class="article-card-meta">
-                  <img :src="art.authorAvatar" alt="" class="author-avatar" />
+                  <img
+                    v-if="art.authorAvatar"
+                    :src="art.authorAvatar"
+                    alt=""
+                    class="author-avatar"
+                    @error="art.authorAvatar = ''"
+                  />
                   <span class="author-name">{{ art.author }}</span>
                   <span class="article-stats">{{ art.likes }}赞 · {{ art.comments }}评</span>
                 </div>
@@ -249,6 +255,11 @@ const fallbackArticles = [
   { title: '亲手打了一只银镯子——乌东银饰体验', cover: 'https://via.placeholder.com/600x400/F7F8FA/D4A14B?text=银饰', author: '手工艺爱好者', authorAvatar: 'https://via.placeholder.com/40x40/FFF7E6/D4A14B?text=H', likes: 189, comments: 55 },
 ];
 
+const normalizeImage = (value?: string | null) => {
+  const url = value?.trim();
+  return url || '';
+};
+
 const articles = ref(fallbackArticles);
 
 onMounted(async () => {
@@ -306,7 +317,7 @@ onMounted(async () => {
           title: item.title,
           cover: item.image || fallbackArticles[idx % fallbackArticles.length].cover,
           author: item.meta || '乌东文旅',
-          authorAvatar: fallbackArticles[idx % fallbackArticles.length].authorAvatar,
+          authorAvatar: normalizeImage(item.authorAvatar || item.avatar || item.userAvatar),
           likes: item.likes || 0,
           comments: item.comments || 0,
         }))

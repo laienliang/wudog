@@ -24,7 +24,13 @@
             <div class="masonry-body">
               <h3 class="masonry-title">{{ art.title }}</h3>
               <div class="masonry-footer">
-                <img :src="art.authorAvatar" alt="" class="author-avatar" />
+                <img
+                  v-if="art.authorAvatar"
+                  :src="art.authorAvatar"
+                  alt=""
+                  class="author-avatar"
+                  @error="art.authorAvatar = ''"
+                />
                 <span class="author-name">{{ art.author }}</span>
                 <span class="masonry-stats">❤ {{ art.likes }} · 💬 {{ art.comments }}</span>
               </div>
@@ -51,18 +57,23 @@ const fallbackArticles = [
   { title: '苗寨民宿推荐｜吊脚楼里的星空之夜', cover: 'https://via.placeholder.com/600x450/F7F8FA/6B8E3D?text=民宿', author: '民宿控', authorAvatar: 'https://via.placeholder.com/40x40/F6FFED/6B8E3D?text=R', likes: 156, comments: 42 },
 ];
 
+const normalizeImage = (value?: string | null) => {
+  const url = value?.trim();
+  return url || '';
+};
+
 const articles = ref(fallbackArticles);
 
 onMounted(async () => {
   try {
     const res = await clientApi.page('article', { page: 1, pageSize: 20 });
     articles.value = res?.list?.length
-      ? res.list.map((item, idx) => ({
+        ? res.list.map((item, idx) => ({
           id: item.id,
           title: item.title,
           cover: item.image || fallbackArticles[idx % fallbackArticles.length].cover,
           author: item.meta || '乌东游客',
-          authorAvatar: fallbackArticles[idx % fallbackArticles.length].authorAvatar,
+          authorAvatar: normalizeImage(item.authorAvatar || item.avatar || item.userAvatar),
           likes: item.likes || 0,
           comments: item.comments || 0,
         }))
