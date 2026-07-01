@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="logo-area">
+    <view class="logo">乌东</view>
+    <view class="subtitle">非遗商品平台</view>
+  </view>
+
+  <view class="form card">
+    <view class="form-item">
+      <input placeholder="用户名" value="{{username}}" bindinput="onUsernameInput" />
+    </view>
+    <view class="form-item">
+      <input placeholder="密码" password value="{{password}}" bindinput="onPasswordInput" />
+    </view>
+    <view class="form-item" wx:if="{{!isLogin}}">
+      <input placeholder="确认密码" password value="{{confirmPassword}}" bindinput="onConfirmPasswordInput" />
+    </view>
+    <view class="form-item" wx:if="{{!isLogin}}">
+      <input placeholder="昵称（选填）" value="{{nickname}}" bindinput="onNicknameInput" />
+    </view>
+    <button class="submit-btn" bindtap="onSubmit" loading="{{submitting}}">{{isLogin ? '登录' : '注册'}}</button>
+    <view class="switch-btn" bindtap="switchMode">{{isLogin ? '没有账号？去注册' : '已有账号？去登录'}}</view>
+  </view>
+</view>

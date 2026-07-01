@@ -1,0 +1,86 @@
+2026-07-01 00:07:41.098 ERROR 3764 [-/::1/-/2ms POST /api/upload/image] TypeError: req.on is not a function
+    at multerMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\multer\lib\make-middleware.js:119:9)
+    at C:\Users\13113\Desktop\wudong\backend\src\controller\UploadController.ts:24:28
+    at new Promise (<anonymous>)
+    at UploadController.uploadImage (C:\Users\13113\Desktop\wudong\backend\src\controller\UploadController.ts:23:12)
+    at C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\common\webGenerator.js:43:61
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:45:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+2026-07-01 00:25:27.944 WARN 23284 [-/::1/-/6ms GET /uploads/1782836290541-in5mf3.png] NotFoundError: /uploads/1782836290541-in5mf3.png Not Found
+    at notFound (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:137:23)
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:48:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+    at async session (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\session\dist\middleware\session.js:137:17)
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:273:40
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:267:24
+    at async midwayRootMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:143:13) {
+  code: '404',
+  cause: undefined,
+  status: 404
+}
+2026-07-01 00:25:45.861 WARN 23284 [-/::1/-/4ms GET /uploads/1782836231170-oqkh78.png] NotFoundError: /uploads/1782836231170-oqkh78.png Not Found
+    at notFound (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:137:23)
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:48:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+    at async session (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\session\dist\middleware\session.js:137:17)
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:273:40
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:267:24
+    at async midwayRootMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:143:13) {
+  code: '404',
+  cause: undefined,
+  status: 404
+}
+2026-07-01 00:25:45.863 WARN 23284 [-/::1/-/5ms GET /uploads/1782836290541-in5mf3.png] NotFoundError: /uploads/1782836290541-in5mf3.png Not Found
+    at notFound (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:137:23)
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:48:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+    at async session (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\session\dist\middleware\session.js:137:17)
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:273:40
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:267:24
+    at async midwayRootMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:143:13) {
+  code: '404',
+  cause: undefined,
+  status: 404
+}
+2026-07-01 00:25:45.865 WARN 23284 [-/::1/-/6ms GET /uploads/1782836577756-8bxx03.jpg] NotFoundError: /uploads/1782836577756-8bxx03.jpg Not Found
+    at notFound (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:137:23)
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:48:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+    at async session (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\session\dist\middleware\session.js:137:17)
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:273:40
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:267:24
+    at async midwayRootMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:143:13) {
+  code: '404',
+  cause: undefined,
+  status: 404
+}
+2026-07-01 00:25:45.867 WARN 23284 [-/::1/-/8ms GET /uploads/1782836604427-3hw9fp.jpg] NotFoundError: /uploads/1782836604427-3hw9fp.jpg Not Found
+    at notFound (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:137:23)
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:48:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)
+    at async session (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\session\dist\middleware\session.js:137:17)
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:273:40
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\baseFramework.js:267:24
+    at async midwayRootMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\koa\dist\framework.js:143:13) {
+  code: '404',
+  cause: undefined,
+  status: 404
+}

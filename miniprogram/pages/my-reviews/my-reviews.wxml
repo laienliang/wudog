@@ -1,0 +1,17 @@
+<view class="container">
+  <view class="review-list" wx:if="{{reviews.length > 0}}">
+    <view class="review-item card" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-header">
+        <text class="review-rating">{{item.ratingText}}</text>
+        <text class="review-time">{{item.created_at}}</text>
+      </view>
+      <view class="review-content">{{item.content || '用户未填写评价'}}</view>
+      <view class="review-reply" wx:if="{{item.reply}}">
+        <text class="reply-label">商家回复：</text>{{item.reply}}
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && reviews.length === 0}}">暂无评价</view>
+  <view class="loading-state" wx:if="{{loading}}">加载中...</view>
+</view>

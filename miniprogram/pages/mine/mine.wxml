@@ -1,0 +1,51 @@
+<view class="container">
+  <!-- 用户信息区 -->
+  <view class="user-header">
+    <view class="avatar" wx:if="{{isLoggedIn && userInfo}}">
+      <image wx:if="{{userInfo.avatar}}" src="{{userInfo.avatar}}" mode="aspectFill" />
+      <text wx:else class="avatar-text">{{userInitial}}</text>
+    </view>
+    <view class="avatar" wx:else bindtap="goLogin">
+      <text class="avatar-text">?</text>
+    </view>
+    <view class="user-info" wx:if="{{isLoggedIn && userInfo}}">
+      <view class="user-name">{{userInfo.nickname || userInfo.username}}</view>
+      <view class="user-id">ID: {{userInfo.id}}</view>
+    </view>
+    <view class="user-info" wx:else bindtap="goLogin">
+      <view class="user-name">点击登录</view>
+    </view>
+  </view>
+
+  <!-- 菜单列表 -->
+  <view class="menu-list card">
+    <view class="menu-item" bindtap="goPage" data-url="/pages/my-orders/my-orders">
+      <text class="menu-icon">📦</text>
+      <text class="menu-text">我的订单</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/my-reviews/my-reviews">
+      <text class="menu-icon">⭐</text>
+      <text class="menu-text">我的评价</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/favorites/favorites">
+      <text class="menu-icon">❤️</text>
+      <text class="menu-text">我的收藏</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/address/address">
+      <text class="menu-icon">📍</text>
+      <text class="menu-text">地址管理</text>
+      <text class="menu-arrow">></text>
+    </view>
+    <view class="menu-item" bindtap="goPage" data-url="/pages/profile/profile">
+      <text class="menu-icon">👤</text>
+      <text class="menu-text">个人中心</text>
+      <text class="menu-arrow">></text>
+    </view>
+  </view>
+
+  <!-- 退出登录 -->
+  <view class="logout-btn" wx:if="{{isLoggedIn}}" bindtap="onLogout">退出登录</view>
+</view>

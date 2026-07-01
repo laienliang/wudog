@@ -1,0 +1,33 @@
+2026-06-30 23:39:41.589 ERROR 21916 [-/::1/-/5ms GET /api/product/list] MidwayDefinitionNotFoundError: redisClient in class ProductService in class ProductController is not valid in current context
+    at MidwayContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\container.js:454:19)
+    at MidwayRequestContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\requestContainer.js:67:32)
+    at RefResolver.resolveAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:57:37)
+    at ManagedResolverFactory.resolveManagedAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:91:25)
+    at ManagedResolverFactory.createAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:238:44)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'MIDWAY_10003',
+  cause: undefined,
+  Symbol(#NotFoundError): Symbol(#NotFoundError)
+}
+2026-06-30 23:40:20.469 ERROR 23360 [-/::1/-/5ms GET /api/product/list] MidwayDefinitionNotFoundError: redisClient in class ProductService in class ProductController is not valid in current context
+    at MidwayContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\container.js:454:19)
+    at MidwayRequestContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\requestContainer.js:67:32)
+    at RefResolver.resolveAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:57:37)
+    at ManagedResolverFactory.resolveManagedAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:91:25)
+    at ManagedResolverFactory.createAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:238:44)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'MIDWAY_10003',
+  cause: undefined,
+  Symbol(#NotFoundError): Symbol(#NotFoundError)
+}
+2026-06-30 23:41:02.109 ERROR 22692 [-/::1/-/5ms GET /api/product/list] MidwayDefinitionNotFoundError: RedisService in class ProductService in class ProductController is not valid in current context
+    at MidwayContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\container.js:454:19)
+    at MidwayRequestContainer.getAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\requestContainer.js:67:32)
+    at RefResolver.resolveAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:57:37)
+    at ManagedResolverFactory.resolveManagedAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:91:25)
+    at ManagedResolverFactory.createAsync (C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\context\managedResolverFactory.js:238:44)
+    at processTicksAndRejections (node:internal/process/task_queues:104:5) {
+  code: 'MIDWAY_10003',
+  cause: undefined,
+  Symbol(#NotFoundError): Symbol(#NotFoundError)
+}

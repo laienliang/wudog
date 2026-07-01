@@ -1,0 +1,160 @@
+/* 全局样式 */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* 自定义滚动条 */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #c1c1c1;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #a8a8a8;
+}
+
+/* Ant Design 主题覆盖 */
+.ant-layout-sider .ant-menu-dark {
+  background: transparent;
+}
+
+.ant-layout-sider .ant-menu-dark .ant-menu-item-selected {
+  background: rgba(201, 169, 110, 0.2) !important;
+  border-right: 3px solid #c9a96e;
+}
+
+.ant-layout-sider .ant-menu-dark .ant-menu-item:hover {
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.ant-btn-primary {
+  background: #c9a96e;
+  border-color: #c9a96e;
+}
+
+.ant-btn-primary:hover {
+  background: #b8944a;
+  border-color: #b8944a;
+}
+
+.ant-switch-checked {
+  background-color: #c9a96e !important;
+}
+
+/* 表格样式 */
+.ant-table {
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.ant-table-thead > tr > th {
+  background: #fafafa !important;
+  font-weight: 600;
+  color: #1a1a2e;
+}
+
+/* 卡片样式 */
+.ant-card {
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+}
+
+/* 输入框焦点状态 */
+.ant-input:focus,
+.ant-input-focused,
+.ant-select-focused .ant-select-selector {
+  border-color: #c9a96e !important;
+  box-shadow: 0 0 0 2px rgba(201, 169, 110, 0.1) !important;
+}
+
+/* 标签样式 */
+.ant-tag {
+  border-radius: 4px;
+}
+
+/* 模态框样式 */
+.ant-modal-content {
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-modal-header {
+  border-bottom: 1px solid #f0f0f0;
+}
+
+/* 分页器样式 */
+.ant-pagination-item-active {
+  border-color: #c9a96e;
+}
+
+.ant-pagination-item-active a {
+  color: #c9a96e;
+}
+
+/* 加载动画 */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.fade-in {
+  animation: fadeIn 0.3s ease-out;
+}
+
+/* 侧边栏折叠动画 */
+.ant-layout-sider {
+  transition: all 0.2s;
+}
+
+/* 按钮悬停效果 */
+.ant-btn {
+  transition: all 0.2s;
+}
+
+/* 表格行悬停效果 */
+.ant-table-tbody > tr:hover > td {
+  background: #fafafa !important;
+}
+
+/* 下拉菜单样式 */
+.ant-dropdown-menu {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 消息提示样式 */
+.ant-message-notice-content {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+/* 确认框样式 */
+.ant-popconfirm .ant-popover-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}

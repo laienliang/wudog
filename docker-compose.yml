@@ -1,0 +1,73 @@
+services:
+  mysql:
+    image: mysql:8.0
+    container_name: wudong-mysql
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: '123456'
+      MYSQL_DATABASE: wudong
+      MYSQL_CHARSET: utf8mb4
+      MYSQL_COLLATION: utf8mb4_unicode_ci
+    volumes:
+      - mysql-data:/var/lib/mysql
+      - ./backend/sql/init.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - '3307:3306'
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    healthcheck:
+      test: ['CMD', 'mysqladmin', 'ping', '-h', 'localhost', '-uroot', '-p123456']
+      interval: 10s
+      timeout: 5s
+      retries: 10
+
+  redis:
+    image: redis:7-alpine
+    container_name: wudong-redis
+    restart: unless-stopped
+    ports:
+      - '6379:6379'
+
+  backend:
+    build: ./backend
+    container_name: wudong-backend
+    restart: unless-stopped
+    ports:
+      - '3000:3000'
+    depends_on:
+      mysql:
+        condition: service_healthy
+      redis:
+        condition: service_started
+    environment:
+      - MYSQL_HOST=mysql
+      - MYSQL_PORT=3306
+      - MYSQL_USER=root
+      - MYSQL_PASSWORD=123456
+      - MYSQL_DATABASE=wudong
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - JWT_SECRET=wudong-jwt-secret
+    volumes:
+      - uploads:/app/uploads
+
+  web:
+    build: ./web
+    container_name: wudong-web
+    restart: unless-stopped
+    ports:
+      - '8081:80'
+    depends_on:
+      - backend
+
+  admin:
+    build: ./admin
+    container_name: wudong-admin
+    restart: unless-stopped
+    ports:
+      - '8080:80'
+    depends_on:
+      - backend
+
+volumes:
+  mysql-data:
+  uploads:

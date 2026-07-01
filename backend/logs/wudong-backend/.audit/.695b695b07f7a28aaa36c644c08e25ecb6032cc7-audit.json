@@ -1,0 +1,20 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 7
+  },
+  "auditLog": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\.audit\\.695b695b07f7a28aaa36c644c08e25ecb6032cc7-audit.json",
+  "files": [
+    {
+      "date": 1782830842339,
+      "name": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\midway-app.log.2026-06-30",
+      "hash": "a44bda63f666b42b320af5adb3da52ac"
+    },
+    {
+      "date": 1782835285398,
+      "name": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\midway-app.log.2026-07-01",
+      "hash": "65d4f8ea02aa86ae8cd362bf647e40d0"
+    }
+  ],
+  "hashType": "md5"
+}

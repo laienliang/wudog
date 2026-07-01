@@ -1,0 +1,19 @@
+<view class="container">
+  <view class="fav-list" wx:if="{{favorites.length > 0}}">
+    <view class="fav-item card" wx:for="{{favorites}}" wx:key="id">
+      <view class="fav-main" bindtap="goDetail" data-id="{{item.product_id}}">
+        <image class="fav-image" src="{{item.imageUrl}}" mode="aspectFill" />
+        <view class="fav-info">
+          <view class="fav-name">{{item.productName}}</view>
+          <view class="fav-price">¥{{item.minPrice}}</view>
+        </view>
+      </view>
+      <view class="fav-actions">
+        <view class="unfav-btn" bindtap="onUnfavorite" data-id="{{item.product_id}}">取消收藏</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && favorites.length === 0}}">暂无收藏</view>
+  <view class="loading-state" wx:if="{{loading}}">加载中...</view>
+</view>

@@ -1,0 +1,49 @@
+<view class="container">
+  <view class="order-list" wx:if="{{orders.length > 0}}">
+    <view class="order-item card" wx:for="{{orders}}" wx:key="id">
+      <view class="order-header">
+        <text class="order-no">订单号：{{item.order_no}}</text>
+        <text class="order-status status-{{item.status}}">{{statusMap[item.status]}}</text>
+      </view>
+      <view class="order-status-tag" wx:if="{{item.cancel_request === 1}}">
+        <text class="tag {{item.cancel_type === 2 ? 'tag-return' : 'tag-cancel'}}">{{item.cancel_type === 2 ? '待退货' : '待取消'}}</text>
+      </view>
+      <view class="order-product">
+        <text class="product-name">{{item.product_name}}</text>
+        <text class="product-spec">{{item.spec_name}}</text>
+      </view>
+      <view class="order-info">
+        <text class="order-price">¥{{item.price}} x {{item.quantity}}</text>
+        <text class="order-receiver">{{item.receiver_name}} {{item.receiver_phone}}</text>
+      </view>
+      <view class="order-actions">
+        <!-- 待处理/已确认 且无取消申请 -->
+        <view wx:if="{{(item.status === 0 || item.status === 1) && item.cancel_request === 0}}" class="action-btn" bindtap="onCancel" data-id="{{item.id}}">取消订单</view>
+        <!-- 已完成 且无取消申请 -->
+        <view wx:if="{{item.status === 3 && item.cancel_request === 0}}" class="action-btn" bindtap="onReturn" data-id="{{item.id}}">申请退货</view>
+        <view wx:if="{{item.status === 3 && item.cancel_request === 0}}" class="action-btn primary" bindtap="onReview" data-id="{{item.id}}">评价</view>
+        <!-- 有取消申请 -->
+        <view wx:if="{{item.cancel_request === 1}}" class="action-btn" bindtap="onRevoke" data-id="{{item.id}}">撤销申请</view>
+      </view>
+    </view>
+  </view>
+
+  <view class="empty-state" wx:if="{{!loading && orders.length === 0}}">暂无订单</view>
+  <view class="loading-state" wx:if="{{loading}}">加载中...</view>
+
+  <!-- 评价弹窗 -->
+  <view class="modal-mask" wx:if="{{showReview}}" bindtap="onCloseReview">
+    <view class="modal" catchtap="">
+      <view class="modal-title">评价订单</view>
+      <view class="rating-row">
+        <text>评分：</text>
+        <slider min="1" max="5" value="{{reviewRating}}" show-value bindchange="onRatingChange" activeColor="#c9a96e" />
+      </view>
+      <textarea class="review-textarea" placeholder="写下您的评价..." value="{{reviewContent}}" bindinput="onReviewContentInput" />
+      <view class="modal-btns">
+        <button class="modal-cancel" bindtap="onCloseReview">取消</button>
+        <button class="modal-confirm" bindtap="onSubmitReview">提交</button>
+      </view>
+    </view>
+  </view>
+</view>

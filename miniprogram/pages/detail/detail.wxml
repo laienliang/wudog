@@ -1,0 +1,72 @@
+<view class="container" wx:if="{{product}}">
+  <!-- 图片轮播 -->
+  <swiper class="swiper" indicator-dots="{{product.images.length > 1}}" bindchange="onSwiperChange" autoplay circular>
+    <swiper-item wx:for="{{product.images}}" wx:key="id">
+      <image class="swiper-image" src="{{item.image_url}}" mode="aspectFill" />
+    </swiper-item>
+  </swiper>
+
+  <!-- 商品信息 -->
+  <view class="card info-card">
+    <view class="product-name">{{product.name}}</view>
+    <view class="product-category" wx:if="{{product.category}}">{{product.category.name}}</view>
+    <view class="product-price">¥{{selectedSku.price || product.min_price || '暂无'}}</view>
+    <view class="product-desc" wx:if="{{product.description}}">{{product.description}}</view>
+  </view>
+
+  <!-- SKU选择 -->
+  <view class="card" wx:if="{{product.skus.length > 0}}">
+    <view class="section-title">规格选择</view>
+    <view class="sku-list">
+      <view class="sku-item {{selectedSku.id === item.id ? 'active' : ''}} {{item.stock <= 0 ? 'disabled' : ''}}"
+        wx:for="{{product.skus}}" wx:key="id" bindtap="selectSku" data-index="{{index}}">
+        {{item.spec_name}} (库存:{{item.stock}})
+      </view>
+    </view>
+  </view>
+
+  <!-- 工艺介绍 -->
+  <view class="card" wx:if="{{product.craft_intro}}">
+    <view class="section-title">工艺介绍</view>
+    <view class="section-content">{{product.craft_intro}}</view>
+  </view>
+
+  <!-- 传承人信息 -->
+  <view class="card" wx:if="{{product.artisan_info}}">
+    <view class="section-title">传承人信息</view>
+    <view class="section-content">{{product.artisan_info}}</view>
+  </view>
+
+  <!-- 用户评价 -->
+  <view class="card" wx:if="{{reviews.length > 0}}">
+    <view class="section-title">用户评价 ({{reviews.length}})</view>
+    <view class="review-item" wx:for="{{reviews}}" wx:key="id">
+      <view class="review-header">
+        <text class="review-rating">{{item.ratingText}}</text>
+        <text class="review-time">{{item.created_at}}</text>
+      </view>
+      <view class="review-content">{{item.content || '用户未填写评价'}}</view>
+      <view class="review-reply" wx:if="{{item.reply}}">
+        <text class="reply-label">商家回复：</text>{{item.reply}}
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部操作栏 -->
+  <view class="bottom-bar">
+    <view class="bottom-left">
+      <view class="bottom-icon" bindtap="goChat">
+        <text class="icon-text">咨询</text>
+      </view>
+      <view class="bottom-icon {{isFavorited ? 'favorited' : ''}}" bindtap="onFavorite">
+        <text class="icon-text">{{isFavorited ? '已收藏' : '收藏'}}</text>
+      </view>
+    </view>
+    <view class="bottom-right">
+      <button class="btn-add-cart" bindtap="onAddCart">加入购物车</button>
+      <button class="btn-buy" bindtap="onBuy" disabled="{{product.sold_out || (selectedSku && selectedSku.stock <= 0)}}">立即购买</button>
+    </view>
+  </view>
+</view>
+
+<view class="loading-state" wx:if="{{loading}}">加载中...</view>

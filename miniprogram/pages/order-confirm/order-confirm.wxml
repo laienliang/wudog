@@ -1,0 +1,51 @@
+<view class="container">
+  <!-- 收货地址 -->
+  <view class="card address-card" bindtap="goAddress">
+    <view wx:if="{{selectedAddress}}">
+      <view class="addr-name">{{selectedAddress.name}} {{selectedAddress.phone}}</view>
+      <view class="addr-detail">{{selectedAddress.province}} {{selectedAddress.city}} {{selectedAddress.district}} {{selectedAddress.town || ''}} {{selectedAddress.detail}}</view>
+    </view>
+    <view wx:else class="addr-empty">请选择收货地址</view>
+    <view class="addr-arrow">></view>
+  </view>
+
+  <!-- 商品信息 -->
+  <view class="card product-card">
+    <view class="product-name">{{productName}}</view>
+    <view class="product-spec">{{specName}}</view>
+    <view class="product-bottom">
+      <text class="product-price">¥{{price}}</text>
+      <text class="product-qty">x{{quantity}}</text>
+    </view>
+  </view>
+
+  <!-- 支付方式 -->
+  <view class="card pay-card">
+    <view class="pay-title">支付方式</view>
+    <view class="pay-item active">
+      <text>微信支付</text>
+      <view class="pay-radio checked">✓</view>
+    </view>
+  </view>
+
+  <!-- 合计 -->
+  <view class="card total-card">
+    <view class="total-row">
+      <text>商品金额</text>
+      <text>¥{{totalAmount}}</text>
+    </view>
+    <view class="total-row total-final">
+      <text>合计</text>
+      <text class="total-price">¥{{totalAmount}}</text>
+    </view>
+  </view>
+
+  <!-- 提交按钮 -->
+  <view class="bottom-bar">
+    <view class="total-info">
+      <text>合计：</text>
+      <text class="total-price">¥{{totalAmount}}</text>
+    </view>
+    <button class="submit-btn" bindtap="onSubmit" loading="{{submitting}}">提交订单</button>
+  </view>
+</view>

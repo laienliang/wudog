@@ -1,0 +1,40 @@
+.review-item {
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.review-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.review-rating {
+  color: #fadb14;
+  font-size: 28rpx;
+}
+
+.review-time {
+  font-size: 22rpx;
+  color: #999;
+}
+
+.review-content {
+  font-size: 28rpx;
+  color: #333;
+  line-height: 1.6;
+  margin-bottom: 12rpx;
+}
+
+.review-reply {
+  padding: 16rpx;
+  background: #f9f9f9;
+  border-radius: 8rpx;
+  font-size: 26rpx;
+  color: #666;
+}
+
+.reply-label {
+  color: #c9a96e;
+  font-weight: 500;
+}

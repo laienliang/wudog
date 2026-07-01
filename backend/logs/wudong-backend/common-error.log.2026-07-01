@@ -1,0 +1,11 @@
+2026-07-01 00:07:41.103 ERROR 3764 [-/::1/-/7ms POST /api/upload/image] TypeError: req.on is not a function
+    at multerMiddleware (C:\Users\13113\Desktop\wudong\backend\node_modules\multer\lib\make-middleware.js:119:9)
+    at C:\Users\13113\Desktop\wudong\backend\src\controller\UploadController.ts:24:28
+    at new Promise (<anonymous>)
+    at UploadController.uploadImage (C:\Users\13113\Desktop\wudong\backend\src\controller\UploadController.ts:23:12)
+    at C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\core\dist\common\webGenerator.js:43:61
+    at async C:\Users\13113\Desktop\wudong\backend\src\middleware\admin-auth.ts:45:9
+    at async serve (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-static\index.js:53:9)
+    at async C:\Users\13113\Desktop\wudong\backend\src\configuration.ts:32:7
+    at async C:\Users\13113\Desktop\wudong\backend\node_modules\@midwayjs\i18n\dist\middleware.js:150:17
+    at async bodyParser (C:\Users\13113\Desktop\wudong\backend\node_modules\koa-bodyparser\index.js:78:5)

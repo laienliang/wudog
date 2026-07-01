@@ -1,0 +1,20 @@
+{
+  "keep": {
+    "days": true,
+    "amount": 7
+  },
+  "auditLog": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\.audit\\.d1333e4068e3674739fc26d6fccd6be87642808b-audit.json",
+  "files": [
+    {
+      "date": 1782830842337,
+      "name": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\common-error.log.2026-06-30",
+      "hash": "08afec70a48d0e137ea1cbaf647247b2"
+    },
+    {
+      "date": 1782835285396,
+      "name": "C:\\Users\\13113\\Desktop\\wudong\\backend\\logs\\wudong-backend\\common-error.log.2026-07-01",
+      "hash": "503def80e0b036c9eb6d3b3eaef7ab4e"
+    }
+  ],
+  "hashType": "md5"
+}

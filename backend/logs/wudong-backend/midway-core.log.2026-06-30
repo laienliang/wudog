@@ -1,0 +1,16 @@
+2026-06-30 23:39:30.724 INFO 21916 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:39:30.730 INFO 21916 [midway:redis] client connect success
+2026-06-30 23:39:32.767 INFO 8456 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:39:32.771 INFO 8456 [midway:redis] client connect success
+2026-06-30 23:40:08.904 INFO 23360 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:40:08.908 INFO 23360 [midway:redis] client connect success
+2026-06-30 23:40:50.510 INFO 22692 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:40:50.514 INFO 22692 [midway:redis] client connect success
+2026-06-30 23:41:24.600 INFO 3176 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:41:24.604 INFO 3176 [midway:redis] client connect success
+2026-06-30 23:43:00.482 INFO 23236 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:43:00.486 INFO 23236 [midway:redis] client connect success
+2026-06-30 23:55:11.268 INFO 22972 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:55:11.271 INFO 22972 [midway:redis] client connect success
+2026-06-30 23:55:33.134 INFO 9084 [midway:redis] server connecting redis://:***@localhost:6380
+2026-06-30 23:55:33.138 INFO 9084 [midway:redis] client connect success

@@ -1,0 +1,20 @@
+<view class="chat-container">
+  <!-- 消息列表 -->
+  <scroll-view class="messages" scroll-y scroll-into-view="{{scrollTo}}">
+    <view class="empty-hint" wx:if="{{messages.length === 0}}">
+      <text>您好！有什么可以帮您的吗？</text>
+    </view>
+    <view class="msg-item {{item.sender_type === 'user' ? 'msg-right' : 'msg-left'}}" wx:for="{{messages}}" wx:key="id" id="msg-{{item.id}}">
+      <view class="bubble {{item.sender_type === 'user' ? 'bubble-right' : 'bubble-left'}}">
+        {{item.content}}
+      </view>
+      <text class="msg-time">{{item.created_at}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 输入区域 -->
+  <view class="input-bar">
+    <input class="chat-input" placeholder="输入消息..." value="{{input}}" bindinput="onInput" bindconfirm="onSend" />
+    <button class="send-btn" bindtap="onSend" disabled="{{!input.trim() || sending}}">发送</button>
+  </view>
+</view>

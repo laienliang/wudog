@@ -1,0 +1,170 @@
+.order-item {
+  padding: 24rpx;
+  margin-bottom: 16rpx;
+}
+
+.order-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 12rpx;
+}
+
+.order-no {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.order-status {
+  font-size: 24rpx;
+  font-weight: 500;
+}
+
+.status-0 { color: #faad14; }
+.status-1 { color: #1890ff; }
+.status-2 { color: #52c41a; }
+.status-3 { color: #52c41a; }
+.status-4 { color: #999; }
+
+.order-status-tag {
+  margin-bottom: 12rpx;
+}
+
+.tag {
+  font-size: 22rpx;
+  padding: 4rpx 12rpx;
+  border-radius: 4rpx;
+}
+
+.tag-cancel {
+  color: #faad14;
+  background: #fffbe6;
+}
+
+.tag-return {
+  color: #fa8c16;
+  background: #fff7e6;
+}
+
+.order-product {
+  margin-bottom: 12rpx;
+}
+
+.product-name {
+  font-size: 28rpx;
+  font-weight: 500;
+  margin-right: 16rpx;
+}
+
+.product-spec {
+  font-size: 24rpx;
+  color: #999;
+}
+
+.order-info {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 16rpx;
+}
+
+.order-price {
+  font-size: 28rpx;
+  color: #f5222d;
+  font-weight: 600;
+}
+
+.order-receiver {
+  font-size: 24rpx;
+  color: #666;
+}
+
+.order-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 16rpx;
+}
+
+.action-btn {
+  padding: 10rpx 24rpx;
+  border: 1rpx solid #d9d9d9;
+  border-radius: 8rpx;
+  font-size: 24rpx;
+  color: #666;
+}
+
+.action-btn.primary {
+  background: #c9a96e;
+  color: #fff;
+  border-color: #c9a96e;
+}
+
+.modal-mask {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  width: 650rpx;
+  background: #fff;
+  border-radius: 16rpx;
+  padding: 40rpx;
+}
+
+.modal-title {
+  font-size: 32rpx;
+  font-weight: 600;
+  text-align: center;
+  margin-bottom: 30rpx;
+}
+
+.rating-row {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+  font-size: 28rpx;
+}
+
+.rating-row slider {
+  flex: 1;
+}
+
+.review-textarea {
+  width: 100%;
+  height: 200rpx;
+  padding: 20rpx;
+  background: #f5f5f5;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+  margin-bottom: 20rpx;
+  box-sizing: border-box;
+}
+
+.modal-btns {
+  display: flex;
+  gap: 20rpx;
+}
+
+.modal-cancel {
+  flex: 1;
+  background: #f5f5f5;
+  color: #333;
+  border: none;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
+
+.modal-confirm {
+  flex: 1;
+  background: #c9a96e;
+  color: #fff;
+  border: none;
+  border-radius: 8rpx;
+  font-size: 28rpx;
+}
