@@ -12,6 +12,8 @@ export default function CategoryManage() {
 
   useEffect(() => {
     loadCategories();
+    const timer = setInterval(loadCategories, 10000);
+    return () => clearInterval(timer);
   }, []);
 
   const loadCategories = async () => {
@@ -82,7 +84,7 @@ export default function CategoryManage() {
       render: (_, record) => (
         <Space>
           <Button type="link" size="small" onClick={() => handleEdit(record)}>编辑</Button>
-          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)} okText="确定" cancelText="取消">
             <Button type="link" size="small" danger>删除</Button>
           </Popconfirm>
         </Space>

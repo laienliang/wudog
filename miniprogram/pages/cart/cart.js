@@ -25,6 +25,7 @@ Page({
           productName: item.product?.name || '商品',
           specName: sku?.spec_name || '',
           price: sku?.price || 0,
+          stock: sku?.stock || 0,
         };
       });
       this.setData({ cartItems: items });
@@ -53,6 +54,9 @@ Page({
     const item = this.data.cartItems[index];
     let quantity = item.quantity + (type === 'add' ? 1 : -1);
     if (quantity < 1) quantity = 1;
+    if (type === 'add' && item.stock && quantity > item.stock) {
+      quantity = item.stock;
+    }
     try {
       await updateCartItem(item.id, { quantity });
       const items = this.data.cartItems;
@@ -90,7 +94,7 @@ Page({
       wx.showToast({ title: '该规格已售罄', icon: 'none' }); return;
     }
     wx.navigateTo({
-      url: `/pages/order-confirm/order-confirm?productId=${item.product_id}&skuId=${item.sku_id}&productName=${encodeURIComponent(item.productName)}&specName=${encodeURIComponent(item.specName)}&price=${item.price}&quantity=${item.quantity}&cartId=${item.id}`,
+      url: `/pages/order-confirm/order-confirm?productId=${item.product_id}&skuId=${item.sku_id}&productName=${encodeURIComponent(item.productName)}&specName=${encodeURIComponent(item.specName)}&price=${item.price}&quantity=${item.quantity}&cartId=${item.id}&stock=${item.stock}`,
     });
   },
 });

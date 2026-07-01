@@ -1,6 +1,6 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { Outlet, useNavigate, useLocation } from 'react-router-dom';
-import { Layout, Menu, Button, theme, Avatar, Dropdown } from 'antd';
+import { Layout, Menu, Button, theme, Avatar, Dropdown, Badge } from 'antd';
 import {
   ShoppingOutlined,
   AppstoreOutlined,
@@ -13,6 +13,7 @@ import {
   MessageOutlined,
   StarOutlined,
 } from '@ant-design/icons';
+import { getAdminConversations, getOrderList, getReviewList } from '../utils/api';
 
 const { Header, Sider, Content } = Layout;
 
@@ -20,7 +21,32 @@ export default function AdminLayout() {
   const navigate = useNavigate();
   const location = useLocation();
   const [collapsed, setCollapsed] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [pendingOrders, setPendingOrders] = useState(0);
+  const [pendingReviews, setPendingReviews] = useState(0);
+  const pollRef = useRef(null);
   const { token: { colorBgContainer, borderRadiusLG } } = theme.useToken();
+
+  useEffect(() => {
+    const fetchAll = async () => {
+      try {
+        const [chatRes, orderRes, reviewRes] = await Promise.all([
+          getAdminConversations(),
+          getOrderList({ pageSize: 100 }),
+          getReviewList({ pageSize: 100 }),
+        ]);
+        const chatTotal = (chatRes.data?.list || chatRes.data || []).reduce((sum, c) => sum + (c.unread || 0), 0);
+        setUnreadCount(chatTotal);
+        const orders = orderRes.data?.list || [];
+        setPendingOrders(orders.filter(o => o.cancel_request === 1).length);
+        const reviews = reviewRes.data?.list || [];
+        setPendingReviews(reviews.filter(r => !r.reply).length);
+      } catch {}
+    };
+    fetchAll();
+    pollRef.current = setInterval(fetchAll, 5000);
+    return () => clearInterval(pollRef.current);
+  }, []);
 
   const handleLogout = () => {
     localStorage.removeItem('admin_token');
@@ -41,17 +67,32 @@ export default function AdminLayout() {
     {
       key: '/orders',
       icon: <OrderedListOutlined />,
-      label: '订单管理',
+      label: (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          订单管理
+          {pendingOrders > 0 && <Badge count={pendingOrders} size="small" offset={[0, 0]} />}
+        </span>
+      ),
     },
     {
       key: '/chat',
       icon: <MessageOutlined />,
-      label: '客服聊天',
+      label: (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          客服聊天
+          {unreadCount > 0 && <Badge count={unreadCount} size="small" offset={[0, 0]} />}
+        </span>
+      ),
     },
     {
       key: '/reviews',
       icon: <StarOutlined />,
-      label: '评价管理',
+      label: (
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 8 }}>
+          评价管理
+          {pendingReviews > 0 && <Badge count={pendingReviews} size="small" offset={[0, 0]} />}
+        </span>
+      ),
     },
   ];
 

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { getOrderList, requestCancelOrder, requestReturnOrder, revokeCancelOrder, createReview } from '../utils/api';
+import { getOrderList, requestCancelOrder, requestReturnOrder, revokeCancelOrder, createReview, markOrdersRead } from '../utils/api';
 import Header from './Header';
 
 const STATUS_MAP = {
@@ -29,6 +29,8 @@ export default function MyOrders() {
       return;
     }
     loadOrders();
+    const timer = setInterval(loadOrders, 10000);
+    return () => clearInterval(timer);
   }, [user]);
 
   const loadOrders = async () => {
@@ -36,6 +38,7 @@ export default function MyOrders() {
     try {
       const res = await getOrderList({ userId: user.id });
       setOrders(res.data?.list || []);
+      markOrdersRead().catch(() => {});
     } catch {
       setOrders([]);
     } finally {

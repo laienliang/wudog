@@ -225,7 +225,7 @@ const styles = {
   },
   badge: {
     position: 'absolute',
-    top: 14,
+    bottom: 12,
     right: 16,
   },
   chatArea: {

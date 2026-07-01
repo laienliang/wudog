@@ -11,6 +11,7 @@ Page({
     quantity: 1,
     totalAmount: '0.00',
     cartId: '',
+    stock: 0,
     addresses: [],
     selectedAddress: null,
     submitting: false,
@@ -28,6 +29,7 @@ Page({
       quantity,
       totalAmount: (price * quantity).toFixed(2),
       cartId: options.cartId || '',
+      stock: Number(options.stock) || 0,
     });
     this.loadAddresses();
   },

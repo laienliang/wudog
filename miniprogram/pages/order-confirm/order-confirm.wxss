@@ -43,6 +43,12 @@
   margin-bottom: 16rpx;
 }
 
+.product-stock {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 16rpx;
+}
+
 .product-bottom {
   display: flex;
   justify-content: space-between;

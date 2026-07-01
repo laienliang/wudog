@@ -11,6 +11,7 @@
     <view class="product-name">{{product.name}}</view>
     <view class="product-category" wx:if="{{product.category}}">{{product.category.name}}</view>
     <view class="product-price">¥{{selectedSku.price || product.min_price || '暂无'}}</view>
+    <view class="product-stock">库存:{{selectedSku.stock || product.stock || 0}}</view>
     <view class="product-desc" wx:if="{{product.description}}">{{product.description}}</view>
   </view>
 

@@ -34,6 +34,8 @@ export default function ProductManage() {
 
   useEffect(() => {
     loadProducts();
+    const timer = setInterval(loadProducts, 10000);
+    return () => clearInterval(timer);
   }, [page, statusFilter]);
 
   const loadCategories = async () => {
@@ -185,6 +187,11 @@ export default function ProductManage() {
       width: 100,
     },
     {
+      title: '库存',
+      dataIndex: 'stock',
+      width: 80,
+    },
+    {
       title: '状态',
       dataIndex: 'status',
       width: 100,
@@ -210,7 +217,7 @@ export default function ProductManage() {
         <Space>
           <Button type="link" size="small" onClick={() => handleEdit(record)}>编辑</Button>
           <Button type="link" size="small" onClick={() => openImageModal(record.id)}>图片</Button>
-          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title="确认删除?" onConfirm={() => handleDelete(record.id)} okText="确定" cancelText="取消">
             <Button type="link" size="small" danger>删除</Button>
           </Popconfirm>
         </Space>
@@ -320,7 +327,7 @@ export default function ProductManage() {
               <div style={{ flex: 1, overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap', fontSize: 12, color: '#666' }}>
                 {img.image_url}
               </div>
-              <Popconfirm title="确认删除?" onConfirm={() => handleDeleteImage(img.id)}>
+              <Popconfirm title="确认删除?" onConfirm={() => handleDeleteImage(img.id)} okText="确定" cancelText="取消">
                 <Button type="link" size="small" danger icon={<DeleteOutlined />} />
               </Popconfirm>
             </div>

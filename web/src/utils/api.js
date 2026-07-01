@@ -50,3 +50,8 @@ export const getChatUnread = (targetId) => request.get(`/api/chat/unread/${targe
 export const createReview = (data) => request.post('/api/review/create', data);
 export const getProductReviews = (productId, params) => request.get(`/api/review/product/${productId}`, { params });
 export const getMyReviews = (params) => request.get('/api/review/my', { params });
+
+// 通知
+export const getNotificationCount = () => request.get('/api/notification/count');
+export const markOrdersRead = () => request.put('/api/notification/read-orders');
+export const markReviewsRead = () => request.put('/api/notification/read-reviews');

@@ -83,7 +83,7 @@ Page({
     if (!selectedSku) { wx.showToast({ title: '请选择规格', icon: 'none' }); return; }
     if (selectedSku.stock <= 0) { wx.showToast({ title: '已售罄', icon: 'none' }); return; }
     wx.navigateTo({
-      url: `/pages/order-confirm/order-confirm?productId=${product.id}&skuId=${selectedSku.id}&productName=${encodeURIComponent(product.name)}&specName=${encodeURIComponent(selectedSku.spec_name)}&price=${selectedSku.price}&quantity=1`,
+      url: `/pages/order-confirm/order-confirm?productId=${product.id}&skuId=${selectedSku.id}&productName=${encodeURIComponent(product.name)}&specName=${encodeURIComponent(selectedSku.spec_name)}&price=${selectedSku.price}&quantity=1&stock=${selectedSku.stock}`,
     });
   },
 

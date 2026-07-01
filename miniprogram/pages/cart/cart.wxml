@@ -8,12 +8,13 @@
       <view class="item-info">
         <view class="item-name">{{item.productName}}</view>
         <view class="item-spec">{{item.specName}}</view>
+        <view class="item-stock">库存:{{item.stock}}</view>
         <view class="item-bottom">
           <text class="item-price">¥{{item.price}}</text>
           <view class="quantity-control">
             <view class="qty-btn" bindtap="onQuantityChange" data-index="{{index}}" data-type="minus">-</view>
             <text class="qty-num">{{item.quantity}}</text>
-            <view class="qty-btn" bindtap="onQuantityChange" data-index="{{index}}" data-type="add">+</view>
+            <view class="qty-btn {{item.quantity >= item.stock ? 'qty-btn-disabled' : ''}}" bindtap="onQuantityChange" data-index="{{index}}" data-type="add">+</view>
           </view>
         </view>
       </view>

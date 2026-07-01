@@ -35,6 +35,8 @@ export class ChatController {
     let result;
     if (senderType === 'admin') {
       result = await this.chatService.getAdminConversation(targetId, user.id, page || 1);
+      // 标记该用户发给管理员的消息为已读
+      await this.chatService.markAdminRead(targetId, user.id);
     } else {
       result = await this.chatService.getConversation(user.id, targetId, page || 1);
       // 标记管理员发的消息为已读

@@ -20,6 +20,8 @@ export default function ProductList() {
 
   useEffect(() => {
     loadProducts();
+    const timer = setInterval(loadProducts, 10000);
+    return () => clearInterval(timer);
   }, [page, categoryId]);
 
   const loadCategories = async () => {
@@ -171,6 +173,7 @@ export default function ProductList() {
                   <span style={styles.price}>
                     {product.min_price != null ? `¥${product.min_price}` : '暂无价格'}
                   </span>
+                  <span style={styles.stock}>库存: {product.stock}</span>
                 </div>
               </div>
             </div>
@@ -470,6 +473,10 @@ const styles = {
     fontSize: 20,
     fontWeight: 700,
     color: '#c9a96e',
+  },
+  stock: {
+    fontSize: 12,
+    color: '#999',
   },
   pagination: {
     maxWidth: 1200,

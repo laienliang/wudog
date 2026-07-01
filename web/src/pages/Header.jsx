@@ -1,12 +1,18 @@
 import { useState, useRef, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
+import { getChatUnread, getNotificationCount } from '../utils/api';
+import ChatDrawer from '../components/ChatDrawer';
 
 export default function Header() {
   const { user, isLoggedIn, logout } = useAuth();
   const navigate = useNavigate();
   const [dropdownOpen, setDropdownOpen] = useState(false);
+  const [unreadCount, setUnreadCount] = useState(0);
+  const [chatOpen, setChatOpen] = useState(false);
+  const [noti, setNoti] = useState({ orderStatus: 0, unreviewed: 0, reviewReply: 0 });
   const dropdownRef = useRef(null);
+  const pollRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -18,6 +24,27 @@ export default function Header() {
     return () => document.removeEventListener('mousedown', handleClickOutside);
   }, []);
 
+  // 轮询未读消息数和通知
+  useEffect(() => {
+    if (isLoggedIn && user) {
+      const fetchAll = async () => {
+        try {
+          const [chatRes, notiRes] = await Promise.all([
+            getChatUnread(1),
+            getNotificationCount(),
+          ]);
+          setUnreadCount(chatRes.data?.count || 0);
+          if (notiRes.data) setNoti(notiRes.data);
+        } catch {}
+      };
+      fetchAll();
+      pollRef.current = setInterval(fetchAll, 5000);
+    }
+    return () => {
+      if (pollRef.current) clearInterval(pollRef.current);
+    };
+  }, [isLoggedIn, user]);
+
   const handleLogout = () => {
     setDropdownOpen(false);
     logout();
@@ -25,6 +52,7 @@ export default function Header() {
   };
 
   return (
+    <>
     <header style={styles.header}>
       <div style={styles.headerContent}>
         <Link to="/list" style={styles.logo}>
@@ -52,6 +80,7 @@ export default function Header() {
                     </svg>
                   </div>
                 )}
+                {unreadCount > 0 && <span style={styles.badge}>{unreadCount > 99 ? '99+' : unreadCount}</span>}
                 <span style={styles.username}>{user?.nickname || user?.username}</span>
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 14, height: 14 }}>
                   <polyline points="6 9 12 15 18 9" />
@@ -60,9 +89,19 @@ export default function Header() {
               {dropdownOpen && (
                 <div style={styles.dropdownMenu}>
                   <button onClick={() => { setDropdownOpen(false); navigate('/profile'); }} style={styles.dropdownItem}>个人中心</button>
-                  <button onClick={() => { setDropdownOpen(false); navigate('/my-orders'); }} style={styles.dropdownItem}>我的订单</button>
-                  <button onClick={() => { setDropdownOpen(false); navigate('/my-reviews'); }} style={styles.dropdownItem}>我的评价</button>
+                  <button onClick={() => { setDropdownOpen(false); navigate('/my-orders'); }} style={styles.dropdownItem}>
+                    我的订单
+                    {noti.orderStatus > 0 && <span style={styles.menuBadge} />}
+                  </button>
+                  <button onClick={() => { setDropdownOpen(false); navigate('/my-reviews'); }} style={styles.dropdownItem}>
+                    我的评价
+                    {(noti.unreviewed > 0 || noti.reviewReply > 0) && <span style={styles.menuBadge} />}
+                  </button>
                   <button onClick={() => { setDropdownOpen(false); navigate('/address'); }} style={styles.dropdownItem}>地址管理</button>
+                  <button onClick={() => { setDropdownOpen(false); setChatOpen(true); }} style={styles.dropdownItem}>
+                    我的信息
+                    {unreadCount > 0 && <span style={styles.menuBadge} />}
+                  </button>
                   <div style={styles.dropdownDivider} />
                   <button onClick={handleLogout} style={{ ...styles.dropdownItem, color: '#ff4d4f' }}>退出登录</button>
                 </div>
@@ -74,6 +113,8 @@ export default function Header() {
         </div>
       </div>
     </header>
+    <ChatDrawer open={chatOpen} onClose={() => setChatOpen(false)} />
+    </>
   );
 }
 
@@ -189,6 +230,7 @@ const styles = {
     color: '#333',
     cursor: 'pointer',
     transition: 'background 0.2s',
+    position: 'relative',
   },
   dropdownDivider: {
     height: 1,
@@ -204,5 +246,29 @@ const styles = {
     fontWeight: 500,
     textDecoration: 'none',
     cursor: 'pointer',
+  },
+  badge: {
+    position: 'absolute',
+    top: -4,
+    right: -4,
+    minWidth: 16,
+    height: 16,
+    lineHeight: '16px',
+    padding: '0 4px',
+    background: '#ff4d4f',
+    color: '#fff',
+    borderRadius: 8,
+    fontSize: 10,
+    fontWeight: 600,
+    textAlign: 'center',
+  },
+  menuBadge: {
+    display: 'inline-block',
+    width: 8,
+    height: 8,
+    background: '#ff4d4f',
+    borderRadius: '50%',
+    marginLeft: 8,
+    verticalAlign: 'middle',
   },
 };

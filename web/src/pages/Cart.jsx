@@ -10,6 +10,8 @@ export default function Cart() {
 
   useEffect(() => {
     loadCart();
+    const timer = setInterval(loadCart, 10000);
+    return () => clearInterval(timer);
   }, []);
 
   const loadCart = async () => {
@@ -114,6 +116,7 @@ export default function Cart() {
                     </h4>
                     <p style={styles.itemSpec}>{item.sku?.spec_name || '默认规格'}</p>
                     <p style={styles.itemPrice}>¥{getPrice(item).toFixed(2)}</p>
+                    <p style={styles.stock}>库存: {item.product?.stock ?? '-'}</p>
                   </div>
 
                   <div style={styles.itemActions}>
@@ -127,6 +130,7 @@ export default function Cart() {
                       <button
                         onClick={() => handleUpdateQuantity(item.id, item.quantity + 1)}
                         style={styles.qtyBtn}
+                        disabled={item.quantity >= (item.product?.stock ?? Infinity)}
                       >+</button>
                     </div>
 
@@ -268,6 +272,11 @@ const styles = {
     color: '#c9a96e',
     fontWeight: 600,
     margin: 0,
+  },
+  stock: {
+    fontSize: 12,
+    color: '#999',
+    margin: '2px 0 0',
   },
   itemActions: {
     display: 'flex',

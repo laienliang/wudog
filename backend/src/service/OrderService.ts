@@ -29,6 +29,26 @@ export class OrderService {
     payment_method?: string;
     user_id: number;
   }) {
+    // 校验商品库存
+    const product = await this.productRepo.findOne({ where: { id: data.product_id } });
+    if (!product) {
+      return { code: 404, message: '商品不存在' };
+    }
+    if (product.stock < data.quantity) {
+      return { code: 400, message: '库存不足' };
+    }
+
+    // 校验SKU库存
+    if (data.sku_id) {
+      const sku = await this.skuRepo.findOne({ where: { id: data.sku_id } });
+      if (!sku) {
+        return { code: 404, message: '商品规格不存在' };
+      }
+      if (sku.stock < data.quantity) {
+        return { code: 400, message: '库存不足' };
+      }
+    }
+
     const orderNo = 'WD' + Date.now() + Math.random().toString(36).slice(2, 6);
 
     const order = this.orderRepo.create({
@@ -73,7 +93,7 @@ export class OrderService {
   }
 
   async updateStatus(id: number, status: number) {
-    await this.orderRepo.update(id, { status });
+    await this.orderRepo.update(id, { status, status_read: 0 });
     return await this.orderRepo.findOne({ where: { id } });
   }
 

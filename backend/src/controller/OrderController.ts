@@ -50,8 +50,12 @@ export class OrderController {
     if (!body.product_id || !body.receiver_name || !body.receiver_phone || !body.receiver_address) {
       return { code: 400, message: '参数错误', data: null };
     }
-    const order = await this.orderService.create({ ...body, user_id: userId });
-    return { code: 200, message: '下单成功', data: order };
+    const result = await this.orderService.create({ ...body, user_id: userId });
+    // 库存不足等错误时service返回错误对象
+    if (result && (result as any).code && (result as any).code !== 200) {
+      return { code: (result as any).code, message: (result as any).message, data: null };
+    }
+    return { code: 200, message: '下单成功', data: result };
   }
 
   @Put('/update-status/:id')

@@ -160,6 +160,7 @@ export default function OrderConfirm() {
               <div style={styles.productInfo}>
                 <div style={styles.productName}>{item.product?.name || item.product_name || '商品'}</div>
                 <div style={styles.productSpec}>{item.sku?.spec_name || item.spec_name || ''}</div>
+                <div style={styles.stock}>库存: {item.product?.stock ?? '-'}</div>
                 <div style={styles.productPriceRow}>
                   <span style={styles.productPrice}>¥{getPrice(item).toFixed(2)}</span>
                   <div style={styles.quantityControl}>
@@ -169,7 +170,11 @@ export default function OrderConfirm() {
                       disabled={item.quantity <= 1}
                     >-</button>
                     <span style={styles.qtyValue}>{item.quantity}</span>
-                    <button onClick={() => updateQuantity(index, 1)} style={styles.qtyBtn}>+</button>
+                    <button
+                      onClick={() => updateQuantity(index, 1)}
+                      style={styles.qtyBtn}
+                      disabled={item.quantity >= (item.product?.stock ?? Infinity)}
+                    >+</button>
                   </div>
                 </div>
               </div>
@@ -242,6 +247,7 @@ const styles = {
   productInfo: { flex: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' },
   productName: { fontSize: 14, fontWeight: 500, color: '#333' },
   productSpec: { fontSize: 12, color: '#999' },
+  stock: { fontSize: 12, color: '#999', marginBottom: 4 },
   productPriceRow: { display: 'flex', justifyContent: 'space-between', alignItems: 'center' },
   productPrice: { fontSize: 15, fontWeight: 600, color: '#c9a96e' },
   quantityControl: { display: 'flex', alignItems: 'center', border: '1px solid #e8e8e8', borderRadius: 6, overflow: 'hidden' },

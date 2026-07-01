@@ -26,6 +26,9 @@ export class Review {
   @Column({ type: 'text', nullable: true, comment: '管理员回复' })
   reply: string;
 
+  @Column({ default: 0, comment: '0未读回复 1已读' })
+  reply_read: number;
+
   @Column({ default: 0 })
   is_deleted: number;
 

@@ -13,6 +13,7 @@
   <view class="card product-card">
     <view class="product-name">{{productName}}</view>
     <view class="product-spec">{{specName}}</view>
+    <view class="product-stock">库存:{{stock}}</view>
     <view class="product-bottom">
       <text class="product-price">¥{{price}}</text>
       <text class="product-qty">x{{quantity}}</text>

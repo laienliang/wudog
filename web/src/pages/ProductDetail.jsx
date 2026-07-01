@@ -216,6 +216,10 @@ export default function ProductDetail() {
             )}
           </div>
 
+          <div style={styles.stockLine}>
+            库存: {selectedSku ? selectedSku.stock : (product.stock ?? '-')}
+          </div>
+
           {!selectedSku && product.skus?.length > 0 && (
             <div style={styles.selectHint}>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{ width: 16, height: 16 }}>
@@ -581,6 +585,12 @@ const styles = {
     background: '#fefcf8',
     borderRadius: 8,
     border: '1px solid #f0e6d3',
+  },
+  stockLine: {
+    fontSize: 13,
+    color: '#999',
+    marginBottom: 16,
+    padding: '0 20px',
   },
   priceSymbol: {
     fontSize: 18,

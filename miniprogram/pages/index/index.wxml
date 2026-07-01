@@ -21,6 +21,7 @@
         <view class="product-name">{{item.name}}</view>
         <view class="product-category" wx:if="{{item.category}}">{{item.category.name}}</view>
         <view class="product-price">¥{{item.min_price || '暂无'}}</view>
+        <view class="product-stock">库存:{{item.stock}}</view>
       </view>
     </view>
   </view>

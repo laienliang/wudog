@@ -47,7 +47,7 @@ export class ReviewService {
   }
 
   async reply(id: number, reply: string) {
-    await this.reviewRepo.update(id, { reply });
+    await this.reviewRepo.update(id, { reply, reply_read: 0 });
     return { code: 200, message: '回复成功' };
   }
 

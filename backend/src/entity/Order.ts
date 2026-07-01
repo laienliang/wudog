@@ -50,6 +50,9 @@ export class Order {
   @Column({ default: 0, comment: '0无 1取消 2退货' })
   cancel_type: number;
 
+  @Column({ default: 1, comment: '1用户未读状态变更 0已读' })
+  status_read: number;
+
   @Column({ default: 0 })
   is_deleted: number;
 

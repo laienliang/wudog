@@ -84,3 +84,8 @@
   color: #f5222d;
   font-weight: 600;
 }
+
+.product-stock {
+  font-size: 22rpx;
+  color: #999;
+}

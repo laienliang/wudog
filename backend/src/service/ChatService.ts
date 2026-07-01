@@ -50,6 +50,13 @@ export class ChatService {
     );
   }
 
+  async markAdminRead(userId: number, adminId: number) {
+    await this.chatRepo.update(
+      { sender_type: 'user', sender_id: userId, receiver_type: 'admin', receiver_id: adminId, is_read: 0 },
+      { is_read: 1 },
+    );
+  }
+
   // 管理员获取所有会话列表
   async getAdminConversations() {
     // 获取所有与管理员相关的消息，按用户分组

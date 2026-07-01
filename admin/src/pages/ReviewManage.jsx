@@ -13,7 +13,11 @@ export default function ReviewManage() {
 
   const pageSize = 10;
 
-  useEffect(() => { loadReviews(); }, [page]);
+  useEffect(() => {
+    loadReviews();
+    const timer = setInterval(loadReviews, 10000);
+    return () => clearInterval(timer);
+  }, [page]);
 
   const loadReviews = async () => {
     setLoading(true);
@@ -70,7 +74,7 @@ export default function ReviewManage() {
           <a onClick={() => { setReplyModal(record); setReplyText(record.reply || ''); }}>
             {record.reply ? '修改回复' : '回复'}
           </a>
-          <Popconfirm title="确定删除该评价？" onConfirm={() => handleDelete(record.id)}>
+          <Popconfirm title="确定删除该评价？" onConfirm={() => handleDelete(record.id)} okText="确定" cancelText="取消">
             <a style={{ color: '#ff4d4f' }}>删除</a>
           </Popconfirm>
         </span>

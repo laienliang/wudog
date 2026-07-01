@@ -28,6 +28,8 @@ export default function OrderManage() {
 
   useEffect(() => {
     loadOrders();
+    const timer = setInterval(loadOrders, 10000);
+    return () => clearInterval(timer);
   }, [page, statusFilter]);
 
   const loadOrders = async () => {

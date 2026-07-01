@@ -38,6 +38,12 @@
   margin-bottom: 12rpx;
 }
 
+.product-stock {
+  font-size: 24rpx;
+  color: #999;
+  margin-bottom: 12rpx;
+}
+
 .product-desc {
   font-size: 26rpx;
   color: #666;
