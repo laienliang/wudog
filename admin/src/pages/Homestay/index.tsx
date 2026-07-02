@@ -26,13 +26,17 @@ export default function HomestayPage() {
 
   const openCreate = () => { setEditing(null); form.resetFields(); setModalOpen(true); };
   const openEdit = (record: any) => { setEditing(record); form.setFieldsValue(record); setModalOpen(true); };
-  const handleDelete = async (id: number) => { try { await deleteHomestay(id); } catch {} message.success('已删除'); fetchData(); };
+  const handleDelete = async (id: number) => {
+    try { await deleteHomestay(id); message.success('已删除'); fetchData(); } catch (err: any) {}
+  };
   const handleSave = async () => {
     const values = await form.validateFields();
-    try { if (editing) { await updateHomestay(editing.id, values); } else { await createHomestay(values); } } catch {}
-    message.success(editing ? '已更新' : '已创建');
-    setModalOpen(false);
-    fetchData();
+    try {
+      if (editing) { await updateHomestay(editing.id, values); } else { await createHomestay(values); }
+      message.success(editing ? '已更新' : '已创建');
+      setModalOpen(false);
+      fetchData();
+    } catch (err: any) {}
   };
 
   const columns = [

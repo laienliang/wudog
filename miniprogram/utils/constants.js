@@ -1,18 +1,18 @@
 /* ============================================================
-   业务常量
+   业务常量（DB 存 TINYINT 数值）
    文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\miniprogram\utils\constants.js
    ============================================================ */
 
-/** 订单状态映射 */
+/** 订单状态映射（后端 OrderStatus 枚举值） */
 const ORDER_STATUS = {
-  pending_payment: { label: '待支付', color: '#9CA3AF' },
-  paid: { label: '已支付', color: '#3B82F6' },
-  confirmed: { label: '已确认', color: '#10B981' },
-  checking_in: { label: '入住中', color: '#F59E0B' },
-  completed: { label: '已完成', color: '#10B981' },
-  cancelled: { label: '已取消', color: '#EF4444' },
-  refunding: { label: '退款中', color: '#F97316' },
-  refunded: { label: '已退款', color: '#8B5CF6' },
+  0: { label: '待支付', color: '#9CA3AF' },
+  1: { label: '已支付', color: '#3B82F6' },
+  2: { label: '已确认', color: '#10B981' },
+  3: { label: '入住中', color: '#F59E0B' },
+  4: { label: '已完成', color: '#10B981' },
+  5: { label: '已取消', color: '#EF4444' },
+  6: { label: '退款中', color: '#F97316' },
+  7: { label: '已退款', color: '#8B5CF6' },
 };
 
 /** 退改规则 */

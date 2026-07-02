@@ -75,11 +75,15 @@ export class ReviewService {
     return saved;
   }
 
-  /** 房东回复（暂不支持，字段已移除） */
+  /** 房东回复 */
   async reply(id: number, ownerReply: string): Promise<Review> {
     const review = await this.reviewRepo.findOneBy({ id, is_deleted: 0 }) as Review;
     if (!review) throw new Error('评价不存在');
-    return review;
+    // 回复内容写入content字段末尾
+    review.content = review.content
+      ? `${review.content}\n\n【房东回复】${ownerReply}`
+      : `【房东回复】${ownerReply}`;
+    return this.reviewRepo.save(review);
   }
 
   /** 软删除（或隐藏） */

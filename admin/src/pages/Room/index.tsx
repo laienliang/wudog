@@ -35,12 +35,16 @@ export default function RoomPage() {
     try { const r = await getHomestays({ pageSize: 100 }); setHomestays(r.list || []); } catch {}
     setModalOpen(true);
   };
-  const handleDelete = async (id: number) => { try { await deleteRoom(id); } catch {} message.success('已删除'); fetchData(); };
+  const handleDelete = async (id: number) => {
+    try { await deleteRoom(id); message.success('已删除'); fetchData(); } catch (err: any) {}
+  };
   const handleSave = async () => {
     const values = await form.validateFields();
-    try { if (editing) { await updateRoom(editing.id, values); } else { await createRoom(values); } } catch {}
-    message.success(editing ? '已更新' : '已创建');
-    setModalOpen(false); fetchData();
+    try {
+      if (editing) { await updateRoom(editing.id, values); } else { await createRoom(values); }
+      message.success(editing ? '已更新' : '已创建');
+      setModalOpen(false); fetchData();
+    } catch (err: any) {}
   };
 
   const columns = [

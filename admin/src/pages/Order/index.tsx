@@ -43,10 +43,11 @@ export default function OrderPage() {
   useEffect(() => { fetchData(); }, [fetchData]);
 
   const handleStatusChange = async (id: number, newStatus: string) => {
-    try { await updateOrderStatus(id, newStatus); } catch {}
-    message.success('状态更新'); fetchData();
+    try { await updateOrderStatus(id, newStatus); message.success('状态更新'); fetchData(); } catch (err: any) {}
   };
-  const handleDelete = async (id: number) => { try { await deleteOrder(id); } catch {} message.success('已删除'); fetchData(); };
+  const handleDelete = async (id: number) => {
+    try { await deleteOrder(id); message.success('已删除'); fetchData(); } catch (err: any) {}
+  };
 
   const columns = [
     { title: '订单号', dataIndex: 'order_no', width: 160 },
@@ -83,7 +84,7 @@ export default function OrderPage() {
         <Space>
           <h2 style={{ margin: 0 }}>订单管理</h2>
           <Select style={{ width: 120 }} placeholder="状态筛选" allowClear value={statusFilter}
-            onChange={setStatusFilter}
+            onChange={(v) => { setStatusFilter(v); setPage(1); }}
             options={Object.entries(STATUS_MAP).map(([k, v]) => ({ label: v.text, value: k }))} />
         </Space>
         <QrVerify />

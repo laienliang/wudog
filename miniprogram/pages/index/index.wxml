@@ -5,10 +5,7 @@
 <view class="page-container">
   <!-- 搜索/筛选栏 -->
   <view class="search-bar">
-    <view class="search-input" bindtap="onSearchTap">
-      <text class="search-icon">🔍</text>
-      <text class="search-placeholder">{{keyword || '搜索民宿名称、地址...'}}</text>
-    </view>
+    <input class="search-input" placeholder="搜索民宿" value="{{keyword}}" bindinput="onSearchInput" bindconfirm="onSearch" confirm-type="search"/>
     <picker mode="date" start="{{today}}" end="{{maxDate}}" value="{{checkIn}}" bindchange="onCheckInChange">
       <view class="date-btn">{{checkIn || '入住'}}</view>
     </picker>

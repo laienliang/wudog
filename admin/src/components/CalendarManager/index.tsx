@@ -78,7 +78,7 @@ export default function CalendarManager() {
 
   const calMap = useMemo(() => {
     const m: Record<string, any> = {};
-    calendar.forEach(c => { m[c.date] = c; });
+    calendar.forEach(c => { m[c.bookingDate] = c; });
     return m;
   }, [calendar]);
 

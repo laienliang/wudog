@@ -7,7 +7,7 @@ import { get, post, put, del } from '../utils/request';
 // ============== 民宿 ==============
 export interface Homestay {
   id: number; name: string; address: string; cover_image: string;
-  images: string[]; description: string; facilities: string[];
+  images: string[]; description: string; facilities: string;
   min_price: number; rating: number; review_count: number;
   latitude: number; longitude: number; contact_phone: string;
 }
@@ -48,8 +48,8 @@ export function getRooms(homestayId: number) {
 
 // ============== 房态 ==============
 export interface CalendarDay {
-  id: number; room_id: number; date: string;
-  available_stock: number; booked_stock: number; price: number; status: number;
+  id: number; room_id: number; bookingDate: string;
+  available_stock: number; bookedStock: number; price: number; status: number;
 }
 
 export function getCalendar(roomId: number, startDate: string, endDate: string) {

@@ -51,7 +51,6 @@ export class FavoriteService {
 
     const qb = this.favoriteRepo
       .createQueryBuilder('f')
-      .leftJoinAndSelect('f.homestay', 'h')  // 注意：Favorite 实体无直接关联，需用 homestayRepo
       .where('f.user_id = :uid', { uid: userId })
       .andWhere('f.is_deleted = 0')
       .orderBy('f.id', 'DESC')

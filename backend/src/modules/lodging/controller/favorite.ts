@@ -11,7 +11,7 @@ export class FavoriteController {
   @Get('/list')
   async list(@Query('page') page: number, @Query('pageSize') pageSize: number, ctx: Context) {
     try {
-      const userId = (ctx as any).currentUser?.id || 1;
+      const userId = (ctx as any).currentUser?.id ?? 1;
       const data = await this.favoriteService.list(userId, { page, pageSize });
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };

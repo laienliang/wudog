@@ -36,9 +36,13 @@ export class RoomController {
 
   /** GET /api/lodging/admin/rooms — 房型管理列表 */
   @Get('/admin/rooms')
-  async adminList(@Query('page') page: number, @Query('pageSize') pageSize: number) {
+  async adminList(
+    @Query('page') page: number,
+    @Query('pageSize') pageSize: number,
+    @Query('homestay_id') homestayId?: number
+  ) {
     try {
-      const data = await this.roomService.list({ page, pageSize });
+      const data = await this.roomService.list({ page, pageSize, homestay_id: homestayId });
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };
     } catch (err: any) {

@@ -2,7 +2,7 @@
    预订下单页 — 选择日期 + 填写入住人 + 提交下单
    文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\pages\Book\index.tsx
    ============================================================ */
-import { useState } from 'react';
+import { useState, useEffect, useMemo } from 'react';
 import { useParams, useSearchParams, useNavigate } from 'react-router-dom';
 import { Card, Form, Input, InputNumber, Button, DatePicker, Descriptions, message, Divider } from 'antd';
 import dayjs from 'dayjs';
@@ -14,26 +14,51 @@ const { RangePicker } = DatePicker;
 
 export default function BookPage() {
   const { roomId } = useParams<{ roomId: string }>();
-  const [searchParams] = useSearchParams();
+  const [searchParams, setSearchParams] = useSearchParams();
   const nav = useNavigate();
 
   const homestayId = Number(searchParams.get('homestayId') || '0');
   const roomName = searchParams.get('roomName') || '';
   const basePrice = Number(searchParams.get('price') || '0');
 
-  const [checkIn, setCheckIn] = useState('');
-  const [checkOut, setCheckOut] = useState('');
-  const [nights, setNights] = useState(0);
+  useEffect(() => {
+    if (!homestayId || !roomId || isNaN(Number(roomId))) {
+      message.error('参数错误，缺少民宿或房型信息');
+      nav('/');
+    }
+  }, [homestayId, roomId, nav]);
+
+  const [checkIn, setCheckIn] = useState(searchParams.get('checkIn') || '');
+  const [checkOut, setCheckOut] = useState(searchParams.get('checkOut') || '');
+  const [nights, setNights] = useState(() => {
+    const cin = searchParams.get('checkIn');
+    const cout = searchParams.get('checkOut');
+    if (cin && cout) {
+      const n = dayjs(cout).diff(dayjs(cin), 'day');
+      return n > 0 ? n : 0;
+    }
+    return 0;
+  });
   const [submitting, setSubmitting] = useState(false);
 
   const [form] = Form.useForm();
+  const roomCount = Form.useWatch('room_count', form) || 1;
 
-  const totalPrice = nights * basePrice * (form.getFieldValue('room_count') || 1);
+  const totalPrice = useMemo(
+    () => nights * basePrice * roomCount,
+    [nights, basePrice, roomCount],
+  );
 
   const handleDateChange = (cin: string, cout: string, n: number) => {
     setCheckIn(cin);
     setCheckOut(cout);
     setNights(n);
+    setSearchParams((prev) => {
+      const next = new URLSearchParams(prev);
+      next.set('checkIn', cin);
+      next.set('checkOut', cout);
+      return next;
+    });
   };
 
   const handleSubmit = async () => {
@@ -67,7 +92,12 @@ export default function BookPage() {
       <h2>预订：{roomName}</h2>
       <div className="book-layout">
         <Card title="选择入住日期">
-          <RoomCalendar roomId={Number(roomId)} basePrice={basePrice} onDateChange={handleDateChange} />
+          <RoomCalendar
+            roomId={Number(roomId)}
+            initialCheckIn={searchParams.get('checkIn') || ''}
+            initialCheckOut={searchParams.get('checkOut') || ''}
+            onDateChange={handleDateChange}
+          />
         </Card>
 
         <Card title="订单信息">
@@ -94,7 +124,7 @@ export default function BookPage() {
             <Descriptions.Item label="单价">¥{basePrice} /晚</Descriptions.Item>
             <Descriptions.Item label="预计总价">
               <span style={{ fontSize: 24, fontWeight: 700, color: '#E85D2F' }}>
-                ¥{nights * basePrice * (form.getFieldValue('room_count') || 1)}
+                ¥{totalPrice}
               </span>
             </Descriptions.Item>
           </Descriptions>

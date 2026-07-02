@@ -28,7 +28,7 @@ export class ReviewController {
   /** POST /api/lodging/reviews — 提交评价 */
   @Post('/reviews')
   async create(@Body() body: ReviewCreateDTO, ctx: Context) {
-    const userId = (ctx as any).currentUser?.id || 1;
+    const userId = (ctx as any).currentUser?.id ?? 1;
     try {
       const data = await this.reviewService.create({
         order_id: body.order_id,

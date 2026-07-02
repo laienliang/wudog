@@ -11,6 +11,15 @@ const request = axios.create({
   headers: { 'Content-Type': 'application/json' },
 });
 
+// 请求拦截：注入 token
+request.interceptors.request.use((config) => {
+  const token = localStorage.getItem('user_token');
+  if (token) {
+    config.headers.Authorization = `Bearer ${token}`;
+  }
+  return config;
+});
+
 // 响应拦截
 request.interceptors.response.use(
   (res: AxiosResponse) => {

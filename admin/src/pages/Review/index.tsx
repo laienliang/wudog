@@ -24,14 +24,14 @@ export default function ReviewPage() {
 
   const handleReply = async () => {
     if (!replyModal) return;
-    try { await replyReview(replyModal.id, replyModal.reply); } catch {}
-    message.success('已回复'); setReplyModal(null); fetchData();
+    try { await replyReview(replyModal.id, replyModal.reply); message.success('已回复'); setReplyModal(null); fetchData(); } catch (err: any) {}
   };
   const handleToggle = async (id: number, status: number) => {
-    try { await toggleReviewStatus(id, status === 1 ? 0 : 1); } catch {}
-    message.success('状态已切换'); fetchData();
+    try { await toggleReviewStatus(id, status === 1 ? 0 : 1); message.success('状态已切换'); fetchData(); } catch (err: any) {}
   };
-  const handleDelete = async (id: number) => { try { await deleteReview(id); } catch {} message.success('已删除'); fetchData(); };
+  const handleDelete = async (id: number) => {
+    try { await deleteReview(id); message.success('已删除'); fetchData(); } catch (err: any) {}
+  };
 
   const columns = [
     { title: 'ID', dataIndex: 'id', width: 60 },

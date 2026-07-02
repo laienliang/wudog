@@ -5,7 +5,7 @@
     <view class="hs-name ellipsis">{{item.name}}</view>
     <view class="hs-address ellipsis">📍 {{item.address}}</view>
     <view class="hs-tags">
-      <text class="tag tag-blue" wx:for="{{item.facilities}}" wx:for-item="f" wx:key="*this" wx:if="{{index < 3}}">{{f}}</text>
+      <text class="tag tag-blue" wx:for="{{facilityList}}" wx:for-item="f" wx:key="*this" wx:if="{{index < 3}}">{{f}}</text>
     </view>
     <view class="hs-footer">
       <view class="hs-rating">

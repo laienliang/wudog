@@ -36,6 +36,12 @@ export class HomestaySearchDTO {
   @Rule(RuleType.number().optional())
   maxPrice?: number;
 
+  @Rule(RuleType.string().optional().allow(''))
+  keyword?: string;
+
+  @Rule(RuleType.string().optional().allow(''))
+  sort?: string;
+
   @Rule(RuleType.array().items(RuleType.string()).optional())
   facilities?: string[];
 

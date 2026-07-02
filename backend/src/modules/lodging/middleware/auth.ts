@@ -49,8 +49,14 @@ export class AuthMiddleware implements IMiddleware<Context, NextFunction> {
     return 'auth';
   }
 
-  /** 仅匹配 /api/lodging/admin/* 路由 */
+  /** 匹配所有管理端路由 */
   match(ctx: Context): boolean {
-    return ctx.path.startsWith('/api/lodging/admin');
+    return (
+      ctx.path.startsWith('/api/lodging/admin') ||
+      ctx.path.startsWith('/api/lodging/room-calendar') ||
+      ctx.path.startsWith('/api/homestay/create') ||
+      ctx.path.startsWith('/api/homestay/update') ||
+      ctx.path.startsWith('/api/homestay/delete')
+    );
   }
 }

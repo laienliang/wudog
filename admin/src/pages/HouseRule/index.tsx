@@ -41,17 +41,21 @@ export default function HouseRulePage() {
     try { const r = await getHomestays({ pageSize: 100 }); setHomestays(r.list || []); } catch {}
     setModalOpen(true);
   };
-  const handleDelete = async (id: number) => { try { await deleteHouseRule(id); } catch {} message.success('已删除'); fetchData(); };
+  const handleDelete = async (id: number) => {
+    try { await deleteHouseRule(id); message.success('已删除'); fetchData(); } catch (err: any) {}
+  };
   const handleSave = async () => {
-    const values = form.getFieldsValue();
+    const values = await form.validateFields();
     const payload = {
       ...values,
       check_in_time: values.check_in_time?.format?.('HH:mm') || values.check_in_time,
       check_out_time: values.check_out_time?.format?.('HH:mm') || values.check_out_time,
     };
-    try { if (editing) { await updateHouseRule(editing.id, payload); } else { await saveHouseRule(payload); } } catch {}
-    message.success(editing ? '已更新' : '已创建');
-    setModalOpen(false); fetchData();
+    try {
+      if (editing) { await updateHouseRule(editing.id, payload); } else { await saveHouseRule(payload); }
+      message.success(editing ? '已更新' : '已创建');
+      setModalOpen(false); fetchData();
+    } catch (err: any) {}
   };
 
   const columns = [

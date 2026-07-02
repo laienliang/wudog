@@ -59,9 +59,9 @@ Page({
     try {
       let res;
       if (checkIn && checkOut) {
-        res = await get('/motel/search', {
+        res = await get('/api/homestay/search', {
           checkInDate: checkIn, checkOutDate: checkOut,
-          page, pageSize,
+          keyword, sort, page, pageSize,
         });
       } else {
         res = await get('/api/homestay/list', { page, pageSize, keyword, sort });
@@ -85,17 +85,27 @@ Page({
   },
 
   onCheckInChange(e) {
-    this.setData({ checkIn: e.detail.value, page: 1, list: [], hasMore: true });
+    const val = e.detail.value;
+    getApp().globalData.checkIn = val;
+    this.setData({ checkIn: val, page: 1, list: [], hasMore: true });
     this.fetchData();
   },
   onCheckOutChange(e) {
-    this.setData({ checkOut: e.detail.value, page: 1, list: [], hasMore: true });
+    const val = e.detail.value;
+    getApp().globalData.checkOut = val;
+    this.setData({ checkOut: val, page: 1, list: [], hasMore: true });
     this.fetchData();
   },
   onSort(e) {
     this.setData({ sort: e.currentTarget.dataset.sort, page: 1, list: [], hasMore: true });
     this.fetchData();
   },
-  onSearchTap() { /* TODO: 搜索弹窗 */ },
+  onSearchInput(e) {
+    this.setData({ keyword: e.detail.value });
+  },
+  onSearch() {
+    this.setData({ page: 1, list: [], leftList: [], rightList: [], hasMore: true });
+    this.fetchData();
+  },
   onRefresh() { this.fetchData(); },
 });

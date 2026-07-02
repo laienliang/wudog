@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Row, Col, Card, Statistic } from 'antd';
 import { HomeOutlined, AppstoreOutlined, ShoppingCartOutlined, StarOutlined } from '@ant-design/icons';
-import { getHomestays } from '../../api/lodging';
-import { get } from '../../utils/request';
+import { getHomestays, getRooms, getAdminOrders, getAdminReviews } from '../../api/lodging';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({ homestay: 0, room: 0, order: 0, review: 0 });
@@ -11,9 +10,9 @@ export default function DashboardPage() {
     (async () => {
       const [hs, rm, od, rv] = await Promise.allSettled([
         getHomestays({ page: 1, pageSize: 1 }),
-        get('/api/lodging/rooms', { page: 1, pageSize: 1 }),
-        get('/api/lodging/orders', { page: 1, pageSize: 1 }),
-        get('/api/lodging/reviews', { page: 1, pageSize: 1 }),
+        getRooms({ page: 1, pageSize: 1 }),
+        getAdminOrders({ page: 1, pageSize: 1 }),
+        getAdminReviews({ page: 1, pageSize: 1 }),
       ]);
       setStats({
         homestay: hs.status === 'fulfilled' ? (hs.value as any)?.total || 0 : 0,

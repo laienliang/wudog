@@ -16,44 +16,78 @@ Page({
   },
 
   onLoad(options) {
-    const { roomId, homestayId, roomName, price } = options;
+    const { roomId, homestayId, roomName, price, checkIn, checkOut } = options;
     this.setData({
-      roomId: Number(roomId), homestayId: Number(homestayId),
-      roomName: decodeURIComponent(roomName || ''), price: Number(price || 0),
+      roomId: Number(roomId) || 0,
+      homestayId: Number(homestayId) || 0,
+      roomName: decodeURIComponent(roomName || ''),
+      price: Number(price || 0),
+      checkIn: checkIn || '',
+      checkOut: checkOut || '',
     });
+    // 若有预填日期，自动计算天数
+    if (checkIn && checkOut) {
+      const n = diffDays(checkIn, checkOut);
+      this.setData({ nights: n > 0 ? n : 0 });
+      this.calcTotal();
+    }
   },
 
   calcTotal() {
     const { price, roomCount, nights } = this.data;
-    const total = price * roomCount * nights;
-    const canSubmit = nights > 0 && this.data.contactName && this.data.contactPhone;
+    const total = price * (parseInt(roomCount) || 1) * nights;
+    const canSubmit = nights > 0 && !!this.data.contactName && !!this.data.contactPhone;
     this.setData({ totalPrice: total, canSubmit });
   },
 
   onCheckIn(e) {
-    this.setData({ checkIn: e.detail.value });
+    const cin = e.detail.value;
+    this.setData({ checkIn: cin });
     if (this.data.checkOut) {
-      const n = diffDays(this.data.checkIn, this.data.checkOut);
+      const n = diffDays(cin, this.data.checkOut);
       this.setData({ nights: n > 0 ? n : 0 });
-      this.calcTotal();
     }
+    this.calcTotal();
   },
   onCheckOut(e) {
-    this.setData({ checkOut: e.detail.value });
+    const cout = e.detail.value;
+    this.setData({ checkOut: cout });
     if (this.data.checkIn) {
-      const n = diffDays(this.data.checkIn, this.data.checkOut);
+      const n = diffDays(this.data.checkIn, cout);
       this.setData({ nights: n > 0 ? n : 0 });
-      this.calcTotal();
     }
+    this.calcTotal();
   },
   onInput(e) {
     const { field } = e.currentTarget.dataset;
-    this.setData({ [field]: e.detail.value });
+    let value = e.detail.value;
+    if (field === 'roomCount' || field === 'guestCount') {
+      value = parseInt(value) || 1;
+    }
+    this.setData({ [field]: value });
     this.calcTotal();
   },
 
   async onSubmit() {
-    if (!this.data.canSubmit) return;
+    // 表单兜底校验
+    if (!this.data.homestayId || !this.data.roomId) {
+      wx.showToast({ title: '页面参数异常，请返回重新进入', icon: 'none' });
+      return;
+    }
+    if (!this.data.checkIn || !this.data.checkOut) {
+      wx.showToast({ title: '请选择入住和离店日期', icon: 'none' });
+      return;
+    }
+    if (!this.data.contactName.trim()) {
+      wx.showToast({ title: '请填写入住人姓名', icon: 'none' });
+      return;
+    }
+    if (!this.data.contactPhone.trim()) {
+      wx.showToast({ title: '请填写联系电话', icon: 'none' });
+      return;
+    }
+    if (!this.data.canSubmit || this.data.submitting) return;
+
     this.setData({ submitting: true });
     try {
       const res = await post('/api/lodging/orders', {
@@ -61,14 +95,17 @@ Page({
         room_id: this.data.roomId,
         check_in_date: this.data.checkIn,
         check_out_date: this.data.checkOut,
-        room_count: this.data.roomCount,
-        contact_name: this.data.contactName,
-        contact_phone: this.data.contactPhone,
-        guest_count: this.data.guestCount,
+        room_count: parseInt(this.data.roomCount) || 1,
+        contact_name: this.data.contactName.trim(),
+        contact_phone: this.data.contactPhone.trim(),
+        guest_count: parseInt(this.data.guestCount) || 1,
       });
       this.setData({ orderResult: res, submitting: false });
-    } catch {
+      wx.showToast({ title: '下单成功', icon: 'success', duration: 2000 });
+    } catch (err) {
       this.setData({ submitting: false });
+      // err.message 即后端返回的真实错误信息
+      wx.showToast({ title: err.message || '下单失败，请重试', icon: 'none', duration: 3000 });
     }
   },
 

@@ -8,6 +8,7 @@ import { Repository, Between, In, Like, SelectQueryBuilder } from 'typeorm';
 import { Homestay } from '../entity/homestay';
 import { Calendar } from '../entity/calendar';
 import { Room } from '../entity/room';
+import { Review } from '../entity/review';
 import { HomestaySearchDTO } from '../dto/homestay';
 import { PaginatedResult } from '../../../interface';
 
@@ -21,6 +22,9 @@ export class HomestayService {
 
   @InjectEntityModel(Room)
   roomRepo: Repository<Room>;
+
+  @InjectEntityModel(Review)
+  reviewRepo: Repository<Review>;
 
   @Config('lodging')
   lodgingConfig: { maxAdvanceDays: number; minStayNights: number };
@@ -70,12 +74,21 @@ export class HomestayService {
     return { total, page, pageSize, list };
   }
 
-  /** 详情 */
+  /** 详情（含房型、入住须知、评价） */
   async detail(id: number): Promise<Homestay | null> {
-    return await this.homestayRepo.findOne({
+    const homestay = await this.homestayRepo.findOne({
       where: { id, is_deleted: 0 },
       relations: ['rooms', 'house_rules'],
-    }) as Homestay;
+    }) as Homestay | null;
+    if (homestay) {
+      const reviews = await this.reviewRepo.find({
+        where: { homestay_id: id, is_deleted: 0, status: 1 },
+        order: { id: 'DESC' },
+        take: 100,
+      });
+      (homestay as any).reviews = reviews;
+    }
+    return homestay;
   }
 
   /** 新增 */
@@ -102,7 +115,7 @@ export class HomestayService {
    * 逻辑：找到在日期范围内每天都有库存（available_stock > 0 且 status=1）的房型所属民宿
    */
   async searchByDate(dto: HomestaySearchDTO): Promise<PaginatedResult<Homestay>> {
-    const { checkInDate, checkOutDate, minPrice, maxPrice, facilities, page, pageSize } = dto;
+    const { checkInDate, checkOutDate, minPrice, maxPrice, keyword, sort, facilities, page, pageSize } = dto;
     const pageNum = page || 1;
     const pageSizeNum = pageSize || 20;
 
@@ -120,13 +133,11 @@ export class HomestayService {
     const placeholders = dateList.map(() => '?').join(', ');
     const rawSQL = `
       SELECT c.room_id
-      FROM calendar c
-      WHERE c.date IN (${placeholders})
-        AND c.is_deleted = 0
+      FROM room_calendar c
+      WHERE c.\`booking_date\` IN (${placeholders})
         AND c.available_stock > 0
-        AND c.status = 1
       GROUP BY c.room_id
-      HAVING COUNT(DISTINCT c.date) = ?
+      HAVING COUNT(DISTINCT c.\`booking_date\`) = ?
     `;
 
     interface RawRow { room_id: number; }
@@ -175,15 +186,28 @@ export class HomestayService {
       .andWhere('h.status = 1')
       .andWhere('h.id IN (:...ids)', { ids: homestayIds });
 
-    // 设施筛选
+    // 关键词搜索
+    if (keyword) {
+      qb.andWhere('(h.name LIKE :kw OR h.address LIKE :kw)', { kw: `%${keyword}%` });
+    }
+
+    // 设施筛选（facility_tags 为逗号分隔 varchar，使用 FIND_IN_SET）
     if (facilities && facilities.length > 0) {
       for (const f of facilities) {
-        qb.andWhere('JSON_CONTAINS(h.facilities, :f)', { f: JSON.stringify(f) });
+        qb.andWhere('FIND_IN_SET(:f, h.facilities) > 0', { f });
       }
     }
 
-    qb.orderBy('h.rating', 'DESC')
-      .skip((pageNum - 1) * pageSizeNum)
+    // 排序
+    if (sort === 'price_asc') {
+      qb.orderBy('h.min_price', 'ASC');
+    } else if (sort === 'price_desc') {
+      qb.orderBy('h.min_price', 'DESC');
+    } else {
+      qb.orderBy('h.rating', 'DESC'); // 默认评分降序
+    }
+
+    qb.skip((pageNum - 1) * pageSizeNum)
       .take(pageSizeNum);
 
     const [list, total] = await qb.getManyAndCount();

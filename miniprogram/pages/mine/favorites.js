@@ -6,7 +6,13 @@ const { get } = require('../../utils/request');
 
 Page({
   data: { list: [], loading: false },
+
   onShow() { this.fetchData(); },
+
+  onPullDownRefresh() {
+    this.fetchData().then(() => wx.stopPullDownRefresh());
+  },
+
   async fetchData() {
     this.setData({ loading: true });
     try {

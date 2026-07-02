@@ -21,13 +21,13 @@ export default function ReviewList({ homestayId }: Props) {
     (async () => {
       setLoading(true);
       try {
-        const res = await getReviews({ homestay_id: homestayId, page: 1, pageSize: 10 });
+        const res = await getReviews({ homestay_id: homestayId, page, pageSize: 10 });
         setReviews(res.list || []);
         setTotal(res.total || 0);
       } catch { /* ignore */ }
       setLoading(false);
     })();
-  }, [homestayId]);
+  }, [homestayId, page]);
 
   return (
     <List

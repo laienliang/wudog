@@ -24,6 +24,27 @@
     退款金额：<text class="price">¥{{order.refund_amount}}</text>
   </view>
 
-  <button wx:if="{{order.status === 'pending_payment' || order.status === 'paid' || order.status === 'confirmed'}}"
+  <button wx:if="{{order.status === 0}}" class="btn-pay-lg" bindtap="onPay">💰 立即支付（模拟）</button>
+
+  <button wx:if="{{order.status === 0 || order.status === 1 || order.status === 2}}"
     class="btn-cancel-lg" bindtap="onCancel">取消订单</button>
+
+  <button wx:if="{{order.status === 4}}" class="btn-review" bindtap="onOpenReview">✍️ 写评价</button>
+</view>
+
+<!-- 评价弹窗 -->
+<view wx:if="{{showReview}}" class="review-modal-mask" bindtap="onCloseReview">
+  <view class="review-modal" catchtap="">
+    <view class="rm-title">写评价</view>
+    <view class="rm-stars">
+      <text wx:for="{{[1,2,3,4,5]}}" wx:key="*this"
+        class="rm-star {{item <= reviewRating ? 'active' : ''}}"
+        bindtap="onRatingTap" data-rating="{{item}}">{{item <= reviewRating ? '★' : '☆'}}</text>
+    </view>
+    <textarea class="rm-textarea" placeholder="分享你的入住体验..." value="{{reviewContent}}" bindinput="onReviewInput" maxlength="500" />
+    <view class="rm-btns">
+      <button class="rm-btn-cancel" bindtap="onCloseReview">取消</button>
+      <button class="rm-btn-submit" bindtap="onSubmitReview" loading="{{submittingReview}}">提交评价</button>
+    </view>
+  </view>
 </view>

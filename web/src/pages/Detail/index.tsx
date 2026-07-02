@@ -4,13 +4,25 @@
    ============================================================ */
 import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { Spin, Card, Tag, Button, Rate, Tabs, Descriptions, message } from 'antd';
+import { Spin, Card, Tag, Button, Rate, Descriptions, message } from 'antd';
 import { HeartOutlined, HeartFilled, EnvironmentOutlined, PhoneOutlined } from '@ant-design/icons';
 import ImageGallery from '../../components/ImageGallery';
-import RoomCalendar from '../../components/Calendar';
 import ReviewList from '../../components/ReviewList';
 import { getHomestayDetail, getHouseRules, toggleFavorite, checkFavorited, Homestay, Room, HouseRule } from '../../api/lodging';
 import './style.css';
+
+/** 安全解析 facilities 字段：数组直接返回，JSON字符串自动parse，逗号字符串split，其余兜底空数组 */
+function safeFacilities(v: any): string[] {
+  if (Array.isArray(v)) return v;
+  if (typeof v === 'string') {
+    const trimmed = v.trim();
+    if (trimmed.startsWith('[')) {
+      try { const parsed = JSON.parse(trimmed); if (Array.isArray(parsed)) return parsed; } catch { /* ignore */ }
+    }
+    return trimmed.split(',').map((s: string) => s.trim()).filter(Boolean);
+  }
+  return [];
+}
 
 export default function DetailPage() {
   const { id } = useParams<{ id: string }>();
@@ -19,7 +31,6 @@ export default function DetailPage() {
   const [rules, setRules] = useState<HouseRule | null>(null);
   const [loading, setLoading] = useState(true);
   const [fav, setFav] = useState(false);
-  const [selectedRoom, setSelectedRoom] = useState<Room | null>(null);
 
   useEffect(() => {
     if (!id) return;
@@ -48,7 +59,7 @@ export default function DetailPage() {
   };
 
   const handleBook = (room: Room) => {
-    nav(`/book/${room.id}?homestayId=${id}&checkIn=&checkOut=&roomName=${encodeURIComponent(room.name)}&price=${room.base_price}`);
+    nav(`/book/${room.id}?homestayId=${id}&roomName=${encodeURIComponent(room.name)}&price=${room.base_price}`);
   };
 
   if (loading) return <Spin style={{ display: 'block', padding: 100 }} />;
@@ -80,12 +91,9 @@ export default function DetailPage() {
           </div>
 
           <div style={{ marginBottom: 16 }}>
-            {(() => {
-              const tagList = detail?.h_facility_tags ? detail.h_facility_tags.split(',') : [];
-              return tagList.map((item, index) => (
-                <span key={index}>{item}</span>
-              ));
-            })()}
+            {safeFacilities(detail.facilities).map((tag: string) => (
+              <Tag key={tag}>{tag}</Tag>
+            ))}
           </div>
 
           <p style={{ color: '#666', lineHeight: 1.8, whiteSpace: 'pre-wrap' }}>{detail.description}</p>
@@ -120,7 +128,7 @@ export default function DetailPage() {
               <div>
                 <p><Tag>{room.bed_type}</Tag> {room.area}㎡ · 可住{room.max_guests}人</p>
                 <p>{room.description}</p>
-                <div>{(() => { const arr = typeof room.facilities === 'string' ? room.facilities.split(',') : Array.isArray(room.facilities) ? room.facilities : []; return arr.map((f) => <Tag key={f}>{f.trim()}</Tag>); })()}</div>
+                <div>{safeFacilities(room.facilities).map((f: string) => <Tag key={f}>{f}</Tag>)}</div>
               </div>
               <div className="room-price-action">
                 <div className="room-price">
@@ -131,15 +139,6 @@ export default function DetailPage() {
                 </Button>
               </div>
             </div>
-
-            {/* 点击预订展开日历 */}
-            {selectedRoom?.id === room.id && (
-              <RoomCalendar
-                roomId={room.id}
-                basePrice={room.base_price}
-                onDateChange={() => {}}
-              />
-            )}
           </Card>
         ))}
       </div>

@@ -16,75 +16,75 @@ export class Order {
   @PrimaryGeneratedColumn('increment', { type: 'bigint', unsigned: true })
   id: number;
 
-  @Column({ type: 'varchar', length: 32, comment: '订单号', unique: true })
+  @Column({ name: 'order_no', type: 'varchar', length: 32, comment: '订单号', unique: true })
   order_no: string;
 
   @Index()
-  @Column({ type: 'bigint', unsigned: true, comment: '用户ID' })
+  @Column({ name: 'user_id', type: 'bigint', unsigned: true, comment: '用户ID' })
   user_id: number;
 
   @Index()
-  @Column({ type: 'bigint', unsigned: true, comment: '民宿ID' })
+  @Column({ name: 'homestay_id', type: 'bigint', unsigned: true, comment: '民宿ID' })
   homestay_id: number;
 
   @Index()
-  @Column({ type: 'bigint', unsigned: true, comment: '房型ID' })
+  @Column({ name: 'room_id', type: 'bigint', unsigned: true, comment: '房型ID' })
   room_id: number;
 
   @Index()
-  @Column({ type: 'date', comment: '入住日期' })
+  @Column({ name: 'checkin_date', type: 'date', comment: '入住日期' })
   check_in_date: string;
 
-  @Column({ type: 'date', comment: '离店日期' })
+  @Column({ name: 'checkout_date', type: 'date', comment: '离店日期' })
   check_out_date: string;
 
-  @Column({ type: 'int', unsigned: true, default: 1, comment: '入住晚数' })
+  @Column({ name: 'nights', type: 'int', unsigned: true, default: 1, comment: '入住晚数' })
   nights: number;
 
-  @Column({ type: 'int', unsigned: true, default: 1, comment: '预订间数' })
+  @Column({ name: 'room_count', type: 'int', unsigned: true, default: 1, comment: '预订间数' })
   room_count: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, default: 0, comment: '订单总价' })
+  @Column({ name: 'total_price', type: 'decimal', precision: 10, scale: 2, default: 0, comment: '订单总价' })
   total_price: number;
 
   @Index()
-  @Column({ type: 'varchar', length: 20, default: 'pending_payment', comment: '订单状态' })
-  status: string;
+  @Column({ name: 'status', type: 'tinyint', default: 0, comment: '订单状态 0待支付1已支付2已确认3入住中4已完成5已取消6退款中7已退款' })
+  status: number;
 
-  @Column({ type: 'varchar', length: 50, comment: '入住联系人姓名' })
+  @Column({ name: 'contact_name', type: 'varchar', length: 50, comment: '入住联系人姓名' })
   contact_name: string;
 
-  @Column({ type: 'varchar', length: 20, comment: '入住联系人电话' })
+  @Column({ name: 'contact_phone', type: 'varchar', length: 20, comment: '入住联系人电话' })
   contact_phone: string;
 
-  @Column({ type: 'tinyint', unsigned: true, default: 1, comment: '入住人数' })
+  @Column({ name: 'guest_count', type: 'tinyint', unsigned: true, default: 1, comment: '入住人数' })
   guest_count: number;
 
-  @Column({ type: 'varchar', length: 16, nullable: true, comment: '入住核销码', unique: true })
+  @Column({ name: 'check_in_code', type: 'varchar', length: 16, nullable: true, comment: '入住核销码', unique: true })
   check_in_code: string;
 
-  @Column({ type: 'datetime', nullable: true, comment: '实际核销时间' })
+  @Column({ name: 'check_in_time', type: 'datetime', nullable: true, comment: '实际核销时间' })
   check_in_time: Date;
 
-  @Column({ type: 'varchar', length: 500, nullable: true, comment: '取消原因' })
+  @Column({ name: 'cancel_reason', type: 'varchar', length: 500, nullable: true, comment: '取消原因' })
   cancel_reason: string;
 
-  @Column({ type: 'datetime', nullable: true, comment: '取消时间' })
+  @Column({ name: 'cancel_time', type: 'datetime', nullable: true, comment: '取消时间' })
   cancel_time: Date;
 
-  @Column({ type: 'varchar', length: 20, nullable: true, comment: '退改状态' })
-  cancel_status: string;
+  @Column({ name: 'cancel_status', type: 'tinyint', nullable: true, comment: '退改状态 0无1部分2全额3拒绝' })
+  cancel_status: number;
 
-  @Column({ type: 'decimal', precision: 10, scale: 2, nullable: true, comment: '退款金额' })
+  @Column({ name: 'refund_amount', type: 'decimal', precision: 10, scale: 2, nullable: true, comment: '退款金额' })
   refund_amount: number;
 
-  @CreateDateColumn({ type: 'datetime', comment: '创建时间' })
+  @CreateDateColumn({ name: 'created_at', type: 'datetime', comment: '创建时间' })
   created_at: Date;
 
-  @UpdateDateColumn({ type: 'datetime', comment: '更新时间' })
+  @UpdateDateColumn({ name: 'updated_at', type: 'datetime', comment: '更新时间' })
   updated_at: Date;
 
   @Index()
-  @Column({ type: 'tinyint', width: 1, default: 0, comment: '软删除' })
+  @Column({ name: 'is_deleted', type: 'tinyint', width: 1, default: 0, comment: '软删除' })
   is_deleted: number;
 }

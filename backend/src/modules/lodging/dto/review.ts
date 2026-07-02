@@ -33,9 +33,6 @@ export class ReviewCreateDTO {
 }
 
 export class ReviewReplyDTO {
-  @Rule(RuleType.number().integer().required())
-  id: number;
-
   @Rule(RuleType.string().required())
   owner_reply: string;
 }

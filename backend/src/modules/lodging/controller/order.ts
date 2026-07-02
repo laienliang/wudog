@@ -6,6 +6,7 @@ import { Controller, Get, Post, Put, Del, Inject, Body, Query, Param } from '@mi
 import { Context } from '@midwayjs/koa';
 import { OrderService } from '../service/order';
 import { OrderCreateDTO, OrderCancelDTO } from '../dto/order';
+import { toOrderStatusNumber, toOrderStatusString } from '../../../interface';
 
 @Controller('/api/lodging')
 export class OrderController {
@@ -49,7 +50,8 @@ export class OrderController {
   ) {
     try {
       const userId = this.getUserId(ctx);
-      const data = await this.orderService.list({ page, pageSize, status, userId });
+      const numericStatus = status ? toOrderStatusNumber(status) : undefined;
+      const data = await this.orderService.list({ page, pageSize, status: numericStatus, userId });
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
       return { code: 200, message: 'success', data };
     } catch (err: any) {
@@ -64,6 +66,21 @@ export class OrderController {
     const data = await this.orderService.detail(id);
     if (!data) return { code: 404, message: '订单不存在', data: null };
     return { code: 200, message: 'success', data };
+  }
+
+  /**
+   * ★ 模拟支付：POST /api/lodging/order/pay/:id
+   * 扣减库存 + 更新状态为已支付
+   */
+  @Post('/order/pay/:id')
+  async pay(@Param('id') id: number, ctx: Context) {
+    const userId = this.getUserId(ctx);
+    try {
+      const data = await this.orderService.pay(id, userId);
+      return { code: 200, message: '支付成功', data };
+    } catch (err: any) {
+      return { code: 400, message: err.message || '支付失败', data: null };
+    }
   }
 
   /**
@@ -112,8 +129,14 @@ export class OrderController {
     @Query('status') status: string
   ) {
     try {
-      const data = await this.orderService.list({ page, pageSize, status });
+      const numericStatus = status ? toOrderStatusNumber(status) : undefined;
+      const data = await this.orderService.list({ page, pageSize, status: numericStatus });
       if (!data) return { code: 200, message: 'success', data: { total: 0, list: [] } };
+      // 将数字状态转为前端字符串
+      data.list = data.list.map((item: any) => ({
+        ...item,
+        status: toOrderStatusString(item.status),
+      }));
       return { code: 200, message: 'success', data };
     } catch (err: any) {
       console.error('[OrderController.adminList] 查询订单列表失败:', err.message || err);
@@ -125,7 +148,8 @@ export class OrderController {
   @Put('/admin/orders/:id/status')
   async updateStatus(@Param('id') id: number, @Body('status') status: string) {
     try {
-      const data = await this.orderService.updateStatus(id, status);
+      const newStatus = toOrderStatusNumber(status);
+      const data = await this.orderService.updateStatus(id, newStatus);
       return { code: 200, message: '状态更新成功', data };
     } catch (err: any) {
       return { code: 400, message: err.message, data: null };

@@ -49,27 +49,35 @@ export class CalendarController {
    */
   @Put('/room-calendar/batch-edit')
   async batchEdit(@Body() body: CalendarBatchEditDTO) {
-    const data = await this.calendarService.batchEdit({
-      roomId: body.roomId,
-      startDate: body.startDate,
-      endDate: body.endDate,
-      availableStock: body.availableStock,
-      price: body.price,
-      status: body.status,
-    });
-    return { code: 200, message: '批量更新成功', data };
+    try {
+      const data = await this.calendarService.batchEdit({
+        roomId: body.roomId,
+        startDate: body.startDate,
+        endDate: body.endDate,
+        availableStock: body.availableStock,
+        price: body.price,
+        status: body.status,
+      });
+      return { code: 200, message: `批量更新成功，影响 ${data.affected} 条记录`, data };
+    } catch (err: any) {
+      return { code: 400, message: err.message || '批量更新失败', data: null };
+    }
   }
 
   /** PATCH /api/lodging/admin/calendar/single — 单日编辑 */
   @Patch('/admin/calendar/single')
   async singleEdit(@Body() body: CalendarSingleEditDTO) {
-    const data = await this.calendarService.singleEdit({
-      roomId: body.roomId,
-      date: body.date,
-      availableStock: body.availableStock,
-      price: body.price,
-      status: body.status,
-    });
-    return { code: 200, message: '更新成功', data };
+    try {
+      const data = await this.calendarService.singleEdit({
+        roomId: body.roomId,
+        date: body.date,
+        availableStock: body.availableStock,
+        price: body.price,
+        status: body.status,
+      });
+      return { code: 200, message: '更新成功', data };
+    } catch (err: any) {
+      return { code: 400, message: err.message || '单日更新失败', data: null };
+    }
   }
 }

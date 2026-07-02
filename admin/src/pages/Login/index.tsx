@@ -7,6 +7,7 @@ import { Card, Form, Input, Button, message } from 'antd';
 import { UserOutlined, LockOutlined, EnvironmentOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
 import { setToken } from '../../store/auth';
+import { post } from '../../utils/request';
 
 export default function LoginPage() {
   const [loading, setLoading] = useState(false);
@@ -15,13 +16,12 @@ export default function LoginPage() {
   const handleLogin = async (values: { username: string; password: string }) => {
     setLoading(true);
     try {
-      // 简化登录：直接存 token（后端实际返回 JWT token 后替换此处）
-      const token = btoa(`${values.username}:${values.password}`);
-      setToken(token);
+      const data: any = await post('/api/auth/login', values);
+      setToken(data.token);
       message.success('登录成功');
       nav('/dashboard');
-    } catch {
-      message.error('登录失败');
+    } catch (err: any) {
+      message.error(err?.message || '登录失败，请检查用户名密码');
     }
     setLoading(false);
   };

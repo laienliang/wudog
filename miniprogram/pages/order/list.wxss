@@ -12,3 +12,4 @@
 .order-code { margin-top:8rpx; font-size:26rpx; }
 .order-actions { margin-top:16rpx; text-align:right; }
 .btn-cancel { border:2rpx solid #EF4444; color:#EF4444; border-radius:32rpx; background:#fff; font-size:24rpx; }
+.btn-pay { border:2rpx solid var(--color-primary); color:#fff; border-radius:32rpx; background:var(--color-primary); font-size:24rpx; margin-right:16rpx; }

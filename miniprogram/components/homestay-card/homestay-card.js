@@ -26,9 +26,14 @@ Component({
     'item': function (item) {
       if (!item) return;
       var rating = item.rating;
+      var facilities = item.facilities || '';
+      var facilityList = typeof facilities === 'string'
+        ? facilities.split(',').map(function (s) { return s.trim(); }).filter(Boolean)
+        : facilities;
       this.setData({
         stars: toStars(rating),
         ratingText: (rating || 5) + '分',
+        facilityList: facilityList,
       });
     },
   },
@@ -36,7 +41,14 @@ Component({
   methods: {
     onTap(e) {
       var id = e.currentTarget.dataset.id;
-      wx.navigateTo({ url: '/pages/homestay/detail?id=' + id });
+      var app = getApp();
+      var checkIn = app.globalData.checkIn || '';
+      var checkOut = app.globalData.checkOut || '';
+      var url = '/pages/homestay/detail?id=' + id;
+      if (checkIn && checkOut) {
+        url += '&checkIn=' + checkIn + '&checkOut=' + checkOut;
+      }
+      wx.navigateTo({ url: url });
     },
   },
 });

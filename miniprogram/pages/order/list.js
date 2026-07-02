@@ -23,7 +23,7 @@ Page({
     this.setData({ loading: true });
     try {
       const params = { pageSize: 50 };
-      if (this.data.activeTab) params.status = this.data.activeTab;
+      if (this.data.activeTab !== '') params.status = Number(this.data.activeTab);
       const res = await get('/api/lodging/orders', params);
       this.setData({ list: res.list || [], loading: false });
     } catch { this.setData({ loading: false }); }
@@ -31,6 +31,22 @@ Page({
 
   onDetail(e) {
     wx.navigateTo({ url: `/pages/order/detail?id=${e.currentTarget.dataset.id}` });
+  },
+
+  onPay(e) {
+    const id = e.currentTarget.dataset.id;
+    wx.showModal({
+      title: '确认支付',
+      content: '模拟支付：确认后将扣减库存并更新订单状态',
+      success: async (res) => {
+        if (!res.confirm) return;
+        try {
+          await post(`/api/lodging/order/pay/${id}`);
+          wx.showToast({ title: '支付成功', icon: 'success' });
+          this.fetchData();
+        } catch { wx.showToast({ title: '支付失败', icon: 'none' }); }
+      },
+    });
   },
 
   onCancel(e) {

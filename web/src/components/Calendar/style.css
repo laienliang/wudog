@@ -1,15 +1,170 @@
-/* 日历组件样式 */
-.calendar-panel { margin: var(--spacing-md) 0; }
+/* ============================================================
+   房态日历样式 — Ant Design RangePicker 覆盖（无价格版）
+   两行居中布局：日期数字 + 余X间（或红色"未开"）
+   解决: 单元格高度不足、多行重叠、内容溢出
+   文件: C:\Users\huangjiaxin\乌东项目5\wudong-group3\web\src\components\Calendar\style.css
+   ============================================================ */
+
+/* ===== 面板容器 ===== */
+.calendar-panel {
+  margin: var(--spacing-md) 0;
+  position: relative;
+}
+
+.calendar-panel .ant-picker-dropdown,
+.calendar-panel .ant-picker-panel-container {
+  z-index: 1050 !important;
+}
+
+/* ===== 底部汇总（仅晚数） ===== */
 .calendar-summary {
   margin-top: var(--spacing-md);
   font-size: var(--font-size-md);
+  color: var(--color-text);
 }
-.calendar-summary em {
-  font-style: normal;
-  color: var(--color-accent);
-  font-size: var(--font-size-xl);
-  font-weight: 700;
+
+/* =================================================================
+   日历单元格 — Ant Design v5 结构:
+   td.ant-picker-cell > div.ant-picker-cell-inner
+   ================================================================= */
+
+/* 1. 加高单元格，适配两行文字 */
+.ant-picker-cell-inner {
+  min-height: 56px !important;          /* 两行文本舒适高度，原默认 ~30px */
+  height: auto !important;
+  padding: 4px 2px !important;
+  display: flex !important;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-sm) !important;
 }
-.date-cell { text-align: center; line-height: 1.2; }
-.date-price { font-size: 10px; color: var(--color-accent); display: block; }
-.date-stock { font-size: 10px; color: var(--color-text-secondary); }
+
+/* 2. 表格行高自适应 */
+.ant-picker-content td {
+  height: auto !important;
+  vertical-align: middle;
+}
+
+/* =================================================================
+   单元格内容容器（由 cellRender 返回）
+   ================================================================= */
+
+.date-cell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;                            /* 两行之间间距 */
+  width: 100%;
+  min-height: 48px;
+  overflow: hidden;                    /* 杜绝内容溢出面板 */
+  text-overflow: ellipsis;
+  white-space: nowrap;                 /* 单品文字不折行，保持紧凑 */
+  line-height: 1.3;
+  padding: 2px 0;
+}
+
+/* ---- 日期数字（第一行） ---- */
+.date-day {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1.4;
+}
+
+/* ---- 剩余房间数（第二行） ---- */
+.date-stock {
+  font-size: 11px;
+  color: var(--color-text-secondary);
+  line-height: 1.3;
+}
+
+/* ---- 不可售标识 ---- */
+.date-unavail {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--color-error);
+  line-height: 1.4;
+}
+
+/* =================================================================
+   状态变体
+   ================================================================= */
+
+/* 满房日微红底色 */
+.date-cell--full {
+  opacity: 0.85;
+}
+
+/* =================================================================
+   禁用日期（过期 / 满房）文字淡化
+   ================================================================= */
+
+.ant-picker-cell-disabled .date-day {
+  color: var(--color-text-placeholder);
+}
+
+.ant-picker-cell-disabled .date-cell {
+  opacity: 0.5;
+}
+
+/* 禁用日期不展示库存/状态文字（兜底） */
+.ant-picker-cell-disabled .date-stock,
+.ant-picker-cell-disabled .date-unavail {
+  display: none;
+}
+
+/* =================================================================
+   上月 / 下月填充格淡化
+   ================================================================= */
+
+.ant-picker-cell:not(.ant-picker-cell-in-view) .date-cell {
+  opacity: 0.3;
+  pointer-events: none;
+}
+
+/* =================================================================
+   悬停高亮（仅可选日期）
+   ================================================================= */
+
+.ant-picker-cell:not(.ant-picker-cell-disabled):hover .ant-picker-cell-inner {
+  background: var(--color-primary-light);
+}
+
+/* =================================================================
+   选中日期范围样式
+   ================================================================= */
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .ant-picker-cell-inner {
+  background: var(--color-primary) !important;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-selected .date-day,
+.ant-picker-cell-in-view.ant-picker-cell-selected .date-stock {
+  color: #fff !important;
+}
+
+.ant-picker-cell-in-view.ant-picker-cell-range-start .ant-picker-cell-inner,
+.ant-picker-cell-in-view.ant-picker-cell-range-end .ant-picker-cell-inner {
+  background: var(--color-primary) !important;
+}
+
+/* 范围中间日期 */
+.ant-picker-cell-in-view.ant-picker-cell-in-range .ant-picker-cell-inner {
+  background: var(--color-primary-light);
+}
+
+/* =================================================================
+   面板宽度 & 表头
+   ================================================================= */
+
+.ant-picker-panel {
+  min-width: 320px;
+}
+
+.ant-picker-content thead th {
+  padding: 6px 0;
+  font-size: var(--font-size-xs);
+  color: var(--color-text-secondary);
+}
