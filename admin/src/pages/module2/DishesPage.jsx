@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, message, Popconfirm, Tag, Switch } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function DishesPage() {
@@ -119,8 +120,8 @@ export default function DishesPage() {
           <Form.Item name="price" label="价格" rules={[{ required: true, message: '请输入价格' }]}>
             <InputNumber min={0} style={{ width: '100%' }} placeholder="价格" />
           </Form.Item>
-          <Form.Item name="image" label="菜品图片URL">
-            <Input placeholder="图片URL" />
+          <Form.Item name="image" label="菜品图片">
+            <ImageUploader placeholder="图片URL 或本地上传" />
           </Form.Item>
           <Form.Item name="intro" label="菜品介绍">
             <Input.TextArea rows={2} placeholder="菜品介绍" />

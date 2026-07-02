@@ -37,6 +37,35 @@
       </view>
     </view>
   </view>
+
+  <!-- Booking -->
+  <view class="section">
+    <view class="section-title">预订路线</view>
+    <view class="form">
+      <view class="form-item">
+        <text class="label">数量</text>
+        <view class="qty-row">
+          <view class="qty-btn" bindtap="onQtyMinus">-</view>
+          <text class="qty-val">{{quantity}}</text>
+          <view class="qty-btn" bindtap="onQtyPlus">+</view>
+        </view>
+      </view>
+      <view class="form-item">
+        <text class="label">联系人</text>
+        <input value="{{contactName}}" bindinput="onNameInput" class="input" placeholder="姓名" />
+      </view>
+      <view class="form-item">
+        <text class="label">电话</text>
+        <input type="number" value="{{contactPhone}}" bindinput="onPhoneInput" class="input" placeholder="手机号" maxlength="11" />
+      </view>
+    </view>
+    <view class="total-row">合计: ¥{{totalPrice}}</view>
+  </view>
+
+  <view style="height:120rpx;"></view>
+  <view class="bottom-bar">
+    <button class="book-btn" bindtap="handleBooking" loading="{{submitting}}">立即预订</button>
+  </view>
 </view>
 
 <view wx:if="{{loading}}" class="loading">加载中...</view>

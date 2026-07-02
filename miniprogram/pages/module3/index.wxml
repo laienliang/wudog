@@ -1,4 +1,8 @@
 <view class="container">
+  <view class="top-bar">
+    <text class="page-title">民宿预订</text>
+    <text class="mine-entry" bindtap="goMine">👤</text>
+  </view>
   <scroll-view scroll-x class="tag-scroll">
     <view class="tag-item {{activeTag === item ? 'tag-active' : ''}}" wx:for="{{styleTags}}" wx:key="*this" data-tag="{{item}}" bindtap="onTagTap">{{item}}</view>
   </scroll-view>
@@ -12,7 +16,7 @@
       <view class="card-name">{{item.name}}</view>
       <view class="card-addr" wx:if="{{item.address}}">{{item.address}}</view>
       <view class="card-tags" wx:if="{{item.styleTags}}">
-        <text class="style-tag" wx:for="{{item.styleTags.split(',')}}" wx:for-item="t" wx:key="*this">{{t}}</text>
+        <text class="style-tag" wx:for="{{item.styleTagList}}" wx:for-item="t" wx:key="*this">{{t}}</text>
       </view>
       <view class="card-footer">
         <text class="rating" wx:if="{{item.avgRating}}">⭐{{item.avgRating}}</text>

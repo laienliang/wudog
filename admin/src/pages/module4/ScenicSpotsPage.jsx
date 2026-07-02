@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function ScenicSpotsPage() {
@@ -80,7 +81,7 @@ export default function ScenicSpotsPage() {
           <Form.Item name="latitude" label="纬度"><InputNumber style={{ width: '100%' }} /></Form.Item>
           <Form.Item name="longitude" label="经度"><InputNumber style={{ width: '100%' }} /></Form.Item>
           <Form.Item name="open_time" label="开放时间"><Input placeholder="如：08:00-17:30" /></Form.Item>
-          <Form.Item name="main_image" label="主图URL"><Input placeholder="主图URL" /></Form.Item>
+          <Form.Item name="main_image" label="主图"><ImageUploader placeholder="主图URL 或本地上传" /></Form.Item>
           <Form.Item name="intro" label="景区介绍"><Input.TextArea rows={3} /></Form.Item>
           <Form.Item name="status" label="状态"><InputNumber min={0} max={1} style={{ width: '100%' }} placeholder="1上架 0下架" /></Form.Item>
         </Form>

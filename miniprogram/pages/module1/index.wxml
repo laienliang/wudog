@@ -1,4 +1,8 @@
 <view class="page">
+  <view class="top-bar">
+    <text class="page-title">非遗商品</text>
+    <text class="mine-entry" bindtap="goMine">👤</text>
+  </view>
   <!-- Category scroll bar -->
   <scroll-view scroll-x class="category-bar">
     <view class="cat-item {{activeCategory === 0 ? 'active' : ''}}" data-id="0" bindtap="onCategoryTap">全部</view>

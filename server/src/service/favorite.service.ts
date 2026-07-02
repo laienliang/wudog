@@ -1,4 +1,4 @@
-import { Repository } from 'typeorm';
+import { Repository, In } from 'typeorm';
 import { Favorite } from '../entity/favorite.entity';
 import { TravelNote } from '../entity/travel-note.entity';
 
@@ -28,7 +28,15 @@ export class FavoriteService {
       skip: (page - 1) * pageSize,
       take: pageSize,
     });
-    return { list, total, page, pageSize };
+    // 关联查询游记数据
+    const noteIds = list.map(f => f.noteId);
+    const notes = noteIds.length ? await this.noteRepo.find({
+      where: { id: In(noteIds), isDeleted: 0 },
+    }) : [];
+    const noteMap: Record<number, any> = {};
+    notes.forEach(n => { noteMap[n.id] = n; });
+    const enriched = list.map(f => ({ ...f, note: noteMap[f.noteId] || null }));
+    return { list: enriched, total, page, pageSize };
   }
 
   async isFavorited(userId: number, noteId: number): Promise<boolean> {

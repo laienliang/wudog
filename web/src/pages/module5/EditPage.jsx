@@ -31,7 +31,7 @@ export default function EditPage() {
 
   const [uploading, setUploading] = useState(false);
 
-  const addImageUrl = () => {
+  const addImageUrl = async () => {
     const url = imageUrl.trim();
     if (!url) return;
     if (!/^https?:\/\/.+/.test(url)) {
@@ -42,8 +42,20 @@ export default function EditPage() {
       alert('最多添加9张图片');
       return;
     }
-    setImages([...images, url]);
-    setImageUrl('');
+    setUploading(true);
+    try {
+      const res = await request.post('/public/upload-url', { url });
+      const localUrl = res.data?.url;
+      if (localUrl) {
+        setImages([...images, localUrl]);
+        setImageUrl('');
+      } else {
+        alert('上传失败');
+      }
+    } catch {
+      alert('URL图片下载失败，请检查链接是否可访问');
+    }
+    setUploading(false);
   };
 
   const handleFileUpload = async (e) => {
@@ -59,11 +71,10 @@ export default function EditPage() {
       const formData = new FormData();
       formData.append('file', file);
       try {
-        const res = await request.post('/public/upload', formData, {
-          headers: { 'Content-Type': 'multipart/form-data' },
-        });
-        if (res.data?.urls?.length > 0) {
-          setImages((prev) => [...prev, ...res.data.urls]);
+        const res = await request.post('/public/upload', formData);
+        const fileUrls = res.data?.files || [];
+        if (fileUrls.length > 0) {
+          setImages((prev) => [...prev, ...fileUrls.map(f => f.url)]);
         }
       } catch {
         alert(`${file.name} 上传失败`);
@@ -191,10 +202,10 @@ export default function EditPage() {
                 value={imageUrl}
                 onChange={(e) => setImageUrl(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && (e.preventDefault(), addImageUrl())}
-                disabled={images.length >= 9}
+                disabled={images.length >= 9 || uploading}
                 style={{ flex: 1, padding: '8px 14px', border: '1px solid #e0e0e0', borderRadius: 8, fontSize: 13, outline: 'none' }}
               />
-              <button onClick={addImageUrl} disabled={images.length >= 9 || !imageUrl.trim()}
+              <button onClick={addImageUrl} disabled={images.length >= 9 || !imageUrl.trim() || uploading}
                 style={{
                   padding: '8px 20px', border: 'none', borderRadius: 8, fontSize: 13, cursor: 'pointer',
                   background: images.length >= 9 ? '#ccc' : '#1677ff', color: '#fff', whiteSpace: 'nowrap',

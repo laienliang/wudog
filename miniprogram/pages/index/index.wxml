@@ -1,4 +1,35 @@
-﻿<view class="container" style="padding:40rpx;text-align:center;">
-  <text style="font-size:36rpx;font-weight:bold;">首页</text>
-  <view style="margin-top:40rpx;color:#999;">模块开发中</view>
+<view class="page">
+  <view class="top-bar">
+    <view class="search-box" bindtap="goSearch">
+      <text class="search-icon">🔍</text>
+      <text class="search-placeholder">搜索游记...</text>
+    </view>
+    <text class="mine-btn" bindtap="goMine">👤 我的</text>
+  </view>
+
+  <scroll-view scroll-x class="topic-bar">
+    <text class="topic-tag {{activeTopic === '' ? 'active' : ''}}" bindtap="onTopicTap" data-id="">全部</text>
+    <text wx:for="{{topics}}" wx:key="id"
+      class="topic-tag {{activeTopic === item.id ? 'active' : ''}}"
+      bindtap="onTopicTap" data-id="{{item.id}}">{{item.name}}</text>
+  </scroll-view>
+
+  <view wx:if="{{list.length === 0 && !loading}}" class="empty">
+    <text>还没有游记，快来写第一篇吧~</text>
+  </view>
+
+  <view class="list">
+    <travel-card
+      wx:for="{{list}}"
+      wx:key="id"
+      item="{{item}}"
+      bindtap="goDetail"
+      data-id="{{item.id}}"
+    />
+  </view>
+
+  <view wx:if="{{loading}}" class="loading">加载中...</view>
+  <view wx:if="{{noMore && list.length > 0}}" class="no-more">— 没有更多了 —</view>
+
+  <view class="fab" bindtap="goPublish">+</view>
 </view>

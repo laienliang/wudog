@@ -28,6 +28,14 @@ Page({
     try {
       const res = await request('/public/auth/login', 'POST', { username, password });
       wx.setStorageSync('token', res.data.token);
+      // 解码JWT存储用户信息
+      try {
+        const payload = JSON.parse(decodeURIComponent(
+          res.data.token.split('.')[1].replace(/[-_]/g, c => c === '-' ? '+' : '/').split('').map(c => '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2)).join('')
+        ));
+        wx.setStorageSync('userId', payload.userId || payload.id);
+        wx.setStorageSync('username', payload.username || username);
+      } catch {}
       wx.showToast({ title: '登录成功', icon: 'success' });
       setTimeout(() => {
         wx.switchTab({ url: '/pages/index/index' }).catch(() => {

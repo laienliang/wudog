@@ -7,6 +7,7 @@ import DetailPage from './pages/module5/DetailPage';
 import EditPage from './pages/module5/EditPage';
 import TopicPage from './pages/module5/TopicPage';
 import UserPage from './pages/module5/UserPage';
+import MyPage from './pages/module5/MyPage';
 import Module1ListPage from './pages/module1/ListPage';
 import Module1DetailPage from './pages/module1/DetailPage';
 import Module1CartPage from './pages/module1/CartPage';
@@ -37,6 +38,7 @@ export default function App() {
           <Route path="/module5/edit/:id" element={<EditPage />} />
           <Route path="/module5/topic/:id" element={<TopicPage />} />
           <Route path="/module5/user/:id" element={<UserPage />} />
+          <Route path="/module5/my" element={<MyPage />} />
           <Route path="/module5/login" element={<LoginPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/module1" element={<Module1ListPage />} />

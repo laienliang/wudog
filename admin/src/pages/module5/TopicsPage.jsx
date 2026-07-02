@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, Switch, Space, message, Tag } from 'antd';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function TopicsPage() {
@@ -95,8 +96,8 @@ export default function TopicsPage() {
           <Form.Item name="description" label="描述">
             <Input.TextArea rows={3} />
           </Form.Item>
-          <Form.Item name="cover_image" label="封面图URL">
-            <Input placeholder="https://..." />
+          <Form.Item name="cover_image" label="封面图">
+            <ImageUploader placeholder="https://... 或本地上传" />
           </Form.Item>
           <Form.Item name="is_pinned" label="置顶" valuePropName="checked">
             <Switch />

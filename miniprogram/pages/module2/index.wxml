@@ -1,4 +1,8 @@
 <view class="container">
+  <view class="top-bar">
+    <text class="page-title">餐饮美食</text>
+    <text class="mine-entry" bindtap="goMine">👤</text>
+  </view>
   <view class="tab-bar">
     <view class="tab-item {{tab === 'restaurant' ? 'active' : ''}}" data-tab="restaurant" bindtap="onTabTap">餐厅</view>
     <view class="tab-item {{tab === 'farm' ? 'active' : ''}}" data-tab="farm" bindtap="onTabTap">农产品</view>

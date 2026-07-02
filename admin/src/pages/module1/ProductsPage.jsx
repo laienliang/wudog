@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Tag, Button, Select, Space, Modal, Form, Input, InputNumber, message, Popconfirm, Upload } from 'antd';
 import { PlusOutlined, DeleteOutlined, EditOutlined, EyeOutlined } from '@ant-design/icons';
-
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 const statusMap = {
@@ -218,8 +218,8 @@ export default function ProductsPage() {
               <InputNumber min={0} style={{ width: '100%' }} />
             </Form.Item>
           </Space>
-          <Form.Item name="main_image" label="主图URL">
-            <Input placeholder="商品主图URL" />
+          <Form.Item name="main_image" label="主图">
+            <ImageUploader placeholder="商品主图URL 或本地上传" />
           </Form.Item>
           <Form.Item name="craft_intro" label="工艺介绍">
             <Input.TextArea rows={2} placeholder="非遗工艺介绍" />
@@ -242,7 +242,7 @@ export default function ProductsPage() {
                 <Input placeholder="规格名" value={sku.spec_name} onChange={e => updateSku(i, 'spec_name', e.target.value)} style={{ width: 150 }} />
                 <InputNumber placeholder="价格" value={sku.price} onChange={v => updateSku(i, 'price', v)} style={{ width: 100 }} min={0} step={0.01} />
                 <InputNumber placeholder="库存" value={sku.stock} onChange={v => updateSku(i, 'stock', v)} style={{ width: 80 }} min={0} />
-                <Input placeholder="图片URL" value={sku.image} onChange={e => updateSku(i, 'image', e.target.value)} style={{ width: 200 }} />
+                <ImageUploader placeholder="SKU图片URL" value={sku.image} onChange={(v) => updateSku(i, 'image', v)} />
                 <Button icon={<DeleteOutlined />} onClick={() => removeSku(i)} danger size="small" />
               </Space>
             ))}
@@ -256,7 +256,7 @@ export default function ProductsPage() {
             </div>
             {images.map((img, i) => (
               <Space key={i} style={{ display: 'flex', marginBottom: 8 }} align="start">
-                <Input placeholder="图片URL" value={img.url} onChange={e => updateImage(i, 'url', e.target.value)} style={{ width: 400 }} />
+                <ImageUploader placeholder="图片URL" value={img.url} onChange={(v) => updateImage(i, 'url', v)} />
                 <InputNumber placeholder="排序" value={img.sort_order} onChange={v => updateImage(i, 'sort_order', v)} style={{ width: 80 }} min={0} />
                 <Button icon={<DeleteOutlined />} onClick={() => removeImage(i)} danger size="small" />
                 {img.url && <img src={img.url} alt="" style={{ width: 40, height: 40, objectFit: 'cover' }} />}

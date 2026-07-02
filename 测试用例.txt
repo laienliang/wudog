@@ -1,0 +1,3 @@
+运行测试：cd server && npm test
+
+覆盖率：cd server && npm run test:coverage

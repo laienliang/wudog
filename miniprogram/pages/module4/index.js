@@ -50,4 +50,10 @@ Page({
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({ url: `/pages/module4/route-detail?id=${id}` });
   },
+
+  goMine() {
+    const token = wx.getStorageSync('token');
+    if (!token) { wx.navigateTo({ url: '/pages/login/login' }); return; }
+    wx.navigateTo({ url: '/pages/mine/index' });
+  },
 });

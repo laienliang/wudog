@@ -1,4 +1,4 @@
-import { request } from '../../utils/request';
+import { request, getImageUrl } from '../../utils/request';
 
 Page({
   data: {
@@ -44,7 +44,8 @@ Page({
       if (activeCategory) params.category_id = activeCategory;
       if (sort !== 'newest') params.sort = sort;
       const res = await request('/api/product/list', 'GET', params);
-      const newList = refresh ? res.data.list : [...this.data.products, ...res.data.list];
+      const list = (res.data.list || []).map(p => ({ ...p, mainImage: getImageUrl(p.mainImage) }));
+      const newList = refresh ? list : [...this.data.products, ...list];
       this.setData({
         products: newList,
         noMore: newList.length >= res.data.total,
@@ -72,5 +73,11 @@ Page({
   goDetail(e) {
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({ url: `/pages/module1/detail?id=${id}` });
+  },
+
+  goMine() {
+    const token = wx.getStorageSync('token');
+    if (!token) { wx.navigateTo({ url: '/pages/login/login' }); return; }
+    wx.navigateTo({ url: '/pages/mine/index' });
   },
 });

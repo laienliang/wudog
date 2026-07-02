@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function HomestaysPage() {
@@ -106,8 +107,8 @@ export default function HomestaysPage() {
           <Form.Item name="facility_tags" label="设施标签（逗号分隔）">
             <Input placeholder="如：WiFi,空调,独立卫浴,停车场" />
           </Form.Item>
-          <Form.Item name="main_image" label="主图URL">
-            <Input placeholder="主图URL" />
+          <Form.Item name="main_image" label="主图">
+            <ImageUploader placeholder="主图URL 或本地上传" />
           </Form.Item>
           <Form.Item name="intro" label="民宿介绍">
             <Input.TextArea rows={3} placeholder="民宿介绍" />

@@ -25,10 +25,13 @@ export default function Header() {
         <Link to="/module4" style={{ color: '#fff' }}>景区出行</Link>
         <Link to="/module5/list" style={{ color: '#fff' }}>社区</Link>
         {token ? (
-          <button onClick={handleLogout} style={{
-            background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)',
-            color: '#fff', padding: '4px 16px', borderRadius: 4, cursor: 'pointer'
-          }}>退出</button>
+          <>
+            <Link to="/module5/my" style={{ color: '#fff' }}>我的</Link>
+            <button onClick={handleLogout} style={{
+              background: 'rgba(255,255,255,0.2)', border: '1px solid rgba(255,255,255,0.3)',
+              color: '#fff', padding: '4px 16px', borderRadius: 4, cursor: 'pointer'
+            }}>退出</button>
+          </>
         ) : (
           <Link to="/login" style={{ color: '#fff' }}>登录</Link>
         )}

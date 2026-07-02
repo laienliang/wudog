@@ -1,4 +1,4 @@
-import { request } from '../../utils/request';
+import { request, getImageUrl } from '../../utils/request';
 
 Page({
   data: {
@@ -19,7 +19,7 @@ Page({
     try {
       const res = await request(`/api/product/detail/${id}`);
       const p = res.data;
-      const allImages = [p.mainImage, ...(p.images || []).map(i => i.url)].filter(Boolean);
+      const allImages = [getImageUrl(p.mainImage), ...(p.images || []).map(i => getImageUrl(i.url))].filter(Boolean);
       this.setData({ product: p, allImages, loading: false });
     } catch {
       this.setData({ product: null, loading: false });

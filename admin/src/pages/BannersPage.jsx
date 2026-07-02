@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../components/ImageUploader';
 import request from '../utils/request';
 
 const positions = ['home', 'module1', 'module2', 'module3', 'module4', 'module5'];
@@ -77,7 +78,9 @@ export default function BannersPage() {
       <Modal title={editing ? '编辑轮播图' : '新增轮播图'} open={modalOpen} onOk={handleSubmit} onCancel={() => setModalOpen(false)} destroyOnClose width={560}>
         <Form form={form} layout="vertical">
           <Form.Item name="title" label="标题"><Input placeholder="轮播图标题" /></Form.Item>
-          <Form.Item name="image_url" label="图片URL" rules={[{ required: true, message: '请输入图片URL' }]}><Input placeholder="https://..." /></Form.Item>
+          <Form.Item name="image_url" label="图片" rules={[{ required: true, message: '请上传图片' }]}>
+            <ImageUploader placeholder="https://... 或本地上传" />
+          </Form.Item>
           <Form.Item name="link_url" label="跳转链接"><Input placeholder="点击跳转URL" /></Form.Item>
           <Form.Item name="position" label="展示位置">
             <Select options={positions.map(p => ({ label: p, value: p }))} />

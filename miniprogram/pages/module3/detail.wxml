@@ -5,7 +5,7 @@
     <view class="name">{{homestay.name}}</view>
     <view class="addr">{{homestay.address || ''}}</view>
     <view class="tags" wx:if="{{homestay.styleTags}}">
-      <text class="tag" wx:for="{{homestay.styleTags.split(',')}}" wx:key="*this">{{item}}</text>
+      <text class="tag" wx:for="{{homestay.styleTagList}}" wx:key="*this">{{item}}</text>
     </view>
     <view class="facilities" wx:if="{{homestay.facilityTags}}">
       设施: {{homestay.facilityTags}}

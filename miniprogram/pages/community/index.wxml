@@ -2,6 +2,7 @@
   <view class="search-bar">
     <input placeholder="搜索游记..." bindconfirm="onSearch" confirm-type="search" />
     <text class="search-icon" bindtap="goSearch">🔍</text>
+    <text class="mine-icon" bindtap="goMine">👤</text>
   </view>
 
   <scroll-view scroll-x class="topic-bar">

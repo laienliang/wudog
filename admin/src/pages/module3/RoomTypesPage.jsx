@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function RoomTypesPage() {
@@ -135,8 +136,8 @@ export default function RoomTypesPage() {
           <Form.Item name="total_rooms" label="总房间数">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="main_image" label="房型图片URL">
-            <Input placeholder="图片URL" />
+          <Form.Item name="main_image" label="房型图片">
+            <ImageUploader placeholder="图片URL 或本地上传" />
           </Form.Item>
           <Form.Item name="status" label="状态">
             <InputNumber min={0} max={1} style={{ width: '100%' }} placeholder="1启用 0禁用" />

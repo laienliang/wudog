@@ -1,4 +1,8 @@
 <view class="container">
+  <view class="top-bar">
+    <text class="page-title">景区出行</text>
+    <text class="mine-entry" bindtap="goMine">👤</text>
+  </view>
   <view class="tab-bar">
     <view class="tab {{tab === 'spots' ? 'tab-active' : ''}}" data-tab="spots" bindtap="onSwitchTab">景区门票</view>
     <view class="tab {{tab === 'routes' ? 'tab-active' : ''}}" data-tab="routes" bindtap="onSwitchTab">旅游路线</view>

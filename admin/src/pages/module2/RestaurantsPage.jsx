@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Space, message, Popconfirm, Tag } from 'antd';
-import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import { PlusOutlined, EditOutlined, DeleteOutlined, ClockCircleOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 export default function RestaurantsPage() {
@@ -9,6 +10,15 @@ export default function RestaurantsPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState(null);
   const [form] = Form.useForm();
+
+  // Slot management
+  const [slotModalOpen, setSlotModalOpen] = useState(false);
+  const [slots, setSlots] = useState([]);
+  const [slotsLoading, setSlotsLoading] = useState(false);
+  const [currentRestaurant, setCurrentRestaurant] = useState(null);
+  const [editingSlot, setEditingSlot] = useState(null);
+  const [showSlotForm, setShowSlotForm] = useState(false);
+  const [slotForm] = Form.useForm();
 
   const fetchData = async () => {
     setLoading(true);
@@ -60,6 +70,62 @@ export default function RestaurantsPage() {
     } catch { /* */ }
   };
 
+  // --- Slot management ---
+  const openSlotManager = async (record) => {
+    setCurrentRestaurant(record);
+    setEditingSlot(null);
+    setShowSlotForm(false);
+    slotForm.resetFields();
+    setSlotModalOpen(true);
+    await fetchSlots(record.id);
+  };
+
+  const fetchSlots = async (restaurantId) => {
+    setSlotsLoading(true);
+    try {
+      const res = await request.get(`/api/restaurant/slots/${restaurantId}`);
+      setSlots(res.data || []);
+    } catch { /* */ } finally { setSlotsLoading(false); }
+  };
+
+  const openAddSlot = () => {
+    setEditingSlot(null);
+    setShowSlotForm(true);
+    slotForm.resetFields();
+    slotForm.setFieldsValue({ max_bookings: 20 });
+  };
+
+  const openEditSlot = (record) => {
+    setEditingSlot(record);
+    setShowSlotForm(true);
+    slotForm.setFieldsValue({ slot_name: record.slotName, max_bookings: record.maxBookings, status: record.status });
+  };
+
+  const handleSlotSubmit = async () => {
+    try {
+      const values = await slotForm.validateFields();
+      if (editingSlot) {
+        await request.put(`/api/restaurant/slot/update/${editingSlot.id}`, values);
+        message.success('更新成功');
+      } else {
+        await request.post('/api/restaurant/slot/create', { ...values, restaurant_id: currentRestaurant.id });
+        message.success('创建成功');
+      }
+      slotForm.resetFields();
+      setEditingSlot(null);
+      setShowSlotForm(false);
+      fetchSlots(currentRestaurant.id);
+    } catch { /* */ }
+  };
+
+  const handleSlotDelete = async (id) => {
+    try {
+      await request.delete(`/api/restaurant/slot/delete/${id}`);
+      message.success('删除成功');
+      fetchSlots(currentRestaurant.id);
+    } catch { /* */ }
+  };
+
   const columns = [
     { title: 'ID', dataIndex: 'id', width: 60 },
     { title: '名称', dataIndex: 'name' },
@@ -69,11 +135,30 @@ export default function RestaurantsPage() {
     { title: '评分', dataIndex: 'avgRating', width: 70, render: (v) => v || '-' },
     { title: '状态', dataIndex: 'status', width: 80, render: (v) => <Tag color={v === 1 ? 'green' : 'red'}>{v === 1 ? '营业中' : '停业'}</Tag> },
     {
-      title: '操作', width: 160,
+      title: '操作', width: 220,
       render: (_, record) => (
         <Space>
           <Button type="link" icon={<EditOutlined />} onClick={() => openEdit(record)}>编辑</Button>
+          <Button type="link" icon={<ClockCircleOutlined />} onClick={() => openSlotManager(record)}>时段</Button>
           <Popconfirm title="确定删除？" onConfirm={() => handleDelete(record.id)}>
+            <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
+          </Popconfirm>
+        </Space>
+      ),
+    },
+  ];
+
+  const slotColumns = [
+    { title: 'ID', dataIndex: 'id', width: 60 },
+    { title: '时段名称', dataIndex: 'slotName' },
+    { title: '最大预订数', dataIndex: 'maxBookings', width: 100 },
+    { title: '状态', dataIndex: 'status', width: 80, render: (v) => <Tag color={v === 1 ? 'green' : 'red'}>{v === 1 ? '启用' : '禁用'}</Tag> },
+    {
+      title: '操作', width: 160,
+      render: (_, record) => (
+        <Space>
+          <Button type="link" icon={<EditOutlined />} onClick={() => openEditSlot(record)}>编辑</Button>
+          <Popconfirm title="确定删除？" onConfirm={() => handleSlotDelete(record.id)}>
             <Button type="link" danger icon={<DeleteOutlined />}>删除</Button>
           </Popconfirm>
         </Space>
@@ -102,8 +187,8 @@ export default function RestaurantsPage() {
           <Form.Item name="capacity" label="容纳人数">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="main_image" label="主图URL">
-            <Input placeholder="主图URL" />
+          <Form.Item name="main_image" label="主图">
+            <ImageUploader placeholder="主图URL 或本地上传" />
           </Form.Item>
           <Form.Item name="intro" label="餐厅介绍">
             <Input.TextArea rows={3} placeholder="餐厅介绍" />
@@ -118,6 +203,49 @@ export default function RestaurantsPage() {
             <InputNumber min={0} max={1} style={{ width: '100%' }} placeholder="1营业 0停业" />
           </Form.Item>
         </Form>
+      </Modal>
+
+      {/* Slot Management Modal */}
+      <Modal
+        title={`${currentRestaurant?.name || ''} - 时段管理`}
+        open={slotModalOpen}
+        onCancel={() => { setSlotModalOpen(false); setEditingSlot(null); setShowSlotForm(false); slotForm.resetFields(); }}
+        footer={null}
+        width={700}
+        destroyOnClose
+      >
+        <div style={{ marginBottom: 12, display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <span style={{ fontWeight: 500 }}>时段列表</span>
+          <Button type="primary" icon={<PlusOutlined />} size="small" onClick={openAddSlot}>新增时段</Button>
+        </div>
+
+        {showSlotForm && (
+          <div style={{ background: '#fafafa', padding: 12, borderRadius: 8, marginBottom: 12 }}>
+            <Form form={slotForm} layout="inline">
+              <Form.Item name="slot_name" label="时段名称" rules={[{ required: true, message: '请输入' }]}>
+                <Input placeholder="如：午餐 11:00-13:00" style={{ width: 180 }} />
+              </Form.Item>
+              <Form.Item name="max_bookings" label="最大预订">
+                <InputNumber min={1} style={{ width: 80 }} />
+              </Form.Item>
+              {editingSlot && (
+                <Form.Item name="status" label="状态">
+                  <InputNumber min={0} max={1} style={{ width: 60 }} placeholder="1启用" />
+                </Form.Item>
+              )}
+              <Form.Item>
+                <Button type="primary" onClick={handleSlotSubmit}>
+                  {editingSlot ? '更新' : '添加'}
+                </Button>
+                <Button style={{ marginLeft: 8 }} onClick={() => { setEditingSlot(null); setShowSlotForm(false); slotForm.resetFields(); }}>
+                  取消
+                </Button>
+              </Form.Item>
+            </Form>
+          </div>
+        )}
+
+        <Table columns={slotColumns} dataSource={slots} rowKey="id" loading={slotsLoading} pagination={false} size="small" />
       </Modal>
     </div>
   );

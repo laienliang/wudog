@@ -95,4 +95,13 @@ Page({
     }
     wx.navigateTo({ url: '/pages/messages/messages' });
   },
+
+  goMine() {
+    const token = wx.getStorageSync('token');
+    if (!token) {
+      wx.navigateTo({ url: '/pages/login/login' });
+      return;
+    }
+    wx.navigateTo({ url: '/pages/mine/index' });
+  },
 });

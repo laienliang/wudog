@@ -34,7 +34,10 @@ Page({
       const params = { page, pageSize };
       if (activeTag !== '全部') params.style_tag = activeTag;
       const res = await request('/api/homestay/list', 'GET', params);
-      const list = refresh ? res.data.list : [...this.data.homestays, ...res.data.list];
+      const list = (refresh ? res.data.list : [...this.data.homestays, ...res.data.list]).map(item => {
+        if (item.styleTags) item.styleTagList = item.styleTags.split(',');
+        return item;
+      });
       this.setData({ homestays: list, noMore: list.length >= res.data.total });
     } catch { /* */ } finally {
       this.setData({ loading: false });
@@ -53,5 +56,11 @@ Page({
   goDetail(e) {
     const { id } = e.currentTarget.dataset;
     wx.navigateTo({ url: `/pages/module3/detail?id=${id}` });
+  },
+
+  goMine() {
+    const token = wx.getStorageSync('token');
+    if (!token) { wx.navigateTo({ url: '/pages/login/login' }); return; }
+    wx.navigateTo({ url: '/pages/mine/index' });
   },
 });

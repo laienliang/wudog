@@ -1,4 +1,4 @@
-import { request } from '../../utils/request';
+import { request, getImageUrl } from '../../utils/request';
 
 Page({
   data: {
@@ -16,8 +16,12 @@ Page({
   async fetchCart() {
     this.setData({ loading: true });
     try {
-      const res = await request('/public/cart/list', 'GET', { source_module: 'module1' });
-      const items = res.data || [];
+      const res = await request('/public/cart/list', 'GET', {});
+      const items = (res.data || []).map(item => ({
+        ...item,
+        product_image: getImageUrl(item.product_image),
+        subtotal: ((Number(item.price) || 0) * item.quantity).toFixed(2),
+      }));
       this.setData({ items, loading: false });
       this.calcTotal();
     } catch { this.setData({ loading: false }); }

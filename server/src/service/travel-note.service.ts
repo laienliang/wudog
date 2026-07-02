@@ -4,12 +4,13 @@ import { TravelNote } from '../entity/travel-note.entity';
 export class TravelNoteService {
   constructor(private repo: Repository<TravelNote>) {}
 
-  async list(query: { page?: number; pageSize?: number; topic?: number; status?: string; keyword?: string; sort?: string }) {
-    const { page = 1, pageSize = 20, topic, status, keyword, sort } = query;
+  async list(query: { page?: number; pageSize?: number; topic?: number; status?: string; keyword?: string; sort?: string; userId?: number }) {
+    const { page = 1, pageSize = 20, topic, status, keyword, sort, userId } = query;
     const where: any = { isDeleted: 0 };
     if (topic) where.topicId = Number(topic);
     if (status) where.status = status;
     if (keyword) where.title = Like(`%${keyword}%`);
+    if (userId) where.userId = userId;
 
     const order: any = { createdAt: 'DESC' };
     if (sort === 'popular') order.likeCount = 'DESC';

@@ -78,7 +78,18 @@ export class OrderService {
     const orders = [];
     for (const o of list) {
       const items = await this.orderItemRepo.find({ where: { order_id: o.id } });
-      orders.push({ ...o, items });
+      orders.push({
+        id: o.id, orderNo: o.order_no, userId: o.user_id, type: o.type,
+        status: o.status, totalAmount: o.total_amount, payAmount: o.pay_amount,
+        addressSnapshot: o.address_snapshot, remark: o.remark,
+        payTime: o.pay_time, cancelTime: o.cancel_time, finishTime: o.finish_time,
+        createdAt: o.created_at, updatedAt: o.updated_at,
+        items: items.map(i => ({
+          id: i.id, orderId: i.order_id, itemType: i.item_type,
+          itemId: i.item_id, itemName: i.item_name, itemImage: i.item_image,
+          price: i.price, quantity: i.quantity, snapshotJson: i.snapshot_json,
+        })),
+      });
     }
 
     return { list: orders, total, page: parseInt(String(page)), pageSize: parseInt(String(pageSize)) };
@@ -91,7 +102,19 @@ export class OrderService {
     if (!order) throw new Error('订单不存在');
     const items = await this.orderItemRepo.find({ where: { order_id: id } });
     const payment = await this.paymentRepo.findOne({ where: { order_id: id } });
-    return { ...order, items, payment };
+    return {
+      id: order.id, orderNo: order.order_no, userId: order.user_id, type: order.type,
+      status: order.status, totalAmount: order.total_amount, payAmount: order.pay_amount,
+      addressSnapshot: order.address_snapshot, remark: order.remark,
+      payTime: order.pay_time, cancelTime: order.cancel_time, finishTime: order.finish_time,
+      createdAt: order.created_at, updatedAt: order.updated_at,
+      items: items.map(i => ({
+        id: i.id, orderId: i.order_id, itemType: i.item_type,
+        itemId: i.item_id, itemName: i.item_name, itemImage: i.item_image,
+        price: i.price, quantity: i.quantity, snapshotJson: i.snapshot_json,
+      })),
+      payment,
+    };
   }
 
   async cancelOrder(userId: number, orderId: number) {
@@ -161,6 +184,14 @@ export class OrderService {
       .take(pageSize)
       .getManyAndCount();
 
-    return { list, total, page: parseInt(String(page)), pageSize: parseInt(String(pageSize)) };
+    const orders = list.map(o => ({
+      id: o.id, orderNo: o.order_no, userId: o.user_id, type: o.type,
+      status: o.status, totalAmount: o.total_amount, payAmount: o.pay_amount,
+      addressSnapshot: o.address_snapshot, remark: o.remark,
+      payTime: o.pay_time, cancelTime: o.cancel_time, finishTime: o.finish_time,
+      createdAt: o.created_at, updatedAt: o.updated_at,
+    }));
+
+    return { list: orders, total, page: parseInt(String(page)), pageSize: parseInt(String(pageSize)) };
   }
 }

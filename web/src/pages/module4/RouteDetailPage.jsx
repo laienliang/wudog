@@ -1,11 +1,19 @@
 import { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import request from '../../utils/request';
 
 export default function RouteDetailPage() {
   const { id } = useParams();
+  const navigate = useNavigate();
   const [route, setRoute] = useState(null);
   const [loading, setLoading] = useState(true);
+
+  // Booking state
+  const [quantity, setQuantity] = useState(1);
+  const [contactName, setContactName] = useState('');
+  const [contactPhone, setContactPhone] = useState('');
+  const [submitting, setSubmitting] = useState(false);
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     setLoading(true);
@@ -14,6 +22,28 @@ export default function RouteDetailPage() {
       .catch(() => {})
       .finally(() => setLoading(false));
   }, [id]);
+
+  const handleBooking = async () => {
+    if (!token) { navigate('/login'); return; }
+    if (!contactName || !contactPhone) { alert('请填写联系信息'); return; }
+    setSubmitting(true);
+    try {
+      await request.post('/public/order/create', {
+        type: 'tour',
+        items: [{
+          item_type: 'tour_route',
+          item_id: route.id,
+          item_name: route.title,
+          item_image: route.mainImage || '',
+          price: Number(route.price),
+          quantity,
+        }],
+        remark: `联系人: ${contactName} ${contactPhone}`,
+      });
+      alert('下单成功，请前往订单页支付');
+      navigate('/mine');
+    } catch { alert('下单失败'); } finally { setSubmitting(false); }
+  };
 
   if (loading) return <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>加载中...</div>;
   if (!route) return <div style={{ textAlign: 'center', padding: 60, color: '#999' }}>路线不存在</div>;
@@ -79,6 +109,32 @@ export default function RouteDetailPage() {
           ))}
         </div>
       )}
+
+      {/* Booking */}
+      <div style={{ marginTop: 32, padding: 24, background: '#fff', borderRadius: 12, boxShadow: '0 2px 8px rgba(0,0,0,0.08)' }}>
+        <h3 style={{ marginBottom: 16 }}>预订路线</h3>
+        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 12, maxWidth: 500 }}>
+          <div>
+            <label style={{ display: 'block', marginBottom: 4, fontSize: 13, color: '#666' }}>数量</label>
+            <input type="number" min={1} value={quantity} onChange={e => setQuantity(Number(e.target.value))} style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #d9d9d9' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: 4, fontSize: 13, color: '#666' }}>联系人</label>
+            <input value={contactName} onChange={e => setContactName(e.target.value)} placeholder="姓名" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #d9d9d9' }} />
+          </div>
+          <div>
+            <label style={{ display: 'block', marginBottom: 4, fontSize: 13, color: '#666' }}>联系电话</label>
+            <input value={contactPhone} onChange={e => setContactPhone(e.target.value)} placeholder="手机号" style={{ width: '100%', padding: '8px 12px', borderRadius: 6, border: '1px solid #d9d9d9' }} />
+          </div>
+        </div>
+        <div style={{ marginTop: 12, color: '#e74c3c', fontSize: 16, fontWeight: 600 }}>
+          合计: ¥{(Number(route.price) * quantity).toFixed(2)}
+        </div>
+        <button onClick={handleBooking} disabled={submitting}
+          style={{ marginTop: 16, width: '100%', maxWidth: 500, padding: '12px 0', background: '#1677ff', color: '#fff', border: 'none', borderRadius: 8, fontSize: 16, cursor: 'pointer' }}>
+          {submitting ? '提交中...' : '立即预订'}
+        </button>
+      </div>
     </div>
   );
 }

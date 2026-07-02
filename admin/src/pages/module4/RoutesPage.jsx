@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 const themes = ['亲子', '摄影', '研学', '节庆', '休闲', '探险'];
@@ -83,7 +84,7 @@ export default function RoutesPage() {
             <Select options={themes.map(t => ({ label: t, value: t }))} placeholder="选择主题" allowClear />
           </Form.Item>
           <Form.Item name="price" label="套餐价格" rules={[{ required: true, message: '请输入价格' }]}><InputNumber min={0} style={{ width: '100%' }} /></Form.Item>
-          <Form.Item name="main_image" label="主图URL"><Input placeholder="主图URL" /></Form.Item>
+          <Form.Item name="main_image" label="主图"><ImageUploader placeholder="主图URL 或本地上传" /></Form.Item>
           <Form.Item name="intro" label="路线简介"><Input.TextArea rows={3} /></Form.Item>
           <Form.Item name="includes" label="包含项目"><Input.TextArea rows={2} placeholder="如：门票、住宿、导游" /></Form.Item>
           <Form.Item name="excludes" label="不包含项目"><Input.TextArea rows={2} placeholder="如：个人消费、餐费" /></Form.Item>

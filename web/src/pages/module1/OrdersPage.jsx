@@ -17,7 +17,7 @@ export default function OrdersPage() {
     if (!token) { navigate('/login'); return; }
     setLoading(true);
     try {
-      const res = await request.get('/public/order/list', { params: { type: 'product' } });
+      const res = await request.get('/public/order/list', { params: {} });
       setOrders(res.data.list || []);
     } catch { /* */ } finally { setLoading(false); }
   };

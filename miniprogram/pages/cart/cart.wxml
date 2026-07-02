@@ -20,7 +20,7 @@
           <view class="qty-val">{{item.quantity}}</view>
           <view class="qty-btn" data-id="{{item.id}}" data-qty="{{item.quantity + 1}}" bindtap="updateQty">+</view>
         </view>
-        <view class="item-subtotal">¥{{(item.price * item.quantity).toFixed(2)}}</view>
+        <view class="item-subtotal">¥{{item.subtotal}}</view>
         <view class="item-del" data-id="{{item.id}}" bindtap="removeItem">×</view>
       </view>
     </view>

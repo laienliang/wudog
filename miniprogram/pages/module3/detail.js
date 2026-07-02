@@ -23,7 +23,11 @@ Page({
     this.setData({ loading: true });
     try {
       const res = await request(`/api/homestay/detail/${id}`);
-      this.setData({ homestay: res.data, loading: false });
+      const data = res.data;
+      if (data && data.styleTags) {
+        data.styleTagList = data.styleTags.split(',');
+      }
+      this.setData({ homestay: data, loading: false });
       this.fetchReviews(id);
     } catch { this.setData({ homestay: null, loading: false }); }
   },

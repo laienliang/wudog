@@ -48,6 +48,7 @@ export class FarmProductService {
     name: string; category_id: number; price: number;
     main_image?: string; detail?: string; stock?: number;
     origin?: string; shelf_life?: string; storage_method?: string; spec?: string;
+    status?: string;
   }) {
     const product = this.repo.create({
       name: data.name,
@@ -61,7 +62,7 @@ export class FarmProductService {
       shelfLife: data.shelf_life || undefined,
       storageMethod: data.storage_method || undefined,
       spec: data.spec || undefined,
-      status: FarmProductStatus.DRAFT,
+      status: (data.status as FarmProductStatus) || FarmProductStatus.DRAFT,
     });
     return this.repo.save(product);
   }
@@ -70,11 +71,11 @@ export class FarmProductService {
     name?: string; category_id?: number; price?: number;
     main_image?: string; detail?: string; stock?: number;
     origin?: string; shelf_life?: string; storage_method?: string; spec?: string;
+    status?: string;
   }) {
     const product = await this.repo.findOne({ where: { id, isDeleted: 0 } });
     if (!product) throw new Error('农产品不存在');
     if (product.merchantId !== userId) throw new Error('无权编辑他人的商品');
-    if (![FarmProductStatus.DRAFT, FarmProductStatus.REMOVED].includes(product.status)) throw new Error('只能编辑草稿或已下架的商品');
 
     if (data.name !== undefined) product.name = data.name;
     if (data.category_id !== undefined) product.categoryId = data.category_id;
@@ -86,7 +87,7 @@ export class FarmProductService {
     if (data.shelf_life !== undefined) product.shelfLife = data.shelf_life;
     if (data.storage_method !== undefined) product.storageMethod = data.storage_method;
     if (data.spec !== undefined) product.spec = data.spec;
-    product.status = FarmProductStatus.DRAFT;
+    if (data.status !== undefined) product.status = data.status as FarmProductStatus;
     return this.repo.save(product);
   }
 

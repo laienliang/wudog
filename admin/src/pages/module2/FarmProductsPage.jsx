@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Table, Button, Modal, Form, Input, InputNumber, Select, Space, message, Popconfirm, Tag } from 'antd';
 import { PlusOutlined, EditOutlined, DeleteOutlined, AppstoreOutlined } from '@ant-design/icons';
+import ImageUploader from '../../components/ImageUploader';
 import request from '../../utils/request';
 
 const statusMap = { draft: { color: 'default', text: '草稿' }, published: { color: 'success', text: '已发布' }, removed: { color: 'warning', text: '已下架' } };
@@ -50,6 +51,7 @@ export default function FarmProductsPage() {
       name: record.name, category_id: record.categoryId, price: record.price,
       stock: record.stock, main_image: record.mainImage, detail: record.detail,
       origin: record.origin, shelf_life: record.shelfLife, storage_method: record.storageMethod, spec: record.spec,
+      status: record.status,
     });
     setModalOpen(true);
   };
@@ -188,8 +190,8 @@ export default function FarmProductsPage() {
           <Form.Item name="stock" label="库存">
             <InputNumber style={{ width: '100%' }} />
           </Form.Item>
-          <Form.Item name="main_image" label="主图URL">
-            <Input placeholder="主图URL" />
+          <Form.Item name="main_image" label="主图">
+            <ImageUploader placeholder="主图URL 或本地上传" />
           </Form.Item>
           <Form.Item name="origin" label="产地">
             <Input placeholder="如：贵州雷山" />
@@ -205,6 +207,13 @@ export default function FarmProductsPage() {
           </Form.Item>
           <Form.Item name="detail" label="商品详情">
             <Input.TextArea rows={4} placeholder="详情描述" />
+          </Form.Item>
+          <Form.Item name="status" label="状态">
+            <Select options={[
+              { label: '草稿', value: 'draft' },
+              { label: '已发布', value: 'published' },
+              { label: '已下架', value: 'removed' },
+            ]} placeholder="选择状态" />
           </Form.Item>
         </Form>
       </Modal>

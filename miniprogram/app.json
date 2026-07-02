@@ -23,7 +23,8 @@
     "pages/module3/orders",
     "pages/module4/spot-detail",
     "pages/module4/route-detail",
-    "pages/module4/orders"
+    "pages/module4/orders",
+    "pages/mine/index"
   ],
   "window": {
     "navigationBarBackgroundColor": "#1677ff",

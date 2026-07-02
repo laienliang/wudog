@@ -21,5 +21,17 @@
 .day-row { font-size: 24rpx; color: #666; line-height: 1.8; }
 .day-label { color: #999; }
 
+.form { padding: 0; }
+.form-item { display: flex; align-items: center; padding: 16rpx 0; border-bottom: 1rpx solid #f0f0f0; }
+.label { width: 140rpx; font-size: 28rpx; color: #333; }
+.input { flex: 1; font-size: 26rpx; padding: 8rpx 0; }
+.qty-row { display: flex; align-items: center; }
+.qty-btn { width: 56rpx; height: 56rpx; border: 1rpx solid #ddd; border-radius: 8rpx; display: flex; align-items: center; justify-content: center; font-size: 32rpx; color: #333; }
+.qty-val { margin: 0 24rpx; font-size: 28rpx; font-weight: 600; min-width: 40rpx; text-align: center; }
+.total-row { text-align: right; font-size: 32rpx; color: #e74c3c; font-weight: 600; margin-top: 16rpx; }
+
+.bottom-bar { position: fixed; bottom: 0; left: 0; right: 0; padding: 16rpx 24rpx; background: #fff; box-shadow: 0 -2rpx 8rpx rgba(0,0,0,0.06); }
+.book-btn { width: 100%; background: #1677ff; color: #fff; border-radius: 44rpx; font-size: 30rpx; height: 88rpx; display: flex; align-items: center; justify-content: center; }
+
 .loading { text-align: center; padding: 60rpx; color: #999; }
 .empty { text-align: center; padding: 60rpx; color: #999; font-size: 28rpx; }

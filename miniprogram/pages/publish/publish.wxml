@@ -3,6 +3,30 @@
     <input placeholder="请输入标题" value="{{title}}" bindinput="onTitleInput" maxlength="200" class="title-input" />
     <textarea placeholder="请输入正文内容..." value="{{content}}" bindinput="onContentInput" class="content-input" />
 
+    <!-- 图片区域 -->
+    <view class="image-section">
+      <view class="image-label">图片（{{images.length}}/9 张）</view>
+
+      <view class="image-grid" wx:if="{{images.length > 0}}">
+        <view class="image-item" wx:for="{{images}}" wx:key="index">
+          <image src="{{item}}" mode="aspectFill" class="image-thumb" />
+          <view class="image-remove" bindtap="removeImage" data-index="{{index}}">✕</view>
+          <view class="image-index" wx:if="{{index === 0}}">封面</view>
+        </view>
+      </view>
+
+      <view class="upload-actions">
+        <button class="upload-btn" bindtap="chooseImage" loading="{{uploading}}" disabled="{{images.length >= 9}}">
+          选择本地图片
+        </button>
+        <view class="url-row">
+          <input class="url-input" placeholder="或粘贴网络图片URL" value="{{imageUrl}}" bindinput="onImageUrlInput"
+            disabled="{{images.length >= 9}}" />
+          <button class="url-btn" bindtap="addImageUrl" disabled="{{images.length >= 9 || !imageUrl}}">下载</button>
+        </view>
+      </view>
+    </view>
+
     <picker mode="selector" range="{{topics}}" range-key="name" bindchange="onTopicChange" value="{{topicIndex}}">
       <view class="picker">
         <text>话题：</text>

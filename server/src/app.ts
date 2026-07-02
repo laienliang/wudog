@@ -175,7 +175,7 @@ async function bootstrap() {
   const transportGuideRepo = ds.getRepository(TransportGuide);
 
   const authService = new AuthService(userRepo, profileRepo);
-  const cartService = new CartService(cartRepo);
+  const cartService = new CartService(cartRepo, productRepo, productSkuRepo, farmProductRepo);
   const orderService = new OrderService(orderRepo, orderItemRepo, paymentRepo, notifRepo);
   const travelNoteService = new TravelNoteService(travelNoteRepo);
   const commentService = new CommentService(commentRepo);
